@@ -2,29 +2,41 @@ package edu.arhs.first1100.util;
 
 public class SystemBase extends Thread
 {
-    public double sleep_delay = 0.1;
-    
-    public void commencement()  { this.run(); }
-    public void takeoff()       { this.run(); }
-    public void inception()     { this.run(); }
+    private int sleepTime = 100;
+
+    public SystemBase() 
+    {
+
+    }
 
     /**
-     * Sets sleep_delay to .1
+     *
+     * @param delay sets the amount of time the system should sleep
      */
-    public SystemBase() { }
-
-    public SystemBase(double delay)
+    public SystemBase(int delay)
     {
-        sleep_delay = delay;
+        setSleep(delay);
     }
 
     public void stop()
     {
         
     }
-    
-    public void log(String message)
+
+    /**
+     * Prints out messages to the console
+     * @param String message 
+     */
+    private void log(String message)
     {
         System.out.println(this.getClass().getName().substring(10)+" : "+message);
+    }
+
+    /**
+     * Set the amount of time that the system should sleep
+     * @param int time How long the component should sleep in milliseconds
+     */
+    public void setSleep(int time){
+        sleepTime = time;
     }
 }
