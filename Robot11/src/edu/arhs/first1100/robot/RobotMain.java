@@ -7,28 +7,53 @@
 
 package edu.arhs.first1100.robot;
 
+import edu.wpi.first.wpilibj.IterativeRobot;
 
-import edu.wpi.first.wpilibj.SimpleRobot;
+import edu.arhs.first1100.autoctl.AutonomousSystem;
+import edu.arhs.first1100.camera.CameraSystem;
+import edu.arhs.first1100.drive.DriveSystem;
+import edu.arhs.first1100.line.LineSystem;
+import edu.arhs.first1100.manipulator.ManipulatorSystem;
+import edu.arhs.first1100.minibot.MinibotSystem;
+import edu.arhs.first1100.opctl.OperatorSystem;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the SimpleRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
- */
-public class RobotMain extends SimpleRobot {
-    /**
-     * This function is called once each time the robot enters autonomous mode.
-     */
-    public void autonomous() {
+public class RobotMain extends IterativeRobot
+{
+    AutonomousSystem autonomousSystem;
+    CameraSystem cameraSystem;
+    DriveSystem driveSystem;
+    LineSystem lineSystem;
+    ManipulatorSystem manipulatorSystem;
+    MinibotSystem minibotSystem;
+    OperatorSystem operatorSystem;
+
+    public void robotInit()
+    {
+        autonomousSystem = new AutonomousSystem();
+        cameraSystem = new CameraSystem();
+        driveSystem = new DriveSystem();
+        lineSystem = new LineSystem();
+        manipulatorSystem = new ManipulatorSystem();
+        minibotSystem = new MinibotSystem();
+        operatorSystem = new OperatorSystem();
         
+        autonomousSystem.start();
+        cameraSystem.start();
+        driveSystem.start();
+        lineSystem.start();
+        manipulatorSystem.start();
+        minibotSystem.start();
+        operatorSystem.start();
     }
 
-    /**
-     * This function is called once each time the robot enters operator control.
-     */
-    public void operatorControl() {
+    // Periodic = called when driver station data is updated
+    // Continuous = called as fast as possible
+    
+    public void autonomousInit() { }
+    public void autonomousPeriodic() { }
 
-    }
+    public void teleopInit() { }
+    public void teleopPeriodic() { }
+
+    public void disabledInit() { }
 }

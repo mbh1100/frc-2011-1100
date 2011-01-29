@@ -3,12 +3,12 @@
  * and open the template in the editor.
  */
 
-package edu.arhs.first1100.manipulator;
+package edu.arhs.first1100.opctl;
 
 /**
  *
- * @author markbh
+ * @author team1100
  */
-public class Manipulator {
+public class ButtonBox {
 
 }
