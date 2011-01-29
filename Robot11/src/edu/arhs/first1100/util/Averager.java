@@ -2,9 +2,9 @@ package edu.arhs.first1100.util;
 
 public class Averager
 {
-    int size = 1;
-    double[] values;
-    int pointer = 0;
+    int size = 10;
+    //average
+    double avg = 0;
 
     /**
      * Make a new Averager object.
@@ -29,11 +29,7 @@ public class Averager
     public Averager(int sampleSize, double starting)
     {
         size = sampleSize;
-        values = new double[size];
-        for(int i=0; i<size; ++i)
-        {
-            values[i] = starting;
-        }
+        avg = starting;
     }
 
     /**
@@ -42,23 +38,16 @@ public class Averager
      */
     public void feed(double value)
     {
-        values[pointer] = value;
-        pointer++;
-        pointer %= size; // wrap around array
+        //EPIC formula courtesy of Akshay
+        avg = (avg*(size-1)+value)/size;
     }
 
     /**
      * Return the average of the values in the array
      * @return the average
      */
-    public float get()
+    public double get()
     {
-        int total = 0;
-
-        for(int i=0; i<size; ++i)
-            total += values[i];
-        total /= size;
-        
-        return total;
+        return avg;
     }
 }
