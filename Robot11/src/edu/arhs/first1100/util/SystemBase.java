@@ -2,7 +2,7 @@ package edu.arhs.first1100.util;
 
 public class SystemBase extends Thread
 {
-     int sleepTime = 100;
+    public int sleepTime = 100;
 
     public SystemBase() 
     {

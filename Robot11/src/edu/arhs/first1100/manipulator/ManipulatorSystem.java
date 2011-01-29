@@ -6,10 +6,19 @@ public class ManipulatorSystem extends SystemBase
 {
     Arm arm;
     Claw claw;
-    Lifter lift;
+    Lift lift;
 
     public ManipulatorSystem() { }
 
-
-
+    public void setLiftSpeed(float speed)
+    {
+        lift.set(speed);
+    }
+    
+    public void run()
+    {
+        lift.update();
+        claw.update();
+        arm.update();
+    }
 }

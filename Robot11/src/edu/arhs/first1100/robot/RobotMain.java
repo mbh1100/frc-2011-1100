@@ -59,12 +59,12 @@ public class RobotMain extends IterativeRobot
 
     public void disabledInit()
     {
-        autonomousSystem.start();
-        cameraSystem.start();
-        driveSystem.start();
-        lineSystem.start();
-        manipulatorSystem.start();
-        minibotSystem.start();
-        operatorSystem.start();
+        autonomousSystem.stop();
+        cameraSystem.stop();
+        driveSystem.stop();
+        lineSystem.stop();
+        manipulatorSystem.stop();
+        minibotSystem.stop();
+        operatorSystem.stop();
     }
 }
