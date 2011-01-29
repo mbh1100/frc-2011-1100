@@ -8,9 +8,11 @@ public class ManipulatorSystem extends SystemBase
     Claw claw;
     Lifter lift;
 
-    public ManipulatorSystem()
+    public ManipulatorSystem() { }
+
+    public ManipulatorSystem(double delay)
     {
-        
+        super(delay);
     }
 
 }

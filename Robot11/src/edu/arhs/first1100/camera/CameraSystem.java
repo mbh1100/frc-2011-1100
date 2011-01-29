@@ -12,9 +12,11 @@ public class CameraSystem extends SystemBase
 {
     public final int WHITE_THRESHOLD = 1;
 
-    private final int PAR_SIZE = 3;
+    private final int PARTICLE_SIZE = 3;
+
     //Camera delay time in milliseconds
     private final int DELAY_TIME = 200;
+
     //RGB Threshold
     private int minRed = 0;
     private int maxRed = 0;
@@ -22,15 +24,19 @@ public class CameraSystem extends SystemBase
     private int maxGreen = 0;
     private int minBlue = 0;
     private int maxBlue = 0;
+
     //Image related
     AxisCamera ac;
     ColorImage cImg;
     BinaryImage bImg;
-    ParticleAnalysisReport[] pRep = new ParticleAnalysisReport[PAR_SIZE];
+    ParticleAnalysisReport[] pRep = new ParticleAnalysisReport[PARTICLE_SIZE];
     
-    public CameraSystem()
+    public CameraSystem() { }
+
+    public CameraSystem(double delay)
     {        
-        super();
+        super(delay);
+        
         ac = AxisCamera.getInstance();
         cImg = null;
         bImg = null;
@@ -43,7 +49,7 @@ public class CameraSystem extends SystemBase
         ac.writeResolution(AxisCamera.ResolutionT.k160x120);
     }
 
-        /**
+    /**
      * Adjusts camera settings. Then processes camera images until
      * the thread is terminated.
      */
@@ -75,7 +81,7 @@ public class CameraSystem extends SystemBase
                 cImg = ac.getImage();
                 bImg = cImg.thresholdRGB(minRed, maxRed,minGreen, maxGreen, minBlue, maxBlue);
                 cImg.free();
-                pRep = bImg.getOrderedParticleAnalysisReports(PAR_SIZE);
+                pRep = bImg.getOrderedParticleAnalysisReports(PARTICLE_SIZE);
                 bImg.free();
             }
             catch(Exception e)

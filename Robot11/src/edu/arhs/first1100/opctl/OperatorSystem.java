@@ -8,8 +8,11 @@ public class OperatorSystem extends SystemBase
     Joystick rightJoystick;
     ButtonBox buttonBox;
 
-    public OperatorSystem()
+    public OperatorSystem() { }
+
+    public OperatorSystem(double delay)
     {
-        
+        super(delay);
     }
+
 }

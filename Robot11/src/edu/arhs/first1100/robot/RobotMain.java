@@ -29,13 +29,13 @@ public class RobotMain extends IterativeRobot
 
     public void robotInit()
     {
-        autonomousSystem = new AutonomousSystem();
-        cameraSystem = new CameraSystem();
-        driveSystem = new DriveSystem();
-        lineSystem = new LineSystem();
+        autonomousSystem  = new AutonomousSystem();
+        cameraSystem      = new CameraSystem();
+        driveSystem       = new DriveSystem();
+        lineSystem        = new LineSystem();
         manipulatorSystem = new ManipulatorSystem();
-        minibotSystem = new MinibotSystem();
-        operatorSystem = new OperatorSystem();
+        minibotSystem     = new MinibotSystem();
+        operatorSystem    = new OperatorSystem();
         
         autonomousSystem.start();
         cameraSystem.start();
@@ -51,9 +51,20 @@ public class RobotMain extends IterativeRobot
     
     public void autonomousInit() { }
     public void autonomousPeriodic() { }
+    public void autonomousContinuous() { }
 
     public void teleopInit() { }
     public void teleopPeriodic() { }
+    public void teleopContinuous() { }
 
-    public void disabledInit() { }
+    public void disabledInit()
+    {
+        autonomousSystem.start();
+        cameraSystem.start();
+        driveSystem.start();
+        lineSystem.start();
+        manipulatorSystem.start();
+        minibotSystem.start();
+        operatorSystem.start();
+    }
 }

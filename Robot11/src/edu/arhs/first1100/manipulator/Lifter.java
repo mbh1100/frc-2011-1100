@@ -1,13 +1,18 @@
 package edu.arhs.first1100.manipulator;
 
-/**
- *
- * @author team1100
- */
+import edu.wpi.first.wpilibj.Jaguar;
+
 public class Lifter
 {
+    Jaguar liftJaguar;
+    
     public Lifter()
     {
+        liftJaguar = new Jaguar(1);
+    }
 
+    public void set(double speed)
+    {
+        liftJaguar.set(speed);
     }
 }
