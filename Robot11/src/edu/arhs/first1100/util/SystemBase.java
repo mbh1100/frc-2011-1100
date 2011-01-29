@@ -2,7 +2,7 @@ package edu.arhs.first1100.util;
 
 public class SystemBase extends Thread
 {
-    private int sleepTime = 100;
+     int sleepTime = 100;
 
     public SystemBase() 
     {
@@ -27,7 +27,7 @@ public class SystemBase extends Thread
      * Prints out messages to the console
      * @param String message 
      */
-    private void log(String message)
+    public void log(String message)
     {
         System.out.println(this.getClass().getName().substring(10)+" : "+message);
     }

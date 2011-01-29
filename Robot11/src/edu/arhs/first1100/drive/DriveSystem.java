@@ -10,8 +10,5 @@ public class DriveSystem extends SystemBase
 {
     public DriveSystem() { }
 
-    public DriveSystem(double delay)
-    {
-        super(delay);
-    }
+
 }

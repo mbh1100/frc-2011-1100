@@ -9,10 +9,4 @@ public class OperatorSystem extends SystemBase
     ButtonBox buttonBox;
 
     public OperatorSystem() { }
-
-    public OperatorSystem(double delay)
-    {
-        super(delay);
-    }
-
 }

@@ -6,8 +6,4 @@ public class AutonomousSystem extends SystemBase
 {
     public AutonomousSystem() { }
     
-    public AutonomousSystem(double delay)
-    {
-        super(delay);
-    }
 }

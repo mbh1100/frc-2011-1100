@@ -6,8 +6,5 @@ public class MinibotSystem extends SystemBase
 {
     public MinibotSystem() { }
 
-    public MinibotSystem(double delay)
-    {
-        super(delay);
-    }
+ 
 }

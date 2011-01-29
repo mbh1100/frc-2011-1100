@@ -14,9 +14,6 @@ public class CameraSystem extends SystemBase
 
     private final int PARTICLE_SIZE = 3;
 
-    //Camera delay time in milliseconds
-    private final int DELAY_TIME = 200;
-
     //RGB Threshold
     private int minRed = 0;
     private int maxRed = 0;
@@ -31,15 +28,13 @@ public class CameraSystem extends SystemBase
     BinaryImage bImg;
     ParticleAnalysisReport[] pRep = new ParticleAnalysisReport[PARTICLE_SIZE];
     
-    public CameraSystem() { }
 
-    public CameraSystem(double delay)
-    {        
-        super(delay);
-        
+    public CameraSystem()
+    {     
         ac = AxisCamera.getInstance();
         cImg = null;
         bImg = null;
+        sleepTime = 200;
 
         //Camera Settings
         ac.writeCompression(0);
@@ -49,7 +44,7 @@ public class CameraSystem extends SystemBase
         ac.writeResolution(AxisCamera.ResolutionT.k160x120);
     }
 
-    /**
+     /**
      * Adjusts camera settings. Then processes camera images until
      * the thread is terminated.
      */
@@ -63,12 +58,12 @@ public class CameraSystem extends SystemBase
                 sleep(DELAY_TIME);
             }
             catch (Exception e){
-                System.out.println("Camera Error: "+e.getMessage());
+                log(e.getMessage());
             }
         }
     }
 
-        /**
+     /**
      * Gets an image from the camera to find particles within the camera's
      * RGB threshold.
      */
@@ -86,13 +81,13 @@ public class CameraSystem extends SystemBase
             }
             catch(Exception e)
             {
-                System.out.println("Camera Error: "+e.getMessage());
+                log(e.getMessage());
             }
             printPRep();
         }
     }
 
-        /**
+     /**
      * Prints out the the boundaries and center of significant particles
      * found by the camera.
      */
@@ -116,7 +111,7 @@ public class CameraSystem extends SystemBase
         }
     }
 
-         /**
+     /**
      * Set the threshold of colors the camera should look for.
      * All parameters must be 0-255.
      * @param r Minimum RedValue
@@ -136,7 +131,7 @@ public class CameraSystem extends SystemBase
         maxBlue = (B >= 0 && B <= 255 && B >= b)? B : 255;
     }
 
-    /*
+     /**
      * Human way of setting the camera threshold.
      * @param t Threshold
      */
@@ -149,7 +144,7 @@ public class CameraSystem extends SystemBase
         }
     }
 
-       /**
+     /**
      * Returns the significant particles found in array of ParticleAnalysisReports.
      * @return ParticleAnalysisReport[]
      */
@@ -158,7 +153,7 @@ public class CameraSystem extends SystemBase
         return pRep;
     }
 
-    /**
+     /**
      * Returns the biggest particle found by the camera.
      * @return ParticleAnalysisReport
      */
@@ -173,5 +168,4 @@ public class CameraSystem extends SystemBase
             return null;
         }
     }
-
 }

@@ -6,8 +6,4 @@ public class LineSystem extends SystemBase
 {
     public LineSystem() { }
 
-    public LineSystem(double delay)
-    {
-        super(delay);
-    }
 }

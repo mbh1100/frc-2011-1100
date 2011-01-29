@@ -10,9 +10,6 @@ public class ManipulatorSystem extends SystemBase
 
     public ManipulatorSystem() { }
 
-    public ManipulatorSystem(double delay)
-    {
-        super(delay);
-    }
+
 
 }
