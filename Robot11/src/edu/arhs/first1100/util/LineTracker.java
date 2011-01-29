@@ -1,4 +1,4 @@
-package edu.arhs.first1100.opctl;
+package edu.arhs.first1100.util;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotDrive;
