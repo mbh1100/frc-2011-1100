@@ -4,8 +4,8 @@ import edu.arhs.first1100.util.SystemBase;
 
 public class OperatorSystem extends SystemBase
 {
-    Joystick leftJoystick;
-    Joystick rightJoystick;
+    AdvJoystick leftJoystick;
+    AdvJoystick rightJoystick;
     ButtonBox buttonBox;
 
     public OperatorSystem() { }
