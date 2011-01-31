@@ -1,3 +1,26 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package edu.arhs.first1100.drive;
+
+import edu.wpi.first.wpilibj.Jaguar;
+
+public class JaguarPair
+{
+    final private boolean REVERSE_SECOND_JAG = false;
+    
+    Jaguar j1;
+    Jaguar j2;
+
+    public JaguarPair(int ch1, int ch2)
+    {
+        j1 = new Jaguar(ch1);
+        j2 = new Jaguar(ch2);
+    }
+
+}
 /**
  * JaguarPair.java
  *
