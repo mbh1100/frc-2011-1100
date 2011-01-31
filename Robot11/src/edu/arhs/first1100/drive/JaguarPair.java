@@ -1,32 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package edu.arhs.first1100.drive;
-
-import edu.wpi.first.wpilibj.Jaguar;
-
-public class JaguarPair
-{
-    final private boolean REVERSE_SECOND_JAG = false;
-    
-    Jaguar j1;
-    Jaguar j2;
-
-    public JaguarPair(int ch1, int ch2)
-    {
-        j1 = new Jaguar(ch1);
-        j2 = new Jaguar(ch2);
-    }
-
-}
 /**
  * JaguarPair.java
  *
  * This class contains two AdvJaguar objects.
  * This class acts exactly like an AdvJaguar, except commands are sent to both
- * simaltaniously.  This will be used in our drive system where two motors
+ * simultaneously.  This will be used in our drive system where two motors
  * must be used together to drive one side of the robot.
  *
  * Nick - 3:24pm 1/29
