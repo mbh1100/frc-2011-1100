@@ -4,21 +4,19 @@ import edu.arhs.first1100.util.SystemBase;
 
 public class ManipulatorSystem extends SystemBase
 {
-    Arm arm;
-    Claw claw;
-    Lift lift;
+    public Arm arm;
+    public Claw claw;
+    public Lift lift;
 
     public ManipulatorSystem() { }
 
-    public void setLiftSpeed(float speed)
+    public void setLiftSpeed(double speed)
     {
         lift.set(speed);
     }
     
-    public void run()
+    public void tick()
     {
-        lift.update();
-        claw.update();
-        arm.update();
+        //
     }
 }

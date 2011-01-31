@@ -1,13 +1,39 @@
 package edu.arhs.first1100.util;
 
+import edu.arhs.first1100.robot.RobotMain;
+
 public class SystemBase extends Thread
 {
+    public RobotMain robot;
     public int sleepTime = 100;
-
+    private boolean stopThread = false;
+    
     public SystemBase() 
-    {
+    { }
 
+    public void run()
+    {
+        while (!stopThread)
+        {
+            tick();
+            
+            try
+            {
+                sleep(sleepTime);
+            }
+            catch (Exception e){
+                log(e.getMessage());
+            }
+        }
     }
+
+    /**
+     * Put your own code here to run.
+     *
+     * This method is called after every sleep cycle.
+     * the delay time is stored in 'sleepTime'.
+     */
+    public void tick() { }
 
     /**
      *
@@ -18,9 +44,14 @@ public class SystemBase extends Thread
         setSleep(delay);
     }
 
+    public void setRobotMain(RobotMain r)
+    {
+        robot = r;
+    }
+    
     public void stop()
     {
-        
+        stopThread = true;
     }
 
     /**

@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 public class CameraSystem extends SystemBase
 {
     public final int WHITE_THRESHOLD = 1;
-
     private final int PARTICLE_SIZE = 3;
 
     //RGB Threshold
@@ -51,19 +50,9 @@ public class CameraSystem extends SystemBase
      * Adjusts camera settings. Then processes camera images until
      * the thread is terminated.
      */
-    public void run()
+    public void tick()
     {
-        while (isAlive())
-        {
-            processImg();
-            try
-            {
-                sleep(sleepTime);
-            }
-            catch (Exception e){
-                log(e.getMessage());
-            }
-        }
+        processImg();
     }
 
      /**
@@ -126,12 +115,12 @@ public class CameraSystem extends SystemBase
      */
     public synchronized void setThresholdRGB(int r, int R, int g, int G, int b, int B)
     {
-        minRed = (r >= 0 && r <= 255 && r <= R)? r : 0;
-        maxRed = (R >= 0 && R <= 255 && r >= r)? R : 255;
+        minRed   = (r >= 0 && r <= 255 && r <= R)? r : 0;
+        maxRed   = (R >= 0 && R <= 255 && r >= r)? R : 255;
         minGreen = (g >= 0 && g <= 255 && g <= G)? g : 0;
         maxGreen = (G >= 0 && G <= 255 && G >= g)? G : 255;
-        minBlue = (b >= 0 && b <= 255 && b <= B)? b : 0;
-        maxBlue = (B >= 0 && B <= 255 && B >= b)? B : 255;
+        minBlue  = (b >= 0 && b <= 255 && b <= B)? b : 0;
+        maxBlue  = (B >= 0 && B <= 255 && B >= b)? B : 255;
     }
 
      /**
@@ -145,6 +134,22 @@ public class CameraSystem extends SystemBase
                 setThresholdRGB(190, 255, 210, 255, 210, 255);
                 break;
         }
+    }
+
+    public double getCenterY()
+    {
+        if(pRep.length != 0)
+            return pRep[0].center_mass_y_normalized;
+        else
+            return 0.0;
+    }
+
+    public double getCenterX()
+    {
+        if(pRep.length != 0)
+            return pRep[0].center_mass_x_normalized;
+        else
+            return 0.0;
     }
 
      /**

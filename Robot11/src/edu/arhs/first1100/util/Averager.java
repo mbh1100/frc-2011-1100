@@ -2,9 +2,8 @@ package edu.arhs.first1100.util;
 
 public class Averager
 {
-    int size = 10;
-    //average
-    double avg = 0;
+    int size = 1;
+    double avg = 0; //average
 
     /**
      * Make a new Averager object.
@@ -38,8 +37,11 @@ public class Averager
      */
     public void feed(double value)
     {
-        //EPIC formula courtesy of Akshay
-        avg = (avg*(size-1)+value)/size;
+        if(size==1)
+            avg = value;
+        else
+            //EPIC formula courtesy of Akshay
+            avg = (avg*(size-1)+value)/size;
     }
 
     /**

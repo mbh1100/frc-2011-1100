@@ -6,5 +6,7 @@ public class MinibotSystem extends SystemBase
 {
     public MinibotSystem() { }
 
+    public void tick()
+    { }
  
 }
