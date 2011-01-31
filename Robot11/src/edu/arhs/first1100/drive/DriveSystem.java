@@ -11,6 +11,7 @@ package edu.arhs.first1100.drive;
 
 import edu.arhs.first1100.util.SystemBase;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.arhs.first1100.camera.CameraSystem;
 /**
  *
  * @author team1100
@@ -24,6 +25,7 @@ public class DriveSystem extends SystemBase
     {
          super();
          this.setDriveSpeed(0.0, 0.0);
+
     }
 
     public void setDriveSpeed(double leftSide, double rightSide)

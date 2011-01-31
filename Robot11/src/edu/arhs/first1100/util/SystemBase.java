@@ -11,6 +11,8 @@ public class SystemBase extends Thread
     public SystemBase() 
     { }
 
+
+
     public void run()
     {
         while (!stopThread)
@@ -56,7 +58,7 @@ public class SystemBase extends Thread
 
     /**
      * Prints out messages to the console
-     * @param String message 
+     * @param String message
      */
     public void log(String message)
     {

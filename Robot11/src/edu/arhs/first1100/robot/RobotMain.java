@@ -20,9 +20,11 @@ import edu.arhs.first1100.line.LineSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.minibot.MinibotSystem;
 import edu.arhs.first1100.opctl.OperatorSystem;
+import edu.arhs.first1100.drive.Mux;
 
 public class RobotMain extends IterativeRobot
 {
+
     public AutonomousSystem autonomousSystem;
     public CameraSystem cameraSystem;
     public DriveSystem driveSystem;
@@ -33,13 +35,13 @@ public class RobotMain extends IterativeRobot
 
     public void robotInit()
     {
-        autonomousSystem  = new AutonomousSystem();
-        cameraSystem      = new CameraSystem();
-        driveSystem       = new DriveSystem();
-        lineSystem        = new LineSystem();
+        autonomousSystem = new AutonomousSystem();
+        cameraSystem = new CameraSystem();
+        driveSystem = new DriveSystem();
+        lineSystem = new LineSystem();
         manipulatorSystem = new ManipulatorSystem();
-        minibotSystem     = new MinibotSystem();
-        operatorSystem    = new OperatorSystem();
+        minibotSystem = new MinibotSystem();
+        operatorSystem = new OperatorSystem();
         
         // We need a MUCH better system than this.
         // Right now I pass a reference to RobotMain
