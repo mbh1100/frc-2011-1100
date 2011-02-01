@@ -20,7 +20,6 @@ import edu.arhs.first1100.line.LineSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.minibot.MinibotSystem;
 import edu.arhs.first1100.opctl.OperatorSystem;
-import edu.arhs.first1100.drive.Mux;
 
 public class RobotMain extends IterativeRobot
 {
@@ -91,6 +90,7 @@ public class RobotMain extends IterativeRobot
     public void autonomousPeriodic() { }
     public void autonomousContinuous() { }
     
+     
     public void teleopInit()
     {
         autonomousSystem.stop();
@@ -98,7 +98,7 @@ public class RobotMain extends IterativeRobot
     }
     public void teleopPeriodic() { }
     public void teleopContinuous() { }
-
+    
     public void disabledInit()
     {
         autonomousSystem.stop();

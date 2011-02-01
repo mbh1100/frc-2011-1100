@@ -6,11 +6,9 @@ public class SystemBase extends Thread
 {
     public RobotMain robot;
     public int sleepTime = 100;
-    private boolean stopThread = false;
     
-    public SystemBase() 
-    { }
-
+    public SystemBase() { }
+    private boolean stopThread = false;
 
 
     public void run()
@@ -28,7 +26,6 @@ public class SystemBase extends Thread
             }
         }
     }
-
     /**
      * Put your own code here to run.
      *
@@ -45,7 +42,7 @@ public class SystemBase extends Thread
     {
         setSleep(delay);
     }
-
+    
     public void setRobotMain(RobotMain r)
     {
         robot = r;
@@ -55,7 +52,7 @@ public class SystemBase extends Thread
     {
         stopThread = true;
     }
-
+    
     /**
      * Prints out messages to the console
      * @param String message

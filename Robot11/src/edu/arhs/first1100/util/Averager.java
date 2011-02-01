@@ -4,6 +4,7 @@ public class Averager
 {
     int size = 1;
     double avg = 0; //average
+    int magnitude = 1;
 
     /**
      * Make a new Averager object.
@@ -37,6 +38,8 @@ public class Averager
      */
     public void feed(double value)
     {
+        //EPIC formula courtesy of Akshay
+        avg = (avg*(size-magnitude)+value*magnitude)/size;
         if(size==1)
             avg = value;
         else
@@ -44,6 +47,11 @@ public class Averager
             avg = (avg*(size-1)+value)/size;
     }
 
+    public void setMagnitude(int m)
+    {
+        magnitude = m;
+    }
+    
     /**
      * Return the average of the values in the array
      * @return the average
