@@ -11,7 +11,7 @@
 
 package edu.arhs.first1100.robot;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SimpleRobot;
 
 import edu.arhs.first1100.autoctl.AutonomousSystem;
 import edu.arhs.first1100.camera.CameraSystem;
@@ -21,7 +21,7 @@ import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.minibot.MinibotSystem;
 import edu.arhs.first1100.opctl.OperatorSystem;
 
-public class RobotMain extends IterativeRobot
+public class RobotMain extends SimpleRobot
 {
 
     public AutonomousSystem autonomousSystem;
@@ -35,11 +35,11 @@ public class RobotMain extends IterativeRobot
     public void robotInit()
     {
         autonomousSystem = new AutonomousSystem();
-        cameraSystem = new CameraSystem();
-        driveSystem = new DriveSystem();
-        lineSystem = new LineSystem();
-        manipulatorSystem = new ManipulatorSystem();
-        minibotSystem = new MinibotSystem();
+        //cameraSystem = new CameraSystem();
+        //driveSystem = new DriveSystem();
+        //lineSystem = new LineSystem();
+        //manipulatorSystem = new ManipulatorSystem();
+        //minibotSystem = new MinibotSystem();
         operatorSystem = new OperatorSystem();
         
         // We need a MUCH better system than this.
@@ -50,63 +50,62 @@ public class RobotMain extends IterativeRobot
         // This is a work around for now.
         //    - Nick
         autonomousSystem.setRobotMain(this);
-        cameraSystem.setRobotMain(this);
-        driveSystem.setRobotMain(this);
-        lineSystem.setRobotMain(this);
-        manipulatorSystem.setRobotMain(this);
-        minibotSystem.setRobotMain(this);
+        //cameraSystem.setRobotMain(this);
+        //driveSystem.setRobotMain(this);
+        //lineSystem.setRobotMain(this);
+        //manipulatorSystem.setRobotMain(this);
+        //minibotSystem.setRobotMain(this);
         operatorSystem.setRobotMain(this);
 
 
         // Eventually we'll define sleep time as final variables in each
         // system's class
-        autonomousSystem.setSleep(50);
-        cameraSystem.setSleep(50);
-        driveSystem.setSleep(100);
-        lineSystem.setSleep(200);
-        manipulatorSystem.setSleep(100);
-        minibotSystem.setSleep(500);
-        operatorSystem.setSleep(50);
+        //autonomousSystem.setSleep(50);
+        //cameraSystem.setSleep(50);
+        //driveSystem.setSleep(100);
+        //lineSystem.setSleep(200);
+        //manipulatorSystem.setSleep(100);
+        //minibotSystem.setSleep(500);
+        //operatorSystem.setSleep(50);
 
         // operator & autonomous threads started/stopped by teleopInit and autonomousInit
         
         //autonomousSystem.start();
-        cameraSystem.start();
+        //cameraSystem.start();
         //driveSystem.start();
         //lineSystem.start();
-        manipulatorSystem.start();
+        //manipulatorSystem.start();
         //minibotSystem.start();
-        operatorSystem.start();
+        //operatorSystem.start();
+        System.out.println("robot init");
     }
 
     // Periodic = called when driver station data is updated
     // Continuous = called as fast as possible
     
-    public void autonomousInit()
+    public void autonomous()
     {
         operatorSystem.stop();
         autonomousSystem.start();
+        System.out.println("enabled autonomous");
     }
-    public void autonomousPeriodic() { }
-    public void autonomousContinuous() { }
-    
+
      
-    public void teleopInit()
+    public void operatorControl()
     {
         autonomousSystem.stop();
         operatorSystem.start();
+        System.out.println("enabled teleop");
     }
-    public void teleopPeriodic() { }
-    public void teleopContinuous() { }
-    
-    public void disabledInit()
+    public void disabled()
     {
         autonomousSystem.stop();
-        cameraSystem.stop();
-        driveSystem.stop();
-        lineSystem.stop();
-        manipulatorSystem.stop();
-        minibotSystem.stop();
+        //cameraSystem.stop();
+        //driveSystem.stop();
+        //lineSystem.stop();
+        //manipulatorSystem.stop();
+        //minibotSystem.stop();
         operatorSystem.stop();
+        System.out.println("disabled");
     }
 }

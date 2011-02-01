@@ -38,18 +38,21 @@ public class Ligihts
                 moe.set(Relay.Value.kOn);
                 larry.set(Relay.Value.kOff);
                 curly.set(Relay.Value.kOff);
+                System.out.println("Red on");
                 break;
 
             case Color.Blue_val:
                 moe.set(Relay.Value.kOff);
                 larry.set(Relay.Value.kOn);
                 curly.set(Relay.Value.kOff);
+                System.out.println("Blue on");
                 break;
 
             case Color.White_val:
                 moe.set(Relay.Value.kOff);
                 larry.set(Relay.Value.kOff);
                 curly.set(Relay.Value.kOn);
+                System.out.println("White on");
                 break;
         }
     }

@@ -7,22 +7,30 @@ public class SystemBase extends Thread
     public RobotMain robot;
     public int sleepTime = 100;
     
-    public SystemBase() { }
+    public SystemBase()
+    {
+
+    }
     private boolean stopThread = false;
 
 
+    public void start()
+    {
+        stopThread = false;
+        super.start();
+    }
     public void run()
     {
+        log ("in System Base");
         while (!stopThread)
         {
-            tick();
-            
             try
             {
+                tick();
                 sleep(sleepTime);
             }
             catch (Exception e){
-                log(e.getMessage());
+                log("exception: " + e.getMessage());
             }
         }
     }
@@ -32,8 +40,11 @@ public class SystemBase extends Thread
      * This method is called after every sleep cycle.
      * the delay time is stored in 'sleepTime'.
      */
-    public void tick() { }
-
+    public void tick()
+    {
+        System.out.println("tick not overridden");
+    }
+    
     /**
      *
      * @param delay sets the amount of time the system should sleep
@@ -41,6 +52,7 @@ public class SystemBase extends Thread
     public SystemBase(int delay)
     {
         setSleep(delay);
+        log("instance");
     }
     
     public void setRobotMain(RobotMain r)
