@@ -9,11 +9,6 @@ public class ManipulatorSystem extends SystemBase
     public Lift lift;
 
     public ManipulatorSystem() { }
-
-    public void setLiftSpeed(double speed)
-    {
-        lift.set(speed);
-    }
     
     public void tick()
     {

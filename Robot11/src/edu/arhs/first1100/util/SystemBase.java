@@ -1,27 +1,34 @@
 package edu.arhs.first1100.util;
 
 import edu.arhs.first1100.robot.RobotMain;
+import edu.wpi.first.wpilibj.Timer;
 
 public class SystemBase extends Thread
 {
     public RobotMain robot;
     public int sleepTime = 100;
-    
+    private boolean stopThread = false;
+
     public SystemBase()
     {
 
     }
-    private boolean stopThread = false;
 
-
+    public SystemBase(int delay)
+    {
+        setSleep(delay);
+        log("instance");
+    }
+    
     public void start()
     {
         stopThread = false;
         super.start();
     }
+    
     public void run()
     {
-        log ("in System Base");
+        log("in System Base");
         while (!stopThread)
         {
             try
@@ -49,11 +56,7 @@ public class SystemBase extends Thread
      *
      * @param delay sets the amount of time the system should sleep
      */
-    public SystemBase(int delay)
-    {
-        setSleep(delay);
-        log("instance");
-    }
+    
     
     public void setRobotMain(RobotMain r)
     {
@@ -78,7 +81,8 @@ public class SystemBase extends Thread
      * Set the amount of time that the system should sleep
      * @param int time How long the component should sleep in milliseconds
      */
-    public void setSleep(int time){
+    public void setSleep(int time)
+    {
         sleepTime = time;
     }
 }
