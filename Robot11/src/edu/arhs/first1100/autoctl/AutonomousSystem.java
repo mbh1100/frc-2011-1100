@@ -44,6 +44,7 @@ public class AutonomousSystem extends SystemBase
          * 3 4 5
          * 6 7 8
          */
+
         
         if(state == STATE_IDLE)
         {
@@ -55,18 +56,21 @@ public class AutonomousSystem extends SystemBase
 
     public void tick()
     {
-        if(state == STATE_FIND_LINE)
+        switch(state)
         {
-            /*
-            if lineSystem state == no line
-                driveSystem.setDriveSpeed(0.5,0.5);
-            else
-                state = STATE_FOLLOW_LINE
-            */
-        }
-        else if(state == STATE_FOLLOW_LINE)
-        {
-            /*
+            case STATE_FIND_LINE:
+            {
+                /*
+                if lineSystem state == no line
+                    driveSystem.setDriveSpeed(0.5,0.5);
+                else
+                    state = STATE_FOLLOW_LINE
+                 */
+                break;
+            }
+            case STATE_FOLLOW_LINE:
+            {
+                            /*
             if lineSystem state == too far left
                 driveSystem.setDriveSpeed(0.6,0.4);
 
@@ -82,23 +86,21 @@ public class AutonomousSystem extends SystemBase
             else if lineSystem state == no line
                 state = STATE_POSITION_FOR_SCORING
             */
+                break;
+            }
+            case STATE_LINE_DECISION:
+            {
+                if (targetRack == false) // move robot left a little
+                {
+                    state = STATE_FOLLOW_LINE;
+                }
+                else if (targetRack == true) // move robot right a little
+                {
+                    state = STATE_FOLLOW_LINE;
+                }
+                break;
+            }
         }
-        else if(state == STATE_LINE_DECISION)
-        {
-            if(targetRack==false)
-                // move robot left a little
-                state = STATE_FOLLOW_LINE;
-            else if(targetRack==true)
-                // move robot right a little
-                state = STATE_FOLLOW_LINE;
-        }
-
-
-
-
-
-
-
         //robot.manipulatorSystem.lift.followY(robot.cameraSystem.getCenterY());
     }    
 }
