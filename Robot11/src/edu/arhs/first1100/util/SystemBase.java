@@ -74,7 +74,16 @@ public class SystemBase extends Thread
      */
     public void log(String message)
     {
-        System.out.println(this.getClass().getName().substring(10)+" : "+message);
+        int lastDot = 0;
+        String name = this.getName();
+        System.out.println(name);
+        for(int n = 0; n<name.length();n++){
+            if (name.charAt(n) == '.'){
+                lastDot = n;
+            }
+        }
+        name = name.substring(lastDot);
+        System.out.println(name);
     }
 
     /**
