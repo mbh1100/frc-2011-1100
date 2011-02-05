@@ -10,9 +10,10 @@
  */
 
 package edu.arhs.first1100.drive;
-
+import  edu.wpi.first.wpilibj.RobotDrive;
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.util.AdvJaguar;
+import edu.arhs.first1100.drive.JaguarPair;
 
 public class DriveSystem extends SystemBase
 {
@@ -93,4 +94,7 @@ public class DriveSystem extends SystemBase
         if(state == STATE_TANK)
             state = STATE_LOWERING;
     }
+    public void setOperatorDrive(){}
+   roborive (advtick 1, joyStick 2);
+
 }
