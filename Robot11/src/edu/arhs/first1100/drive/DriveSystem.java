@@ -33,7 +33,8 @@ public class DriveSystem extends SystemBase
     {
          super();
          this.setDriveSpeed(0.0, 0.0);
-
+         leftTankMotor = new JaguarPair(1,2);
+         leftTankMotor = new JaguarPair(3,4);
     }
 
     public void setDriveSpeed(double leftSide, double rightSide)
