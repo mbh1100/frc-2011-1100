@@ -1,5 +1,7 @@
 package edu.arhs.first1100.autoctl;
 
+
+
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.line.LineSystem;
 import edu.arhs.first1100.drive.DriveSystem;
@@ -11,13 +13,16 @@ public class AutonomousSystem extends SystemBase
 {
     private final int STATE_IDLE = 0;                  // Doing nothing
     //private final int STATE_SCORE_RING = 0;
-
     
     private int state = 0;
+
     private boolean targetRack = false;
     private int targetPeg = 0;
     
-    public AutonomousSystem() { }
+    public AutonomousSystem()
+    {
+        super();
+    }
 
     /*
      * Start the process of following the line, positioning the arm, and
@@ -44,12 +49,30 @@ public class AutonomousSystem extends SystemBase
          * 6 7 8
          */
 
+        /*
+        if(startingPosition == 0 || startingPosition == 2)
+        {
+            //robot.lineSystem.followLine();
+        }
+        else
+        {
+            if(rack==false)
+                // Turn left at fork
+                //robot.lineSystem.followLineLeft();
+            else
+                // Turn right at fork
+                //robot.lineSystem.followLineRight();
+        }
+         */
     }
 
     public void run()
     {
-        LineSystem line = robot.lineSystem;
 
+        //if(robot.operatorSystem.GetRack() == false)
+        //    robot.lineSystem.FollowLeftLine();
+
+        
         //robot.manipulatorSystem.lift.followY(robot.cameraSystem.getCenterY());
     }
 

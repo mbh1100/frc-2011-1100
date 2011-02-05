@@ -3,33 +3,64 @@ package edu.arhs.first1100.opctl;
 import edu.wpi.first.wpilibj.Timer;
 
 import edu.arhs.first1100.util.SystemBase;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 public class OperatorSystem extends SystemBase
 {
     AdvJoystick leftJoystick;
     AdvJoystick rightJoystick;
+
+    AdvJoystick xboxGamepad;
+    
     ButtonBox buttonBox;
     GamepieceIndicator ledIndicator;
 
     public OperatorSystem()
     {
         super(200);
-
-        leftJoystick = new AdvJoystick(2);
-        rightJoystick = new AdvJoystick(1);
         
-        ledIndicator = new GamepieceIndicator();
+        leftJoystick  = new AdvJoystick(2);
+        rightJoystick = new AdvJoystick(1);
+        xboxGamepad   = new AdvJoystick(3);
+        
+        ledIndicator  = new GamepieceIndicator();
     }
-
+    
     public void tick()
     {
-        /*
+        log("Tick...");
+        
+        if(false)
+        {
+            log("xbox X:"        + xboxGamepad.getAxis(AxisType.kX));
+            log("xbox Y:"        + xboxGamepad.getAxis(AxisType.kY));
+            log("xbox Z:"        + xboxGamepad.getAxis(AxisType.kZ));
+            log("xbox twist:"    + xboxGamepad.getAxis(AxisType.kTwist));
+            log("xbox throttle:" + xboxGamepad.getAxis(AxisType.kThrottle));
+            log("");
+        }
+
+        if(true)
+        {
+            log("Left  Joy:" + leftJoystick.getY());
+            log("Right Joy:" + rightJoystick.getY());
+            log("");
+        }
+        
         // Robot drive.  DriveSystem handles when and how to use the input.  We
         // just keep pumping in data.
-        robot.driveSystem.setDriveSpeed(leftJoystick.getY(), rightJoystick.getY());
-        robot.driveSystem.setSideSpeed(rightJoystick.getX());
-        */
 
+        try
+        {
+            robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
+            robot.driveSystem.tick();
+        }
+        catch(NullPointerException e)
+        {
+            log("Drive null error:"+e.getMessage());
+        }
+        //robot.driveSystem.setSideSpeed(rightJoystick.getX());
+        
         /*
         // quo-quo-quo-quo-CHEET *transformers sound effect*
         if(rightJoystick.getRawButton(11))
@@ -62,8 +93,6 @@ public class OperatorSystem extends SystemBase
             log("button 2");
             ledIndicator.setLightColorClear();
         }
-        
-        
         
     }
 }

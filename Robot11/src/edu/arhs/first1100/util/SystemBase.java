@@ -1,46 +1,78 @@
 package edu.arhs.first1100.util;
 
 import edu.arhs.first1100.robot.RobotMain;
+import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Timer;
 
 public class SystemBase extends Thread
 {
     public RobotMain robot;
     public int sleepTime = 100;
-    private boolean stopThread = false;
-
+    private boolean stopThread = true;
+    
+    private boolean threadStarted = false;
+    
     public SystemBase()
-    {
-
-    }
+    { }
 
     public SystemBase(int delay)
     {
         setSleep(delay);
-        log("instance");
     }
     
     public void start()
     {
+        init(); // User code
         stopThread = false;
-        super.start();
+        
+        if(!threadStarted)
+        {
+            super.start();
+            threadStarted = true;
+        }
+        else
+        {
+            interrupt();
+        }
+    }
+
+    public void stop()
+    {
+        stopThread = true;
     }
     
     public void run()
     {
-        log("in System Base");
-        while (!stopThread)
+        log("run() called");
+        while(true)
         {
+            while(!stopThread)
+            {
+                try
+                {
+                    tick(); // User code
+                    sleep(sleepTime);
+                }
+                catch(InterruptedException e)
+                {
+                    log("Interrupted tick: " + e.getMessage());
+                }
+            }
+            
             try
             {
-                tick();
-                sleep(sleepTime);
+                sleep(20*60*1000);
+                log("waiting for a notify");
             }
-            catch (Exception e){
-                log("exception: " + e.getMessage());
+            catch (InterruptedException e)
+            {
+                log("Thread was interrupted! :"+e);
             }
+        
+        log("run is looping again");
         }
     }
+    
     /**
      * Put your own code here to run.
      *
@@ -49,23 +81,22 @@ public class SystemBase extends Thread
      */
     public void tick()
     {
-        System.out.println("tick not overridden");
+        log("tick not overridden");
     }
-    
+
     /**
+     * Put your own code here to run.
      *
-     * @param delay sets the amount of time the system should sleep
+     * This method is called after the thread starts
      */
-    
+    public void init()
+    {
+        log("startThread not overridden");
+    }
     
     public void setRobotMain(RobotMain r)
     {
         robot = r;
-    }
-    
-    public void stop()
-    {
-        stopThread = true;
     }
     
     /**
@@ -75,15 +106,15 @@ public class SystemBase extends Thread
     public void log(String message)
     {
         int lastDot = 0;
-        String name = this.getName();
-        System.out.println(name);
-        for(int n = 0; n<name.length();n++){
+        String name = this.getClass().getName();
+        
+        for(int n = 0; n<name.length(); n++){
             if (name.charAt(n) == '.'){
-                lastDot = n;
+                lastDot = n+1;
             }
         }
         name = name.substring(lastDot);
-        System.out.println(name);
+        System.out.println(name+": "+message);
     }
 
     /**

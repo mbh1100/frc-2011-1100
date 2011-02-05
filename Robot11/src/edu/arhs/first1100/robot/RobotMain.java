@@ -12,6 +12,7 @@
 package edu.arhs.first1100.robot;
 
 import edu.wpi.first.wpilibj.SimpleRobot;
+import edu.wpi.first.wpilibj.Timer;
 
 import edu.arhs.first1100.autoctl.AutonomousSystem;
 import edu.arhs.first1100.camera.CameraSystem;
@@ -23,7 +24,6 @@ import edu.arhs.first1100.opctl.OperatorSystem;
 
 public class RobotMain extends SimpleRobot
 {
-
     public AutonomousSystem autonomousSystem;
     public CameraSystem cameraSystem;
     public DriveSystem driveSystem;
@@ -36,7 +36,7 @@ public class RobotMain extends SimpleRobot
     {
         autonomousSystem = new AutonomousSystem();
         //cameraSystem = new CameraSystem();
-        //driveSystem = new DriveSystem();
+        driveSystem = new DriveSystem();
         //lineSystem = new LineSystem();
         //manipulatorSystem = new ManipulatorSystem();
         //minibotSystem = new MinibotSystem();
@@ -51,7 +51,7 @@ public class RobotMain extends SimpleRobot
         //    - Nick
         autonomousSystem.setRobotMain(this);
         //cameraSystem.setRobotMain(this);
-        //driveSystem.setRobotMain(this);
+        driveSystem.setRobotMain(this);
         //lineSystem.setRobotMain(this);
         //manipulatorSystem.setRobotMain(this);
         //minibotSystem.setRobotMain(this);
@@ -77,7 +77,21 @@ public class RobotMain extends SimpleRobot
         //manipulatorSystem.start();
         //minibotSystem.start();
         //operatorSystem.start();
-        System.out.println("robot init");
+        /*System.out.println("robot init");
+
+        System.out.println("Starting thread");
+        operatorSystem.start();
+        Timer.delay(3);
+
+        System.out.println("Stopping thread");
+        operatorSystem.stop();
+        Timer.delay(3);
+
+        System.out.println("Starting thread");
+        operatorSystem.start();
+
+        System.out.println("If you can read this, it worked!!!");
+*/
     }
 
     // Periodic = called when driver station data is updated
@@ -87,26 +101,32 @@ public class RobotMain extends SimpleRobot
     {
         operatorSystem.stop();
         autonomousSystem.start();
-        System.out.println("enabled autonomous");
+        log("enabled autonomous");
     }
 
      
     public void operatorControl()
     {
         autonomousSystem.stop();
+        driveSystem.start();
         operatorSystem.start();
-        System.out.println("enabled teleop");
+        log("enabled teleop");
     }
     
     public void disabled()
     {
         autonomousSystem.stop();
         //cameraSystem.stop();
-        //driveSystem.stop();
+        driveSystem.stop();
         //lineSystem.stop();
         //manipulatorSystem.stop();
         //minibotSystem.stop();
         operatorSystem.stop();
-        System.out.println("disabled");
+        log("disabled");
+    }
+
+    public void log(String message)
+    {
+        System.out.println("RobotMain: " + message);
     }
 }

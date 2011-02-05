@@ -22,7 +22,7 @@ public class DriveSystem extends SystemBase
     private final int STATE_LOWERING = 2;
     private final int STATE_SIDESTEP = 3;
 
-    private int state;
+    private int state = STATE_TANK;
     
     private JaguarPair leftTankMotor;
     private JaguarPair rightTankMotor;
@@ -33,13 +33,17 @@ public class DriveSystem extends SystemBase
     public DriveSystem() 
     {
          super();
-         this.setDriveSpeed(0.0, 0.0);
-         leftTankMotor = new JaguarPair(1,2);
-         leftTankMotor = new JaguarPair(3,4);
+         leftTankMotor = new JaguarPair(1,3);
+         rightTankMotor = new JaguarPair(2,4);
+         
+         //this.setDriveSpeed(0.0, 0.0);
     }
 
     public void setDriveSpeed(double leftSide, double rightSide)
     {
+        log("Set Left: "+leftTankMotor.get());
+        log("Set Right:"+rightTankMotor.get());
+        log("");
         if(state == STATE_TANK)
         {
             leftTankMotor.set(leftSide);
@@ -70,7 +74,11 @@ public class DriveSystem extends SystemBase
         rightTankMotor.update();
         liftMotor.update();
         sidestepDriveMotor.update();
-
+        
+        log("Left: "+leftTankMotor.get());
+        log("Right:"+rightTankMotor.get());
+        log("");
+        
         if(state == STATE_RAISING)
         {
             // move motors up based on POT value
@@ -82,7 +90,7 @@ public class DriveSystem extends SystemBase
             // when wheels are all the way down, state = STATE_SIDESTEP
         }
     }
-
+    
     public void setDriveModeTank()
     {
         if(state == STATE_SIDESTEP)
@@ -95,6 +103,5 @@ public class DriveSystem extends SystemBase
             state = STATE_LOWERING;
     }
     public void setOperatorDrive(){}
-   roborive (advtick 1, joyStick 2);
 
 }

@@ -55,6 +55,14 @@ public class JaguarPair
         targetSpeed = speed;
     }
 
+    /*
+     * return the speed of the first jaguar
+     */
+    public double get()
+    {
+        return j1.get();
+    }
+    
     public void update()
     {
         averager.feed(targetSpeed);
