@@ -7,17 +7,18 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 public class OperatorSystem extends SystemBase
 {
-    AdvJoystick leftJoystick;
-    AdvJoystick rightJoystick;
+    AdvJoystick leftJoystick;//controls the left side of the robot
+    AdvJoystick rightJoystick;//controls the right side of the robot
 
-    AdvJoystick xboxGamepad;
+    AdvJoystick xboxGamepad;//controls the arm and other stuff
     
     ButtonBox buttonBox;
-    GamepieceIndicator ledIndicator;
+    GamepieceIndicator ledIndicator;//indicates the gamepiece that the human
+    //should give to the robot
 
     public OperatorSystem()
     {
-        super(200);
+        super();
         
         leftJoystick  = new AdvJoystick(2);
         rightJoystick = new AdvJoystick(1);
@@ -49,11 +50,9 @@ public class OperatorSystem extends SystemBase
         
         // Robot drive.  DriveSystem handles when and how to use the input.  We
         // just keep pumping in data.
-
         try
         {
             robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
-            robot.driveSystem.tick();
         }
         catch(NullPointerException e)
         {
