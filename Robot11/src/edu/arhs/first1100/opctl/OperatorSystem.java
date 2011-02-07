@@ -52,7 +52,8 @@ public class OperatorSystem extends SystemBase
         // just keep pumping in data.
         try
         {
-            robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
+            robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), rightJoystick.getY());
+            robot.driveSystem.tick();
         }
         catch(NullPointerException e)
         {

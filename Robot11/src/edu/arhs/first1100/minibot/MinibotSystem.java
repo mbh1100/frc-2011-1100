@@ -4,7 +4,10 @@ import edu.arhs.first1100.util.SystemBase;
 
 public class MinibotSystem extends SystemBase
 {
-    public MinibotSystem() { }
+    public MinibotSystem()
+    {
+        super();
+    }
 
     public void tick()
     { }

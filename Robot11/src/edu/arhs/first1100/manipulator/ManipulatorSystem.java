@@ -4,9 +4,10 @@ import edu.arhs.first1100.util.SystemBase;
 
 public class ManipulatorSystem extends SystemBase
 {
-    
-
-    public ManipulatorSystem() { }
+    public ManipulatorSystem()
+    {
+        super();
+    }
     
     public void tick()
     {

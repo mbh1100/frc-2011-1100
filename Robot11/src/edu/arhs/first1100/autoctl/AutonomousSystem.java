@@ -28,6 +28,10 @@ public class AutonomousSystem extends SystemBase
      * Start the process of following the line, positioning the arm, and
      * scoring the ring.
      */
+
+    public void init(){
+        log("Started");
+    }
     
     public void ScoreUberRing(int startingPosition, boolean rack, int peg)
     {

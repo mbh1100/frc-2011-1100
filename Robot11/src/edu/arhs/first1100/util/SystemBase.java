@@ -59,14 +59,16 @@ public class SystemBase extends Thread
                 }
             }
             
-            try
+            while(stopThread)
             {
-                sleep(20*60*1000);
-                log("waiting for a notify");
-            }
-            catch (InterruptedException e)
-            {
-                log("Thread was interrupted! :"+e);
+                try
+                {
+                    sleep(5);
+                }
+                catch(InterruptedException e)
+                {
+                    log("Interrupted sleep: " + e.getMessage());
+                }
             }
         
         log("run is looping again");

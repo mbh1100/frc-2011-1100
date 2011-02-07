@@ -10,13 +10,19 @@
  */
 
 package edu.arhs.first1100.drive;
-import  edu.wpi.first.wpilibj.RobotDrive;
+
+import edu.wpi.first.wpilibj.SimpleRobot;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.util.AdvJaguar;
 import edu.arhs.first1100.drive.JaguarPair;
+import edu.arhs.first1100.opctl.OperatorSystem;
+
+
 
 public class DriveSystem extends SystemBase
 {
+
     private final int STATE_TANK = 0;
     private final int STATE_RAISING = 1;
     private final int STATE_LOWERING = 2;
@@ -44,6 +50,7 @@ public class DriveSystem extends SystemBase
         log("Set Left: "+leftTankMotor.get());
         log("Set Right:"+rightTankMotor.get());
         log("");
+        
         if(state == STATE_TANK)
         {
             leftTankMotor.set(leftSide);
@@ -70,6 +77,8 @@ public class DriveSystem extends SystemBase
     
     public void tick()
     {
+        log("tick!");
+
         leftTankMotor.update();
         rightTankMotor.update();
         liftMotor.update();
@@ -103,5 +112,5 @@ public class DriveSystem extends SystemBase
             state = STATE_LOWERING;
     }
     public void setOperatorDrive(){}
-
+    //while robot.operatorSystem.
 }

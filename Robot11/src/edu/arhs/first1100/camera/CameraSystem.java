@@ -26,13 +26,11 @@ public class CameraSystem extends SystemBase
     ColorImage cImg;
     BinaryImage bImg;
     ParticleAnalysisReport[] pRep = new ParticleAnalysisReport[PARTICLE_SIZE];
-
-    public CameraSystem(int delay)
-    {        
-        super(delay);
-    }
+    
     public CameraSystem()
     {
+        super();
+        
         ac = AxisCamera.getInstance();
         cImg = null;
         bImg = null;

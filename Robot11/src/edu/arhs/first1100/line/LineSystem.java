@@ -1,11 +1,14 @@
 package edu.arhs.first1100.line;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Joystick;
 
-public class LineSystem extends SimpleRobot
+import edu.arhs.first1100.util.SystemBase;
+
+public class LineSystem extends SystemBase
 {
     final int MIDDLE = 0;
     final int RIGHT = -1;
@@ -23,7 +26,7 @@ public class LineSystem extends SimpleRobot
     Joystick rightStick;
 
     LineTracker lt;
-
+    /*
     public void robotInit()
     {
         rdPrimary = new RobotDrive(1, 2);
@@ -31,7 +34,8 @@ public class LineSystem extends SimpleRobot
         leftStick = new Joystick(1);
         rightStick = new Joystick(2);
     }
-
+    */
+    
     public void beginAutonomous()
     {
         mode = kAutonomous;
@@ -52,10 +56,10 @@ public class LineSystem extends SimpleRobot
         switch (mode)
         {
             case kAutonomous:
-                autonomousLineTracker();
+                //autonomousLineTracker();
                 break;
             case kOperatorControl:
-                operatorControlLineTracker();
+                //operatorControlLineTracker();
                 break;
             case kNoTracking:
                 break;
@@ -64,27 +68,27 @@ public class LineSystem extends SimpleRobot
 
     public void autonomousLineTracker()
     {
-       {
+       
             if (lt.middleLine() || lineStatus == MIDDLE)
             {
-                rdPrimary.tankDrive(0.7, 0.7);
+                //rdPrimary.tankDrive(0.7, 0.7);
                 System.out.println("Driving on line");
                 lineStatus = MIDDLE;
             }
             if (lt.leftline() || lineStatus == LEFT)   //this moves the robot to the right
             {
-                rdPrimary.tankDrive(-0.3,0.7);
+                //rdPrimary.tankDrive(-0.3,0.7);
                 System.out.println("Left LT on line");
                 lineStatus = LEFT;
             }
             if (lt.rightline() || lineStatus == RIGHT)  //this moves the robot to the left
             {
-                rdPrimary.tankDrive(0.7, -0.3);
+                //rdPrimary.tankDrive(0.7, -0.3);
                 System.out.println("Right LT on line");
                 lineStatus = RIGHT;
             }
             Timer.delay(.25);
-        }
+        
     }
         //used to test if the LTs are working
         /*while(true)
