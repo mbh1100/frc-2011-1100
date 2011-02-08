@@ -35,11 +35,11 @@ public class RobotMain extends SimpleRobot
     public void robotInit()
     {
         autonomousSystem = new AutonomousSystem();
-        //cameraSystem = new CameraSystem();
+        cameraSystem = new CameraSystem();
         driveSystem = new DriveSystem();
-        //lineSystem = new LineSystem();
-        //manipulatorSystem = new ManipulatorSystem();
-        //minibotSystem = new MinibotSystem();
+        lineSystem = new LineSystem();
+        manipulatorSystem = new ManipulatorSystem();
+        minibotSystem = new MinibotSystem();
         operatorSystem = new OperatorSystem();
         
         // We need a MUCH better system than this.
@@ -50,13 +50,12 @@ public class RobotMain extends SimpleRobot
         // This is a work around for now.
         //    - Nick
         autonomousSystem.setRobotMain(this);
-        //cameraSystem.setRobotMain(this);
+        cameraSystem.setRobotMain(this);
         driveSystem.setRobotMain(this);
-        //lineSystem.setRobotMain(this);
-        //manipulatorSystem.setRobotMain(this);
-        //minibotSystem.setRobotMain(this);
+        lineSystem.setRobotMain(this);
+        manipulatorSystem.setRobotMain(this);
+        minibotSystem.setRobotMain(this);
         operatorSystem.setRobotMain(this);
-
 
         // Eventually we'll define sleep time as final variables in each
         // system's class
@@ -70,13 +69,13 @@ public class RobotMain extends SimpleRobot
 
         // operator & autonomous threads started/stopped by teleopInit and autonomousInit
         
-        //autonomousSystem.start();
-        //cameraSystem.start();
-        //driveSystem.start();
-        //lineSystem.start();
-        //manipulatorSystem.start();
-        //minibotSystem.start();
-        //operatorSystem.start();
+        
+        cameraSystem.start();
+        driveSystem.start();
+        lineSystem.start();
+        manipulatorSystem.start();
+        minibotSystem.start();
+        
         /*System.out.println("robot init");
 
         System.out.println("Starting thread");
@@ -91,7 +90,7 @@ public class RobotMain extends SimpleRobot
         operatorSystem.start();
 
         System.out.println("If you can read this, it worked!!!");
-*/
+    */
     }
 
     // Periodic = called when driver station data is updated
@@ -108,7 +107,6 @@ public class RobotMain extends SimpleRobot
     public void operatorControl()
     {
         autonomousSystem.stop();
-        driveSystem.start();
         operatorSystem.start();
         log("enabled teleop");
     }
@@ -116,11 +114,11 @@ public class RobotMain extends SimpleRobot
     public void disabled()
     {
         autonomousSystem.stop();
-        //cameraSystem.stop();
+        cameraSystem.stop();
         driveSystem.stop();
-        //lineSystem.stop();
-        //manipulatorSystem.stop();
-        //minibotSystem.stop();
+        lineSystem.stop();
+        manipulatorSystem.stop();
+        minibotSystem.stop();
         operatorSystem.stop();
         log("disabled");
     }
