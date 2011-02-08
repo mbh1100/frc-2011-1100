@@ -22,7 +22,6 @@ import edu.arhs.first1100.opctl.OperatorSystem;
 
 public class DriveSystem extends SystemBase
 {
-
     private final int STATE_TANK = 0;
     private final int STATE_RAISING = 1;
     private final int STATE_LOWERING = 2;
@@ -39,18 +38,18 @@ public class DriveSystem extends SystemBase
     public DriveSystem() 
     {
          super();
-         leftTankMotor = new JaguarPair(1,3);
-         rightTankMotor = new JaguarPair(2,4);
+         
+         // JaguarPair(ch1, ch2, invert, averager sample size);
+         leftTankMotor  = new JaguarPair(2, 4, true, 3);
+         rightTankMotor = new JaguarPair(1, 3, false, 3);
+         
+         sidestepDriveMotor = new AdvJaguar(5);
          
          //this.setDriveSpeed(0.0, 0.0);
     }
 
     public void setDriveSpeed(double leftSide, double rightSide)
     {
-        log("Set Left: "+leftTankMotor.get());
-        log("Set Right:"+rightTankMotor.get());
-        log("");
-        
         if(state == STATE_TANK)
         {
             leftTankMotor.set(leftSide);
@@ -81,12 +80,15 @@ public class DriveSystem extends SystemBase
 
         leftTankMotor.update();
         rightTankMotor.update();
-        liftMotor.update();
+        //liftMotor.update();
         sidestepDriveMotor.update();
-        
-        log("Left: "+leftTankMotor.get());
-        log("Right:"+rightTankMotor.get());
-        log("");
+
+        if(true)
+        {
+            log("Left: "+leftTankMotor.get());
+            log("Right:"+rightTankMotor.get());
+            log("");
+        }
         
         if(state == STATE_RAISING)
         {
@@ -111,6 +113,4 @@ public class DriveSystem extends SystemBase
         if(state == STATE_TANK)
             state = STATE_LOWERING;
     }
-    public void setOperatorDrive(){}
-    //while robot.operatorSystem.
 }

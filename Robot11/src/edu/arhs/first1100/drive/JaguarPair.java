@@ -24,30 +24,23 @@ public class JaguarPair
     private Jaguar j1;
     private Jaguar j2;
 
-    private boolean j1polarity;
-    private boolean j2polarity;
+    private boolean polarity;
 
     private double targetSpeed = 0.0;
 
-    public JaguarPair(int ch1, int ch2, boolean invert1, boolean invert2, int sampleSize)
+    public JaguarPair(int ch1, int ch2, boolean invert, int sampleSize)
     {
         averager = new Averager(sampleSize);
         
         j1 = new Jaguar(ch1);
         j2 = new Jaguar(ch2);
 
-        j1polarity = invert1;
-        j2polarity = invert2;
-    }
-
-    public JaguarPair(int ch1, int ch2, int sampleSize)
-    {
-        this(ch1, ch2, false, false, sampleSize);
+        polarity = invert;
     }
 
     public JaguarPair(int ch1, int ch2)
     {
-        this(ch1, ch2, false, false, 1);
+        this(ch1, ch2, false, 0);
     }
     
     public void set(double speed)
@@ -68,7 +61,7 @@ public class JaguarPair
         averager.feed(targetSpeed);
         
         double s = averager.get();
-        j1.set( j1polarity ? -s : s );
-        j2.set( j2polarity ? -s : s );
+        j1.set( polarity ? -s : s );
+        j2.set( polarity ? -s : s );
     }
 }

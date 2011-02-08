@@ -50,15 +50,10 @@ public class OperatorSystem extends SystemBase
         
         // Robot drive.  DriveSystem handles when and how to use the input.  We
         // just keep pumping in data.
-        try
-        {
-            robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), rightJoystick.getY());
-            robot.driveSystem.tick();
-        }
-        catch(NullPointerException e)
-        {
-            log("Drive null error:"+e.getMessage());
-        }
+        
+        robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
+        robot.driveSystem.tick();
+        
         //robot.driveSystem.setSideSpeed(rightJoystick.getX());
         
         /*

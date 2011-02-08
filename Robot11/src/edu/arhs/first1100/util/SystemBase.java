@@ -12,8 +12,7 @@ public class SystemBase extends Thread
     
     private boolean threadStarted = false;
     
-    public SystemBase()
-    { }
+    public SystemBase() { }
 
     public SystemBase(int delay)
     {
