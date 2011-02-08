@@ -41,8 +41,8 @@ public class Averager
     }
 
     /**
-     * Add a value to the array.  Oldest value is deleted.
-     * @param value
+     * recalculates average with newest input
+     * @param value the newest value
      */
     public void feed(double value)
     {
@@ -53,9 +53,13 @@ public class Averager
             avg = (avg*(size-magnitude)+value*magnitude)/size;
     }
 
+    /**
+     * Sets magnitude of averager. Higher magnitude will cause average to move faster.
+     * @param m magnitude
+     */
     public void setMagnitude(int m)
     {
-        magnitude = m;
+        magnitude = Math.abs(m);
     }
     
     /**
