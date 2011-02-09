@@ -21,17 +21,12 @@ public class SystemBase extends Thread
     
     public void start()
     {
-        init(); // User code
         stopThread = false;
         
         if(!threadStarted)
         {
             super.start();
             threadStarted = true;
-        }
-        else
-        {
-            interrupt();
         }
     }
 
@@ -83,16 +78,6 @@ public class SystemBase extends Thread
     public void tick()
     {
         log("tick not overridden");
-    }
-
-    /**
-     * Put your own code here to run.
-     *
-     * This method is called after the thread starts
-     */
-    public void init()
-    {
-        log("startThread not overridden");
     }
     
     public void setRobotMain(RobotMain r)

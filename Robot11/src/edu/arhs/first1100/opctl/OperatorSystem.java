@@ -31,17 +31,17 @@ public class OperatorSystem extends SystemBase
     {
         log("Tick...");
         
-        if(false)
+        if(true)
         {
-            log("xbox X:"        + xboxGamepad.getAxis(AxisType.kX));
-            log("xbox Y:"        + xboxGamepad.getAxis(AxisType.kY));
-            log("xbox Z:"        + xboxGamepad.getAxis(AxisType.kZ));
-            log("xbox twist:"    + xboxGamepad.getAxis(AxisType.kTwist));
-            log("xbox throttle:" + xboxGamepad.getAxis(AxisType.kThrottle));
+            // Non 0 based array?  sigh....
+            for(int axis=1; axis<=6; ++axis)
+                log("xbox axis " + axis + ": " + xboxGamepad.getRawAxis(axis));
+            for(int button=1; button<=12; ++button)
+                log("xbox button " + button + ": " + xboxGamepad.getRawButton(button));
             log("");
         }
 
-        if(true)
+        if(false)
         {
             log("Left  Joy:" + leftJoystick.getY());
             log("Right Joy:" + rightJoystick.getY());

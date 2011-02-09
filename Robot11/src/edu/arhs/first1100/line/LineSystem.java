@@ -76,7 +76,7 @@ public class LineSystem extends SystemBase
     {       
             if (lt.middleLine() || lineStatus == MIDDLE)
             {
-                rdPrimary.tankDrive(0.7, 0.7);
+                robot.driveSystem.setDriveSpeed(0.5,0.5);
                 log("Driving on line");
                 lineStatus = MIDDLE;
             }
