@@ -8,11 +8,17 @@
 
 package edu.arhs.first1100.util;
 
+import java.util.Vector; // added by alex 2-8
+
 public class Averager
 {
     int size = 1;
     double avg = 0; //average
     int magnitude = 1;
+    int index = 0;
+
+    Vector container = new Vector(); //created by alex 2-8
+
 
     /**
      * Make a new Averager object.
@@ -38,28 +44,47 @@ public class Averager
     {
         size = sampleSize;
         avg = starting;
+        container.setSize(size);
     }
 
     /**
-     * recalculates average with newest input
-     * @param value the newest value
+     * Add a value to the array.  Oldest value is deleted.
+     * @param value
      */
     public void feed(double value)
     {
-        if(size==1)
+        Double newVal = new Double(value);
+        index++;
+        int newSize = index%size;
+        container.insertElementAt(newVal, newSize);
+        double addCount = 0;
+
+        for(int i = 0; i < container.size(); i++)
+        {
+            double extractVal = ((Double)container.elementAt(i)).doubleValue();
+            addCount += extractVal;
+        }
+        avg = addCount/container.size();
+
+        //Akshay's code
+        /*if(size==1)
             avg = value;
         else
             //EPIC formula courtesy of Akshay
             avg = (avg*(size-magnitude)+value*magnitude)/size;
+        */
     }
-
-    /**
-     * Sets magnitude of averager. Higher magnitude will cause average to move faster.
-     * @param m magnitude
+java.util.Vector t;
+    /*
+    public void clearValueCount()
+    {
+        valueCount = 0
+    }
+        created by alex 2-8
      */
     public void setMagnitude(int m)
     {
-        magnitude = Math.abs(m);
+        magnitude = m;
     }
     
     /**
