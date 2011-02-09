@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 public class OperatorSystem extends SystemBase
 {
-    AdvJoystick leftJoystick;//controls the left side of the robot
-    AdvJoystick rightJoystick;//controls the right side of the robot
+    public AdvJoystick leftJoystick; //controls the left side of the robot
+    public AdvJoystick rightJoystick;//controls the right side of the robot
 
     AdvJoystick xboxGamepad;//controls the arm and other stuff
     

@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Joystick;
 
 import edu.arhs.first1100.util.SystemBase;
+import edu.arhs.first1100.robot.RobotMain;
 
 public class LineSystem extends SystemBase
 {
@@ -25,15 +26,14 @@ public class LineSystem extends SystemBase
     Joystick rightStick;
 
     LineTracker lt;
-    /*
-    public void robotInit()
+   
+    public LineSystem(RobotMain robot)
     {
         rdPrimary = new RobotDrive(1, 2);
         rdSecondary = new RobotDrive (3,4);
-        leftStick = new Joystick(1);
-        rightStick = new Joystick(2);
+        leftStick = robot.operatorSystem.leftJoystick;
+        rightStick = robot.operatorSystem.rightJoystick;
     }
-    */
     
     public void initAutonomous()
     {
@@ -75,7 +75,7 @@ public class LineSystem extends SystemBase
     {       
             if (lt.middleLine() || lineStatus == MIDDLE)
             {
-                rdPrimary.tankDrive(robot.dr, 0.7);
+                rdPrimary.tankDrive(0.7, 0.7);
                 log("Driving on line");
                 lineStatus = MIDDLE;
             }
