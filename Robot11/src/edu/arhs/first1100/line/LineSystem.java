@@ -29,6 +29,7 @@ public class LineSystem extends SystemBase
    
     public LineSystem(RobotMain robot)
     {
+        setRobotMain(robot);
         rdPrimary = new RobotDrive(1, 2);
         rdSecondary = new RobotDrive (3,4);
         leftStick = robot.operatorSystem.leftJoystick;
