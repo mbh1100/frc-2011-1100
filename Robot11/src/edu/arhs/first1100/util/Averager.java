@@ -16,7 +16,7 @@ public class Averager
     double avg = 0; //average
     int magnitude = 1;
     int index = 0;
-
+    
     Vector container = new Vector(); //created by alex 2-8
 
 
@@ -44,7 +44,7 @@ public class Averager
     {
         size = sampleSize;
         avg = starting;
-        container.setSize(size);
+        container.setSize(sampleSize);
     }
 
     /**
@@ -54,18 +54,28 @@ public class Averager
     public void feed(double value)
     {
         Double newVal = new Double(value);
-        index++;
+        
         int newSize = index%size;
-        container.insertElementAt(newVal, newSize);
+        //System.out.println("Averager newSize: "+newSize);
+        container.setElementAt(newVal, newSize);
         double addCount = 0;
 
+        index++;
+
+        //System.out.println("Averager: "+container);
+        
         for(int i = 0; i < container.size(); i++)
         {
-            double extractVal = ((Double)container.elementAt(i)).doubleValue();
-            addCount += extractVal;
+            if(container.elementAt(i) != null)
+            {
+                double extractVal = ((Double)container.elementAt(i)).doubleValue();
+                addCount += extractVal;
+            }
         }
         avg = addCount/container.size();
 
+        
+        
         //Akshay's code
         /*if(size==1)
             avg = value;
@@ -74,7 +84,7 @@ public class Averager
             avg = (avg*(size-magnitude)+value*magnitude)/size;
         */
     }
-java.util.Vector t;
+        
     /*
     public void clearValueCount()
     {
