@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 public class OperatorSystem extends SystemBase
 {
-    public AdvJoystick leftJoystick; //controls the left side of the robot
-    public AdvJoystick rightJoystick;//controls the right side of the robot
+    private AdvJoystick leftJoystick; //controls the left side of the robot
+    private AdvJoystick rightJoystick;//controls the right side of the robot
 
-    AdvJoystick xboxGamepad;//controls the arm and other stuff
+    private AdvJoystick xboxGamepad;//controls the arm and other stuff
     
-    ButtonBox buttonBox;
-    GamepieceIndicator ledIndicator;//indicates the gamepiece that the human
+    private ButtonBox buttonBox;
+    private GamepieceIndicator ledIndicator;//indicates the gamepiece that the human
                                     //should give to the robot
 
     public OperatorSystem(RobotMain robot, int sleepTime)
@@ -33,7 +33,7 @@ public class OperatorSystem extends SystemBase
     
     public void tick()
     {
-        //og("Tick...");
+        //log("Tick...");
 
         if(false)
         {
@@ -68,27 +68,20 @@ public class OperatorSystem extends SystemBase
         
         // Lift control
         // robot.manipulatorSystem.setLiftSpeed(leftJoystick.getY());
-
+        
         // Gamepiece indicator control
-        if (leftJoystick.getRawButton(4))
-        {
-            //log("button 4");
+        if(leftJoystick.getRawButton(4))
             ledIndicator.setLightColorRed();
-        }
-        else if (leftJoystick.getRawButton(5))
-        {
-            //log("button 5");
+
+        else if(leftJoystick.getRawButton(5))
             ledIndicator.setLightColorWhite();
-        }
-        else if (leftJoystick.getRawButton(3))
-        {
-            //log("button 3");
+
+        else if(leftJoystick.getRawButton(3))
             ledIndicator.setLightColorBlue();
-        }
-        else if (leftJoystick.getRawButton(2))
-        {
-            //log("button 2");
+        
+        else
             ledIndicator.setLightColorClear();
-        }
+        
+        ledIndicator.update();
     }
 }
