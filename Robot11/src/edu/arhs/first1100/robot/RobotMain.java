@@ -35,10 +35,10 @@ public class RobotMain extends SimpleRobot
     public void robotInit()
     {
         autonomousSystem = new AutonomousSystem(this, 100);
-        operatorSystem = new OperatorSystem(this, 100);
+        operatorSystem = new OperatorSystem(this, 200);
         cameraSystem = new CameraSystem(this, 100);
         driveSystem = new DriveSystem(this, 100);
-        lineSystem = new LineSystem(this, 100);
+        lineSystem = new LineSystem(this, 200);
         manipulatorSystem = new ManipulatorSystem(this, 100);
         minibotSystem = new MinibotSystem(this, 100);
         
@@ -46,7 +46,6 @@ public class RobotMain extends SimpleRobot
         
         cameraSystem.start();
         driveSystem.start();
-        lineSystem.start();
         manipulatorSystem.start();
         minibotSystem.start();
     }
@@ -56,6 +55,8 @@ public class RobotMain extends SimpleRobot
     
     public void autonomous()
     {
+        lineSystem.start();
+        lineSystem.initAutonomous();
         operatorSystem.stop();
         autonomousSystem.start();
         log("enabled autonomous");
@@ -63,6 +64,8 @@ public class RobotMain extends SimpleRobot
     
     public void operatorControl()
     {
+        lineSystem.start();
+        lineSystem.initOperatorControl();
         autonomousSystem.stop();
         operatorSystem.start();
         log("enabled teleop");

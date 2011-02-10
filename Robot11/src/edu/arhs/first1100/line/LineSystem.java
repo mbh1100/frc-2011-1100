@@ -16,7 +16,7 @@ public class LineSystem extends SystemBase
     final int K_AUTONOMOUS = 1;
     final int K_OPERATOR_CONTROL = 2;
     final int K_NO_TRACKING = 3;
-    int mode = 3;
+    int mode = K_NO_TRACKING;
     
     int lineStatus = MIDDLE;
     
@@ -45,7 +45,6 @@ public class LineSystem extends SystemBase
 
     public void tick()
     {
-        /*
         switch (mode)
         {
             case K_AUTONOMOUS:
@@ -63,14 +62,16 @@ public class LineSystem extends SystemBase
                 break;
             }
 
-        }*/
-        
+        }
+        /*
         log(lt.ltLeft.get()+":"+lt.ltMiddle.get()+":"+lt.ltRight.get());
         log(lt.ltBack.get()+"");
         log("");
+         * 
+         */
     }
     
-    public void autonomousLineTracker()
+     private void autonomousLineTracker()
     {
         if (lt.middleLine() || lineStatus == MIDDLE)
         {
@@ -92,7 +93,7 @@ public class LineSystem extends SystemBase
         }
     }
 
-    public void operatorControlLineTracker()
+    private void operatorControlLineTracker()
     {
         if ((lt.middleLine() && lt.backLine()) || (lineStatus == MIDDLE && lt.middleLine()))
         {

@@ -76,15 +76,15 @@ public class DriveSystem extends SystemBase
     
     public void tick()
     {
-        log("tick!");
-
+ 
         leftTankMotor.update();
         rightTankMotor.update();
         //liftMotor.update();
         sidestepDriveMotor.update();
 
-        if(true)
+        if(false)
         {
+            log("tick!");
             log("Left: "+leftTankMotor.get());
             log("Right:"+rightTankMotor.get());
             log("");

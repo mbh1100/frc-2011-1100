@@ -11,10 +11,10 @@ public class LineTracker
 
     public LineTracker()
     {
-        ltLeft = new DigitalInput(1);
-        ltMiddle = new DigitalInput(2);
-        ltRight = new DigitalInput(3);
-        ltBack = new DigitalInput(4);
+        ltLeft = new DigitalInput(2);
+        ltMiddle = new DigitalInput(3);
+        ltRight = new DigitalInput(4);
+        ltBack = new DigitalInput(1);
     }
     
     public boolean leftline()

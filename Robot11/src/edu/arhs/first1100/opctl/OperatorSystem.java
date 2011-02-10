@@ -33,8 +33,8 @@ public class OperatorSystem extends SystemBase
     
     public void tick()
     {
-        log("Tick...");
-        
+        //og("Tick...");
+
         if(false)
         {
             // Non 0 based array?  sigh....
