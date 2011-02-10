@@ -19,49 +19,21 @@ public class LineTracker
     
     public boolean leftline()
     {
-        if (ltLeft.get())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }        
+        return ltLeft.get();       
     }
     
     public boolean rightline()
     {
-        if (ltRight.get())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }        
+        return ltRight.get();       
     }
     
     public boolean middleLine()
     {
-        if (ltMiddle.get())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }        
+        return ltMiddle.get();
     }
     
     public boolean backLine()
     {
-        if (ltBack.get())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }     
+        return ltBack.get();    
     }
 }
