@@ -9,14 +9,14 @@ public class LineTracker
     DigitalInput ltRight;
     DigitalInput ltBack;
 
-    public void robotInit()
+    public LineTracker()
     {
         ltLeft = new DigitalInput(1);
         ltMiddle = new DigitalInput(2);
         ltRight = new DigitalInput(3);
         ltBack = new DigitalInput(4);
     }
-
+    
     public boolean leftline()
     {
         if (ltLeft.get())

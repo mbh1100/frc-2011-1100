@@ -1,13 +1,12 @@
 package edu.arhs.first1100.autoctl;
 
-
-
 import edu.arhs.first1100.util.SystemBase;
+import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.line.LineSystem;
 import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.camera.CameraSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
-
+import edu.arhs.first1100.robot.RobotMain;
 
 public class AutonomousSystem extends SystemBase
 {
@@ -19,9 +18,9 @@ public class AutonomousSystem extends SystemBase
     private boolean targetRack = false;
     private int targetPeg = 0;
     
-    public AutonomousSystem()
+    public AutonomousSystem(RobotMain robot, int sleepTime)
     {
-        super();
+        super(robot, sleepTime);
     }
 
     /*
@@ -29,7 +28,8 @@ public class AutonomousSystem extends SystemBase
      * scoring the ring.
      */
 
-    public void init(){
+    public void init()
+    {
         log("Started");
     }
     
@@ -52,7 +52,6 @@ public class AutonomousSystem extends SystemBase
          * 3 4 5
          * 6 7 8
          */
-
         /*
         if(startingPosition == 0 || startingPosition == 2)
         {
@@ -68,17 +67,6 @@ public class AutonomousSystem extends SystemBase
                 //robot.lineSystem.followLineRight();
         }
          */
+
     }
-
-    public void run()
-    {
-
-        //if(robot.operatorSystem.GetRack() == false)
-        //    robot.lineSystem.FollowLeftLine();
-
-        
-        //robot.manipulatorSystem.lift.followY(robot.cameraSystem.getCenterY());
-    }
-
-
 }

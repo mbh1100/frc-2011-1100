@@ -28,8 +28,7 @@ public class Lift
     public Lift()
     {
         liftJaguar = new AdvJaguar(1);
-        liftJaguar = new AdvJaguar(1);
-
+        
         //pid = new PIDController(KP, KI, KD, PIDSource source, PIDOutput output);
 
     }
@@ -37,11 +36,6 @@ public class Lift
     public void setHeight(double height)
     {
         targetHeight = height;
-    }
-    
-    public void set(double speed)
-    {
-        liftJaguar.set(speed);
     }
     
     public void stop()

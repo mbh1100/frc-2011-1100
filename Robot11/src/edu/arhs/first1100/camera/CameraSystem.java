@@ -1,6 +1,7 @@
 package edu.arhs.first1100.camera;
 
 import edu.arhs.first1100.util.SystemBase;
+import edu.arhs.first1100.robot.RobotMain;
 
 import edu.wpi.first.wpilibj.camera.*;
 import edu.wpi.first.wpilibj.image.ColorImage;
@@ -27,9 +28,9 @@ public class CameraSystem extends SystemBase
     BinaryImage bImg;
     ParticleAnalysisReport[] pRep = new ParticleAnalysisReport[PARTICLE_SIZE];
     
-    public CameraSystem()
+    public CameraSystem(RobotMain robot, int sleepTime)
     {
-        super();
+        super(robot, sleepTime);
         
         ac = AxisCamera.getInstance();
         cImg = null;

@@ -3,6 +3,8 @@ package edu.arhs.first1100.opctl;
 import edu.wpi.first.wpilibj.Timer;
 
 import edu.arhs.first1100.util.SystemBase;
+import edu.arhs.first1100.robot.RobotMain;
+
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 public class OperatorSystem extends SystemBase
@@ -14,11 +16,13 @@ public class OperatorSystem extends SystemBase
     
     ButtonBox buttonBox;
     GamepieceIndicator ledIndicator;//indicates the gamepiece that the human
-    //should give to the robot
+                                    //should give to the robot
 
-    public OperatorSystem()
+    public OperatorSystem(RobotMain robot, int sleepTime)
     {
-        super();
+        super(robot, sleepTime);
+        
+        log("Operator system constructor.");
         
         leftJoystick  = new AdvJoystick(2);
         rightJoystick = new AdvJoystick(1);
@@ -31,7 +35,7 @@ public class OperatorSystem extends SystemBase
     {
         log("Tick...");
         
-        if(true)
+        if(false)
         {
             // Non 0 based array?  sigh....
             for(int axis=1; axis<=6; ++axis)
@@ -52,9 +56,7 @@ public class OperatorSystem extends SystemBase
         // just keep pumping in data.
         
         robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
-        robot.driveSystem.tick();
-        
-        //robot.driveSystem.setSideSpeed(rightJoystick.getX());
+        robot.driveSystem.setSideSpeed(rightJoystick.getX());
         
         /*
         // quo-quo-quo-quo-CHEET *transformers sound effect*
@@ -70,24 +72,23 @@ public class OperatorSystem extends SystemBase
         // Gamepiece indicator control
         if (leftJoystick.getRawButton(4))
         {
-            log("button 4");
+            //log("button 4");
             ledIndicator.setLightColorRed();
         }
         else if (leftJoystick.getRawButton(5))
         {
-            log("button 5");
+            //log("button 5");
             ledIndicator.setLightColorWhite();
         }
         else if (leftJoystick.getRawButton(3))
         {
-            log("button 3");
+            //log("button 3");
             ledIndicator.setLightColorBlue();
         }
         else if (leftJoystick.getRawButton(2))
         {
-            log("button 2");
+            //log("button 2");
             ledIndicator.setLightColorClear();
         }
-        
     }
 }

@@ -17,23 +17,15 @@ public class LineSystem extends SystemBase
     final int K_OPERATOR_CONTROL = 2;
     final int K_NO_TRACKING = 3;
     int mode = 3;
-
-    RobotDrive rdPrimary;
-    RobotDrive rdSecondary;
-    double lineStatus = MIDDLE;
-
-    Joystick leftStick;
-    Joystick rightStick;
-
+    
+    int lineStatus = MIDDLE;
+    
     LineTracker lt;
-   
-    public LineSystem(RobotMain robot)
+
+    public LineSystem(RobotMain robot, int sleepTime)
     {
-        setRobotMain(robot);
-        rdPrimary = new RobotDrive(1, 2);
-        rdSecondary = new RobotDrive (3,4);
-        leftStick = robot.operatorSystem.leftJoystick;
-        rightStick = robot.operatorSystem.rightJoystick;
+        super(robot, sleepTime);
+        lt = new LineTracker();
     }
     
     public void initAutonomous()
@@ -53,6 +45,7 @@ public class LineSystem extends SystemBase
 
     public void tick()
     {
+        /*
         switch (mode)
         {
             case K_AUTONOMOUS:
@@ -69,72 +62,71 @@ public class LineSystem extends SystemBase
             {
                 break;
             }
-        }
-    }
 
+        }*/
+        
+        log(lt.ltLeft.get()+":"+lt.ltMiddle.get()+":"+lt.ltRight.get());
+        log(lt.ltBack.get()+"");
+        log("");
+    }
+    
     public void autonomousLineTracker()
-    {       
-            if (lt.middleLine() || lineStatus == MIDDLE)
-            {
-                robot.driveSystem.setDriveSpeed(0.5,0.5);
-                log("Driving on line");
-                lineStatus = MIDDLE;
-            }
-            else if(lt.leftline() || lineStatus == LEFT) //this moves the robot to the right
-            {
-                robot.driveSystem.setDriveSpeed(-0.3,0.7);
-                log("Left LT on line");
-                lineStatus = LEFT;
-            }
-            else if(lt.rightline() || lineStatus == RIGHT) //this moves the robot to the left
-            {
-                robot.driveSystem.setDriveSpeed(0.7, -0.3);
-                log("Right LT on line");
-                lineStatus = RIGHT;
-            }
-            Timer.delay(.25);        
+    {
+        if (lt.middleLine() || lineStatus == MIDDLE)
+        {
+            robot.driveSystem.setDriveSpeed(0.5,0.5);
+            log("Driving on line");
+            lineStatus = MIDDLE;
+        }
+        else if(lt.leftline() || lineStatus == LEFT) //this moves the robot to the right
+        {
+            robot.driveSystem.setDriveSpeed(-0.3,0.7);
+            log("Left LT on line");
+            lineStatus = LEFT;
+        }
+        else if(lt.rightline() || lineStatus == RIGHT) //this moves the robot to the left
+        {
+            robot.driveSystem.setDriveSpeed(0.7, -0.3);
+            log("Right LT on line");
+            lineStatus = RIGHT;
+        }
     }
 
     public void operatorControlLineTracker()
     {
-        while (mode == K_OPERATOR_CONTROL)
+        if ((lt.middleLine() && lt.backLine()) || (lineStatus == MIDDLE && lt.middleLine()))
         {
-            Timer.delay(.25);
-            if ((lt.middleLine() && lt.backLine()) || (lineStatus == MIDDLE && lt.middleLine()))
-            {
-               rdPrimary.tankDrive(0.7, 0.7);
-               log("Driving on line");
-               lineStatus = MIDDLE;
-            }
+           robot.driveSystem.setDriveSpeed(0.7, 0.7);
+           log("Driving on line");
+           lineStatus = MIDDLE;
+        }
 
-            else if (lt.middleLine() && !lt.backLine()) // this runs if the robot is not fully on the line
+        else if (lt.middleLine() && !lt.backLine()) // this runs if the robot is not fully on the line
+        {
+            if (robot.operatorSystem.leftJoystick.getTrigger() ) // if the robot is on the left of the line (based on driver)
             {
-                if (leftStick.getTrigger() ) // if the robot is on the left of the line (based on driver)
-                {
-                    rdSecondary.tankDrive(0.0, -0.7);  // the robot piviots to align to the line
-                }
-                else if (rightStick.getTrigger()) // if the robot is on the right of the line (based on driver)
-                {
-                    rdSecondary.tankDrive(-0.7, 0.0);  // the robot piviots to align to the line
-                }
+                robot.driveSystem.setDriveSpeed(0.0, -0.7);  // the robot piviots to align to the line
             }
-            else if (lt.leftline() || lineStatus == LEFT) //this moves the robot to the right
+            else if (robot.operatorSystem.rightJoystick.getTrigger()) // if the robot is on the right of the line (based on driver)
             {
-                rdPrimary.tankDrive(-0.3,0.7);
-                log("Left LT on line");
-                lineStatus = LEFT;
+                robot.driveSystem.setDriveSpeed(-0.7, 0.0);  // the robot piviots to align to the line
             }
-            else if (lt.rightline() || lineStatus == RIGHT) //this moves the robot to the left
-            {
-                rdPrimary.tankDrive(0.7, -0.3);
-                log("Right LT on line");
-               lineStatus = RIGHT;
-            }
-            else
-            {
-               rdPrimary.tankDrive(0.7, 0.7);
-            }
-            Timer.delay(.25);
+        }
+        else if (lt.leftline() || lineStatus == LEFT) //this moves the robot to the right
+        {
+            robot.driveSystem.setDriveSpeed(-0.3,0.7);
+            log("Left LT on line");
+            lineStatus = LEFT;
+        }
+        else if (lt.rightline() || lineStatus == RIGHT) //this moves the robot to the left
+        {
+            robot.driveSystem.setDriveSpeed(0.7, -0.3);
+            log("Right LT on line");
+            lineStatus = RIGHT;
+        }
+        else
+        {
+           robot.driveSystem.setDriveSpeed(0.7, 0.7);
         }
     }
 }

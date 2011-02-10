@@ -13,12 +13,12 @@ package edu.arhs.first1100.drive;
 
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.RobotDrive;
+
 import edu.arhs.first1100.util.SystemBase;
+import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.util.AdvJaguar;
 import edu.arhs.first1100.drive.JaguarPair;
 import edu.arhs.first1100.opctl.OperatorSystem;
-
-
 
 public class DriveSystem extends SystemBase
 {
@@ -35,9 +35,9 @@ public class DriveSystem extends SystemBase
     private AdvJaguar liftMotor; //motor that raises lowers the side step wheels
     private AdvJaguar sidestepDriveMotor; // drives the side step wheel
     
-    public DriveSystem() 
+    public DriveSystem(RobotMain robot, int sleepTime)
     {
-         super();
+         super(robot, sleepTime);
          
          // JaguarPair(ch1, ch2, invert, averager sample size);
          leftTankMotor  = new JaguarPair(2, 4, true, 3);

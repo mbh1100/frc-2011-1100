@@ -34,47 +34,21 @@ public class RobotMain extends SimpleRobot
 
     public void robotInit()
     {
-        autonomousSystem = new AutonomousSystem();
-        operatorSystem = new OperatorSystem();
-        cameraSystem = new CameraSystem();
-        driveSystem = new DriveSystem();
-        lineSystem = new LineSystem(this);
-        manipulatorSystem = new ManipulatorSystem();
-        minibotSystem = new MinibotSystem();
-
+        autonomousSystem = new AutonomousSystem(this, 100);
+        operatorSystem = new OperatorSystem(this, 100);
+        cameraSystem = new CameraSystem(this, 100);
+        driveSystem = new DriveSystem(this, 100);
+        lineSystem = new LineSystem(this, 100);
+        manipulatorSystem = new ManipulatorSystem(this, 100);
+        minibotSystem = new MinibotSystem(this, 100);
         
-        // We need a MUCH better system than this.
-        // Right now I pass a reference to RobotMain
-        // so Systems can access other Systems.
-        //
-        // We need a ".getInstance()" instead.
-        // This is a work around for now.
-        //    - Nick
-        autonomousSystem.setRobotMain(this);
-        cameraSystem.setRobotMain(this);
-        driveSystem.setRobotMain(this);
-        lineSystem.setRobotMain(this);
-        manipulatorSystem.setRobotMain(this);
-        minibotSystem.setRobotMain(this);
-        operatorSystem.setRobotMain(this);
-
-        // Eventually we'll define sleep time as final variables in each
-        // system's class
-        //autonomousSystem.setSleep(50);
-        //cameraSystem.setSleep(50);
-        //driveSystem.setSleep(100);
-        //lineSystem.setSleep(200);
-        //manipulatorSystem.setSleep(100);
-        //minibotSystem.setSleep(500);
-        //operatorSystem.setSleep(50);
-
         // operator & autonomous threads started/stopped by teleopInit and autonomousInit
         
-        //cameraSystem.start();
+        cameraSystem.start();
         driveSystem.start();
-        //lineSystem.start();
-        //manipulatorSystem.start();
-        //minibotSystem.start();
+        lineSystem.start();
+        manipulatorSystem.start();
+        minibotSystem.start();
     }
 
     // Periodic = called when driver station data is updated
@@ -86,8 +60,7 @@ public class RobotMain extends SimpleRobot
         autonomousSystem.start();
         log("enabled autonomous");
     }
-
-     
+    
     public void operatorControl()
     {
         autonomousSystem.stop();

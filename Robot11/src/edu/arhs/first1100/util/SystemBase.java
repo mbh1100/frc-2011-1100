@@ -14,6 +14,13 @@ public class SystemBase extends Thread
     
     public SystemBase() { }
 
+    public SystemBase(RobotMain robot, int sleep)
+    {
+        setSleep(sleep);
+        setRobotMain(robot);
+    }
+
+
     public SystemBase(int delay)
     {
         setSleep(delay);
@@ -21,6 +28,8 @@ public class SystemBase extends Thread
     
     public void start()
     {
+        log("Starting thread");
+        
         stopThread = false;
         
         if(!threadStarted)
