@@ -67,7 +67,7 @@ public class Averager
         
 
     /**
-     * Sets the speed magnitude of averager. This changes how much new value affects the average.
+     * Sets the speed magnitude of averager. This changes how much new value affects the average. 
      * @param m magnitide
      */
     public void setMagnitude(int m)
