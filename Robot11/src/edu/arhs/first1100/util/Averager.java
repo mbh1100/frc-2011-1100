@@ -8,16 +8,13 @@
 
 package edu.arhs.first1100.util;
 
-import java.util.Vector; // added by alex 2-8
-
 public class Averager
 {
-    int size = 1;
     double avg = 0; //average
     int magnitude = 1;
-    int index = 0;
+    double data[];
+    int index;
     
-    Vector container = new Vector(); //created by alex 2-8
 
 
     /**
@@ -42,55 +39,36 @@ public class Averager
      */
     public Averager(int sampleSize, double starting)
     {
-        size = sampleSize;
         avg = starting;
-        container.setSize(sampleSize);
+        data = new double[sampleSize];
+        for (int i = 0; i<sampleSize;i++){
+            data[i] = starting;
+        }
     }
 
     /**
-     * Add a value to the array.  Oldest value is deleted.
+     * Add a value to the array.  Oldest value is dropped.
      * @param value
      */
     public void feed(double value)
     {
-        Double newVal = new Double(value);
-        
-        int newSize = index%size;
-        //System.out.println("Averager newSize: "+newSize);
-        container.setElementAt(newVal, newSize);
-        double addCount = 0;
-
         index++;
-
-        //System.out.println("Averager: "+container);
-        
-        for(int i = 0; i < container.size(); i++)
-        {
-            if(container.elementAt(i) != null)
-            {
-                double extractVal = ((Double)container.elementAt(i)).doubleValue();
-                addCount += extractVal;
+        index = index%data.length;
+        for (int i = 0;i<data.length;i++)
+                avg = 0;
+                data[index] = value*magnitude;
+                for(int i =0;i<data.length;i++){
+                    avg += data[i];
+                    avg /= avg/(data.length+(magnitude-1));
+                }
+                System.out.print(avg);
             }
-        }
-        avg = addCount/container.size();
+    
+        
 
-        
-        
-        //Akshay's code
-        /*if(size==1)
-            avg = value;
-        else
-            //EPIC formula courtesy of Akshay
-            avg = (avg*(size-magnitude)+value*magnitude)/size;
-        */
-    }
-        
-    /*
-    public void clearValueCount()
-    {
-        valueCount = 0
-    }
-        created by alex 2-8
+    /**
+     * Sets the speed magnitude of averager. This changes how much new value affects the average.
+     * @param m magnitide
      */
     public void setMagnitude(int m)
     {
@@ -106,3 +84,4 @@ public class Averager
         return avg;
     }
 }
+
