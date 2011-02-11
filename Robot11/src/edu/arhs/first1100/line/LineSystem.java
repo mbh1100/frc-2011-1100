@@ -10,15 +10,16 @@ import edu.arhs.first1100.robot.RobotMain;
 
 public class LineSystem extends SystemBase
 {
-    final int MIDDLE = 0;
-    final int RIGHT = -1;
-    final int LEFT = 1;
+    final int STATE_MIDDLE = 0;
+    final int STATE_RIGHT = -1;
+    final int STATE_LEFT = 1;
+    final int STATE_NONE = 2;
     final int K_AUTONOMOUS = 1;
     final int K_OPERATOR_CONTROL = 2;
     final int K_NO_TRACKING = 3;
     int mode = K_NO_TRACKING;
     
-    int lineStatus = MIDDLE;
+    int lineStatus = STATE_MIDDLE;
 
     boolean done = false;
     
@@ -126,11 +127,11 @@ public class LineSystem extends SystemBase
 
     private void operatorControlLineTracker()
     {
-        if ((lt.middleLine() && lt.backLine()) || (lineStatus == MIDDLE && lt.middleLine()))
+        if ((lt.middleLine() && lt.backLine()) || (lineStatus == STATE_MIDDLE && lt.middleLine()))
         {
            robot.driveSystem.setDriveSpeed(0.7, 0.7);
            //log("Driving on line");
-           lineStatus = MIDDLE;
+           lineStatus = STATE_MIDDLE;
         }
 
         else if (lt.middleLine() && !lt.backLine()) // this runs if the robot is not fully on the line
@@ -145,21 +146,25 @@ public class LineSystem extends SystemBase
                 robot.driveSystem.setDriveSpeed(-0.7, 0.0);  // the robot piviots to align to the line
             }*/
         }
-        else if (lt.leftline() || lineStatus == LEFT) //this moves the robot to the right
+        else if (lt.leftline() || lineStatus == STATE_LEFT) //this moves the robot to the right
         {
             robot.driveSystem.setDriveSpeed(-0.3,0.7);
             //log("Left LT on line");
-            lineStatus = LEFT;
+            lineStatus = STATE_LEFT;
         }
-        else if (lt.rightline() || lineStatus == RIGHT) //this moves the robot to the left
+        else if (lt.rightline() || lineStatus == STATE_RIGHT) //this moves the robot to the left
         {
             robot.driveSystem.setDriveSpeed(0.7, -0.3);
             //log("Right LT on line");
-            lineStatus = RIGHT;
+            lineStatus = STATE_RIGHT;
         }
         else
         {
            robot.driveSystem.setDriveSpeed(0.7, 0.7);
         }
+    }
+
+    public int getState() {
+        return lineStatus;
     }
 }
