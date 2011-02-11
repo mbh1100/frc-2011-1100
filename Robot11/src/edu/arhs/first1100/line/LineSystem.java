@@ -19,6 +19,8 @@ public class LineSystem extends SystemBase
     int mode = K_NO_TRACKING;
     
     int lineStatus = MIDDLE;
+
+    boolean done = false;
     
     LineTracker lt;
 
@@ -43,7 +45,31 @@ public class LineSystem extends SystemBase
         mode = K_NO_TRACKING;
     }
 
-    public void tick()
+    public void trackLineToGoal()
+    {
+        done = false;
+        initAutonomous();
+    }
+
+    synchronized public void waitUntilDone()
+    {
+        if (!done)
+        {
+            try
+            {
+                wait();
+            }
+            catch (InterruptedException x) {}
+        }
+    }
+
+    synchronized void imDone()
+    {
+        done = true;
+        this.notify();
+    }
+
+     public void tick()
     {
         switch (mode)
         {
@@ -67,15 +93,17 @@ public class LineSystem extends SystemBase
         log(lt.ltLeft.get()+":"+lt.ltMiddle.get()+":"+lt.ltRight.get());
         log(lt.ltBack.get()+"");
         log("");
-         * 
+         *
          */
     }
-    
-     private void autonomousLineTracker()
+
+    private void autonomousLineTracker()
     {
         if(lt.leftline() && lt.middleLine() && lt.rightline())
         {
             robot.driveSystem.setDriveSpeed(0.0, 0.0);
+            endControl();
+            imDone();
         }
         else if (lt.middleLine())
         {
