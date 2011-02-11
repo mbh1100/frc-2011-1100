@@ -104,11 +104,11 @@ public class LineSystem extends SystemBase
 
         else if (lt.middleLine() && !lt.backLine()) // this runs if the robot is not fully on the line
         {
-            if (robot.operatorSystem.leftJoystick.getTrigger() ) // if the robot is on the left of the line (based on driver)
+            if (robot.operatorSystem.getJoystick(robot.operatorSystem.LEFT).getTrigger() ) // if the robot is on the left of the line (based on driver)
             {
                 robot.driveSystem.setDriveSpeed(0.0, -0.7);  // the robot piviots to align to the line
             }
-            else if (robot.operatorSystem.rightJoystick.getTrigger()) // if the robot is on the right of the line (based on driver)
+            else if (robot.operatorSystem.getJoystick(robot.operatorSystem.RIGHT).getTrigger()) // if the robot is on the right of the line (based on driver)
             {
                 robot.driveSystem.setDriveSpeed(-0.7, 0.0);  // the robot piviots to align to the line
             }

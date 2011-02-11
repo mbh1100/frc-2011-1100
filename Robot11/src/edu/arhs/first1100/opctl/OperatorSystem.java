@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 public class OperatorSystem extends SystemBase
 {
+    public final int LEFT = 2;
+    public final int RIGHT = 1;
     private AdvJoystick leftJoystick; //controls the left side of the robot
     private AdvJoystick rightJoystick;//controls the right side of the robot
 
@@ -24,8 +26,8 @@ public class OperatorSystem extends SystemBase
         
         log("Operator system constructor.");
         
-        leftJoystick  = new AdvJoystick(2);
-        rightJoystick = new AdvJoystick(1);
+        leftJoystick  = new AdvJoystick(LEFT);
+        rightJoystick = new AdvJoystick(RIGHT);
         xboxGamepad   = new AdvJoystick(3);
         
         ledIndicator  = new GamepieceIndicator();
@@ -79,4 +81,16 @@ public class OperatorSystem extends SystemBase
         else
             ledIndicator.setLight(ledIndicator.OFF);
     }
+    
+    public AdvJoystick getJoystick(int stick){
+        if (stick == LEFT)
+            return leftJoystick;
+        else if(stick == RIGHT)
+            return rightJoystick;
+        else 
+            return null;
+    }
+
+
 }
+
