@@ -9,9 +9,10 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 public class OperatorSystem extends SystemBase
 {
-    public AdvJoystick leftJoystick; //controls the left side of the robot
-    public AdvJoystick rightJoystick;//controls the right side of the robot
-    public XboxJoystick xboxJoystick;//controls the arm and other stuff
+    private AdvJoystick leftJoystick; //controls the left side of the robot
+    private AdvJoystick rightJoystick;//controls the right side of the robot
+
+    private AdvJoystick xboxGamepad;//controls the arm and other stuff
     
     private ButtonBox buttonBox;
     private GamepieceIndicator ledIndicator;//indicates the gamepiece that the human
@@ -25,10 +26,9 @@ public class OperatorSystem extends SystemBase
         
         leftJoystick  = new AdvJoystick(2);
         rightJoystick = new AdvJoystick(1);
-        xboxJoystick   = new XboxJoystick(3);
+        xboxGamepad   = new AdvJoystick(3);
         
         ledIndicator  = new GamepieceIndicator();
-        ledIndicator.start();
     }
     
     public void tick()
@@ -39,9 +39,9 @@ public class OperatorSystem extends SystemBase
         {
             // Non 0 based array?  sigh....
             for(int axis=1; axis<=6; ++axis)
-                log("xbox axis " + axis + ": " + xboxJoystick.getRawAxis(axis));
+                log("xbox axis " + axis + ": " + xboxGamepad.getRawAxis(axis));
             for(int button=1; button<=12; ++button)
-                log("xbox button " + button + ": " + xboxJoystick.getRawButton(button));
+                log("xbox button " + button + ": " + xboxGamepad.getRawButton(button));
             log("");
         }
 
@@ -58,8 +58,6 @@ public class OperatorSystem extends SystemBase
         robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
         robot.driveSystem.setSideSpeed(rightJoystick.getX());
         
-        //robot.manipulatorSystem.lift.setSpeed(xboxJoystick.getLeftStickY());
-        
         /*
         // quo-quo-quo-quo-CHEET *transformers sound effect*
         if(rightJoystick.getRawButton(11))
@@ -71,23 +69,14 @@ public class OperatorSystem extends SystemBase
         // Lift control
         // robot.manipulatorSystem.setLiftSpeed(leftJoystick.getY());
         
-        if(rightJoystick.getRawButton(1))
-        {
-            
-        }
-        
         // Gamepiece indicator control
         if(leftJoystick.getRawButton(4))
-            ledIndicator.setLightColorRed();
-
-        else if(leftJoystick.getRawButton(3))
-            ledIndicator.setLightColorWhite();
-
+            ledIndicator.setLight(ledIndicator.RED);
         else if(leftJoystick.getRawButton(5))
-            ledIndicator.setLightColorBlue();
-        
+            ledIndicator.setLight(ledIndicator.WHITE);
+        else if(leftJoystick.getRawButton(3))
+            ledIndicator.setLight(ledIndicator.BLUE);
         else
-            ledIndicator.setLightColorClear();
-        
+            ledIndicator.setLight(ledIndicator.OFF);
     }
 }
