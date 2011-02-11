@@ -23,10 +23,10 @@ public class GamepieceIndicator extends Thread
 
     private final double BLINK_DELAY = 0.5;
     
-    private final int OFF   = 0;
-    private final int RED   = 1;
-    private final int WHITE = 2;
-    private final int BLUE  = 3;
+    public final int OFF   = 0;
+    public final int RED   = 1;
+    public final int WHITE = 2;
+    public final int BLUE  = 3;
     
     private int color = 0;
     
@@ -44,20 +44,38 @@ public class GamepieceIndicator extends Thread
 
     public void setLightColorWhite()
     {
-        color = WHITE;
-        
+        color = WHITE;        
     }
     
     public void setLightColorBlue()
     {
-        color = BLUE;
-        
+        color = BLUE;        
     }
 
     public void setLightColorClear()
     {
         color = OFF;
     }
+
+    public void setLight(int C)
+    {
+        switch(C)
+        {
+            case RED:
+                color = RED;
+                break;
+            case WHITE:
+                color = WHITE;
+                break;
+            case BLUE:
+                color = BLUE;
+                break;
+            case OFF:
+                color = OFF;
+                break;
+        }
+    }
+
     
     public void run()
     {
