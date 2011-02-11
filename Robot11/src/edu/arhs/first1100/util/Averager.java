@@ -15,8 +15,7 @@ public class Averager
     double data[];
     int index;
     
-
-
+    
     /**
      * Make a new Averager object.
      * An Averager gives the average value of an array of doubles that you
@@ -54,15 +53,14 @@ public class Averager
     {
         index++;
         index = index%data.length;
-        for (int i = 0;i<data.length;i++)
-                avg = 0;
-                data[index] = value*magnitude;
-                for(int i =0;i<data.length;i++){
-                    avg += data[i];
-                    avg /= avg/(data.length+(magnitude-1));
-                }
-                System.out.print(avg);
-            }
+        avg = 0;
+        data[index] = value * magnitude;
+        for (int i = 0; i < data.length; i++)
+        {
+            avg += data[i];
+        }
+        avg = avg / (data.length + (magnitude - 1));
+    }
     
         
 

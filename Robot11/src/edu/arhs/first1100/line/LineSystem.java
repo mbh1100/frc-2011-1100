@@ -76,19 +76,19 @@ public class LineSystem extends SystemBase
         if (lt.middleLine() || lineStatus == MIDDLE)
         {
             robot.driveSystem.setDriveSpeed(0.5,0.5);
-            log("Driving on line");
+            //log("Driving on line");
             lineStatus = MIDDLE;
         }
         else if(lt.leftline() || lineStatus == LEFT) //this moves the robot to the right
         {
             robot.driveSystem.setDriveSpeed(-0.3,0.7);
-            log("Left LT on line");
+            //log("Left LT on line");
             lineStatus = LEFT;
         }
         else if(lt.rightline() || lineStatus == RIGHT) //this moves the robot to the left
         {
             robot.driveSystem.setDriveSpeed(0.7, -0.3);
-            log("Right LT on line");
+            //log("Right LT on line");
             lineStatus = RIGHT;
         }
     }
@@ -98,7 +98,7 @@ public class LineSystem extends SystemBase
         if ((lt.middleLine() && lt.backLine()) || (lineStatus == MIDDLE && lt.middleLine()))
         {
            robot.driveSystem.setDriveSpeed(0.7, 0.7);
-           log("Driving on line");
+           //log("Driving on line");
            lineStatus = MIDDLE;
         }
 
@@ -116,13 +116,13 @@ public class LineSystem extends SystemBase
         else if (lt.leftline() || lineStatus == LEFT) //this moves the robot to the right
         {
             robot.driveSystem.setDriveSpeed(-0.3,0.7);
-            log("Left LT on line");
+            //log("Left LT on line");
             lineStatus = LEFT;
         }
         else if (lt.rightline() || lineStatus == RIGHT) //this moves the robot to the left
         {
             robot.driveSystem.setDriveSpeed(0.7, -0.3);
-            log("Right LT on line");
+            //log("Right LT on line");
             lineStatus = RIGHT;
         }
         else

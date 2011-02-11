@@ -14,19 +14,20 @@ package edu.arhs.first1100.opctl;
 
 
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Timer;
 
-public class GamepieceIndicator
+
+public class GamepieceIndicator extends Thread
 {
     Relay red, white, blue;
 
-    private final int BLINK_DELAY = 16;
+    private final double BLINK_DELAY = 0.5;
     
     private final int OFF   = 0;
     private final int RED   = 1;
     private final int WHITE = 2;
     private final int BLUE  = 3;
-
-    private int step = 0;
+    
     private int color = 0;
     
     public GamepieceIndicator()
@@ -58,37 +59,43 @@ public class GamepieceIndicator
         color = OFF;
     }
     
-    public void update()
+    public void run()
     {
-        if(step % BLINK_DELAY == 0)
+        while(true)
         {
+            System.out.println("GPI: run repeat");
             switch(color)
             {
                 case RED:
                     red.set(Relay.Value.kOn);
                     blue.set(Relay.Value.kOff);
                     white.set(Relay.Value.kOff);
+                    System.out.println("GPI:red");
                     break;
                 case WHITE:
                     red.set(Relay.Value.kOff);
                     blue.set(Relay.Value.kOff);
                     white.set(Relay.Value.kOn);
+                    System.out.println("GPI:white");
                     break;
                 case BLUE:
                     red.set(Relay.Value.kOff);
                     blue.set(Relay.Value.kOn);
                     white.set(Relay.Value.kOff);
+                    System.out.println("GPI:blue");
                     break;
             }
-        }
-        else if(step % BLINK_DELAY == (BLINK_DELAY/2))
-        {
+            
+            Timer.delay(BLINK_DELAY);
+            
             red.set(Relay.Value.kOff);
             blue.set(Relay.Value.kOff);
             white.set(Relay.Value.kOff);
+            
+            System.out.println("GPI:OFF");
+            System.out.println("");
+
+            Timer.delay(BLINK_DELAY);
         }
-        
-        step++;
-        step%=BLINK_DELAY;
     }
 }
