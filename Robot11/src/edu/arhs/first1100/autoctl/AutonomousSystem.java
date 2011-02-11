@@ -69,4 +69,9 @@ public class AutonomousSystem extends SystemBase
          */
         
     }
+
+    public void tick()
+    {
+
+    }
 }
