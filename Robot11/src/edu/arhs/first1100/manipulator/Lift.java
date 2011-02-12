@@ -16,31 +16,20 @@ public class Lift
     private final double KP = 0.5;
     private final double KI = 0.5;
     private final double KD = 0.5;
-
-    // private double targetHeight = 0.0;
-    // private double currentHeight = 0.0;
     
     private double targetSpeed = 0.0;
     
     private Encoder encoder;
 
     private AdvJaguar liftJaguar;
-    private PIDController pid;
     
     public Lift()
     {
-        liftJaguar = new AdvJaguar(1);
+        liftJaguar = new AdvJaguar(8);
         
         //pid = new PIDController(KP, KI, KD, PIDSource source, PIDOutput output);
 
     }
-
-    /*
-    public void setHeight(double height)
-    {
-        targetHeight = height;
-    }
-    */
     
     public void setSpeed(double speed)
     {
@@ -55,7 +44,5 @@ public class Lift
     public void update()
     {
         //currentHeight += encoder.getDistance();
-        
-        
     }
 }

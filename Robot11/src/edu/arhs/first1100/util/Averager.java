@@ -15,7 +15,6 @@ public class Averager
     double data[];
     int index;
     
-    
     /**
      * Make a new Averager object.
      * An Averager gives the average value of an array of doubles that you
@@ -65,7 +64,7 @@ public class Averager
 
     /**
      * Sets the speed magnitude of averager. This changes how much new value affects the average. 
-     * @param m magnitide
+     * @param m magnitude
      */
     public void setMagnitude(int m)
     {

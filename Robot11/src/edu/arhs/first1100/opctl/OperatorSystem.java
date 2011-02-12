@@ -8,19 +8,20 @@ import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.autoctl.TargetPegRoutine;
 import edu.arhs.first1100.autoctl.ScoreRoutine;
 import edu.arhs.first1100.autoctl.FollowLineRoutine;
+import edu.wpi.first.wpilibj.Joystick.ButtonType;
 
 public class OperatorSystem extends SystemBase
 {
     private boolean ignoreJoysticks = false;
     
-    public AdvJoystick leftJoystick;  //controls the left side of the robot
-    public AdvJoystick rightJoystick; //controls the right side of the robot
-    public XboxJoystick xboxJoystick; //controls the arm and other stuff
+    public AdvJoystick leftJoystick;  //controls the left side of the robot. There is love.
+    public AdvJoystick rightJoystick; //controls the right side of the robot. I love lurve you.
+    public XboxJoystick xboxJoystick; //controls the arm and other stuff. Hi.
     
-    private ButtonBox buttonBox;
-    private GamepieceIndicator ledIndicator; //indicates the gamepiece that the human
-                                             //should give to the robot
-    
+    //private ButtonBox buttonBox;
+    private GamepieceIndicator ledIndicator;  //indicates the gamepiece that the human. I love you.
+                                              //should give to the robot I really do
+    // These are supposed to start as null
     private TargetPegRoutine targetRoutine;
     private ScoreRoutine scoreRoutine;
     private FollowLineRoutine lineRoutine;
@@ -41,103 +42,87 @@ public class OperatorSystem extends SystemBase
     
     public void tick()
     {
-        if(false)
-        {
-            // Non 0 based array?  sigh....
-            for(int axis=1; axis<=6; ++axis)
-                log("xbox axis " + axis + ": " + xboxJoystick.getRawAxis(axis));
-            for(int button=1; button<=12; ++button)
-                log("xbox button " + button + ": " + xboxJoystick.getRawButton(button));
-            log("");
-        }
-
-        if(false)
-        {
+        /*
             log("Left  Joy:" + leftJoystick.getY());
             log("Right Joy:" + rightJoystick.getY());
             log("");
-        }
-        
-        // Robot drive.  DriveSystem handles when and how to use the input.  We
-        // just keep pumping in data.
-
-        if(xboxJoystick.getAButton() && targetRoutine == null)
-        {
-            targetRoutine = new TargetPegRoutine(robot, 100);
-            targetRoutine.start();
-        }
-        /*
-        if(leftJoystick.() && targetRoutine == null)
-        {
-            targetRoutine = new TargetPegRoutine(robot, 100);
-            targetRoutine.start();
-        }
-
-        if(xboxJoystick.getAButton() && targetRoutine == null)
-        {
-            targetRoutine = new TargetPegRoutine(robot, 100);
-            targetRoutine.start();
-        }
         */
-        
-        robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
-        robot.driveSystem.setSideSpeed(rightJoystick.getX());
-        
-        if(!ignoreJoysticks)
-        {
-            if(lineRoutine == null)
-            {
-                /*
-                robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
-                robot.driveSystem.setSideSpeed(rightJoystick.getX());
-                */
-            }
-            else
-            {
-                if(xboxJoystick.getLeftBumper())
-                {
-                    lineRoutine.stop();
-                    lineRoutine = null;
-                }
-            }
-            
-            if(targetRoutine == null)
-            {
-                robot.manipulatorSystem.lift.setSpeed(xboxJoystick.getLeftStickY());
-            }
-            else
-            {
-                if(xboxJoystick.getLeftBumper())
-                {
-                    targetRoutine.stop();
-                    targetRoutine = null;
-                }
-            }
 
-            if(scoreRoutine == null)
-            {
-                //robot.manipulatorSystem.arm.setSpeed();
-                //robot.manipulatorSystem.claw.setSpeed();
-            }
-            else
-            {
-                if(xboxJoystick.getLeftBumper())
-                {
-                    scoreRoutine.stop();
-                    scoreRoutine = null;
-                }
-            }
+        /*
+         * Run routines
+         */
+        if(xboxJoystick.getAButton() && scoreRoutine == null)
+        {
+            scoreRoutine = new ScoreRoutine(robot, 100);
+            scoreRoutine.start();
+        }
+        
+        if(leftJoystick.getRawButton(11) && lineRoutine == null)
+        {
+            lineRoutine = new FollowLineRoutine(robot, 100);
+            lineRoutine.start();
+        }
+        
+        /*
+         * Driving
+         */
+        if(lineRoutine == null)
+        {
+            robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
+            robot.driveSystem.setSideSpeed(rightJoystick.getX());
             
-            /*
             // quo-quo-quo-quo-CHEET *transformers sound effect*
+            /*
             if(rightJoystick.getRawButton(11))
                 robot.driveSystem.setDriveModeSideStep();
             else if(rightJoystick.getRawButton(10))
                 robot.driveSystem.setDriveModeTank();
-            */
+             */
+        }
+        else
+        {
+            if(xboxJoystick.getLeftBumper())
+            {
+                lineRoutine.stop();
+                lineRoutine = null;
+            }
+        }
+
+        /*
+         * Lift control
+         */
+        if(targetRoutine == null)
+        {
+            robot.manipulatorSystem.setLiftSpeed(xboxJoystick.getTriggers()/2);
+        }
+        else
+        {
+            if(xboxJoystick.getLeftBumper())
+            {
+                targetRoutine.stop();
+                targetRoutine = null;
+            }
+        }
+
+        /*
+         * Arm control
+         */
+        if(scoreRoutine == null)
+        {
+            robot.manipulatorSystem.setClaw( xboxJoystick.getRightStickY()<-0.5 ? true : false );
+            robot.manipulatorSystem.setWrist( !xboxJoystick.getRightBumper() );
+        }
+        else
+        {
+            if(xboxJoystick.getLeftBumper())
+            {
+                scoreRoutine.stop();
+                scoreRoutine = null;
+            }
         }
         
-        // Gamepiece indicator control
+        
+        // Gamepiece indicator controller of love
         if(xboxJoystick.getXButton())
             ledIndicator.setLightColorRed();
 

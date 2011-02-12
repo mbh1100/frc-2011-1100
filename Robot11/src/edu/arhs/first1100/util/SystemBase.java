@@ -56,9 +56,9 @@ public class SystemBase extends Thread
                     tick(); // User code
                     sleep(sleepTime);
                 }
-                catch(InterruptedException e)
+                catch(Exception e)
                 {
-                    log("Interrupted tick: " + e.getMessage());
+                    log("Thread crash! " + e.getMessage());
                 }
             }
             
