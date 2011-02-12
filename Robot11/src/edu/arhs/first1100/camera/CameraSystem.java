@@ -2,7 +2,7 @@ package edu.arhs.first1100.camera;
 
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
-
+import edu.arhs.first1100.camera.Light;
 import edu.wpi.first.wpilibj.camera.*;
 import edu.wpi.first.wpilibj.image.ColorImage;
 import edu.wpi.first.wpilibj.image.BinaryImage;
@@ -13,7 +13,8 @@ public class CameraSystem extends SystemBase
 {
     public final int WHITE_THRESHOLD = 1;
     private final int PARTICLE_SIZE = 3;
-
+    private Light light;
+    
     //RGB Threshold
     private int minRed = 0;
     private int maxRed = 0;
@@ -36,6 +37,8 @@ public class CameraSystem extends SystemBase
         cImg = null;
         bImg = null;
         sleepTime = 200;
+
+        light = new Light(5);
 
         //Camera Settings
         ac.writeCompression(0);
@@ -76,6 +79,7 @@ public class CameraSystem extends SystemBase
             }
             printPRep();
         }
+
     }
 
      /**
@@ -195,13 +199,12 @@ public class CameraSystem extends SystemBase
      */
     public synchronized ParticleAnalysisReport[] SortY(ParticleAnalysisReport[] p)
     {
-        int l = p.length;
         int index = 0;
-        ParticleAnalysisReport[] sortedP = new ParticleAnalysisReport[l];
-        for (int i = 0; i< l-1; i++)
+        ParticleAnalysisReport[] sortedP = new ParticleAnalysisReport[p.length];
+        for (int i = 0; i< p.length-1; i++)
         {
             index = i;
-            for (int n = i+1; n< l;n++)
+            for (int n = i+1; n< p.length;n++)
             {
                 if (p[i].center_mass_y < p[n].center_mass_y)
                     index++;
