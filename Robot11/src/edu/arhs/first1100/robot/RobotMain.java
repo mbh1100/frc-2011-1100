@@ -35,7 +35,7 @@ public class RobotMain extends SimpleRobot
     public void robotInit()
     {
         autonomousSystem = new AutonomousSystem(this, 100);
-        operatorSystem = new OperatorSystem(this, 200);
+        operatorSystem = new OperatorSystem(this, 100);
         cameraSystem = new CameraSystem(this, 100);
         driveSystem = new DriveSystem(this, 100);
         lineSystem = new LineSystem(this, 100);
