@@ -29,7 +29,7 @@ public class XboxJoystick extends AdvJoystick
 
     /*
      * NOTE: Triggers are not independant.
-     * -1.0 is right trigger, 1.0 is left.
+     * 1.0 to 0 is get right trigger, 1.0 to 0 is get left trigger.
      * both triggers can't be read at once as both triggers down or up = 0.0
      */
     public double getLeftTrigger()
@@ -41,7 +41,11 @@ public class XboxJoystick extends AdvJoystick
     {
         return Math.max(super.getRawAxis(3), 0);
     }
-
+    /*
+     * NOTE: Triggers are not independant.
+     * 1.0 is right trigger, -1.0 is left trigger.
+     * both triggers can't be read at once as both triggers down or up = 0.0
+     */
     public double getTriggers()
     {
         return super.getRawAxis(3);
