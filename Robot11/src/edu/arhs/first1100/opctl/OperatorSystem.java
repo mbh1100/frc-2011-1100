@@ -7,6 +7,7 @@ import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.autoctl.TargetPegRoutine;
 import edu.arhs.first1100.autoctl.ScoreRoutine;
+import edu.arhs.first1100.autoctl.FollowLineRoutine;
 
 public class OperatorSystem extends SystemBase
 {
@@ -19,10 +20,10 @@ public class OperatorSystem extends SystemBase
     private ButtonBox buttonBox;
     private GamepieceIndicator ledIndicator; //indicates the gamepiece that the human
                                              //should give to the robot
-    private boolean ignoreManipulatorCommands = false;
     
     private TargetPegRoutine targetRoutine;
     private ScoreRoutine scoreRoutine;
+    private FollowLineRoutine lineRoutine;
     
     public OperatorSystem(RobotMain robot, int sleepTime)
     {
@@ -30,20 +31,16 @@ public class OperatorSystem extends SystemBase
         
         log("Operator system constructor.");
         
-        leftJoystick  = new AdvJoystick(2);
-        rightJoystick = new AdvJoystick(1);
+        leftJoystick  = new AdvJoystick(1);
+        rightJoystick = new AdvJoystick(2);
         xboxJoystick  = new XboxJoystick(3);
         
         ledIndicator  = new GamepieceIndicator();
         ledIndicator.start();
-
-        
     }
     
     public void tick()
     {
-        //log("Tick...");
-
         if(false)
         {
             // Non 0 based array?  sigh....
@@ -64,17 +61,42 @@ public class OperatorSystem extends SystemBase
         // Robot drive.  DriveSystem handles when and how to use the input.  We
         // just keep pumping in data.
 
-        if(xboxJoystick.getAButton() && !ignoreManipulatorCommands)
+        if(xboxJoystick.getAButton() && targetRoutine == null)
         {
-            
+            targetRoutine = new TargetPegRoutine(robot, 100);
+            targetRoutine.start();
+        }
+        /*
+        if(leftJoystick.() && targetRoutine == null)
+        {
+            targetRoutine = new TargetPegRoutine(robot, 100);
+            targetRoutine.start();
         }
 
+        if(xboxJoystick.getAButton() && targetRoutine == null)
+        {
+            targetRoutine = new TargetPegRoutine(robot, 100);
+            targetRoutine.start();
+        }
+        */
+        
         if(!ignoreJoysticks)
         {
-            robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
-            robot.driveSystem.setSideSpeed(rightJoystick.getX());
-
-            if(!ignoreManipulatorCommands)
+            if(lineRoutine == null)
+            {
+                robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
+                robot.driveSystem.setSideSpeed(rightJoystick.getX());
+            }
+            else
+            {
+                if(xboxJoystick.getLeftBumper())
+                {
+                    lineRoutine.stop();
+                    lineRoutine = null;
+                }
+            }
+            
+            if(targetRoutine == null)
             {
                 robot.manipulatorSystem.lift.setSpeed(xboxJoystick.getLeftStickY());
             }
@@ -82,8 +104,22 @@ public class OperatorSystem extends SystemBase
             {
                 if(xboxJoystick.getLeftBumper())
                 {
-                    
-                    ignoreManipulatorCommands = false;
+                    targetRoutine.stop();
+                    targetRoutine = null;
+                }
+            }
+
+            if(scoreRoutine == null)
+            {
+                //robot.manipulatorSystem.arm.setSpeed();
+                //robot.manipulatorSystem.claw.setSpeed();
+            }
+            else
+            {
+                if(xboxJoystick.getLeftBumper())
+                {
+                    scoreRoutine.stop();
+                    scoreRoutine = null;
                 }
             }
             
@@ -94,9 +130,6 @@ public class OperatorSystem extends SystemBase
             else if(rightJoystick.getRawButton(10))
                 robot.driveSystem.setDriveModeTank();
             */
-
-            // Lift control
-            //robot.manipulatorSystem.lift.setSpeed(xboxJoystick.getTrigger());
         }
         
         // Gamepiece indicator control
