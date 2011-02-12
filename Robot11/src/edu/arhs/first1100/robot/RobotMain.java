@@ -44,10 +44,6 @@ public class RobotMain extends SimpleRobot
         
         // operator & autonomous threads started/stopped by teleopInit and autonomousInit
         
-        cameraSystem.start();
-        driveSystem.start();
-        manipulatorSystem.start();
-        minibotSystem.start();
     }
 
     // Periodic = called when driver station data is updated
@@ -55,30 +51,40 @@ public class RobotMain extends SimpleRobot
     
     public void autonomous()
     {
-        lineSystem.start();
-        lineSystem.initAutonomous();
         operatorSystem.stop();
         autonomousSystem.start();
+
+        cameraSystem.start();
+        driveSystem.start();
+        manipulatorSystem.start();
+        minibotSystem.start();
+
         log("enabled autonomous");
     }
     
     public void operatorControl()
     {
-        lineSystem.start();
-        lineSystem.initOperatorControl();
-        autonomousSystem.stop();
         operatorSystem.start();
+        autonomousSystem.stop();
+        
+        cameraSystem.start();
+        driveSystem.start();
+        manipulatorSystem.start();
+        minibotSystem.start();
+
         log("enabled teleop");
     }
     
     public void disabled()
     {
+        operatorSystem.stop();
         autonomousSystem.stop();
+        
         cameraSystem.stop();
         lineSystem.stop();
         manipulatorSystem.stop();
         minibotSystem.stop();
-        operatorSystem.stop();
+        
         log("disabled");
     }
 

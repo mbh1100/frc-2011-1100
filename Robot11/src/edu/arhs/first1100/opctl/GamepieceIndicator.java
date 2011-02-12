@@ -81,26 +81,26 @@ public class GamepieceIndicator extends Thread
     {
         while(true)
         {
-            System.out.println("GPI: run repeat");
+            //System.out.println("GPI: run repeat");
             switch(color)
             {
                 case RED:
                     red.set(Relay.Value.kOn);
                     blue.set(Relay.Value.kOff);
                     white.set(Relay.Value.kOff);
-                    System.out.println("GPI:red");
+                    //System.out.println("GPI:red");
                     break;
                 case WHITE:
                     red.set(Relay.Value.kOff);
                     blue.set(Relay.Value.kOff);
                     white.set(Relay.Value.kOn);
-                    System.out.println("GPI:white");
+                    //System.out.println("GPI:white");
                     break;
                 case BLUE:
                     red.set(Relay.Value.kOff);
                     blue.set(Relay.Value.kOn);
                     white.set(Relay.Value.kOff);
-                    System.out.println("GPI:blue");
+                    //System.out.println("GPI:blue");
                     break;
             }
             
@@ -110,8 +110,8 @@ public class GamepieceIndicator extends Thread
             blue.set(Relay.Value.kOff);
             white.set(Relay.Value.kOff);
             
-            System.out.println("GPI:OFF");
-            System.out.println("");
+            //System.out.println("GPI:OFF");
+            //System.out.println("");
 
             Timer.delay(BLINK_DELAY);
         }

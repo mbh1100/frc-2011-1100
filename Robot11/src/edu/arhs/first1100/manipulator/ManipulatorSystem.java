@@ -5,9 +5,9 @@ import edu.arhs.first1100.robot.RobotMain;
 
 public class ManipulatorSystem extends SystemBase
 {
-    Arm arm;
-    Claw claw;
-    Lift lift;
+    public Arm arm;
+    public Claw claw;
+    public Lift lift;
 
     public ManipulatorSystem(RobotMain robot, int sleepTime)
     {

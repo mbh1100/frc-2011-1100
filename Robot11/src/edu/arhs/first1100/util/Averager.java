@@ -51,15 +51,14 @@ public class Averager
      */
     public void feed(double value)
     {
-        index++;
-        index = index%data.length;
+        index = (index+1)%data.length;
         avg = 0;
         data[index] = value * magnitude;
         for (int i = 0; i < data.length; i++)
         {
             avg += data[i];
         }
-        avg = avg / (data.length + (magnitude - 1));
+        avg /= (data.length + (magnitude - 1));
     }
     
         

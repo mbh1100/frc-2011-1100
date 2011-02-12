@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 public class OperatorSystem extends SystemBase
 {
+    private boolean ignoreJoysticks = false;
+    
     public AdvJoystick leftJoystick; //controls the left side of the robot
     public AdvJoystick rightJoystick;//controls the right side of the robot
     public XboxJoystick xboxJoystick;//controls the arm and other stuff
@@ -54,36 +56,34 @@ public class OperatorSystem extends SystemBase
         
         // Robot drive.  DriveSystem handles when and how to use the input.  We
         // just keep pumping in data.
-        
-        robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
-        robot.driveSystem.setSideSpeed(rightJoystick.getX());
-        
-        //robot.manipulatorSystem.lift.setSpeed(xboxJoystick.getLeftStickY());
-        
-        /*
-        // quo-quo-quo-quo-CHEET *transformers sound effect*
-        if(rightJoystick.getRawButton(11))
-            robot.driveSystem.setDriveModeSideStep();
-        else if(rightJoystick.getRawButton(10))
-            robot.driveSystem.setDriveModeTank();
-        */
-        
-        // Lift control
-        // robot.manipulatorSystem.setLiftSpeed(leftJoystick.getY());
-        
-        if(rightJoystick.getRawButton(1))
+
+        if(ignoreJoysticks)
         {
-            
+            robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
+            robot.driveSystem.setSideSpeed(rightJoystick.getX());
+
+            //robot.manipulatorSystem.lift.setSpeed(xboxJoystick.getLeftStickY());
+
+            /*
+            // quo-quo-quo-quo-CHEET *transformers sound effect*
+            if(rightJoystick.getRawButton(11))
+                robot.driveSystem.setDriveModeSideStep();
+            else if(rightJoystick.getRawButton(10))
+                robot.driveSystem.setDriveModeTank();
+            */
+
+            // Lift control
+            //robot.manipulatorSystem.lift.setSpeed(xboxJoystick.getTrigger());
         }
         
         // Gamepiece indicator control
-        if(leftJoystick.getRawButton(4))
+        if(xboxJoystick.getXButton())
             ledIndicator.setLightColorRed();
 
-        else if(leftJoystick.getRawButton(3))
+        else if(xboxJoystick.getYButton())
             ledIndicator.setLightColorWhite();
 
-        else if(leftJoystick.getRawButton(5))
+        else if(xboxJoystick.getBButton())
             ledIndicator.setLightColorBlue();
         
         else

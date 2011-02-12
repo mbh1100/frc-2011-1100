@@ -8,6 +8,9 @@ import edu.arhs.first1100.camera.CameraSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.robot.RobotMain;
 
+import edu.arhs.first1100.autoctl.Routine;
+import edu.arhs.first1100.autoctl.FollowLineRoutine;
+
 public class AutonomousSystem extends SystemBase
 {
     private final int STATE_IDLE = 0;                  // Doing nothing
@@ -27,19 +30,25 @@ public class AutonomousSystem extends SystemBase
      * Start the process of following the line, positioning the arm, and
      * scoring the ring.
      */
-
+    
     public void init()
     {
         log("Started");
     }
-    
+
+    public void runRoutine(Routine r)
+    {
+        r.start();
+        r.waitForDone();
+    }
+
     public void ScoreUberRing(int startingPosition, boolean rack, int peg)
     {
         /*
          * starting position input:
          *
-         * when facing the rack, 0 is on the left line,
-         * 1 is on the middle line, 2 is on the right line.
+         * when facing the rack, -1 is on the left line,
+         * 0 is on the middle line, 1 is on the right line.
          * 
          * 
          * rack position input:
@@ -52,22 +61,15 @@ public class AutonomousSystem extends SystemBase
          * 3 4 5
          * 6 7 8
          */
-        /*
-        if(startingPosition == 0 || startingPosition == 2)
-        {
-            //robot.lineSystem.followLine();
-        }
-        else
-        {
-            if(rack==false)
-                // Turn left at fork
-                //robot.lineSystem.followLineLeft();
-            else
-                // Turn right at fork
-                //robot.lineSystem.followLineRight();
-        }
-         */
+
         
+        runRoutine( new FollowLineRoutine(robot, 100, startingPosition) );
+        
+
+        //runRoutine( new FollowLineRoutine(robot, 100) );
+        
+        runRoutine( new AimPegRoutine(robot, 100) );
+
     }
 
     public void tick()
