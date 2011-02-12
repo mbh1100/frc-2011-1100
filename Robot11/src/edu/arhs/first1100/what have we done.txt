@@ -1,3 +1,6 @@
 created a program that follows the retro reflective tape
 robot drives
 finished jaguarpair
+xbox joystick class
+averager
+control diagram
