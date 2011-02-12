@@ -40,8 +40,8 @@ public class DriveSystem extends SystemBase
          super(robot, sleepTime);
          
          // JaguarPair(ch1, ch2, invert, averager sample size);
-         leftTankMotor  = new JaguarPair(1, 3, true, 3);
-         rightTankMotor = new JaguarPair(2, 4, false, 3);
+         leftTankMotor  = new JaguarPair(1, 3, false, 3);
+         rightTankMotor = new JaguarPair(2, 4, true, 3);
          
          sidestepDriveMotor = new AdvJaguar(5);
          
