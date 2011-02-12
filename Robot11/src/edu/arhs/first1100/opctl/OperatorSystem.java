@@ -80,12 +80,17 @@ public class OperatorSystem extends SystemBase
         }
         */
         
+        robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
+        robot.driveSystem.setSideSpeed(rightJoystick.getX());
+        
         if(!ignoreJoysticks)
         {
             if(lineRoutine == null)
             {
+                /*
                 robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
                 robot.driveSystem.setSideSpeed(rightJoystick.getX());
+                */
             }
             else
             {
