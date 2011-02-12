@@ -2,7 +2,6 @@ package edu.arhs.first1100.camera;
 
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
-import edu.arhs.first1100.camera.Light;
 import edu.wpi.first.wpilibj.camera.*;
 import edu.wpi.first.wpilibj.image.ColorImage;
 import edu.wpi.first.wpilibj.image.BinaryImage;
@@ -118,12 +117,12 @@ public class CameraSystem extends SystemBase
      */
     public synchronized void setThresholdRGB(int r, int R, int g, int G, int b, int B)
     {
-        minRed   = (r >= 0 && r <= 255 && r <= R)? r : 0;
-        maxRed   = (R >= 0 && R <= 255 && r >= r)? R : 255;
+        minRed = (r >= 0 && r <= 255 && r <= R)? r : 0;
+        maxRed = (R >= 0 && R <= 255 && r >= r)? R : 255;
         minGreen = (g >= 0 && g <= 255 && g <= G)? g : 0;
         maxGreen = (G >= 0 && G <= 255 && G >= g)? G : 255;
-        minBlue  = (b >= 0 && b <= 255 && b <= B)? b : 0;
-        maxBlue  = (B >= 0 && B <= 255 && B >= b)? B : 255;
+        minBlue = (b >= 0 && b <= 255 && b <= B)? b : 0;
+        maxBlue = (B >= 0 && B <= 255 && B >= b)? B : 255;
     }
 
      /**

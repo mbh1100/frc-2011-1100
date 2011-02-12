@@ -1,11 +1,10 @@
-
-
 package edu.arhs.first1100.camera;
 
 import edu.wpi.first.wpilibj.Relay;
 
 public class Light {
     Relay relay;
+
     public Light(int ch)
     {
         relay = new Relay(ch, Relay.Direction.kForward);

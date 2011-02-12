@@ -12,7 +12,6 @@
 package edu.arhs.first1100.robot;
 
 import edu.wpi.first.wpilibj.SimpleRobot;
-import edu.wpi.first.wpilibj.Timer;
 
 import edu.arhs.first1100.autoctl.AutonomousSystem;
 import edu.arhs.first1100.camera.CameraSystem;
