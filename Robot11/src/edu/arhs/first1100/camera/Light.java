@@ -4,19 +4,18 @@ import edu.wpi.first.wpilibj.Relay;
 
 public class Light {
     Relay relay;
+    boolean on = false;
 
     public Light(int ch)
     {
         relay = new Relay(ch, Relay.Direction.kForward);
     }
 
-    public void on()
-    {
-        relay.set(Relay.Value.kOn);
-    }
-    public void off()
-    {
-        relay.set(Relay.Value.kOff);
+    public void toggle(){
+        if (on)
+            relay.set(Relay.Value.kOff);
+        else
+            relay.set(Relay.Value.kOn);
     }
 }
 
