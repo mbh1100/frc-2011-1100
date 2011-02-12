@@ -28,7 +28,7 @@ public class XboxJoystick extends AdvJoystick
     }
 
     /*
-     * NOTE: Triggers are not independant.
+     * NOTE: Triggers are independant.
      * 1.0 to 0 is get right trigger, 1.0 to 0 is get left trigger.
      * both triggers can't be read at once as both triggers down or up = 0.0
      */
