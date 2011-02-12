@@ -19,5 +19,7 @@ public class ManipulatorSystem extends SystemBase
         lift.update();
         claw.update();
         arm.update();
+
+        //compare potentiometers to make sure arm won't run into ground
     }
 }

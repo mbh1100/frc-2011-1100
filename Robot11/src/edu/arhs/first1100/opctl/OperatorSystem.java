@@ -1,24 +1,29 @@
 package edu.arhs.first1100.opctl;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
-
-import edu.wpi.first.wpilibj.Joystick.AxisType;
+import edu.arhs.first1100.autoctl.TargetPegRoutine;
+import edu.arhs.first1100.autoctl.ScoreRoutine;
 
 public class OperatorSystem extends SystemBase
 {
     private boolean ignoreJoysticks = false;
     
-    public AdvJoystick leftJoystick; //controls the left side of the robot
-    public AdvJoystick rightJoystick;//controls the right side of the robot
-    public XboxJoystick xboxJoystick;//controls the arm and other stuff
+    public AdvJoystick leftJoystick;  //controls the left side of the robot
+    public AdvJoystick rightJoystick; //controls the right side of the robot
+    public XboxJoystick xboxJoystick; //controls the arm and other stuff
     
     private ButtonBox buttonBox;
-    private GamepieceIndicator ledIndicator;//indicates the gamepiece that the human
-                                    //should give to the robot
-
+    private GamepieceIndicator ledIndicator; //indicates the gamepiece that the human
+                                             //should give to the robot
+    private boolean ignoreManipulatorCommands = false;
+    
+    private TargetPegRoutine targetRoutine;
+    private ScoreRoutine scoreRoutine;
+    
     public OperatorSystem(RobotMain robot, int sleepTime)
     {
         super(robot, sleepTime);
@@ -31,6 +36,8 @@ public class OperatorSystem extends SystemBase
         
         ledIndicator  = new GamepieceIndicator();
         ledIndicator.start();
+
+        
     }
     
     public void tick()
@@ -57,13 +64,29 @@ public class OperatorSystem extends SystemBase
         // Robot drive.  DriveSystem handles when and how to use the input.  We
         // just keep pumping in data.
 
-        if(ignoreJoysticks)
+        if(xboxJoystick.getAButton() && !ignoreManipulatorCommands)
+        {
+            
+        }
+
+        if(!ignoreJoysticks)
         {
             robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
             robot.driveSystem.setSideSpeed(rightJoystick.getX());
 
-            //robot.manipulatorSystem.lift.setSpeed(xboxJoystick.getLeftStickY());
-
+            if(!ignoreManipulatorCommands)
+            {
+                robot.manipulatorSystem.lift.setSpeed(xboxJoystick.getLeftStickY());
+            }
+            else
+            {
+                if(xboxJoystick.getLeftBumper())
+                {
+                    
+                    ignoreManipulatorCommands = false;
+                }
+            }
+            
             /*
             // quo-quo-quo-quo-CHEET *transformers sound effect*
             if(rightJoystick.getRawButton(11))

@@ -12,10 +12,8 @@
 
 package edu.arhs.first1100.opctl;
 
-
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
-
 
 public class GamepieceIndicator extends Thread
 {

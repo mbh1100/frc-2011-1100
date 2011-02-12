@@ -25,17 +25,7 @@ public class AutonomousSystem extends SystemBase
     {
         super(robot, sleepTime);
     }
-
-    /*
-     * Start the process of following the line, positioning the arm, and
-     * scoring the ring.
-     */
     
-    public void init()
-    {
-        log("Started");
-    }
-
     public void runRoutine(Routine r)
     {
         r.start();
@@ -61,19 +51,19 @@ public class AutonomousSystem extends SystemBase
          * 3 4 5
          * 6 7 8
          */
-         
         
         runRoutine( new FollowLineRoutine(robot, 100, startingPosition) );
         
-
-        //runRoutine( new FollowLineRoutine(robot, 100) );
+        runRoutine( new SelectColumnRoutine(robot, 100) );
         
-        runRoutine( new AimPegRoutine(robot, 100) );
+        runRoutine( new TargetPegRoutine(robot, 100) );
 
+        runRoutine( new ScoreRoutine(robot, 100) );
+        
     }
-
+    
     public void tick()
     {
-
+        
     }
 }
