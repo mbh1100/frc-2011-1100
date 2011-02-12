@@ -137,7 +137,7 @@ public class CameraSystem extends SystemBase
 
     public double getCenterY()
     {
-        if(pRep.length != 0)
+        if(!(pRep.length >= 0))
             return pRep[0].center_mass_y_normalized;
         else
             return 0.0;
@@ -145,7 +145,7 @@ public class CameraSystem extends SystemBase
 
     public double getCenterX()
     {
-        if(pRep.length != 0)
+        if(!(pRep.length >= 0))
             return pRep[0].center_mass_x_normalized;
         else
             return 0.0;
@@ -159,6 +159,18 @@ public class CameraSystem extends SystemBase
     {
         return pRep;
     }
+    /**
+     * Return a specified number of particles in order of size.
+     * @param n Number of particles
+     * @return ParticleAnalysisReport[n]
+     */
+    public synchronized ParticleAnalysisReport[] getParticles(int n)
+    {
+        ParticleAnalysisReport[] p = new ParticleAnalysisReport[n];
+        System.arraycopy(pRep, 0, p, 0, n);
+        return p;
+    }
+
 
      /**
      * Returns the biggest particle found by the camera.
@@ -174,5 +186,28 @@ public class CameraSystem extends SystemBase
         {
             return null;
         }
+    }
+
+    /**
+     * Sort an array of particles by their Y values.
+     * @param p ParticleAnalysisReport[]
+     * @return sorted ParticleAnalysisReport[]
+     */
+    public synchronized ParticleAnalysisReport[] SortY(ParticleAnalysisReport[] p)
+    {
+        int l = p.length;
+        int index = 0;
+        ParticleAnalysisReport[] sortedP = new ParticleAnalysisReport[l];
+        for (int i = 0; i< l-1; i++)
+        {
+            index = i;
+            for (int n = i+1; n< l;n++)
+            {
+                if (p[i].center_mass_y < p[n].center_mass_y)
+                    index++;
+            }
+            sortedP[index] = p[i];
+        }
+        return sortedP;
     }
 }
