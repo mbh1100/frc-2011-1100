@@ -6,7 +6,7 @@ public class XboxJoystick extends AdvJoystick
     {
         super(ch);
     }
-    
+
     public double getLeftStickX()
     {
         return super.getRawAxis(1);
@@ -25,7 +25,6 @@ public class XboxJoystick extends AdvJoystick
     public double getRightStickY()
     {
         return super.getRawAxis(5);
-
     }
 
     /*

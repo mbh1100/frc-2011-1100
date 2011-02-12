@@ -59,7 +59,7 @@ public class RobotMain extends SimpleRobot
         manipulatorSystem.start();
         minibotSystem.start();
 
-        log("enabled autonomous");
+        //log("enabled autonomous");
     }
     
     public void operatorControl()
@@ -72,7 +72,7 @@ public class RobotMain extends SimpleRobot
         manipulatorSystem.start();
         minibotSystem.start();
 
-        log("enabled teleop");
+        //log("enabled teleop");
     }
     
     public void disabled()
@@ -85,7 +85,7 @@ public class RobotMain extends SimpleRobot
         manipulatorSystem.stop();
         minibotSystem.stop();
         
-        log("disabled");
+        //log("disabled");
     }
 
     public void log(String message)
