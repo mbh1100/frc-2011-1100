@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.arhs.first1100.autoctl.Routine;
 import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.line.LineSystem;
-import
 
 public class FollowLineRoutine extends Routine
 {
