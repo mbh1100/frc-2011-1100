@@ -45,12 +45,16 @@ public class Lift
     
     public void setSpeed(double speed)
     {
+        liftPid.disable();
+        camPid.disable();
         liftJaguar.set(speed);
     }
 
     public void setHeight(double target)
     {
+        camPid.disable();
         liftPid.setSetpoint(target);
+        liftPid.enable();
     }
 
     public void setHeight(int point)
@@ -60,6 +64,8 @@ public class Lift
     
     public void stop()
     {
+        camPid.disable();
+        liftPid.disable();
         liftJaguar.set(0.0);
     }
     
