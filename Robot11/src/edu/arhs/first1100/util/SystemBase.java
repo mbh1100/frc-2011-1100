@@ -51,27 +51,13 @@ public class SystemBase extends Thread
         {
             while(!stopThread)
             {
-                try
-                {
-                    tick(); // User code
-                    sleep(sleepTime);
-                }
-                catch(Exception e)
-                {
-                    log("Thread crash! " + e.getMessage());
-                }
+                tick(); // User code
+                Timer.delay( ((double)(sleepTime))/1000 );
             }
             
             while(stopThread)
             {
-                try
-                {
-                    sleep(5);
-                }
-                catch(InterruptedException e)
-                {
-                    log("Interrupted sleep: " + e.getMessage());
-                }
+                Timer.delay(0.1);
             }
         
         log("run is looping again");

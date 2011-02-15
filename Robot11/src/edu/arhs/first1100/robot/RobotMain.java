@@ -20,9 +20,13 @@ import edu.arhs.first1100.line.LineSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.minibot.MinibotSystem;
 import edu.arhs.first1100.opctl.OperatorSystem;
+import edu.wpi.first.wpilibj.Compressor;
 
 public class RobotMain extends SimpleRobot
 {
+    private final int COMPRESSOR_VALUE = 1;
+    private final int COMPRESSOR_SWITCH_CHANNEL = 6;
+
     public AutonomousSystem autonomousSystem;
     public CameraSystem cameraSystem;
     public DriveSystem driveSystem;
@@ -30,6 +34,7 @@ public class RobotMain extends SimpleRobot
     public ManipulatorSystem manipulatorSystem;
     public MinibotSystem minibotSystem;
     public OperatorSystem operatorSystem;
+    private Compressor compressor;
 
     public void robotInit()
     {
@@ -41,6 +46,9 @@ public class RobotMain extends SimpleRobot
         lineSystem = new LineSystem(this, 100);
         manipulatorSystem = new ManipulatorSystem(this, 100);
         minibotSystem = new MinibotSystem(this, 100);
+        compressor = new Compressor(COMPRESSOR_SWITCH_CHANNEL, COMPRESSOR_VALUE);
+
+        compressor.start();
         
         // operator & autonomous threads started/stopped by teleopInit and autonomousInit
         
@@ -59,7 +67,7 @@ public class RobotMain extends SimpleRobot
         manipulatorSystem.start();
         minibotSystem.start();
 
-        //log("enabled autonomous");
+        log("enabled autonomous");
     }
     
     public void operatorControl()
@@ -72,7 +80,7 @@ public class RobotMain extends SimpleRobot
         manipulatorSystem.start();
         minibotSystem.start();
 
-        //log("enabled teleop");
+        log("enabled teleop");
     }
     
     public void disabled()
@@ -85,7 +93,7 @@ public class RobotMain extends SimpleRobot
         manipulatorSystem.stop();
         minibotSystem.stop();
         
-        //log("disabled");
+        log("disabled");
     }
 
     public void log(String message)

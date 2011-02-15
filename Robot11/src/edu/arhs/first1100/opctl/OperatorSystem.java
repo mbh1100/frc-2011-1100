@@ -36,6 +36,7 @@ public class OperatorSystem extends SystemBase
         leftJoystick  = new AdvJoystick(1);
         rightJoystick = new AdvJoystick(2);
         xboxJoystick  = new XboxJoystick(3);
+
         
         ledIndicator  = new GamepieceIndicator();
         ledIndicator.start();
@@ -57,6 +58,15 @@ public class OperatorSystem extends SystemBase
             AutonomousGoal goal = new AutonomousGoal(0,false,0,0);
             scoreRoutine = new ScoreRoutine(robot, 100, goal);
             scoreRoutine.start();
+        }
+
+        if(xboxJoystick.getRawButton(7))
+        {
+            robot.minibotSystem.dropArm();
+        }
+        if(xboxJoystick.getRawButton(8))
+        {
+            robot.minibotSystem.deploy();
         }
         
         if(leftJoystick.getRawButton(11) && lineRoutine == null)
@@ -107,8 +117,28 @@ public class OperatorSystem extends SystemBase
                 targetRoutine.stop();
                 targetRoutine = null;
             }
+            else
+            {
+                if(xboxJoystick.getLeftBumper())
+                {
+                    lineRoutine.stop();
+                    lineRoutine = null;
+                }
+            }
+            
+            if(targetRoutine == null)
+            {
+                //robot.manipulatorSystem.lift.setSpeed(xboxJoystick.getLeftStickY());
+            }
+            else
+            {
+                if(xboxJoystick.getLeftBumper())
+                {
+                    targetRoutine.stop();
+                    targetRoutine = null;
+                }
+            }
         }
-
         /*
          * Arm control
          */
