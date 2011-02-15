@@ -9,13 +9,13 @@ import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
 
 public class LineSystem extends SystemBase
-{
-    public final int STATE_MIDDLE = 0;
-    public final int STATE_RIGHT = -1;
-    public final int STATE_LEFT = 1;
-    public final int STATE_NONE = 2;
-    public final int STATE_ALL = 3;
-    public final int STATE_SPLIT = 4;
+{   //these need to be static for FollowLineRoutine;
+    public static final int STATE_MIDDLE = 0;
+    public static final int STATE_RIGHT = -1;
+    public static final int STATE_LEFT = 1;
+    public static final int STATE_NONE = 2;
+    public static final int STATE_ALL = 3;
+    public static final int STATE_SPLIT = 4;
     
     int lineStatus = STATE_MIDDLE;
 
