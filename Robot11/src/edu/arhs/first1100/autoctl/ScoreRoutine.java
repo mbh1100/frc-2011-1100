@@ -13,9 +13,9 @@ import edu.arhs.first1100.robot.RobotMain;
 
 public class ScoreRoutine extends Routine
 {
-    public ScoreRoutine(RobotMain robot, int sleep)
+    public ScoreRoutine(RobotMain robot, int sleep, AutonomousGoal goal)
     {
-        super(robot, sleep);
+        super(robot, sleep, goal);
     }
 
     public void tick()

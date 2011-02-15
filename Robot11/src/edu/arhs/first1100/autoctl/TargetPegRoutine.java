@@ -8,20 +8,19 @@ package edu.arhs.first1100.autoctl;
 
 import edu.wpi.first.wpilibj.Timer;
 
-import edu.arhs.first1100.autoctl.Routine;
 import edu.arhs.first1100.robot.RobotMain;
+import edu.arhs.first1100.util.PID;
 
 public class TargetPegRoutine extends Routine
 {
-    public TargetPegRoutine(RobotMain robot, int sleep)
+    public TargetPegRoutine(RobotMain robot, int sleep, AutonomousGoal goal)
     {
-        super(robot, sleep);
+        super(robot, sleep, goal);
     }
 
     public void tick()
     {
-        //read camera, position lift
         Timer.delay(3);
-        super.setDone();
+        setDone();
     }
 }

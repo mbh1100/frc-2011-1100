@@ -2,6 +2,7 @@ package edu.arhs.first1100.manipulator;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Encoder;
 
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
@@ -11,8 +12,11 @@ public class ManipulatorSystem extends SystemBase
 {
     private AdvJaguar lift;
     private AdvJaguar arm;
+    
     private Solenoid wrist;
     private Solenoid claw;
+
+    private Encoder liftEncoder;
     
     public ManipulatorSystem(RobotMain robot, int sleepTime)
     {
@@ -80,8 +84,5 @@ public class ManipulatorSystem extends SystemBase
     {
         arm.update();
         lift.update();
-
-        // TODO: have POTs on each motor, compare each value, and make
-        // limiting code to make sure the arm can't crash to the ground
     }
 }

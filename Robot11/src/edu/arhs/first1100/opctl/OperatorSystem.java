@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
+import edu.arhs.first1100.autoctl.AutonomousGoal;
 import edu.arhs.first1100.autoctl.TargetPegRoutine;
 import edu.arhs.first1100.autoctl.ScoreRoutine;
 import edu.arhs.first1100.autoctl.FollowLineRoutine;
@@ -53,13 +54,17 @@ public class OperatorSystem extends SystemBase
          */
         if(xboxJoystick.getAButton() && scoreRoutine == null)
         {
-            scoreRoutine = new ScoreRoutine(robot, 100);
+            AutonomousGoal goal = new AutonomousGoal(0,false,0,0);
+            scoreRoutine = new ScoreRoutine(robot, 100, goal);
             scoreRoutine.start();
         }
         
         if(leftJoystick.getRawButton(11) && lineRoutine == null)
         {
-            lineRoutine = new FollowLineRoutine(robot, 100);
+            // middle line, go to left, bottom left peg. Get actual
+            // target from controller
+            AutonomousGoal goal = new AutonomousGoal(0,false,0,0);
+            lineRoutine = new FollowLineRoutine(robot, 100, goal);
             lineRoutine.start();
         }
         

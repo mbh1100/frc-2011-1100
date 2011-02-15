@@ -10,21 +10,9 @@ public class FollowLineRoutine extends Routine
     private int path = 0;
     private final double TURN_DELAY = 0.6;
     
-    public FollowLineRoutine(RobotMain robot, int sleep)
+    public FollowLineRoutine(RobotMain robot, int sleep, AutonomousGoal goal)
     {
-        super(robot, sleep);
-    }
-
-    /**
-     *
-     * @param robot
-     * @param sleep
-     * @param path Set which way down the path to go.  0 none, -1 left, 1 right.
-     */
-    public FollowLineRoutine(RobotMain robot, int sleep, int path)
-    {
-        super(robot, sleep);
-        this.path = path;
+        super(robot, sleep, goal);
     }
 
     public void tick()

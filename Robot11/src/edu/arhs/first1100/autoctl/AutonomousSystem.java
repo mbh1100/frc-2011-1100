@@ -32,33 +32,44 @@ public class AutonomousSystem extends SystemBase
         r.waitForDone();
     }
 
-    public void ScoreUberRing(int startingPosition, boolean rack, int peg)
+    public void ScoreUberRing(int startingPosition)
     {
         /*
          * starting position input:
-         *
+         * 
          * when facing the rack, -1 is on the left line,
          * 0 is on the middle line, 1 is on the right line.
          * 
          * 
-         * rack position input:
-         *
-         * when rack is false, it refers to the left rack.
-         * when tack is true, it refers to the right rack.
+         * rack position:
+         *    when rack is false, it refers to the left rack.
+         *    when tack is true, it refers to the right rack.
          * 
-         * peg position chart:
-         * 0 1 2
-         * 3 4 5
-         * 6 7 8
+         * Columns:
+         *    2
+         *    1
+         *    0
+         *
+         * Rows:
+         *  0 1 2
+         * 
+         * 
          */
+         
+        //                                         startingpos,  side, column, row
+        AutonomousGoal goal = new AutonomousGoal(            0, false,      1,   0);
         
-        runRoutine( new FollowLineRoutine(robot, 100, startingPosition) );
-        
-        runRoutine( new SelectColumnRoutine(robot, 100) );
-        
-        runRoutine( new TargetPegRoutine(robot, 100) );
+        // Follow the line.  Will automaticly know which way to go down the split
+        new FollowLineRoutine(robot, 100, goal).execute();
 
-        runRoutine( new ScoreRoutine(robot, 100) );
+        // Position robot in front of the right column
+        new SelectColumnRoutine(robot, 100, goal).execute();
+        
+        // Set the right lift height
+        new TargetPegRoutine(robot, 100, goal).execute();
+        
+        // move the lift and arm out and release the gripper to score a tube
+        new ScoreRoutine(robot, 100, goal).execute();
         
     }
     

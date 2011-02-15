@@ -9,23 +9,35 @@ import edu.arhs.first1100.util.Averager;
 
 public class Lift
 {
-    //private final int MAX_HEIGHT = lololololololol;
-    
     // Config for PID controller
     // Will need to calibrate later
-    private final double KP = 0.5;
-    private final double KI = 0.5;
-    private final double KD = 0.5;
+    private final double kCAM_P = 0.5;
+    private final double kCAM_I = 0.05;
+    private final double kCAM_D = 0.005;
     
-    private double targetSpeed = 0.0;
+    private final double kLIFT_P = 0.5;
+    private final double kLIFT_I = 0.05;
+    private final double kLIFT_D = 0.005;
+    
+    private double pulseDistance = .1;
+
+    private PID camPid;
+    private PID liftPid;
     
     private Encoder encoder;
-
+    
     private AdvJaguar liftJaguar;
     
     public Lift()
     {
         liftJaguar = new AdvJaguar(8);
+        encoder = new Encoder(1,2);
+
+        encoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
+        encoder.setDistancePerPulse(pulseDistance);
+        
+        camPid  = new PID(kCAM_P, kCAM_I, kCAM_D, encoder, liftJaguar);
+        liftPid = new PID(kLIFT_P, kLIFT_I, kLIFT_D, null, liftJaguar);
         
         //pid = new PIDController(KP, KI, KD, PIDSource source, PIDOutput output);
 
@@ -35,6 +47,16 @@ public class Lift
     {
         liftJaguar.set(speed);
     }
+
+    public void setHeight(double target)
+    {
+        liftPid.setSetpoint(target);
+    }
+
+    public void setHeight(int point)
+    {
+        
+    }
     
     public void stop()
     {
@@ -43,6 +65,6 @@ public class Lift
     
     public void update()
     {
-        //currentHeight += encoder.getDistance();
+        liftJaguar.update();
     }
 }
