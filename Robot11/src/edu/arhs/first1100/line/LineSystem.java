@@ -1,10 +1,5 @@
 package edu.arhs.first1100.line;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.Joystick;
-
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
 
