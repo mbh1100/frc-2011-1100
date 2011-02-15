@@ -21,6 +21,7 @@ public class ManipulatorSystem extends SystemBase
     public ManipulatorSystem(RobotMain robot, int sleepTime)
     {
         super(robot, sleepTime);
+        liftEncoder = new Encoder(8, 9);
     }
 
     public void setLiftSpeed(double speed)
@@ -38,7 +39,7 @@ public class ManipulatorSystem extends SystemBase
         log("Open claw");
         setClaw(true);
     }
-
+    
     public void closeClaw()
     {
         log("Close claw");
@@ -78,11 +79,17 @@ public class ManipulatorSystem extends SystemBase
     public void toggleWrist()
     {
         log("Toggle wrist");
-        wrist.set(!wrist.get()); }
+        wrist.set(!wrist.get());
+    }
     
     public void tick()
     {
-        arm.update();
-        lift.update();
+        //arm.update();
+        //lift.update();
+        
+        log("Get:" +liftEncoder.get());
+        log("Dist:"+liftEncoder.getDistance());
+        log("Dir:" +liftEncoder.getDirection());
+        log("");
     }
 }
