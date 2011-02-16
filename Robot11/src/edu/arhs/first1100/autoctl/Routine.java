@@ -5,13 +5,16 @@ import edu.arhs.first1100.util.SystemBase;
 
 public class Routine extends SystemBase
 {
-    public boolean done = false;
-    AutonomousGoal goal;
+    private boolean done = false;
     
-    public Routine(RobotMain robot, int sleep, AutonomousGoal goal)
+    public Routine(RobotMain robot, int sleep)
     {
         super(robot, sleep);
-        this.goal = goal;
+    }
+
+    public boolean isDone()
+    {
+        return done;
     }
 
     public synchronized void waitForDone()

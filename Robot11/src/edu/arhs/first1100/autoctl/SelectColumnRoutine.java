@@ -13,10 +13,14 @@ import edu.arhs.first1100.robot.RobotMain;
 
 public class SelectColumnRoutine extends Routine
 {
-    
-    public SelectColumnRoutine(RobotMain robot, int sleep, AutonomousGoal goal)
+    private int startingColumn = 0;
+    private int targetColumn = 0;
+
+    public SelectColumnRoutine(RobotMain robot, int sleep, int startingColumn, int targetColumn)
     {
-        super(robot, sleep, goal);
+        super(robot, sleep);
+        this.startingColumn = startingColumn;
+        this.targetColumn = targetColumn;
     }
 
     public void tick()

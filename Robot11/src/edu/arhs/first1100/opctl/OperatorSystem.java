@@ -23,9 +23,9 @@ public class OperatorSystem extends SystemBase
     private GamepieceIndicator ledIndicator;  //indicates the gamepiece that the human. I love you.
                                               //should give to the robot I really do
     // These are supposed to start as null
-    private TargetPegRoutine targetRoutine;
-    private ScoreRoutine scoreRoutine;
-    private FollowLineRoutine lineRoutine;
+    private TargetPegRoutine targetRoutine = null;
+    private ScoreRoutine scoreRoutine = null;
+    private FollowLineRoutine lineRoutine = null;
     
     public OperatorSystem(RobotMain robot, int sleepTime)
     {
@@ -36,7 +36,6 @@ public class OperatorSystem extends SystemBase
         leftJoystick  = new AdvJoystick(1);
         rightJoystick = new AdvJoystick(2);
         xboxJoystick  = new XboxJoystick(3);
-
         
         ledIndicator  = new GamepieceIndicator();
         ledIndicator.start();
@@ -53,13 +52,22 @@ public class OperatorSystem extends SystemBase
         /*
          * Run routines
          */
-        if(xboxJoystick.getAButton() && scoreRoutine == null)
+        if(leftJoystick.getRawButton(11) && lineRoutine == null)
         {
-            AutonomousGoal goal = new AutonomousGoal(0,false,0,0);
-            scoreRoutine = new ScoreRoutine(robot, 100, goal);
-            scoreRoutine.start();
+            // middle line, go to left, bottom left peg. Get actual
+            // target from controller
+            lineRoutine = new FollowLineRoutine(robot, 100);
+            lineRoutine.start();
+        }
+        if(xboxJoystick.getAButton() && targetRoutine == null)
+        {
+            // middle line, go to left, bottom left peg. Get actual
+            // target from controller
+            targetRoutine = new TargetPegRoutine(robot, 100, -100.0);
+            targetRoutine.start();
         }
 
+        /*
         if(xboxJoystick.getRawButton(7))
         {
             robot.minibotSystem.dropArm();
@@ -68,15 +76,7 @@ public class OperatorSystem extends SystemBase
         {
             robot.minibotSystem.deploy();
         }
-        
-        if(leftJoystick.getRawButton(11) && lineRoutine == null)
-        {
-            // middle line, go to left, bottom left peg. Get actual
-            // target from controller
-            AutonomousGoal goal = new AutonomousGoal(0,false,0,0);
-            lineRoutine = new FollowLineRoutine(robot, 100, goal);
-            lineRoutine.start();
-        }
+        */
         
         /*
          * Driving
@@ -96,64 +96,45 @@ public class OperatorSystem extends SystemBase
         }
         else
         {
-            if(xboxJoystick.getLeftBumper())
+            if(leftJoystick.getRawButton(10))
             {
                 lineRoutine.stop();
                 lineRoutine = null;
             }
         }
-
+        
         /*
          * Lift control
          */
         if(targetRoutine == null)
         {
-            robot.manipulatorSystem.setLiftSpeed(xboxJoystick.getTriggers()/2);
+            robot.manipulatorSystem.setLiftSpeed(xboxJoystick.getTriggers() / 2);
         }
         else
         {
-            if(xboxJoystick.getLeftBumper())
+            if(xboxJoystick.getLeftBumper() || targetRoutine.isDone())
             {
                 targetRoutine.stop();
                 targetRoutine = null;
             }
-            else
-            {
-                if(xboxJoystick.getLeftBumper())
-                {
-                    lineRoutine.stop();
-                    lineRoutine = null;
-                }
-            }
-            
-            if(targetRoutine == null)
-            {
-                //robot.manipulatorSystem.lift.setSpeed(xboxJoystick.getLeftStickY());
-            }
-            else
-            {
-                if(xboxJoystick.getLeftBumper())
-                {
-                    targetRoutine.stop();
-                    targetRoutine = null;
-                }
-            }
         }
+
         /*
          * Arm control
          */
-        if(scoreRoutine == null)
+        if(true)//scoreRoutine == null)
         {
-            robot.manipulatorSystem.setClaw( xboxJoystick.getRightStickY()<-0.5 ? true : false );
-            robot.manipulatorSystem.setWrist( !xboxJoystick.getRightBumper() );
+            //robot.manipulatorSystem.setClaw( xboxJoystick.getRightStickY()<-0.5 ? true : false );
+            //robot.manipulatorSystem.setWrist( !xboxJoystick.getRightBumper() );
         }
         else
         {
+            /*
             if(xboxJoystick.getLeftBumper())
             {
                 scoreRoutine.stop();
                 scoreRoutine = null;
-            }
+            }*/
         }
         
         

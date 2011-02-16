@@ -6,21 +6,34 @@
 
 package edu.arhs.first1100.autoctl;
 
-import edu.wpi.first.wpilibj.Timer;
+import edu.arhs.first1100.manipulator.ManipulatorSystem;
 
 import edu.arhs.first1100.robot.RobotMain;
-import edu.arhs.first1100.util.PID;
 
 public class TargetPegRoutine extends Routine
 {
-    public TargetPegRoutine(RobotMain robot, int sleep, AutonomousGoal goal)
+    double targetHeight = 0;
+    
+    public TargetPegRoutine(RobotMain robot, int sleep, double height)
     {
-        super(robot, sleep, goal);
+        super(robot, sleep);
+        robot.manipulatorSystem.setLiftHeight(height);
+        //robot.manipulatorSystem.waitUntilDone();
+        //robot.manipulatorSystem.trackWithCamera();
+        //robot.manipulatorSystem.waitUntilDone();
+
+        log("launching TargetPegRoutine to height " + height);
     }
 
+    public TargetPegRoutine(RobotMain robot, int sleep)
+    {
+        super(robot, sleep);
+        targetHeight = /*Get current lift height*/ 0;
+    }
+    
     public void tick()
     {
-        Timer.delay(3);
-        setDone();
+        if(robot.manipulatorSystem.PIDOnTarget())
+            setDone();
     }
 }

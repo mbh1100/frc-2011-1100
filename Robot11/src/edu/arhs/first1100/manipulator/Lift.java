@@ -2,6 +2,7 @@ package edu.arhs.first1100.manipulator;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Jaguar;
 
 import edu.arhs.first1100.util.AdvJaguar;
 import edu.arhs.first1100.util.PID;
@@ -15,9 +16,9 @@ public class Lift
     private final double kCAM_I = 0.05;
     private final double kCAM_D = 0.005;
     
-    private final double kLIFT_P = 0.5;
-    private final double kLIFT_I = 0.05;
-    private final double kLIFT_D = 0.005;
+    private final double kLIFT_P = 0.1;
+    private final double kLIFT_I = 0.01;
+    private final double kLIFT_D = 0.001;
     
     private double pulseDistance = .1;
 
@@ -26,18 +27,19 @@ public class Lift
     
     private Encoder encoder;
     
-    private AdvJaguar liftJaguar;
+    private Jaguar liftJaguar;
     
     public Lift()
     {
-        liftJaguar = new AdvJaguar(8);
-        encoder = new Encoder(1,2);
+        liftJaguar = new Jaguar(6);
+        encoder = new Encoder(9,8);
 
         encoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
         encoder.setDistancePerPulse(pulseDistance);
+        encoder.start();
         
-        camPid  = new PID(kCAM_P, kCAM_I, kCAM_D, encoder, liftJaguar);
-        liftPid = new PID(kLIFT_P, kLIFT_I, kLIFT_D, null, liftJaguar);
+        //camPid  = new PID(kCAM_P, kCAM_I, kCAM_D, null, liftJaguar);
+        liftPid = new PID(kLIFT_P, kLIFT_I, kLIFT_D, encoder, liftJaguar);
         
         //pid = new PIDController(KP, KI, KD, PIDSource source, PIDOutput output);
 
@@ -46,13 +48,13 @@ public class Lift
     public void setSpeed(double speed)
     {
         liftPid.disable();
-        camPid.disable();
+        //camPid.disable();
         liftJaguar.set(speed);
     }
 
     public void setHeight(double target)
     {
-        camPid.disable();
+        //camPid.disable();
         liftPid.setSetpoint(target);
         liftPid.enable();
     }
@@ -64,13 +66,19 @@ public class Lift
     
     public void stop()
     {
-        camPid.disable();
+        //camPid.disable();
         liftPid.disable();
         liftJaguar.set(0.0);
+    }
+
+    public double getPidError()
+    {
+        return liftPid.getError();
     }
     
     public void update()
     {
-        liftJaguar.update();
+        System.out.println("encoder value" + encoder.pidGet());
+        //liftJaguar.update();
     }
 }

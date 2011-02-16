@@ -10,23 +10,34 @@ import edu.arhs.first1100.util.AdvJaguar;
 
 public class ManipulatorSystem extends SystemBase
 {
-    private AdvJaguar lift;
+    public static final int STATE_NONE = 0;
+    public static final int STATE_VALUE = 1;
+    public static final int STATE_CAMERA = 2;
+    
+    private int state = 0;
+    
+    private Lift lift;
     private AdvJaguar arm;
     
     private Solenoid wrist;
     private Solenoid claw;
-
+    
     private Encoder liftEncoder;
     
     public ManipulatorSystem(RobotMain robot, int sleepTime)
     {
         super(robot, sleepTime);
-        liftEncoder = new Encoder(8, 9);
+        lift = new Lift();
     }
 
     public void setLiftSpeed(double speed)
     {
-        lift.set(speed);
+        lift.setSpeed(speed);
+    }
+
+    public void setLiftHeight(double height)
+    {
+        lift.setHeight(height);
     }
 
     public void setArm(double speed)
@@ -81,15 +92,20 @@ public class ManipulatorSystem extends SystemBase
         log("Toggle wrist");
         wrist.set(!wrist.get());
     }
-    
+
+    public void setPIDState(int state)
+    {
+        this.state = state;
+    }
+
+    public boolean PIDOnTarget()
+    {
+        return (lift.getPidError() <= 1);
+    }
+
     public void tick()
     {
         //arm.update();
-        //lift.update();
-        
-        log("Get:" +liftEncoder.get());
-        log("Dist:"+liftEncoder.getDistance());
-        log("Dir:" +liftEncoder.getDirection());
-        log("");
+        lift.update();
     }
 }

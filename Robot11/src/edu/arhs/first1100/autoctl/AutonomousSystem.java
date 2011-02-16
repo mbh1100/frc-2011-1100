@@ -55,22 +55,22 @@ public class AutonomousSystem extends SystemBase
          * 
          * 
          */
-         
-        //                                         startingpos,  side, column, row
-        AutonomousGoal goal = new AutonomousGoal(            0, false,      1,   0);
-        
+
+        /*
+
         // Follow the line.  Will automaticly know which way to go down the split
-        new FollowLineRoutine(robot, 100, goal).execute();
+        new FollowLineRoutine(robot, 100).execute();
 
         // Position robot in front of the right column
-        new SelectColumnRoutine(robot, 100, goal).execute();
+        new SelectColumnRoutine(robot, 100).execute();
         
         // Set the right lift height
-        new TargetPegRoutine(robot, 100, goal).execute();
+        new TargetPegRoutine(robot, 100).execute();
         
         // move the lift and arm out and release the gripper to score a tube
-        new ScoreRoutine(robot, 100, goal).execute();
+        new ScoreRoutine(robot, 100).execute();
         
+        */
     }
     
     public void tick()

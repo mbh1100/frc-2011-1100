@@ -10,11 +10,18 @@ public class FollowLineRoutine extends Routine
     private int path = 0;
     private final double TURN_DELAY = 0.6;
     
-    public FollowLineRoutine(RobotMain robot, int sleep, AutonomousGoal goal)
+    public FollowLineRoutine(RobotMain robot, int sleep, int startingPosition)
     {
-        super(robot, sleep, goal);
+        super(robot, sleep);
+        path = startingPosition;
     }
 
+    public FollowLineRoutine(RobotMain robot, int sleep)
+    {
+        super(robot, sleep);
+        path = 2;
+    }
+    
     public void tick()
     {
         //read from LineSystem
@@ -38,7 +45,10 @@ public class FollowLineRoutine extends Routine
                     robot.driveSystem.setDriveSpeed(0.5, 0.0);
                 else if(path == -1)
                     robot.driveSystem.setDriveSpeed(0.0, 0.5);
-            Timer.delay(TURN_DELAY);
+                else if(path == 2)
+                    setDone();
+                Timer.delay(TURN_DELAY);
+                break;
         }
     }
 }
