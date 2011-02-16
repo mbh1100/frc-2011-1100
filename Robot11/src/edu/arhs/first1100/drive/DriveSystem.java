@@ -77,8 +77,8 @@ public class DriveSystem extends SystemBase
     public void tick()
     {
  // hi. I am required to say that I have done somthing involving programming the robot. This is what I have done. Love, Dr. Ryan Samuel Giblin III
-        leftTankMotor.update();
-        rightTankMotor.update();
+        leftTankMotor.get();
+        rightTankMotor.get();
         //liftMotor.update();
         sidestepDriveMotor.update();
 

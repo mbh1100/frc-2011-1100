@@ -1,30 +1,39 @@
 package edu.arhs.first1100.opctl;
+import edu.arhs.first1100.util.Averager;
 
 public class XboxJoystick extends AdvJoystick
 {
+    private Averager averager;
+    private int sampleSize = 4;
+
     public XboxJoystick(int ch)
     {
         super(ch);
+        averager = new Averager(sampleSize);
     }
 
     public double getLeftStickX()
     {
-        return super.getRawAxis(1);
+        averager.feed(super.getRawAxis(1));
+        return averager.get();
     }
 
     public double getLeftStickY()
     {
-        return super.getRawAxis(2);
+        averager.feed(super.getRawAxis(2));
+        return averager.get();
     }
 
     public double getRightStickX()
     {
-        return super.getRawAxis(4);
+        averager.feed(super.getRawAxis(4));
+        return averager.get();
     }
 
     public double getRightStickY()
     {
-        return super.getRawAxis(5);
+        averager.feed(super.getRawAxis(5));
+        return averager.get();
     }
 
     /*
