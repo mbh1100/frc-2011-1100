@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.Jaguar;
 
 import edu.arhs.first1100.util.AdvJaguar;
 import edu.arhs.first1100.util.PID;
-import edu.arhs.first1100.util.Averager;
 
 public class Lift
 {

@@ -10,14 +10,11 @@
  */
 
 package edu.arhs.first1100.drive;
-
-import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.RobotDrive;
 
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.util.AdvJaguar;
-import edu.arhs.first1100.drive.JaguarPair;
 import edu.arhs.first1100.opctl.OperatorSystem;
 
 public class DriveSystem extends SystemBase

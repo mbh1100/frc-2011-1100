@@ -19,7 +19,6 @@ public class Averager
      * Make a new Averager object.
      * An Averager gives the average value of an array of doubles that you
      * can feed one at a time.  With each feed, the oldest value is dropped.
-     *
      * @param sampleSize The size of the array
      */
     public Averager(int sampleSize)
