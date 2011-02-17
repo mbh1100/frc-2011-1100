@@ -145,7 +145,7 @@ public class CameraSystem extends SystemBase
         else
             return 0.0;
     }
-
+    
     public double getCenterX()
     {
         if(!(pRep.length >= 0))

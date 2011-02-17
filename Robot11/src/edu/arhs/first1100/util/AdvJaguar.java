@@ -16,13 +16,10 @@ package edu.arhs.first1100.util;
 
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Timer;
-import edu.arhs.first1100.util.Averager;
 
 public class AdvJaguar extends Jaguar
 {
-    Averager averager;
     private boolean polarity;
-    private double targetSpeed = 0.0;
     
     public AdvJaguar(int ch)
     {
@@ -31,25 +28,12 @@ public class AdvJaguar extends Jaguar
 
     public AdvJaguar(int ch, boolean inverted)
     {
-        this(ch, false, 1);
-    }
-    
-    public AdvJaguar(int ch, boolean inverted, int sampleSize)
-    {
         super(ch);
         polarity = inverted;
-        averager = new Averager(sampleSize);
     }
     
     public void set(double speed)
     {
-        targetSpeed = speed;
-    }
-
-    public void update()
-    {
-        averager.feed(targetSpeed);
-        double s = averager.get();
-        super.set( polarity ? -s : s);
+        super.set( polarity ? -speed : speed);
     }
 }

@@ -35,8 +35,4 @@ public class Arm
         armJaguar.set(0.0);
     }
 
-    public void update()
-    {
-        armJaguar.update();
-    }
 }
