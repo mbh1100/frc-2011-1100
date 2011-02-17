@@ -11,7 +11,7 @@ public class LineSystem extends SystemBase
     public static final int STATE_NONE = 2;
     public static final int STATE_ALL = 3;
     public static final int STATE_SPLIT = 4;
-    
+   
     int lineStatus = STATE_MIDDLE;
 
     boolean done = false;
