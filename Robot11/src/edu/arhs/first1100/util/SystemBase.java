@@ -60,9 +60,13 @@ public class SystemBase extends Thread
                 }
                 catch(Exception e)
                 {
-                    log("Thread Error!: " + e.getMessage());
+                    log("********************************");
+                    log("  Fatal Thread Error!");
+                    log(e.getMessage());
+                    log("********************************");
                     robot.disabled();
                 }
+                
                 Timer.delay( ((double)(sleepTime))/1000 );
             }
             
@@ -111,6 +115,7 @@ public class SystemBase extends Thread
      */
     public void log(String message)
     {
+        /*
         int lastDot = 0;
         String name = this.getClass().getName();
         
@@ -120,9 +125,11 @@ public class SystemBase extends Thread
             }
         }
         name = name.substring(lastDot);
-        System.out.println(name+": "+message);
+        */
+        
+        System.out.println(this.getClass().getName().substring(20)+": "+message);
     }
-
+    
     /**
      * Set the amount of time that the system should sleep
      * @param int time How long the component should sleep in milliseconds
