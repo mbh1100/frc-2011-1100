@@ -50,6 +50,7 @@ public class XboxJoystick extends AdvJoystick
     {
         return Math.max(super.getRawAxis(3), 0);
     }
+    
     /*
      * NOTE: Triggers are not independant.
      * 1.0 is right trigger, -1.0 is left trigger.

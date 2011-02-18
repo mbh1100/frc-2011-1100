@@ -5,16 +5,16 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
+import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.autoctl.AutonomousGoal;
 import edu.arhs.first1100.autoctl.TargetPegRoutine;
 import edu.arhs.first1100.autoctl.ScoreRoutine;
 import edu.arhs.first1100.autoctl.FollowLineRoutine;
+
 import edu.wpi.first.wpilibj.Joystick.ButtonType;
 
 public class OperatorSystem extends SystemBase
 {
-    private boolean ignoreJoysticks = false;
-    
     public AdvJoystick leftJoystick;  //controls the left side of the robot. There is love.
     public AdvJoystick rightJoystick; //controls the right side of the robot. I love lurve you.
     public XboxJoystick xboxJoystick; //controls the arm and other stuff. Hi.
@@ -44,13 +44,7 @@ public class OperatorSystem extends SystemBase
     public void tick()
     {
         /*
-            log("Left  Joy:" + leftJoystick.getY());
-            log("Right Joy:" + rightJoystick.getY());
-            log("");
-        */
-
-        /*
-         * Run routines
+         * Start routine buttons
          */
         if(leftJoystick.getRawButton(11) && lineRoutine == null)
         {
@@ -66,17 +60,6 @@ public class OperatorSystem extends SystemBase
             targetRoutine = new TargetPegRoutine(robot, 100, 100.0);
             targetRoutine.start();
         }
-
-        /*
-        if(xboxJoystick.getRawButton(7))
-        {
-            robot.minibotSystem.dropArm();
-        }
-        if(xboxJoystick.getRawButton(8))
-        {
-            robot.minibotSystem.deploy();
-        }
-        */
         
         /*
          * Driving
@@ -125,12 +108,24 @@ public class OperatorSystem extends SystemBase
         if(true)//scoreRoutine == null)
         {
             robot.manipulatorSystem.setClaw( xboxJoystick.getRightStickY()<-0.5 ? true : false );
-            
             robot.manipulatorSystem.setWrist( !xboxJoystick.getRightBumper() );
-
             robot.manipulatorSystem.setArm( xboxJoystick.getLeftStickY() );
-        }
+            
+            /*
+            if(xboxJoystick.getAButton())
+                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
 
+            if(xboxJoystick.getBButton())
+                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_MID_PEG);
+
+            if(xboxJoystick.getYButton())
+                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_TOP_PEG);
+
+            if(xboxJoystick.getXButton())
+                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FEEDER);
+            */
+        }
+        
         else
         {
             /*
@@ -141,7 +136,8 @@ public class OperatorSystem extends SystemBase
             }*/
         }
         
-        
+
+        /*
         // Gamepiece indicator controller of love
         if(xboxJoystick.getXButton())
             ledIndicator.setLightColorRed();
@@ -154,6 +150,6 @@ public class OperatorSystem extends SystemBase
         
         else
             ledIndicator.setLightColorClear();
-        
+        */
     }
 }

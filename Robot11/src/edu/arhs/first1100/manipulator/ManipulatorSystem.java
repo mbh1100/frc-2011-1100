@@ -96,7 +96,7 @@ public class ManipulatorSystem extends SystemBase
                 break;
         }
     }
-
+    
     public void openClaw()
     {
         log("Open claw");
