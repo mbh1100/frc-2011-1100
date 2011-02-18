@@ -1,11 +1,30 @@
 package edu.arhs.first1100.camera;
 
 import edu.wpi.first.wpilibj.Relay;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Light
 {
     Relay relay;
     boolean on = false;
+    java.util.Timer timer;
+        
+    class Timeout extends TimerTask
+    {
+        Light light;
+        
+        public Timeout(Light light)
+        {
+            this.light = light;
+        }
+        
+        public void run()
+        {
+            light.off();
+        }
+        
+    }
 
     public Light(int ch)
     {
@@ -16,14 +35,29 @@ public class Light
     {
         if (on)
         {
-            relay.set(Relay.Value.kOn);
+            this.off();
         }
         else
         {
-            relay.set(Relay.Value.kOff);
+            this.on();
+        }
+    }
+
+    public void onForAWhile ()
+    {
+        this.on();
+        this.scheduleOff();
+    }
+
+    public void scheduleOff()
+    {        
+        if (timer != null)
+        {
+            timer.cancel();
         }
         
-        on = !on;
+        timer = new Timer();
+        timer.schedule(new Timeout(this), 2000);
     }
 
     public void on()

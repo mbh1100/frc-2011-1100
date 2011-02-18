@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.camera.*;
 import edu.wpi.first.wpilibj.image.ColorImage;
 import edu.wpi.first.wpilibj.image.BinaryImage;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
+import edu.wpi.first.wpilibj.Timer;
 
 
 public class CameraSystem extends SystemBase
@@ -37,7 +38,7 @@ public class CameraSystem extends SystemBase
         bImg = null;
         sleepTime = 200;
 
-        //light = new Light(12);
+        light = new Light(12);
 
         //Camera Settings
         ac.writeCompression(0);
@@ -51,6 +52,14 @@ public class CameraSystem extends SystemBase
      * Adjusts camera settings. Then processes camera images until
      * the thread is terminated.
      */
+    public void start()
+    {
+        super.start();
+        while (!ac.freshImage())
+        {
+            Timer.delay(0.1);
+        }
+    }
     public void tick()
     {
         processImg();
@@ -140,6 +149,7 @@ public class CameraSystem extends SystemBase
 
     public double getCenterY()
     {
+        light.onForAWhile();
         if(!(pRep.length >= 0))
             return pRep[0].center_mass_y_normalized;
         else
@@ -148,6 +158,7 @@ public class CameraSystem extends SystemBase
     
     public double getCenterX()
     {
+        light.onForAWhile();
         if(!(pRep.length >= 0))
             return pRep[0].center_mass_x_normalized;
         else
@@ -160,6 +171,7 @@ public class CameraSystem extends SystemBase
      */
     public synchronized ParticleAnalysisReport[] getParticles()
     {
+        light.onForAWhile();
         return pRep;
     }
     /**
@@ -169,6 +181,7 @@ public class CameraSystem extends SystemBase
      */
     public synchronized ParticleAnalysisReport[] getParticles(int n)
     {
+        light.onForAWhile();
         ParticleAnalysisReport[] p = new ParticleAnalysisReport[n];
         System.arraycopy(pRep, 0, p, 0, n);
         return p;
@@ -181,6 +194,7 @@ public class CameraSystem extends SystemBase
      */
     public synchronized ParticleAnalysisReport getBiggestParticle()
     {
+        light.onForAWhile();
         if (pRep != null && pRep.length != 0)
         {
             return pRep[0];
@@ -198,6 +212,7 @@ public class CameraSystem extends SystemBase
      */
     public synchronized ParticleAnalysisReport[] SortY(ParticleAnalysisReport[] p)
     {
+        light.onForAWhile();
         int index = 0;
         ParticleAnalysisReport[] sortedP = new ParticleAnalysisReport[p.length];
         for (int i = 0; i< p.length-1; i++)
