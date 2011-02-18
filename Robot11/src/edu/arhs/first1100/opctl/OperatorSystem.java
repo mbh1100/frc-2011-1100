@@ -155,9 +155,13 @@ public class OperatorSystem extends SystemBase
         /*
          * Minibot control
          */
-        if (xboxJoystick.getBackButton() && xboxJoystick.getStartButton())
+        if (xboxJoystick.getBackButton())
         {
-            robot.minibotSystem.tick();
+            robot.minibotSystem.down();
+        }
+        if (xboxJoystick.getStartButton())
+        {
+            robot.minibotSystem.deploy();
         }
     }
 }

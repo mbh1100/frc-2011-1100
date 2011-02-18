@@ -25,25 +25,25 @@ public class MinibotSystem extends SystemBase
     
     public MinibotSystem(RobotMain robot, int sleepTime)
     {
-
         super(robot, sleepTime);
         towerDetector = new DigitalInput(TOWER_SWITCH_CHANNEL);
         mSolenoid = new Solenoid(MINIBOT_SOLENOID_CHANNEL);
         mJaguar = new AdvJaguar(ADVJAGUAR_CHANEL);
     }
 
-    public void tick()
+    public void deploy()
     {
-        deployReady = towerDetector.get();
-        if (!deployReady)
+        if (towerDetector.get())
+        {
+            mSolenoid.set(true);
+        }
+    }
+
+    public void down()
+    {
+        if(!towerDetector.get())
         {
             mJaguar.set(mJagSpeed);
         }
-        else if (deployReady)
-        {
-            mJaguar.set(0);
-            mSolenoid.set(true);//may need to change to false for correct direction
-        }
-        log((deployReady)? "Moving Down" : "Deploying");
     }
 }

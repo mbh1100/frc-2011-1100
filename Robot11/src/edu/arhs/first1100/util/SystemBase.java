@@ -72,7 +72,7 @@ public class SystemBase extends Thread
      */
     public void tick()
     {
-        log("tick not overridden");
+        //log("Tick!");
     }
     
     public void setRobotMain(RobotMain r)
