@@ -67,7 +67,7 @@ public class OperatorSystem extends SystemBase
         if(lineRoutine == null)
         {
             robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
-            robot.driveSystem.setSideSpeed(rightJoystick.getX());
+            //robot.driveSystem.setSideSpeed(rightJoystick.getX()); // commented out by Alex 2-17-11 to try to get the robot to drive
             
             // quo-quo-quo-quo-CHEET *transformers sound effect*
             /*

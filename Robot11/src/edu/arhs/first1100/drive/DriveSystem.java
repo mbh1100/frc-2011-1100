@@ -46,8 +46,8 @@ public class DriveSystem extends SystemBase
          leftTankmotor2 = new AdvJaguar (4, false);
          rightTankmotor2 = new AdvJaguar(3, true);
 
-         rd = new RobotDrive(leftTankmotor1, rightTankmotor1, leftTankmotor2, rightTankmotor2);
-
+         rd = new RobotDrive(leftTankmotor1, leftTankmotor2 , rightTankmotor1, rightTankmotor2);
+            /// swapped leftTankmotor 2 and rightTankmotor1  Alex 10:26 on 2-17
          sidestepDriveMotor = new AdvJaguar(5);
          
          //this.setDriveSpeed(0.0, 0.0);
