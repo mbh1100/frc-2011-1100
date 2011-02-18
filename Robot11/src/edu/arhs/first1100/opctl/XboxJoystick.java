@@ -90,4 +90,14 @@ public class XboxJoystick extends AdvJoystick
     {
         return super.getRawButton(6);
     }
+
+    public boolean getBackButton()
+    {
+        return super.getRawButton(7);
+    }
+
+    public boolean getStartButton()
+    {
+        return super.getRawButton(8);
+    }
 }

@@ -151,5 +151,12 @@ public class OperatorSystem extends SystemBase
         else
             ledIndicator.setLightColorClear();
         */
+        /*
+         * Minibot control
+         */
+        if (xboxJoystick.getBackButton() && xboxJoystick.getStartButton())
+        {
+            robot.minibotSystem.tick();
+        }
     }
 }
