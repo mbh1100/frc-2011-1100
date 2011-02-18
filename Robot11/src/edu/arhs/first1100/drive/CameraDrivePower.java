@@ -15,15 +15,26 @@ public class CameraDrivePower
     ZPIDSource source;
     ArcadeDriveMux output;
 
-    final private double P = .5;
-    final private double I = .05;
-    final private double D = .005;
+    final private double P = .1;
+    final private double I = .01;
+    final private double D = .001;
 
     PIDOutput power;
 
-    public void trackCamera()
+    public CameraDrivePower(ArcadeDriveMux adm)
     {
+        output = adm;
+        power = new PowerPIDWrite(adm);
         source = new ZPIDSource();
         pid = new PID( P, I, D, source, power);
+        pid.setOutputRange(-0.4, 0.4);
+    }
+    public void trackCamera()
+    {
+        pid.enable();
+    }
+    public void stopTrackCamera()
+    {
+        pid.disable();
     }
 }

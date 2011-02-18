@@ -5,6 +5,7 @@
 
 package edu.arhs.first1100.camera;
 
+import com.sun.squawk.debugger.Log;
 import edu.wpi.first.wpilibj.PIDSource;
 
 public class ZPIDSource implements PIDSource
@@ -13,6 +14,7 @@ public class ZPIDSource implements PIDSource
 
     public double pidGet()
     {
+
         if (cs.pRep.length == 0)
         {
             return 0;
@@ -20,6 +22,7 @@ public class ZPIDSource implements PIDSource
 
         else
         {
+            System.out.println("z-axis return:" + cs.pRep[0].particleArea);
             return cs.pRep[0].particleArea;
         }
     }

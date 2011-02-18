@@ -35,6 +35,9 @@ public class DriveSystem extends SystemBase
     private AdvJaguar liftMotor; //motor that raises lowers the side step wheels
     private AdvJaguar sidestepDriveMotor; // drives the side step wheel
     private RobotDrive rd;
+    private ArcadeDriveMux adm;
+    private CameraDriveCurve cdc;
+    private CameraDrivePower cdp;
 
     public DriveSystem(RobotMain robot, int sleepTime)
     {
@@ -47,12 +50,20 @@ public class DriveSystem extends SystemBase
          rightTankmotor2 = new AdvJaguar(3, true);
 
          rd = new RobotDrive(leftTankmotor1, leftTankmotor2 , rightTankmotor1, rightTankmotor2);
-            /// swapped leftTankmotor 2 and rightTankmotor1  Alex 10:26 on 2-17
          sidestepDriveMotor = new AdvJaguar(5);
          
          //this.setDriveSpeed(0.0, 0.0);
+
+         adm = new ArcadeDriveMux(this);
+         cdc = new CameraDriveCurve(adm);
+         cdp = new CameraDrivePower(adm);
     }
-    
+    public void testCameraDrive(double speed)
+    {
+        cdc.trackCamera();
+        adm.setPower(speed);
+        cdp.trackCamera();
+    }
     public void setDriveSpeed(double leftSide, double rightSide)
     {
         if(state == STATE_TANK)
@@ -74,6 +85,7 @@ public class DriveSystem extends SystemBase
         {
             rd.stopMotor();
         }
+        log("curve:" + curve);
     }
 
     public void setSideSpeed(double speed)

@@ -15,15 +15,28 @@ public class CameraDriveCurve
     XPIDSource source;
     ArcadeDriveMux output;
 
-    final private double P = .5;
-    final private double I = .05;
-    final private double D = .005;
+    final private double P = .1;
+    final private double I = .01;
+    final private double D = .001;
 
     PIDOutput curve;
 
-    public void trackCamera()
+    public CameraDriveCurve (ArcadeDriveMux adm)
     {
+        output = adm;
+        curve = new CurvePIDWrite(adm);
         source = new XPIDSource();
         pid = new PID( P, I, D, source, curve);
+        pid.setOutputRange(-0.3, 0.3);
+    }
+
+    public void trackCamera()
+    {
+        pid.enable();
+    }
+
+    public void stopTrackCamera()
+    {
+        pid.disable();
     }
 } 
