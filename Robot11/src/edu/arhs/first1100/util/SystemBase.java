@@ -19,8 +19,7 @@ public class SystemBase extends Thread
         setSleep(sleep);
         setRobotMain(robot);
     }
-
-
+    
     public SystemBase(int delay)
     {
         setSleep(delay);
@@ -37,6 +36,10 @@ public class SystemBase extends Thread
             super.start();
             threadStarted = true;
         }
+        else
+        {
+            selfNotify();
+        }
     }
 
     public void stop()
@@ -51,17 +54,39 @@ public class SystemBase extends Thread
         {
             while(!stopThread)
             {
-                tick(); // User code
+                try
+                {
+                    tick(); // User code
+                }
+                catch(Exception e)
+                {
+                    log("Thread Error!: " + e.getMessage());
+                    robot.disabled();
+                }
                 Timer.delay( ((double)(sleepTime))/1000 );
             }
             
-            while(stopThread)
-            {
-                Timer.delay(0.1);
-            }
+            selfWait();
         
         log("run is looping again");
         }
+    }
+    
+    public synchronized void selfWait()
+    {
+        try
+        {
+            super.wait();
+        }
+        catch(InterruptedException e)
+        {
+            log("Wait error!");
+        }
+    }
+
+    public synchronized void selfNotify()
+    {
+        super.notify();
     }
     
     /**
