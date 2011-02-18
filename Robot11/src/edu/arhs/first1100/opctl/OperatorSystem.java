@@ -63,7 +63,7 @@ public class OperatorSystem extends SystemBase
         {
             // middle line, go to left, bottom left peg. Get actual
             // target from controller
-            targetRoutine = new TargetPegRoutine(robot, 100, -100.0);
+            targetRoutine = new TargetPegRoutine(robot, 100, 100.0);
             targetRoutine.start();
         }
 
@@ -124,9 +124,13 @@ public class OperatorSystem extends SystemBase
          */
         if(true)//scoreRoutine == null)
         {
-            //robot.manipulatorSystem.setClaw( xboxJoystick.getRightStickY()<-0.5 ? true : false );
-            //robot.manipulatorSystem.setWrist( !xboxJoystick.getRightBumper() );
+            robot.manipulatorSystem.setClaw( xboxJoystick.getRightStickY()<-0.5 ? true : false );
+            
+            robot.manipulatorSystem.setWrist( !xboxJoystick.getRightBumper() );
+
+            robot.manipulatorSystem.setArm( xboxJoystick.getLeftStickY() );
         }
+
         else
         {
             /*

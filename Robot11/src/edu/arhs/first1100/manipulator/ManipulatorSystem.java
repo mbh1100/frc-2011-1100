@@ -10,24 +10,42 @@ import edu.arhs.first1100.util.AdvJaguar;
 
 public class ManipulatorSystem extends SystemBase
 {
-    public static final int STATE_NONE = 0;
-    public static final int STATE_VALUE = 1;
-    public static final int STATE_CAMERA = 2;
     
-    private int state = 0;
+
+    public static final double PEG_TOP1 = 245;
+    public static final double PEG_MIDDLE1 = 80.7;
+    public static final double PEG_BOTTOM1 = 10;
+    
+    public static final double PEG_TOP2 = 245;
+    public static final double PEG_MIDDLE = 105;
+    public static final double PEG_BOTTOM2 = 10;
+    
+    public static final int STATE_DEFAULT    = 0;
+
+    public static final int STATE_TOP_PEG    = 3;
+    public static final int STATE_MID_PEG    = 2;
+    public static final int STATE_BOTTOM_PEG = 1;
+    
+    public static final int STATE_FEEDER     = 4;
+    public static final int STATE_FLOOR      = 5;
+
+    private int state = STATE_DEFAULT;
     
     private Lift lift;
-    private AdvJaguar arm;
+    private Arm arm;
     
     private Solenoid wrist;
     private Solenoid claw;
     
-    private Encoder liftEncoder;
-    
     public ManipulatorSystem(RobotMain robot, int sleepTime)
     {
         super(robot, sleepTime);
+        
         lift = new Lift();
+        arm = new Arm();
+        
+        wrist = new Solenoid(2);
+        claw = new Solenoid(1);
     }
 
     public void setLiftSpeed(double speed)
@@ -35,14 +53,48 @@ public class ManipulatorSystem extends SystemBase
         lift.setSpeed(speed);
     }
 
-    public void setLiftHeight(double height)
-    {
-        lift.setHeight(height);
-    }
-
     public void setArm(double speed)
     {
-        arm.set(speed);
+        arm.setSpeed(speed);
+    }
+
+    public void setState(int state)
+    {
+        log("Set State:"+state);
+        
+        switch(state)
+        {
+            case STATE_TOP_PEG:
+                lift.setState(Lift.STATE_HIGH);
+                arm.setState(Arm.STATE_HIGH);
+                raiseWrist();
+                break;
+            case STATE_MID_PEG:
+                lift.setState(Lift.STATE_LOW);
+                arm.setState(Arm.STATE_MID);
+                raiseWrist();
+                break;
+            case STATE_BOTTOM_PEG:
+                lift.setState(Lift.STATE_MID);
+                arm.setState(Arm.STATE_LOW);
+                raiseWrist();
+                break;
+            case STATE_FEEDER:
+                lift.setState(Lift.STATE_LOW);
+                arm.setState(Arm.STATE_MID);
+                raiseWrist();
+                break;
+            case STATE_FLOOR:
+                lift.setState(Lift.STATE_MID);
+                arm.setState(Arm.STATE_LOW);
+                lowerWrist();
+                break;
+            case STATE_DEFAULT:
+                lift.setState(Lift.STATE_LOW);
+                arm.setState(Arm.STATE_HIGH);
+                raiseWrist();
+                break;
+        }
     }
 
     public void openClaw()
@@ -92,20 +144,21 @@ public class ManipulatorSystem extends SystemBase
         log("Toggle wrist");
         wrist.set(!wrist.get());
     }
-
-    public void setPIDState(int state)
-    {
-        this.state = state;
-    }
-
-    public boolean PIDOnTarget()
+    
+    public boolean liftOnTarget()
     {
         return (lift.getPidError() <= 1);
     }
 
+    public boolean armPIDOnTarget()
+    {
+        return (arm.getPidError() <= 1);
+    }
+    
     public void tick()
     {
         //arm.update();
-        lift.update();
+        //lift.update();
+        
     }
 }

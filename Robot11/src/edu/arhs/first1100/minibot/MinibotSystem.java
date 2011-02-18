@@ -17,7 +17,6 @@ public class MinibotSystem extends SystemBase
     private DigitalInput towerDetector;
     private Solenoid minibotsolenoid;
     private AdvJaguar minibotjaguar;
-
     
     public MinibotSystem(RobotMain robot, int sleepTime)
     {
