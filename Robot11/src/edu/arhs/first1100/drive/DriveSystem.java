@@ -26,20 +26,28 @@ public class DriveSystem extends SystemBase
 
     private int state = STATE_TANK;
     
-    private JaguarPair leftTankMotor;
-    private JaguarPair rightTankMotor;
-
+   // private JaguarPair leftTankMotor;
+    //private JaguarPair rightTankMotor;
+    private AdvJaguar rightTankmotor1;
+    private AdvJaguar rightTankmotor2;
+    private AdvJaguar leftTankmotor1;//left tank 1
+    private AdvJaguar leftTankmotor2;//left tank 2
     private AdvJaguar liftMotor; //motor that raises lowers the side step wheels
     private AdvJaguar sidestepDriveMotor; // drives the side step wheel
-    
+    private RobotDrive rd;
+
     public DriveSystem(RobotMain robot, int sleepTime)
     {
          super(robot, sleepTime);
          
          // JaguarPair(ch1, ch2, invert, averager sample size);
-         leftTankMotor  = new JaguarPair(2, 4, false, 3);
-         rightTankMotor = new JaguarPair(1, 3, true, 3);
-         
+         leftTankmotor1  = new AdvJaguar(2, false);
+         rightTankmotor1 = new AdvJaguar(1, true);
+         leftTankmotor2 = new AdvJaguar (4, false);
+         rightTankmotor2 = new AdvJaguar(3, true);
+
+         rd = new RobotDrive(leftTankmotor1, rightTankmotor1, leftTankmotor2, rightTankmotor2);
+
          sidestepDriveMotor = new AdvJaguar(5);
          
          //this.setDriveSpeed(0.0, 0.0);
@@ -49,13 +57,22 @@ public class DriveSystem extends SystemBase
     {
         if(state == STATE_TANK)
         {
-            leftTankMotor.set(leftSide);
-            rightTankMotor.set(rightSide);
+            rd.tankDrive(leftSide, rightSide);
         }
         else
         {
-            leftTankMotor.set(0.0);
-            rightTankMotor.set(0.0);
+            rd.stopMotor();
+        }
+    }
+    public void drive(double power, double curve)
+    {
+        if(state == STATE_TANK)
+        {
+            rd.drive(power, curve);
+        }
+        else
+        {
+            rd.stopMotor();
         }
     }
 
@@ -74,16 +91,14 @@ public class DriveSystem extends SystemBase
     public void tick()
     {
  // hi. I am required to say that I have done somthing involving programming the robot. This is what I have done. Love, Dr. Ryan Samuel Giblin III
-        leftTankMotor.get();
-        rightTankMotor.get();
-        //liftMotor.update();
-        sidestepDriveMotor.update();
 
         if(false)
         {
             log("tick!");
-            log("Left: "+leftTankMotor.get());
-            log("Right:"+rightTankMotor.get());
+            log("Left: "+leftTankmotor1.get());
+            log("Left: "+leftTankmotor2.get());
+            log("Right:"+rightTankmotor1.get());
+            log("Right:"+rightTankmotor2.get());
             log("");
         }
         
