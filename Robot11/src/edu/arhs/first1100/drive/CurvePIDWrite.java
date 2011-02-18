@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.PIDOutput;
 
 public class CurvePIDWrite implements PIDOutput
 {
-    CameraDriveCurve cdc;
     ArcadeDriveMux adm;
 
     public CurvePIDWrite(ArcadeDriveMux adm)
@@ -18,7 +17,7 @@ public class CurvePIDWrite implements PIDOutput
 
     public void pidWrite(double curve)
     {
-
+        adm.setCurve(curve);
     }
 
 }

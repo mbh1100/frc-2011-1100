@@ -24,7 +24,7 @@ public class LiftToPegRoutine extends Routine
 
     public void tick()
     {
-        ParticleAnalysisReport pegs  = robot.cameraSystem.getParticles();
+        //ParticleAnalysisReport pegs  = robot.cameraSystem.getParticles();
     }
 
 }

@@ -6,13 +6,13 @@ package edu.arhs.first1100.drive;
 
 import edu.arhs.first1100.camera.CameraSystem;
 import edu.arhs.first1100.util.PID;
-import edu.arhs.first1100.camera.YPIDSource;
+import edu.arhs.first1100.camera.ZPIDSource;
 import edu.wpi.first.wpilibj.PIDOutput;
 
 public class CameraDrivePower
 {
     PID pid;
-    YPIDSource source;
+    ZPIDSource source;
     ArcadeDriveMux output;
 
     final private double P = .5;
@@ -23,7 +23,7 @@ public class CameraDrivePower
 
     public void trackCamera()
     {
-        source = new YPIDSource();
+        source = new ZPIDSource();
         pid = new PID( P, I, D, source, power);
     }
 }
