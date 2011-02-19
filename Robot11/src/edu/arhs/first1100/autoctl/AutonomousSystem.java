@@ -1,19 +1,17 @@
 package edu.arhs.first1100.autoctl;
 
 import edu.arhs.first1100.util.SystemBase;
-import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.line.LineSystem;
 import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.camera.CameraSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.robot.RobotMain;
 
-import edu.arhs.first1100.autoctl.Routine;
-import edu.arhs.first1100.autoctl.FollowLineRoutine;
 /**
  *
  * @author team1100
  */
+
 public class AutonomousSystem extends SystemBase
 {
     private final int STATE_IDLE = 0;                  // Doing nothing
@@ -90,6 +88,6 @@ public class AutonomousSystem extends SystemBase
      */
     public void tick()
     {
-        
+        log("tick");
     }
 }

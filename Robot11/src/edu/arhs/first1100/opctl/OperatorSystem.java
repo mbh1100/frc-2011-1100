@@ -18,14 +18,12 @@ import edu.wpi.first.wpilibj.Joystick.ButtonType;
  */
 public class OperatorSystem extends SystemBase
 {
-    public final int LINE_TRACK_BUTTON = 7;//on the RIGHT joystick
-    public AdvJoystick leftJoystick;
-    public AdvJoystick rightJoystick;
-    public XboxJoystick xboxJoystick;
-
+    public AdvJoystick leftJoystick;  //controls the left side of the robot
+    public AdvJoystick rightJoystick; //controls the right side of the robot.
+    public XboxJoystick xboxJoystick; //controls the arm and other stuff. Hi.
+    
     //private ButtonBox buttonBox;
-    private GamepieceIndicator ledIndicator;  //indicates the gamepiece that the human
-                                              //should give to the robot
+    private GamepieceIndicator ledIndicator;  //indicates the gamepiece that the human. 
     // These are supposed to start as null
     private TargetPegRoutine targetRoutine = null;
     private ScoreRoutine scoreRoutine = null;
@@ -105,7 +103,7 @@ public class OperatorSystem extends SystemBase
 
         if (rightJoystick.getRawButton(9))
         {
-            robot.cameraSystem.getCenterX();
+            robot.cameraSystem.light.overrideTimer();
         }
         
         /*

@@ -13,6 +13,7 @@ public class Light
 {
     Solenoid solenoid;
     boolean state = false;
+    boolean overrideT = false;
     java.util.Timer timer;
     
     /**
@@ -58,7 +59,8 @@ public class Light
     public void onForAWhile()
     {
         state = true;
-        this.scheduleOff();
+        if (!overrideT)
+            this.scheduleOff();
     }
     /**
      *
@@ -67,6 +69,11 @@ public class Light
     {             
         timer = new Timer();
         timer.schedule(new Timeout(this), 2000);
+    }
+
+    public void overrideTimer()
+    {
+        overrideT = !overrideT;
     }
 }
 

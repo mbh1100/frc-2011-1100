@@ -7,6 +7,8 @@
 package edu.arhs.first1100.autoctl;
 
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
+import edu.wpi.first.wpilibj.camera.*;
+import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 
 import edu.arhs.first1100.robot.RobotMain;
 /**
@@ -19,12 +21,8 @@ public class TargetPegRoutine extends Routine
      *
      */
     double targetHeight = 0;
-    /**
-     *
-     * @param robot
-     * @param sleep
-     * @param height
-     */
+    int cam_resX;
+    int cam_resY;
     public TargetPegRoutine(RobotMain robot, int sleep, double height)
     {
         super(robot, sleep);
@@ -32,6 +30,8 @@ public class TargetPegRoutine extends Routine
         //robot.manipulatorSystem.waitUntilDone();
         //robot.manipulatorSystem.trackWithCamera();
         //robot.manipulatorSystem.waitUntilDone();
+        cam_resX = AxisCamera.getInstance().getResolution().width;
+        cam_resY = AxisCamera.getInstance().getResolution().height;
 
 
         log("launching TargetPegRoutine to height " + height);
@@ -53,5 +53,6 @@ public class TargetPegRoutine extends Routine
     {
         if(robot.manipulatorSystem.armPIDOnTarget())
             setDone();
+
     }
 }
