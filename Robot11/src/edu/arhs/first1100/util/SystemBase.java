@@ -49,17 +49,18 @@ public class SystemBase extends Thread
         {
             super.start();
             threadStarted = true;
-        }
+        }/*
         else
         {
             selfNotify();
-        }
+        }*/
     }
 /**
  *
  */
     public void stop()
     {
+        log("Stopping thread");
         stopThread = true;
     }
    /**
@@ -68,6 +69,7 @@ public class SystemBase extends Thread
     public void run()
     {
         log("run() called");
+        
         while(true)
         {
             while(!stopThread)
@@ -84,14 +86,20 @@ public class SystemBase extends Thread
                     log("********************************");
                     robot.disabled();
                 }
-      /**
-       *
-       */
+                
                 Timer.delay( ((double)(sleepTime))/1000 );
             }
+
+            log("Stopping thread");
             
+            while(stopThread)
+            {
+                Timer.delay(0.1);
+            }
+            /*
+            log("Starting to wait");
             selfWait();
-        
+            */
         log("run is looping again");
         }
     }
@@ -100,21 +108,24 @@ public class SystemBase extends Thread
      */
     public synchronized void selfWait()
     {
+        log("Waiting!");
         try
         {
-            super.wait();
+            wait();
         }
         catch(InterruptedException e)
         {
             log("Wait error!");
         }
     }
-/**
- *
- */
+    
+    /**
+     *
+     */
     public synchronized void selfNotify()
     {
-        super.notify();
+        log("Notify!");
+        notify();
     }
     
     /**
@@ -140,8 +151,7 @@ public class SystemBase extends Thread
     public void log(String message)
     {
         /*
-        int lastDot = 0;
-        String name = this.getClass().getName();
+        int lastDot = 0        String name = this.getClass().getName();
         
         for(int n = 0; n<name.length(); n++){
             if (name.charAt(n) == '.'){
@@ -150,9 +160,9 @@ public class SystemBase extends Thread
         }
         name = name.substring(lastDot);
         */
-
-
-        System.out.println(this.getClass().getName().substring(this.getClass().getName().lastIndexOf('.')+1)+": "+message);
+        
+        String name = this.getClass().getName();
+        System.out.println(name.substring(name.lastIndexOf('.')+1)+": "+message);
     }
     
     /**

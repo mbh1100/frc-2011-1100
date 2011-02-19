@@ -39,8 +39,6 @@ public class OperatorSystem extends SystemBase
     {
         super(robot, sleepTime);
         
-        log("Operator system constructor.");
-        
         leftJoystick  = new AdvJoystick(1);
         rightJoystick = new AdvJoystick(2);
         xboxJoystick  = new XboxJoystick(3);
@@ -54,6 +52,8 @@ public class OperatorSystem extends SystemBase
      */
     public void tick()
     {
+        log("Tick");
+        
         /*
          * Start routine buttons
          */

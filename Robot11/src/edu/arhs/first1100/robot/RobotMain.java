@@ -58,17 +58,19 @@ public class RobotMain extends SimpleRobot
 
     // Periodic = called when driver station data is updated
     // Continuous = called as fast as possible
-   /**
-    *
-    */
+    
+    /**
+     *
+     */
     public void autonomous()
     {
         operatorSystem.stop();
         autonomousSystem.start();
         
         cameraSystem.start();
-        driveSystem.start();
         manipulatorSystem.start();
+        driveSystem.start();
+        lineSystem.start();
         minibotSystem.start();
 
         log("enabled autonomous");
@@ -79,14 +81,21 @@ public class RobotMain extends SimpleRobot
      */
     public void operatorControl()
     {
+        log("Enabling teleop.n m   GO GO GO G OOOOOOOOOO.");
+
+        log("Starting opsys");
         operatorSystem.start();
+
+        log("stopping ausys");
         autonomousSystem.stop();
-        
+
+        log("Starting cam, drive, manip");
         cameraSystem.start();
-        driveSystem.start();
         manipulatorSystem.start();
+        driveSystem.start();
+        lineSystem.start();
         minibotSystem.start();
-        
+
         log("Enabled teleop");
     }
     
@@ -95,21 +104,28 @@ public class RobotMain extends SimpleRobot
      */
     public void disabled()
     {
+        log("Enabling disabling...");
+
+        log("stopping opsys");
         operatorSystem.stop();
+
+        log("stopping ausys");
         autonomousSystem.stop();
-        
+
+        log("stopping cam, line, manip, and drive");
         cameraSystem.stop();
-        lineSystem.stop();
         manipulatorSystem.stop();
+        driveSystem.stop();
+        lineSystem.stop();
         minibotSystem.stop();
         
         log("disabled");
     }
     
-/**
- *
- * @param message
- */
+    /**
+     *
+     * @param message
+     */
     public void log(String message)
     {
         System.out.println("RobotMain: " + message);
