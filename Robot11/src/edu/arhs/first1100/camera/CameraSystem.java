@@ -18,6 +18,8 @@ public class CameraSystem extends SystemBase
     * 
     */
     public final int WHITE_THRESHOLD = 1;
+    public final int RED_THRESHOLD = 2;
+    public final int BLUE_THRESHOLD =3;
     private final int PARTICLE_SIZE = 3;
     public Light light;
     
@@ -156,6 +158,9 @@ public class CameraSystem extends SystemBase
         {
             case WHITE_THRESHOLD:
                 setThresholdRGB(190, 255, 210, 255, 210, 255);
+                break;
+            case BLUE_THRESHOLD:
+                setThresholdRGB(0, 60, 0, 60, 210, 255);
                 break;
         }
     }
