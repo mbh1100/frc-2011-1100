@@ -48,7 +48,7 @@ public class CameraSystem extends SystemBase
         bImg = null;
         sleepTime = 200;
 
-        light = new Light(12);
+        light = new Light(3);
 
         //Camera Settings
         ac.writeCompression(0);

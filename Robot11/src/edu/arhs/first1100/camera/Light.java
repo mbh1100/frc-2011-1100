@@ -59,7 +59,7 @@ public class Light
 /**
  *
  */
-    public void onForAWhile ()
+    public void onForAWhile()
     {
         this.on();
         this.scheduleOff();

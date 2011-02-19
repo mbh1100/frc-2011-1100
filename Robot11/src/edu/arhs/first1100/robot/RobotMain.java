@@ -76,6 +76,7 @@ public class RobotMain extends SimpleRobot
 
         log("enabled autonomous");
     }
+
     /**
      *
      */
@@ -91,6 +92,7 @@ public class RobotMain extends SimpleRobot
 
         log("enabled teleop");
     }
+
     /**
      *
      */
@@ -106,6 +108,7 @@ public class RobotMain extends SimpleRobot
         
         log("disabled");
     }
+    
 /**
  *
  * @param message

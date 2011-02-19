@@ -150,8 +150,9 @@ public class SystemBase extends Thread
         }
         name = name.substring(lastDot);
         */
-        
-        System.out.println(this.getClass().getName().substring(20)+": "+message);
+
+
+        System.out.println(this.getClass().getName().substring(this.getClass().getName().lastIndexOf('.'))+": "+message);
     }
     
     /**
