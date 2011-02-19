@@ -7,6 +7,11 @@ import edu.wpi.first.wpilibj.Jaguar;
 import edu.arhs.first1100.util.AdvJaguar;
 import edu.arhs.first1100.util.PID;
 
+
+/**
+ *
+ * @author team1100
+ */
 public class Lift
 {
     // Config for PID controller
@@ -35,7 +40,10 @@ public class Lift
     private Encoder encoder;
     
     private Jaguar liftJaguar;
-    
+
+    /**
+     *
+     */
     public Lift()
     {
         liftJaguar = new Jaguar(6);
@@ -48,7 +56,10 @@ public class Lift
         //camPid  = new PID(kCAM_P, kCAM_I, kCAM_D, null, liftJaguar);
         liftPid = new PID(kLIFT_P, kLIFT_I, kLIFT_D, encoder, liftJaguar);
     }
-
+/**
+ *
+ * @param state
+ */
     public void setState(int state)
     {
         liftPid.enable();
@@ -65,21 +76,30 @@ public class Lift
                 break;
         }
     }
-    
+
+    /**
+     *
+     * @param speed
+     */
     public void setSpeed(double speed)
     {
         liftPid.disable();
         //camPid.disable();
         liftJaguar.set(speed);
     }
-    
+    /**
+     *
+     */
     public void stop()
     {
         //camPid.disable();
         liftPid.disable();
         liftJaguar.set(0.0);
     }
-    
+    /**
+     *
+     * @return
+     */
     public double getPidError()
     {
         if(liftPid.isEnable())
@@ -95,19 +115,25 @@ public class Lift
             return 0.0;
         }
     }
-    
+    /**
+     *
+     */
     public void startLiftPid()
     {
         //camPid.disable();
         liftPid.enable();
     }
-
+/**
+ *
+ */
     public void startArmPid()
     {
         //camPid.enable();
         liftPid.disable();
     }
-
+/**
+ *
+ */
     public void stopPID()
     {
         //camPid.disable();

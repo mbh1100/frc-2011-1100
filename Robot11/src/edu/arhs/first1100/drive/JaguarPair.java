@@ -1,21 +1,11 @@
-/**
- * JaguarPair.java
- *
- * This class contains two Jaguar objects.
- * This class acts exactly like an Jaguar, except commands are sent to both
- * simultaneously.  This will be used in our drive system where two motors
- * must be used together to drive one side of the robot.
- *
- * This suffers the same fate as AdvJaguar and must manually be updated each
- * tick().
- *
- */
-
 package edu.arhs.first1100.drive;
 
 import edu.wpi.first.wpilibj.Jaguar;
 
-
+/**
+ *
+ * @author team1100
+ */
 public class JaguarPair
 {
     
@@ -25,7 +15,13 @@ public class JaguarPair
     private boolean polarity;
 
     private double targetSpeed = 0.0;
-
+/**
+ *
+ * @param ch1
+ * @param ch2
+ * @param invert
+ * @param sampleSize
+ */
     public JaguarPair(int ch1, int ch2, boolean invert, int sampleSize)
     {        
         j1 = new Jaguar(ch1);
@@ -33,12 +29,19 @@ public class JaguarPair
 
         polarity = invert;
     }
-
+/**
+ *
+ * @param ch1
+ * @param ch2
+ */
     public JaguarPair(int ch1, int ch2)
     {
         this(ch1, ch2, false, 0);
     }
-    
+   /**
+    *
+    * @param speed
+    */
     public void set(double speed)
     {
         j1.set( polarity ? -speed : speed );

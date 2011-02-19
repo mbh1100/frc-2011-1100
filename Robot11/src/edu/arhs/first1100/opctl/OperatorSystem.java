@@ -12,7 +12,10 @@ import edu.arhs.first1100.autoctl.ScoreRoutine;
 import edu.arhs.first1100.autoctl.FollowLineRoutine;
 
 import edu.wpi.first.wpilibj.Joystick.ButtonType;
-
+/**
+ *
+ * @author team1100
+ */
 public class OperatorSystem extends SystemBase
 {
     public AdvJoystick leftJoystick;  //controls the left side of the robot. There is love.
@@ -26,7 +29,11 @@ public class OperatorSystem extends SystemBase
     private TargetPegRoutine targetRoutine = null;
     private ScoreRoutine scoreRoutine = null;
     private FollowLineRoutine lineRoutine = null;
-    
+   /**
+    *
+    * @param robot
+    * @param sleepTime
+    */
     public OperatorSystem(RobotMain robot, int sleepTime)
     {
         super(robot, sleepTime);
@@ -40,7 +47,9 @@ public class OperatorSystem extends SystemBase
         ledIndicator  = new GamepieceIndicator();
         ledIndicator.start();
     }
-    
+    /**
+     *
+     */
     public void tick()
     {
         /*
@@ -80,6 +89,9 @@ public class OperatorSystem extends SystemBase
         }
         else
         {
+       /**
+        * 
+        */
             if(leftJoystick.getRawButton(10))
             {
                 lineRoutine.stop();
@@ -96,6 +108,9 @@ public class OperatorSystem extends SystemBase
         }
         else
         {
+            /**
+             *
+             */
             if(xboxJoystick.getLeftBumper() || targetRoutine.isDone())
             {
                 targetRoutine.stop();

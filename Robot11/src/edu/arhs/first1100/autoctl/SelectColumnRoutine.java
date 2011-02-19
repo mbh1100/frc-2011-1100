@@ -10,19 +10,30 @@ import edu.wpi.first.wpilibj.Timer;
 
 import edu.arhs.first1100.autoctl.Routine;
 import edu.arhs.first1100.robot.RobotMain;
-
+/**
+ *
+ * @author team1100
+ */
 public class SelectColumnRoutine extends Routine
 {
     private int startingColumn = 0;
     private int targetColumn = 0;
-
+/**
+ *
+ * @param robot
+ * @param sleep
+ * @param startingColumn
+ * @param targetColumn
+ */
     public SelectColumnRoutine(RobotMain robot, int sleep, int startingColumn, int targetColumn)
     {
         super(robot, sleep);
         this.startingColumn = startingColumn;
         this.targetColumn = targetColumn;
     }
-
+/**
+ *
+ */
     public void tick()
     {
         Timer.delay(3);

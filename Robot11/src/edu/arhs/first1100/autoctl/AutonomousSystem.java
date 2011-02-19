@@ -10,7 +10,10 @@ import edu.arhs.first1100.robot.RobotMain;
 
 import edu.arhs.first1100.autoctl.Routine;
 import edu.arhs.first1100.autoctl.FollowLineRoutine;
-
+/**
+ *
+ * @author team1100
+ */
 public class AutonomousSystem extends SystemBase
 {
     private final int STATE_IDLE = 0;                  // Doing nothing
@@ -20,18 +23,28 @@ public class AutonomousSystem extends SystemBase
 
     private boolean targetRack = false;
     private int targetPeg = 0;
-    
+    /**
+     *
+     * @param robot
+     * @param sleepTime
+     */
     public AutonomousSystem(RobotMain robot, int sleepTime)
     {
         super(robot, sleepTime);
     }
-    
+   /**
+    *
+    * @param r
+    */
     public void runRoutine(Routine r)
     {
         r.start();
         r.waitForDone();
     }
-
+/**
+ *
+ * @param startingPosition
+ */
     public void ScoreUberRing(int startingPosition)
     {
         /*
@@ -72,7 +85,9 @@ public class AutonomousSystem extends SystemBase
         
         */
     }
-    
+    /**
+     *
+     */
     public void tick()
     {
         

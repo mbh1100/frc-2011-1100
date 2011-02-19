@@ -7,9 +7,15 @@
  */
 
 package edu.arhs.first1100.util;
-
+/**
+ *
+ * @author team1100
+ */
 public class Averager
 {
+    /**
+     *
+     */
     double avg = 0; //average
     int magnitude = 1;
     double data[];

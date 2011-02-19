@@ -21,7 +21,10 @@ import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.minibot.MinibotSystem;
 import edu.arhs.first1100.opctl.OperatorSystem;
 import edu.wpi.first.wpilibj.Compressor;
-
+/**
+ *
+ * @author team1100
+ */
 public class RobotMain extends SimpleRobot
 {
     private final int COMPRESSOR_VALUE = 1;
@@ -35,7 +38,9 @@ public class RobotMain extends SimpleRobot
     public MinibotSystem minibotSystem;
     public OperatorSystem operatorSystem;
     private Compressor compressor;
-
+/**
+ *
+ */
     public void robotInit()
     {
         autonomousSystem = new AutonomousSystem(this, 100);
@@ -56,7 +61,9 @@ public class RobotMain extends SimpleRobot
 
     // Periodic = called when driver station data is updated
     // Continuous = called as fast as possible
-    
+   /**
+    *
+    */
     public void autonomous()
     {
         operatorSystem.stop();
@@ -69,7 +76,9 @@ public class RobotMain extends SimpleRobot
 
         log("enabled autonomous");
     }
-    
+    /**
+     *
+     */
     public void operatorControl()
     {
         operatorSystem.start();
@@ -82,7 +91,9 @@ public class RobotMain extends SimpleRobot
 
         log("enabled teleop");
     }
-    
+    /**
+     *
+     */
     public void disabled()
     {
         operatorSystem.stop();
@@ -95,7 +106,10 @@ public class RobotMain extends SimpleRobot
         
         log("disabled");
     }
-
+/**
+ *
+ * @param message
+ */
     public void log(String message)
     {
         System.out.println("RobotMain: " + message);

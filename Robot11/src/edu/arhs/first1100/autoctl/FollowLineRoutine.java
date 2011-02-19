@@ -4,24 +4,38 @@ import edu.wpi.first.wpilibj.Timer;
 
 import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.line.LineSystem;
-
+/**
+ *
+ * @author team1100
+ */
 public class FollowLineRoutine extends Routine
 {
     private int path = 0;
     private final double TURN_DELAY = 0.6;
-    
+   /**
+    *
+    * @param robot
+    * @param sleep
+    * @param startingPosition
+    */
     public FollowLineRoutine(RobotMain robot, int sleep, int startingPosition)
     {
         super(robot, sleep);
         path = startingPosition;
     }
-
+/**
+ *
+ * @param robot
+ * @param sleep
+ */
     public FollowLineRoutine(RobotMain robot, int sleep)
     {
         super(robot, sleep);
         path = 2;
     }
-    
+   /**
+    *
+    */
     public void tick()
     {
         //read from LineSystem

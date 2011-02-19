@@ -8,9 +8,15 @@ import edu.wpi.first.wpilibj.image.BinaryImage;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 import edu.wpi.first.wpilibj.Timer;
 
-
+/**
+ *
+ * @author team1100
+ */
 public class CameraSystem extends SystemBase
 {
+   /**
+    * 
+    */
     public final int WHITE_THRESHOLD = 1;
     private final int PARTICLE_SIZE = 3;
     private Light light;
@@ -28,7 +34,11 @@ public class CameraSystem extends SystemBase
     ColorImage cImg;
     BinaryImage bImg;
     ParticleAnalysisReport[] pRep = new ParticleAnalysisReport[PARTICLE_SIZE];
-    
+/**
+ *
+ * @param robot
+ * @param sleepTime
+ */
     public CameraSystem(RobotMain robot, int sleepTime)
     {
         super(robot, sleepTime);
@@ -59,7 +69,10 @@ public class CameraSystem extends SystemBase
         {
             Timer.delay(0.1);
         }
-    }
+   }
+    /**
+     *
+     */
     public void tick()
     {
         processImg();
@@ -146,7 +159,10 @@ public class CameraSystem extends SystemBase
                 break;
         }
     }
-
+/**
+ *
+ * @return
+ */
     public double getCenterY()
     {
         light.onForAWhile();
@@ -155,7 +171,10 @@ public class CameraSystem extends SystemBase
         else
             return 0.0;
     }
-    
+    /**
+     *
+     * @return
+     */
     public double getCenterX()
     {
         light.onForAWhile();

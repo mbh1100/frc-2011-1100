@@ -16,22 +16,35 @@ package edu.arhs.first1100.util;
 
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Timer;
-
+/**
+ *
+ * @author team1100
+ */
 public class AdvJaguar extends Jaguar
 {
     private boolean polarity;
-    
+   /**
+    *
+    * @param ch
+    */
     public AdvJaguar(int ch)
     {
         this(ch, false);
     }
-
+/**
+ *
+ * @param ch
+ * @param inverted
+ */
     public AdvJaguar(int ch, boolean inverted)
     {
         super(ch);
         polarity = inverted;
     }
-    
+   /**
+    *
+    * @param speed
+    */
     public void set(double speed)
     {
         super.set( polarity ? -speed : speed);

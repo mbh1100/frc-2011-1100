@@ -8,7 +8,10 @@ import edu.arhs.first1100.camera.CameraSystem;
 import edu.arhs.first1100.util.PID;
 import edu.arhs.first1100.camera.ZPIDSource;
 import edu.wpi.first.wpilibj.PIDOutput;
-
+/**
+ *
+ * @author team1100
+ */
 public class CameraDrivePower
 {
     PID pid;
@@ -20,7 +23,10 @@ public class CameraDrivePower
     final private double D = .001;
 
     PIDOutput power;
-
+/**
+ *
+ * @param adm
+ */
     public CameraDrivePower(ArcadeDriveMux adm)
     {
         output = adm;
@@ -29,10 +35,16 @@ public class CameraDrivePower
         pid = new PID( P, I, D, source, power);
         pid.setOutputRange(-0.4, 0.4);
     }
+    /**
+     *
+     */
     public void trackCamera()
     {
         pid.enable();
     }
+    /**
+     *
+     */
     public void stopTrackCamera()
     {
         pid.disable();

@@ -9,9 +9,15 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 
-
+/**
+ *
+ * @author team1100
+ */
 public class MinibotSystem extends SystemBase
 {
+    /**
+     *
+     */
     private final int TOWER_SWITCH_CHANNEL = 14;
     private final int MINIBOT_SOLENOID_CHANNEL = 8;
     private final int ADVJAGUAR_CHANEL = 10;
@@ -22,7 +28,11 @@ public class MinibotSystem extends SystemBase
     double mJagSpeed = 0.4;
     // Checks if the minibot deployer is down
     private boolean deployReady = false;
-    
+    /**
+     *
+     * @param robot
+     * @param sleepTime
+     */
     public MinibotSystem(RobotMain robot, int sleepTime)
     {
         super(robot, sleepTime);
@@ -30,7 +40,9 @@ public class MinibotSystem extends SystemBase
         mSolenoid = new Solenoid(MINIBOT_SOLENOID_CHANNEL);
         mJaguar = new AdvJaguar(ADVJAGUAR_CHANEL);
     }
-
+/**
+ *
+ */
     public void deploy()
     {
         if (towerDetector.get())
@@ -38,7 +50,9 @@ public class MinibotSystem extends SystemBase
             mSolenoid.set(true);
         }
     }
-
+/**
+ *
+ */
     public void down()
     {
         if(!towerDetector.get())

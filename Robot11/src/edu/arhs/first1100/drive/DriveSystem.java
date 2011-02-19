@@ -16,7 +16,10 @@ import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.util.AdvJaguar;
 import edu.arhs.first1100.opctl.OperatorSystem;
-
+/**
+ *
+ * @author team1100
+ */
 public class DriveSystem extends SystemBase
 {
     private final int STATE_TANK = 0;
@@ -38,7 +41,11 @@ public class DriveSystem extends SystemBase
     private ArcadeDriveMux adm;
     private CameraDriveCurve cdc;
     private CameraDrivePower cdp;
-
+/**
+ *
+ * @param robot
+ * @param sleepTime
+ */
     public DriveSystem(RobotMain robot, int sleepTime)
     {
          super(robot, sleepTime);
@@ -58,12 +65,21 @@ public class DriveSystem extends SystemBase
          cdc = new CameraDriveCurve(adm);
          cdp = new CameraDrivePower(adm);
     }
+    /**
+     *
+     * @param speed
+     */
     public void testCameraDrive(double speed)
     {
         cdc.trackCamera();
         adm.setPower(speed);
         cdp.trackCamera();
     }
+    /**
+     *
+     * @param leftSide
+     * @param rightSide
+     */
     public void setDriveSpeed(double leftSide, double rightSide)
     {
         if(state == STATE_TANK)
@@ -75,6 +91,11 @@ public class DriveSystem extends SystemBase
             rd.stopMotor();
         }
     }
+    /**
+     *
+     * @param power
+     * @param curve
+     */
     public void drive(double power, double curve)
     {
         if(state == STATE_TANK)
@@ -87,7 +108,10 @@ public class DriveSystem extends SystemBase
         }
         log("curve:" + curve);
     }
-
+/**
+ *
+ * @param speed
+ */
     public void setSideSpeed(double speed)
     {
         if(state == STATE_SIDESTEP)
@@ -99,7 +123,9 @@ public class DriveSystem extends SystemBase
             sidestepDriveMotor.set(0.0);
         }
     }
-    
+    /**
+     *
+     */
     public void tick()
     {
  // hi. I am required to say that I have done somthing involving programming the robot. This is what I have done. Love, Dr. Ryan Samuel Giblin III
@@ -125,7 +151,9 @@ public class DriveSystem extends SystemBase
             // when wheels are all the way down, state = STATE_SIDESTEP
         }
     }
-    
+    /**
+     *
+     */
     public void setDriveModeTank()
     {
         if(state == STATE_SIDESTEP)

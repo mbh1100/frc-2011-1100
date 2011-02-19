@@ -3,7 +3,10 @@ package edu.arhs.first1100.util;
 import edu.arhs.first1100.robot.RobotMain;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Timer;
-
+/**
+ *
+ * @author team1100
+ */
 public class SystemBase extends Thread
 {
     public RobotMain robot;
@@ -11,20 +14,31 @@ public class SystemBase extends Thread
     private boolean stopThread = true;
     
     private boolean threadStarted = false;
-    
+   /**
+    *
+    */
     public SystemBase() { }
-
+/**
+ *
+ * @param robot
+ * @param sleep
+ */
     public SystemBase(RobotMain robot, int sleep)
     {
         setSleep(sleep);
         setRobotMain(robot);
     }
-    
+   /**
+    *
+    * @param delay
+    */
     public SystemBase(int delay)
     {
         setSleep(delay);
     }
-    
+    /**
+     *
+     */
     public void start()
     {
         log("Starting thread");
@@ -41,12 +55,16 @@ public class SystemBase extends Thread
             selfNotify();
         }
     }
-
+/**
+ *
+ */
     public void stop()
     {
         stopThread = true;
     }
-    
+   /**
+    *
+    */
     public void run()
     {
         log("run() called");
@@ -66,7 +84,9 @@ public class SystemBase extends Thread
                     log("********************************");
                     robot.disabled();
                 }
-                
+      /**
+       *
+       */
                 Timer.delay( ((double)(sleepTime))/1000 );
             }
             
@@ -75,7 +95,9 @@ public class SystemBase extends Thread
         log("run is looping again");
         }
     }
-    
+    /**
+     *
+     */
     public synchronized void selfWait()
     {
         try
@@ -87,7 +109,9 @@ public class SystemBase extends Thread
             log("Wait error!");
         }
     }
-
+/**
+ *
+ */
     public synchronized void selfNotify()
     {
         super.notify();

@@ -14,7 +14,10 @@ package edu.arhs.first1100.opctl;
 
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
-
+/**
+ *
+ * @author team1100
+ */
 public class GamepieceIndicator extends Thread
 {
     Relay red, white, blue;
@@ -27,14 +30,18 @@ public class GamepieceIndicator extends Thread
     public final int BLUE  = 3;
     
     private int color = 0;
-    
+   /**
+    *
+    */
     public GamepieceIndicator()
     {
         red   = new Relay(4, Relay.Direction.kForward); //red light on channel 4
         white = new Relay(6, Relay.Direction.kForward); //White light on channel 6
         blue  = new Relay(5, Relay.Direction.kForward); //Blue light on channel 5
     }
-    
+    /**
+     *
+     */
     public void setLightColorRed()
     {
         color = RED;
@@ -54,7 +61,10 @@ public class GamepieceIndicator extends Thread
     {
         color = OFF;
     }
-
+/**
+ *
+ * @param C
+ */
     public void setLight(int C)
     {
         switch(C)
@@ -74,7 +84,9 @@ public class GamepieceIndicator extends Thread
         }
     }
 
-    
+   /**
+    *
+    */
     public void run()
     {
         while(true)

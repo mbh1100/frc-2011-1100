@@ -7,7 +7,10 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.util.AdvJaguar;
-
+/**
+ *
+ * @author team1100
+ */
 public class ManipulatorSystem extends SystemBase
 {
     
@@ -36,7 +39,11 @@ public class ManipulatorSystem extends SystemBase
     
     private Solenoid wrist;
     private Solenoid claw;
-    
+    /**
+     *
+     * @param robot
+     * @param sleepTime
+     */
     public ManipulatorSystem(RobotMain robot, int sleepTime)
     {
         super(robot, sleepTime);
@@ -47,17 +54,26 @@ public class ManipulatorSystem extends SystemBase
         wrist = new Solenoid(2);
         claw = new Solenoid(1);
     }
-
+/**
+ *
+ * @param speed
+ */
     public void setLiftSpeed(double speed)
     {
         lift.setSpeed(speed);
     }
-
+/**
+ *
+ * @param speed
+ */
     public void setArm(double speed)
     {
         arm.setSpeed(speed);
     }
-
+/**
+ *
+ * @param state
+ */
     public void setState(int state)
     {
         log("Set State:"+state);
@@ -96,7 +112,9 @@ public class ManipulatorSystem extends SystemBase
                 break;
         }
     }
-    
+   /**
+    * 
+    */
     public void openClaw()
     {
         log("Open claw");
@@ -108,53 +126,75 @@ public class ManipulatorSystem extends SystemBase
         log("Close claw");
         setClaw(true);
     }
-
+/**
+ *
+ * @param state
+ */
     public void setClaw(boolean state)
     {
         log("Set claw" + state);
         claw.set(state);
     }
-
+/**
+ *
+ */
     public void toggleClaw()
     {
         log("toggle claw");
         claw.set(!claw.get());
     }
-    
+   /**
+    *
+    */
     public void raiseWrist()
     {
         log("Raise wrist");
         setWrist(true);
     }
-
+/**
+ *
+ */
     public void lowerWrist()
     {
         log("Lower wrist");
         setWrist(true);
     }
-
+/**
+ *
+ * @param state
+ */
     public void setWrist(boolean state)
     {
         log("Set wrist" + state);
         wrist.set(state);
     }
-
+/**
+ *
+ */
     public void toggleWrist()
     {
         log("Toggle wrist");
         wrist.set(!wrist.get());
     }
-    
+   /**
+    *
+    * @return
+    */
     public boolean liftOnTarget()
     {
         return (lift.getPidError() <= 1);
     }
-
+/**
+ *
+ * @return
+ */
     public boolean armPIDOnTarget()
     {
         return (arm.getPidError() <= 1);
     }
-    
+   /**
+    *
+    */
     public void tick()
     {
         //arm.update();

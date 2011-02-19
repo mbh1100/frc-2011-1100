@@ -3,6 +3,11 @@ package edu.arhs.first1100.line;
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
 
+
+/**
+ *
+ * @author team1100
+ */
 public class LineSystem extends SystemBase
 {   //these need to be static for FollowLineRoutine;
     public static final int STATE_MIDDLE = 0;
@@ -17,7 +22,11 @@ public class LineSystem extends SystemBase
     boolean done = false;
     
     LineTracker lt;
-
+/**
+ *
+ * @param robot
+ * @param sleepTime
+ */
     public LineSystem(RobotMain robot, int sleepTime)
     {
         super(robot, sleepTime);
@@ -44,6 +53,9 @@ public class LineSystem extends SystemBase
     }
     */
     
+   /**
+    * 
+    */
     public void tick()
     {
         if(lt.leftline() && lt.middleLine() && lt.rightline())
@@ -59,7 +71,10 @@ public class LineSystem extends SystemBase
         else if(lt.leftline() && !lt.middleLine() && lt.rightline())
             lineStatus = STATE_SPLIT;
     }
-
+/**
+ *
+ * @return
+ */
     public int getState()
     {
         return lineStatus;

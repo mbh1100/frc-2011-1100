@@ -6,7 +6,10 @@ import edu.wpi.first.wpilibj.Jaguar;
 import edu.arhs.first1100.util.AdvJaguar;
 import edu.arhs.first1100.util.PID;
 
-
+/**
+ *
+ * @author team1100
+ */
 public class Arm
 {
     private final double KP = 0.5;
@@ -26,7 +29,9 @@ public class Arm
     private Encoder encoder;
     
     private Jaguar armJaguar;
-    
+   /**
+    *
+    */
     public Arm()
     {
         armJaguar = new Jaguar(8);
@@ -38,7 +43,10 @@ public class Arm
         
         pid = new PID(KP, KI, KD, encoder, armJaguar);
     }
-    
+    /**
+     *
+     * @param value
+     */
     public void setState(int value)
     {
         pid.enable();
@@ -55,18 +63,26 @@ public class Arm
                 break;
         }
     }
-    
+    /**
+     *
+     */
     public void stop()
     {
         pid.disable();
     }
-
+/**
+ *
+ * @param speed
+ */
     public void setSpeed(double speed)
     {
         pid.disable();
         armJaguar.set(speed);
     }
-
+/**
+ *
+ * @return
+ */
     public double getPidError()
     {
         return pid.getError();
