@@ -76,19 +76,16 @@ public class OperatorSystem extends SystemBase
         */
 
         log("Compressor:"+robot.compressor.getPressureSwitchValue());
-
-        robot.cameraSystem.getCenterX();
-
-        
+       
         
         /*
          * Driving
          */
         if(lineRoutine == null)
         {
-            //robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
+            robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
             //robot.driveSystem.setSideSpeed(rightJoystick.getX()); // commented out by Alex 2-17-11 to try to get the robot to drive
-            robot.driveSystem.testCameraDrive(-rightJoystick.getY());
+            //robot.driveSystem.testCameraDrive(-rightJoystick.getY());
             
             /*
             if(rightJoystick.getRawButton(11))
@@ -129,7 +126,7 @@ public class OperatorSystem extends SystemBase
         {
             robot.manipulatorSystem.setClawState( xboxJoystick.getLeftBumper() );
             robot.manipulatorSystem.setWristState( xboxJoystick.getRightBumper() );
-            robot.manipulatorSystem.setArmSpeed( -xboxJoystick.getLeftStickY() );
+            robot.manipulatorSystem.setArmSpeed( -xboxJoystick.getLeftStickY()/4 );
             
             /*
             if(xboxJoystick.getAButton())

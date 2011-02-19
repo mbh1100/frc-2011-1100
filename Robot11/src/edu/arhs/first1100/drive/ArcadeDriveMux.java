@@ -47,6 +47,6 @@ public class ArcadeDriveMux
  */
     public void cameraDrive()
     {
-        ds.drive(power,curve);
+        //ds.drive(power,curve);
     }
 }

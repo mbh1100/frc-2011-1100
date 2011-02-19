@@ -3,6 +3,7 @@ package edu.arhs.first1100.manipulator;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 import edu.arhs.first1100.util.AdvJaguar;
 import edu.arhs.first1100.util.PID;
@@ -41,6 +42,8 @@ public class Lift
     
     private Jaguar liftJaguar;
 
+    DigitalInput bottomLimitSwitch;
+
     /**
      *
      */
@@ -52,6 +55,8 @@ public class Lift
         encoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
         encoder.setDistancePerPulse(pulseDistance);
         encoder.start();
+
+        bottomLimitSwitch = new DigitalInput(7);
         
         //camPid  = new PID(kCAM_P, kCAM_I, kCAM_D, null, liftJaguar);
         liftPid = new PID(kLIFT_P, kLIFT_I, kLIFT_D, encoder, liftJaguar);
@@ -83,9 +88,24 @@ public class Lift
      */
     public void setSpeed(double speed)
     {
-        liftPid.disable();
-        //camPid.disable();
-        liftJaguar.set(speed);
+        /*
+        if (bottomLimitSwitch.get())
+        {
+            encoder.reset();
+        }
+
+        else if(bottomLimitSwitch.get() || speed < 0)
+        {
+            liftJaguar.set(0);
+            encoder.reset();
+        }
+
+        else
+        {*/
+            liftPid.disable();
+            //camPid.disable();
+            liftJaguar.set(speed);
+        //}
     }
     /**
      *

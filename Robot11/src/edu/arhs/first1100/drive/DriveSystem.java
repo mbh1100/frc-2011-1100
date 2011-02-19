@@ -53,14 +53,14 @@ public class DriveSystem extends SystemBase
          // JaguarPair(ch1, ch2, invert, averager sample size);
          leftTankmotor1  = new AdvJaguar(2, false);
          rightTankmotor1 = new AdvJaguar(1, true);
-         leftTankmotor2 = new AdvJaguar (4, false);
+         leftTankmotor2 =  new AdvJaguar(4, false);
          rightTankmotor2 = new AdvJaguar(3, true);
-
+         
          rd = new RobotDrive(leftTankmotor1, leftTankmotor2 , rightTankmotor1, rightTankmotor2);
          sidestepDriveMotor = new AdvJaguar(5);
          
          //this.setDriveSpeed(0.0, 0.0);
-
+         
          adm = new ArcadeDriveMux(this);
          cdc = new CameraDriveCurve(adm);
          cdp = new CameraDrivePower(adm);
@@ -71,6 +71,7 @@ public class DriveSystem extends SystemBase
      */
     public void testCameraDrive(double speed)
     {
+        log("testCamereaDrive");
         cdc.trackCamera();
         adm.setPower(speed);
         cdp.trackCamera();
@@ -82,6 +83,7 @@ public class DriveSystem extends SystemBase
      */
     public void setDriveSpeed(double leftSide, double rightSide)
     {
+        cdp.stopTrackCamera();
         if(state == STATE_TANK)
         {
             rd.tankDrive(leftSide, rightSide);
@@ -108,10 +110,10 @@ public class DriveSystem extends SystemBase
         }
         log("curve:" + curve);
     }
-/**
- *
- * @param speed
- */
+    /**
+     *
+     * @param speed
+     */
     public void setSideSpeed(double speed)
     {
         if(state == STATE_SIDESTEP)

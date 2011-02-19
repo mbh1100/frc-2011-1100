@@ -52,26 +52,26 @@ public class ManipulatorSystem extends SystemBase
         wrist = new Solenoid(2);
         claw = new Solenoid(1);
     }
-/**
- *
- * @param speed
- */
+    /**
+     *
+     * @param speed
+     */
     public void setLiftSpeed(double speed)
     {
         lift.setSpeed(speed);
     }
-/**
- *
- * @param speed
- */
+    /**
+     *
+     * @param speed
+     */
     public void setArmSpeed(double speed)
     {
         arm.setSpeed(speed);
     }
-/**
- *
- * @param state
- */
+    /**
+     *
+     * @param state
+     */
     public void setState(int state)
     {
         log("Set State:"+state);
