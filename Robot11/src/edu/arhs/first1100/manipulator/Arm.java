@@ -77,7 +77,7 @@ public class Arm
     public void setSpeed(double speed)
     {
         pid.disable();
-        armJaguar.set(speed);
+        armJaguar.set(-speed);
     }
 /**
  *

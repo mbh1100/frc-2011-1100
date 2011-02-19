@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.util.AdvJaguar;
+
 /**
  *
  * @author team1100
@@ -80,108 +81,74 @@ public class ManipulatorSystem extends SystemBase
         {
             case STATE_TOP_PEG:
                 lift.setState(Lift.STATE_HIGH);
-                arm.setState(Arm.STATE_HIGH);
-                raiseWrist();
+                //arm.setState(Arm.STATE_HIGH);
+                //raiseWrist();
                 break;
             case STATE_MID_PEG:
                 lift.setState(Lift.STATE_LOW);
-                arm.setState(Arm.STATE_MID);
-                raiseWrist();
+                //arm.setState(Arm.STATE_MID);
+                //raiseWrist();
                 break;
             case STATE_BOTTOM_PEG:
                 lift.setState(Lift.STATE_MID);
-                arm.setState(Arm.STATE_LOW);
-                raiseWrist();
+                //arm.setState(Arm.STATE_LOW);
+                //raiseWrist();
                 break;
             case STATE_FEEDER:
                 lift.setState(Lift.STATE_LOW);
-                arm.setState(Arm.STATE_MID);
-                raiseWrist();
+                //arm.setState(Arm.STATE_MID);
+                //raiseWrist();
                 break;
             case STATE_FLOOR:
                 lift.setState(Lift.STATE_MID);
-                arm.setState(Arm.STATE_LOW);
-                lowerWrist();
+                //arm.setState(Arm.STATE_LOW);
+                //lowerWrist();
                 break;
             case STATE_DEFAULT:
                 lift.setState(Lift.STATE_LOW);
-                arm.setState(Arm.STATE_HIGH);
-                raiseWrist();
+                //arm.setState(Arm.STATE_HIGH);
+                //raiseWrist();
                 break;
         }
     }
-   /**
-    * 
-    */
+
+    /**
+     * Grabber controls
+     */
+    
     public void openClaw()
-    {
-        log("Open claw");
-        setClawState(true);
-    }
+    { setClawState(true); }
     
     public void closeClaw()
-    {
-        log("Close claw");
-        setClawState(true);
-    }
-/**
- *
- * @param state
- */
+    { setClawState(true); }
+
     public void setClawState(boolean state)
-    {
-        //log("Set claw" + state);
-        claw.set(state);
-    }
-    /**
-     *
-     */
+    { claw.set(state); }
+
     public void toggleClaw()
-    {
-        //log("toggle claw");
-        claw.set(!claw.get());
-    }
-   /**
-    *
-    */
+    { claw.set(!claw.get()); }
+
     public void raiseWrist()
-    {
-        //log("Raise wrist");
-        setWristState(true);
-    }
-    /**
-     *
-     */
+    { setWristState(true); }
+    
     public void lowerWrist()
-    {
-        //log("Lower wrist");
-        setWristState(true);
-    }
-    /**
-     *
-     * @param state
-     */
+    { setWristState(true); }
+
     public void setWristState(boolean state)
-    {
-        //log("Set wrist" + state);
-        wrist.set(state);
-    }
+    { wrist.set(state); }
+    
+    public void toggleWrist()
+    { wrist.set(!wrist.get()); }
+    
     /**
      *
+     * @return
      */
-    public void toggleWrist()
-    {
-        //log("Toggle wrist");
-        wrist.set(!wrist.get());
-    }
-   /**
-    *
-    * @return
-    */
     public boolean liftOnTarget()
     {
         return (lift.getPidError() <= 1);
     }
+
     /**
      *
      * @return
@@ -190,13 +157,18 @@ public class ManipulatorSystem extends SystemBase
     {
         return (arm.getPidError() <= 1);
     }
-   /**
-    *
-    */
+    
+    /**
+     *
+     */
     public void tick()
     {
-        //arm.update();
-        //lift.update();
-        
+        if(lift.getPidError() < 1.0)
+        {
+            log("Stopping lift pid");
+            lift.stopPID();
+        }
+
+
     }
 }

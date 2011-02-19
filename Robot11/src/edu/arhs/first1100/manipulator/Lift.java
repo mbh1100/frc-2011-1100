@@ -27,15 +27,13 @@ public class Lift
     private final double kLIFT_D = 0.001;
     private PID liftPid;
     
-    private final double VALUE_LOW = 0;
-    private final double VALUE_MID = 100;
-    private final double VALUE_HIGH = 200;
+    private final double VALUE_LOW = 10;
+    private final double VALUE_MID = 120;
+    private final double VALUE_HIGH = 230;
 
     public static final int STATE_LOW = 0;
     public static final int STATE_MID = 1;
     public static final int STATE_HIGH = 2;
-
-    private int state = STATE_LOW;
     
     private final double pulseDistance = .1;
     private Encoder encoder;
@@ -81,32 +79,29 @@ public class Lift
                 break;
         }
     }
-
+    
     /**
      *
      * @param speed
      */
     public void setSpeed(double speed)
     {
-        /*
         if (bottomLimitSwitch.get())
         {
             encoder.reset();
+            if(speed<0)
+            {
+                liftJaguar.set(0);
+            }
         }
-
-        else if(bottomLimitSwitch.get() || speed < 0)
-        {
-            liftJaguar.set(0);
-            encoder.reset();
-        }
-
         else
-        {*/
+        {
             liftPid.disable();
             //camPid.disable();
             liftJaguar.set(speed);
-        //}
+        }
     }
+
     /**
      *
      */
@@ -116,6 +111,7 @@ public class Lift
         liftPid.disable();
         liftJaguar.set(0.0);
     }
+
     /**
      *
      * @return
@@ -135,6 +131,7 @@ public class Lift
             return 0.0;
         }
     }
+    
     /**
      *
      */
@@ -143,17 +140,19 @@ public class Lift
         //camPid.disable();
         liftPid.enable();
     }
-/**
- *
- */
+
+    /**
+     *
+     */
     public void startArmPid()
     {
         //camPid.enable();
         liftPid.disable();
     }
-/**
- *
- */
+    
+    /**
+     *
+     */
     public void stopPID()
     {
         //camPid.disable();
