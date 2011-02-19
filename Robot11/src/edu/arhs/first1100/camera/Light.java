@@ -12,7 +12,7 @@ import java.util.TimerTask;
 public class Light
 {
     Solenoid solenoid;
-    boolean on = false;
+    boolean state = false;
     java.util.Timer timer;
     
     /**
@@ -31,7 +31,7 @@ public class Light
         */
         public void run()
         {
-            light.off();
+            light.state = false;
         }
         
     }
@@ -48,54 +48,25 @@ public class Light
      */
     public void toggle()
     {
-        if (on)
-        {
-            this.off();
-        }
-        else
-        {
-            this.on();
-        }
+        state = !state;
+        System.out.println("Light toggled");
+        solenoid.set(state);
     }
     /**
      *
      */
     public void onForAWhile()
     {
-        this.on();
+        state = true;
         this.scheduleOff();
     }
     /**
      *
      */
     public void scheduleOff()
-    {        
-        if (timer != null)
-        {
-            timer.cancel();
-        }
-        
+    {             
         timer = new Timer();
         timer.schedule(new Timeout(this), 2000);
     }
-    /**
-     *
-     */
-    public void on()
-    {
-        on = true;
-        System.out.println("Light: on called");
-        solenoid.set(true);
-    }
-    /**
-     *
-     */
-    public void off()
-    {
-        on = false;
-        System.out.println("Light: off called");
-        solenoid.set(false);
-    }
-
 }
 

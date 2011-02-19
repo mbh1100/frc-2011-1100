@@ -15,19 +15,12 @@ import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
  */
 public class LiftToPegRoutine extends Routine
 {
-    ParticleAnalysisReport pegs;
-/**
- *
- * @param robot
- * @param sleep
- */
+
     public LiftToPegRoutine(RobotMain robot, int sleep)
     {
         super(robot, sleep);
     }
-/**
- *
- */
+
     public void tick()
     {
         //ParticleAnalysisReport pegs  = robot.cameraSystem.getParticles();

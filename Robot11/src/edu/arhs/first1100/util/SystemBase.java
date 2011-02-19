@@ -74,18 +74,21 @@ public class SystemBase extends Thread
         {
             while(!stopThread)
             {
+                /*
                 try
-                {
+                {*/
                     tick(); // User code
-                }
+                /*}
                 catch(Exception e)
                 {
                     log("********************************");
                     log("  Fatal Thread Error!");
                     log(e.getMessage());
+                    log(e.toString());
+
                     log("********************************");
                     robot.disabled();
-                }
+                }*/
                 
                 Timer.delay( ((double)(sleepTime))/1000 );
             }

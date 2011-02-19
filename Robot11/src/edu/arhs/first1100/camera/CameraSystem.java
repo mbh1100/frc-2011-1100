@@ -58,6 +58,7 @@ public class CameraSystem extends SystemBase
         ac.writeExposureControl(AxisCamera.ExposureT.hold);
         ac.writeRotation(AxisCamera.RotationT.k0);
         ac.writeResolution(AxisCamera.ResolutionT.k160x120);
+
     }
 
      /**
@@ -66,7 +67,16 @@ public class CameraSystem extends SystemBase
      */
     public void start()
     {
+         /*
+         * FUN CODE
+         */
+        for(int i = 0; i< 10;i++)
+        {
+            light.toggle();
+            Timer.delay(.5);
+        }
         super.start();
+
         while (!ac.freshImage())
         {
             Timer.delay(0.1);

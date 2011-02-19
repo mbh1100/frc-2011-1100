@@ -18,13 +18,14 @@ import edu.wpi.first.wpilibj.Joystick.ButtonType;
  */
 public class OperatorSystem extends SystemBase
 {
-    public AdvJoystick leftJoystick;  //controls the left side of the robot. There is love.
-    public AdvJoystick rightJoystick; //controls the right side of the robot. I love lurve you.
-    public XboxJoystick xboxJoystick; //controls the arm and other stuff. Hi.
-    
+    public final int LINE_TRACK_BUTTON = 7;//on the RIGHT joystick
+    public AdvJoystick leftJoystick;
+    public AdvJoystick rightJoystick;
+    public XboxJoystick xboxJoystick;
+
     //private ButtonBox buttonBox;
-    private GamepieceIndicator ledIndicator;  //indicates the gamepiece that the human. I love you.
-                                              //should give to the robot I really do
+    private GamepieceIndicator ledIndicator;  //indicates the gamepiece that the human
+                                              //should give to the robot
     // These are supposed to start as null
     private TargetPegRoutine targetRoutine = null;
     private ScoreRoutine scoreRoutine = null;
@@ -58,7 +59,7 @@ public class OperatorSystem extends SystemBase
          * Start routine buttons
          */
         
-        /*
+        
         if(leftJoystick.getRawButton(11) && lineRoutine == null)
         {
             // middle line, go to left, bottom left peg. Get actual
@@ -73,7 +74,7 @@ public class OperatorSystem extends SystemBase
             targetRoutine = new TargetPegRoutine(robot, 100, 100.0);
             targetRoutine.start();
         }
-        */
+        
 
         log("Compressor:"+robot.compressor.getPressureSwitchValue());
        
@@ -86,14 +87,13 @@ public class OperatorSystem extends SystemBase
             robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
             //robot.driveSystem.setSideSpeed(rightJoystick.getX()); // commented out by Alex 2-17-11 to try to get the robot to drive
             //robot.driveSystem.testCameraDrive(-rightJoystick.getY());
-            
             /*
             if(rightJoystick.getRawButton(11))
                 robot.driveSystem.setDriveModeSideStep();
             else if(rightJoystick.getRawButton(10))
                 robot.driveSystem.setDriveModeTank();
              */
-        }/*
+        }
         else
         {
             if(leftJoystick.getRawButton(10))
@@ -101,15 +101,20 @@ public class OperatorSystem extends SystemBase
                 lineRoutine.stop();
                 lineRoutine = null;
             }
-        }*/
+        }
+
+        if (rightJoystick.getRawButton(9))
+        {
+            robot.cameraSystem.getCenterX();
+        }
         
         /*
          * Lift control
-         */
+         *
         if(targetRoutine == null)
         {
-            robot.manipulatorSystem.setLiftSpeed(-xboxJoystick.getRightStickY());
-        }/*
+            
+        }
         else
         {
             if(xboxJoystick.getLeftBumper() || targetRoutine.isDone())
@@ -118,54 +123,53 @@ public class OperatorSystem extends SystemBase
                 targetRoutine = null;
             }
         }*/
-
+        
         /*
          * Arm control
          */
-        if(true)//scoreRoutine == null)
-        {
-            robot.manipulatorSystem.setClawState( xboxJoystick.getLeftBumper() );
-            robot.manipulatorSystem.setWristState( xboxJoystick.getRightBumper() );
-            robot.manipulatorSystem.setArmSpeed( -xboxJoystick.getLeftStickY()/4 );
-            
-            /*
-            if(xboxJoystick.getAButton())
-                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
-
-            if(xboxJoystick.getBButton())
-                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_MID_PEG);
-
-            if(xboxJoystick.getYButton())
-                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_TOP_PEG);
-
-            if(xboxJoystick.getXButton())
-                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FEEDER);
-            */
-        }
-        else
-        {
-            /*
-            if(xboxJoystick.getLeftBumper())
-            {
-                scoreRoutine.stop();
-                scoreRoutine = null;
-            }*/
-        }
-
-        /*
-        // Gamepiece indicator controller of love
-        if(xboxJoystick.getXButton())
-            ledIndicator.setLightColorRed();
-
-        else if(xboxJoystick.getYButton())
-            ledIndicator.setLightColorWhite();
+        robot.manipulatorSystem.setClawState( xboxJoystick.getLeftBumper() );
+        robot.manipulatorSystem.setWristState( xboxJoystick.getRightBumper() );
+        robot.manipulatorSystem.setArmSpeed( -xboxJoystick.getLeftStickY()/4 );
+        
+        //robot.manipulatorSystem.setLiftSpeed(-xboxJoystick.getRightStickY());
+        if(xboxJoystick.getAButton())
+            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
 
         else if(xboxJoystick.getBButton())
+            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_MID_PEG);
+
+        else if(xboxJoystick.getYButton())
+            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_TOP_PEG);
+
+        else if(xboxJoystick.getXButton())
+            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FEEDER);
+
+        if(xboxJoystick.getDpad() == 1.0)
+        {
+            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_DEFAULT);
+        }
+        else if(xboxJoystick.getDpad() == 1.0)
+        {
+            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FLOOR);
+        }
+
+        
+        
+        /**
+         * Gamepiece indicator controller of love
+         */
+        if(rightJoystick.getRawButton(4) || leftJoystick.getRawButton(4))
+            ledIndicator.setLightColorRed();
+
+        else if(rightJoystick.getRawButton(3) || leftJoystick.getRawButton(3))
+            ledIndicator.setLightColorWhite();
+
+        else if(rightJoystick.getRawButton(5) || leftJoystick.getRawButton(5))
             ledIndicator.setLightColorBlue();
         
-        else
+        else if(rightJoystick.getRawButton(2) || leftJoystick.getRawButton(2))
             ledIndicator.setLightColorClear();
-        */
+        
         
         /*
          * Minibot control
@@ -178,5 +182,12 @@ public class OperatorSystem extends SystemBase
         {
             robot.minibotSystem.deploy();
         }
+
+        /*
+         * Line tracking control
+         */
+
     }
+
+
 }

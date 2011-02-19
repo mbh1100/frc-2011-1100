@@ -25,7 +25,7 @@ public class Lift
     private final double kLIFT_P = 0.1;
     private final double kLIFT_I = 0.01;
     private final double kLIFT_D = 0.001;
-    private PID liftPid;
+    public PID liftPid;
     
     private final double VALUE_LOW = 10;
     private final double VALUE_MID = 120;
@@ -122,10 +122,11 @@ public class Lift
         {
             return liftPid.getError();
         }
+        /*
         else if(camPid.isEnable())
         {
             return camPid.getError();
-        }
+        }*/
         else
         {
             return 0.0;

@@ -85,14 +85,18 @@ public class ManipulatorSystem extends SystemBase
                 //raiseWrist();
                 break;
             case STATE_MID_PEG:
-                lift.setState(Lift.STATE_LOW);
+                //lift.setState(Lift.STATE_LOW);
                 //arm.setState(Arm.STATE_MID);
                 //raiseWrist();
+                
+                lift.setState(Lift.STATE_MID); //TEMP
                 break;
             case STATE_BOTTOM_PEG:
-                lift.setState(Lift.STATE_MID);
+                //lift.setState(Lift.STATE_MID);
                 //arm.setState(Arm.STATE_LOW);
                 //raiseWrist();
+
+                lift.setState(Lift.STATE_LOW); //TEMP
                 break;
             case STATE_FEEDER:
                 lift.setState(Lift.STATE_LOW);
@@ -163,12 +167,10 @@ public class ManipulatorSystem extends SystemBase
      */
     public void tick()
     {
-        if(lift.getPidError() < 1.0)
+        if(lift.liftPid.isEnable() && lift.getPidError() < 1.0)
         {
             log("Stopping lift pid");
             lift.stopPID();
         }
-
-
     }
 }
