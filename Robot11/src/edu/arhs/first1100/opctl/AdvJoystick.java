@@ -12,6 +12,8 @@ public class AdvJoystick extends Joystick
     *
     */
     private Averager averager;
+    private Averager averagerX;
+    private Averager averagerY;
     private int sampleSize = 4;
 /**
  *
@@ -21,6 +23,8 @@ public class AdvJoystick extends Joystick
     {
         super(port);
         averager = new Averager(sampleSize);
+        averagerX = new Averager(sampleSize);
+        averagerY = new Averager(sampleSize);
     }
 /**
  *
@@ -28,8 +32,8 @@ public class AdvJoystick extends Joystick
  */
     public double getStickX()
     {
-        averager.feed(super.getRawAxis(1));
-        return averager.get();
+        averagerX.feed(super.getRawAxis(1));
+        return averagerX.get();
     }
 /**
  *
@@ -37,7 +41,7 @@ public class AdvJoystick extends Joystick
  */
     public double getStickY()
     {
-        averager.feed(super.getRawAxis(2));
-        return averager.get();
+        averagerY.feed(super.getRawAxis(2));
+        return averagerY.get();
     }
 }

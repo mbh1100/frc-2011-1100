@@ -13,8 +13,6 @@ import edu.arhs.first1100.util.AdvJaguar;
  */
 public class ManipulatorSystem extends SystemBase
 {
-    
-
     public static final double PEG_TOP1 = 245;
     public static final double PEG_MIDDLE1 = 80.7;
     public static final double PEG_BOTTOM1 = 10;
@@ -66,7 +64,7 @@ public class ManipulatorSystem extends SystemBase
  *
  * @param speed
  */
-    public void setArm(double speed)
+    public void setArmSpeed(double speed)
     {
         arm.setSpeed(speed);
     }
@@ -118,29 +116,29 @@ public class ManipulatorSystem extends SystemBase
     public void openClaw()
     {
         log("Open claw");
-        setClaw(true);
+        setClawState(true);
     }
     
     public void closeClaw()
     {
         log("Close claw");
-        setClaw(true);
+        setClawState(true);
     }
 /**
  *
  * @param state
  */
-    public void setClaw(boolean state)
+    public void setClawState(boolean state)
     {
-        log("Set claw" + state);
+        //log("Set claw" + state);
         claw.set(state);
     }
-/**
- *
- */
+    /**
+     *
+     */
     public void toggleClaw()
     {
-        log("toggle claw");
+        //log("toggle claw");
         claw.set(!claw.get());
     }
    /**
@@ -148,32 +146,32 @@ public class ManipulatorSystem extends SystemBase
     */
     public void raiseWrist()
     {
-        log("Raise wrist");
-        setWrist(true);
+        //log("Raise wrist");
+        setWristState(true);
     }
-/**
- *
- */
+    /**
+     *
+     */
     public void lowerWrist()
     {
-        log("Lower wrist");
-        setWrist(true);
+        //log("Lower wrist");
+        setWristState(true);
     }
-/**
- *
- * @param state
- */
-    public void setWrist(boolean state)
+    /**
+     *
+     * @param state
+     */
+    public void setWristState(boolean state)
     {
-        log("Set wrist" + state);
+        //log("Set wrist" + state);
         wrist.set(state);
     }
-/**
- *
- */
+    /**
+     *
+     */
     public void toggleWrist()
     {
-        log("Toggle wrist");
+        //log("Toggle wrist");
         wrist.set(!wrist.get());
     }
    /**
@@ -184,10 +182,10 @@ public class ManipulatorSystem extends SystemBase
     {
         return (lift.getPidError() <= 1);
     }
-/**
- *
- * @return
- */
+    /**
+     *
+     * @return
+     */
     public boolean armPIDOnTarget()
     {
         return (arm.getPidError() <= 1);

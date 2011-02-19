@@ -27,9 +27,6 @@ import edu.wpi.first.wpilibj.Compressor;
  */
 public class RobotMain extends SimpleRobot
 {
-    private final int COMPRESSOR_VALUE = 1;
-    private final int COMPRESSOR_SWITCH_CHANNEL = 6;
-
     public AutonomousSystem autonomousSystem;
     public CameraSystem cameraSystem;
     public DriveSystem driveSystem;
@@ -37,7 +34,7 @@ public class RobotMain extends SimpleRobot
     public ManipulatorSystem manipulatorSystem;
     public MinibotSystem minibotSystem;
     public OperatorSystem operatorSystem;
-    private Compressor compressor;
+    public Compressor compressor;
 /**
  *
  */
@@ -45,14 +42,14 @@ public class RobotMain extends SimpleRobot
     {
         autonomousSystem = new AutonomousSystem(this, 100);
         operatorSystem = new OperatorSystem(this, 100);
-
+        
         cameraSystem = new CameraSystem(this, 100);
         driveSystem = new DriveSystem(this, 100);
         lineSystem = new LineSystem(this, 100);
         manipulatorSystem = new ManipulatorSystem(this, 100);
         minibotSystem = new MinibotSystem(this, 100);
-        compressor = new Compressor(COMPRESSOR_SWITCH_CHANNEL, COMPRESSOR_VALUE);
 
+        compressor = new Compressor(6, 1);
         compressor.start();
         
         // operator & autonomous threads started/stopped by teleopInit and autonomousInit
@@ -68,7 +65,7 @@ public class RobotMain extends SimpleRobot
     {
         operatorSystem.stop();
         autonomousSystem.start();
-
+        
         cameraSystem.start();
         driveSystem.start();
         manipulatorSystem.start();
@@ -89,10 +86,10 @@ public class RobotMain extends SimpleRobot
         driveSystem.start();
         manipulatorSystem.start();
         minibotSystem.start();
-
-        log("enabled teleop");
+        
+        log("Enabled teleop");
     }
-
+    
     /**
      *
      */

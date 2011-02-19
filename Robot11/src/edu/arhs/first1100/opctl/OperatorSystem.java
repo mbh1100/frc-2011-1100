@@ -29,6 +29,7 @@ public class OperatorSystem extends SystemBase
     private TargetPegRoutine targetRoutine = null;
     private ScoreRoutine scoreRoutine = null;
     private FollowLineRoutine lineRoutine = null;
+    
    /**
     *
     * @param robot
@@ -47,6 +48,7 @@ public class OperatorSystem extends SystemBase
         ledIndicator  = new GamepieceIndicator();
         ledIndicator.start();
     }
+    
     /**
      *
      */
@@ -55,6 +57,8 @@ public class OperatorSystem extends SystemBase
         /*
          * Start routine buttons
          */
+        
+        /*
         if(leftJoystick.getRawButton(11) && lineRoutine == null)
         {
             // middle line, go to left, bottom left peg. Get actual
@@ -69,6 +73,13 @@ public class OperatorSystem extends SystemBase
             targetRoutine = new TargetPegRoutine(robot, 100, 100.0);
             targetRoutine.start();
         }
+        */
+
+        log("Compressor:"+robot.compressor.getPressureSwitchValue());
+
+        robot.cameraSystem.getCenterX();
+
+        
         
         /*
          * Driving
@@ -78,54 +89,47 @@ public class OperatorSystem extends SystemBase
             //robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
             //robot.driveSystem.setSideSpeed(rightJoystick.getX()); // commented out by Alex 2-17-11 to try to get the robot to drive
             robot.driveSystem.testCameraDrive(-rightJoystick.getY());
-
-            // quo-quo-quo-quo-CHEET *transformers sound effect*
+            
             /*
             if(rightJoystick.getRawButton(11))
                 robot.driveSystem.setDriveModeSideStep();
             else if(rightJoystick.getRawButton(10))
                 robot.driveSystem.setDriveModeTank();
              */
-        }
+        }/*
         else
         {
-       /**
-        * 
-        */
             if(leftJoystick.getRawButton(10))
             {
                 lineRoutine.stop();
                 lineRoutine = null;
             }
-        }
+        }*/
         
         /*
          * Lift control
          */
         if(targetRoutine == null)
         {
-            robot.manipulatorSystem.setLiftSpeed(xboxJoystick.getTriggers() / 2);
-        }
+            robot.manipulatorSystem.setLiftSpeed(-xboxJoystick.getRightStickY());
+        }/*
         else
         {
-            /**
-             *
-             */
             if(xboxJoystick.getLeftBumper() || targetRoutine.isDone())
             {
                 targetRoutine.stop();
                 targetRoutine = null;
             }
-        }
+        }*/
 
         /*
          * Arm control
          */
         if(true)//scoreRoutine == null)
         {
-            robot.manipulatorSystem.setClaw( xboxJoystick.getRightStickY()<-0.5 ? true : false );
-            robot.manipulatorSystem.setWrist( !xboxJoystick.getRightBumper() );
-            robot.manipulatorSystem.setArm( xboxJoystick.getLeftStickY() );
+            robot.manipulatorSystem.setClawState( xboxJoystick.getLeftBumper() );
+            robot.manipulatorSystem.setWristState( xboxJoystick.getRightBumper() );
+            robot.manipulatorSystem.setArmSpeed( -xboxJoystick.getLeftStickY() );
             
             /*
             if(xboxJoystick.getAButton())
@@ -141,7 +145,6 @@ public class OperatorSystem extends SystemBase
                 robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FEEDER);
             */
         }
-        
         else
         {
             /*
@@ -151,7 +154,6 @@ public class OperatorSystem extends SystemBase
                 scoreRoutine = null;
             }*/
         }
-        
 
         /*
         // Gamepiece indicator controller of love
@@ -167,6 +169,7 @@ public class OperatorSystem extends SystemBase
         else
             ledIndicator.setLightColorClear();
         */
+        
         /*
          * Minibot control
          */

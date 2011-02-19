@@ -9,7 +9,11 @@ public class XboxJoystick extends AdvJoystick
     /**
      *
      */
-    private Averager averager;
+    private Averager lsX;
+    private Averager lsY;
+    private Averager rsX;
+    private Averager rsY;
+
     private int sampleSize = 4;
 /**
  *
@@ -18,7 +22,10 @@ public class XboxJoystick extends AdvJoystick
     public XboxJoystick(int ch)
     {
         super(ch);
-        averager = new Averager(sampleSize);
+        lsX = new Averager(sampleSize);
+        lsY = new Averager(sampleSize);
+        rsX = new Averager(sampleSize);
+        rsY = new Averager(sampleSize);
     }
 /**
  *
@@ -26,8 +33,8 @@ public class XboxJoystick extends AdvJoystick
  */
     public double getLeftStickX()
     {
-        averager.feed(super.getRawAxis(1));
-        return averager.get();
+        lsX.feed(super.getRawAxis(1));
+        return lsX.get();
     }
 /**
  *
@@ -35,8 +42,8 @@ public class XboxJoystick extends AdvJoystick
  */
     public double getLeftStickY()
     {
-        averager.feed(super.getRawAxis(2));
-        return averager.get();
+        lsY.feed(super.getRawAxis(2));
+        return lsY.get();
     }
 /**
  *
@@ -44,8 +51,8 @@ public class XboxJoystick extends AdvJoystick
  */
     public double getRightStickX()
     {
-        averager.feed(super.getRawAxis(4));
-        return averager.get();
+        rsX.feed(super.getRawAxis(4));
+        return rsX.get();
     }
 /**
  *
@@ -53,8 +60,8 @@ public class XboxJoystick extends AdvJoystick
  */
     public double getRightStickY()
     {
-        averager.feed(super.getRawAxis(5));
-        return averager.get();
+        rsY.feed(super.getRawAxis(5));
+        return rsY.get();
     }
 
     /*

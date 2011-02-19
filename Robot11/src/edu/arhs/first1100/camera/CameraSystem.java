@@ -19,7 +19,7 @@ public class CameraSystem extends SystemBase
     */
     public final int WHITE_THRESHOLD = 1;
     private final int PARTICLE_SIZE = 3;
-    private Light light;
+    public Light light;
     
     //RGB Threshold
     private int minRed = 0;
@@ -178,6 +178,7 @@ public class CameraSystem extends SystemBase
     public double getCenterX()
     {
         light.onForAWhile();
+        
         if(!(pRep.length >= 0))
             return pRep[0].center_mass_x_normalized;
         else

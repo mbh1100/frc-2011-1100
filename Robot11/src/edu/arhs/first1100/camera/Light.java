@@ -1,6 +1,7 @@
 package edu.arhs.first1100.camera;
 
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Solenoid;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -10,10 +11,10 @@ import java.util.TimerTask;
  */
 public class Light
 {
-    Relay relay;
+    Solenoid solenoid;
     boolean on = false;
     java.util.Timer timer;
-
+    
     /**
      *
      */
@@ -25,26 +26,26 @@ public class Light
         {
             this.light = light;
         }
-   /**
-    *
-    */
+       /**
+        *
+        */
         public void run()
         {
             light.off();
         }
         
     }
-/**
- *
- * @param ch
- */
+    /**
+     *
+     * @param ch
+     */
     public Light(int ch)
     {
-        relay = new Relay(ch, Relay.Direction.kForward);
+        solenoid = new Solenoid(ch);
     }
-/**
- *
- */
+    /**
+     *
+     */
     public void toggle()
     {
         if (on)
@@ -56,17 +57,17 @@ public class Light
             this.on();
         }
     }
-/**
- *
- */
+    /**
+     *
+     */
     public void onForAWhile()
     {
         this.on();
         this.scheduleOff();
     }
-/**
- *
- */
+    /**
+     *
+     */
     public void scheduleOff()
     {        
         if (timer != null)
@@ -83,7 +84,8 @@ public class Light
     public void on()
     {
         on = true;
-        relay.set(Relay.Value.kOn);
+        System.out.println("Light: on called");
+        solenoid.set(true);
     }
     /**
      *
@@ -91,7 +93,8 @@ public class Light
     public void off()
     {
         on = false;
-        relay.set(Relay.Value.kOff);
+        System.out.println("Light: off called");
+        solenoid.set(false);
     }
 
 }

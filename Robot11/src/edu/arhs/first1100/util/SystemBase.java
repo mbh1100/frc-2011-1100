@@ -152,7 +152,7 @@ public class SystemBase extends Thread
         */
 
 
-        System.out.println(this.getClass().getName().substring(this.getClass().getName().lastIndexOf('.'))+": "+message);
+        System.out.println(this.getClass().getName().substring(this.getClass().getName().lastIndexOf('.')+1)+": "+message);
     }
     
     /**

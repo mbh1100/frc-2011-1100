@@ -29,9 +29,9 @@ public class Arm
     private Encoder encoder;
     
     private Jaguar armJaguar;
-   /**
-    *
-    */
+    /**
+     *
+     */
     public Arm()
     {
         armJaguar = new Jaguar(8);
