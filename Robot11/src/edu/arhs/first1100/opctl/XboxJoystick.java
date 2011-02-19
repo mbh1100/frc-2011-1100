@@ -54,16 +54,22 @@ public class XboxJoystick extends AdvJoystick
         rsX.feed(super.getRawAxis(4));
         return rsX.get();
     }
-/**
- *
- * @return
- */
+    
+    /**
+     *
+     * @return
+     */
     public double getRightStickY()
     {
         rsY.feed(super.getRawAxis(5));
         return rsY.get();
     }
-
+    
+    public double getDpad()
+    {
+        System.out.println(super.getRawAxis(6));
+        return super.getRawAxis(6);
+    }
     /*
      * NOTE: Triggers are independant.
      * 1.0 to 0 is get right trigger, 1.0 to 0 is get left trigger.
@@ -71,15 +77,13 @@ public class XboxJoystick extends AdvJoystick
      */
     public double getLeftTrigger()
     {
-        /**
-         *
-         */
         return -Math.min(super.getRawAxis(3), 0);
     }
-/**
- *
- * @return
- */
+    
+    /**
+     *
+     * @return
+     */
     public double getRightTrigger()
     {
         return Math.max(super.getRawAxis(3), 0);
