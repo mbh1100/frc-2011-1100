@@ -40,6 +40,7 @@ public class ManipulatorSystem extends SystemBase
     
     private Solenoid wrist;
     private Solenoid claw;
+    
     /**
      *when to lift the arm claw and wrist and where they are
      * @param robot
@@ -55,22 +56,6 @@ public class ManipulatorSystem extends SystemBase
         wrist = new Solenoid(2);
         claw = new Solenoid(1);
     }
-    /**
-     *how fast the lift moves
-     * @param speed
-     */
-    public void setLiftSpeed(double speed)
-    {
-        lift.setSpeed(speed);
-    }
-    /**
-     *how fast the arm moves
-     * @param speed
-     */
-    public void setArmSpeed(double speed)
-    {
-        arm.setSpeed(speed);
-    }
 
     /**
      *sets the state of the robot
@@ -80,7 +65,7 @@ public class ManipulatorSystem extends SystemBase
     {
         log("Set State:"+state);
         this.state = state;
-        
+
         switch(state)
         {
             case STATE_TOP_PEG:
@@ -123,6 +108,34 @@ public class ManipulatorSystem extends SystemBase
     }
     
     /**
+     *how fast the lift moves
+     * @param speed
+     */
+    public void setLiftSpeed(double speed)
+    {
+        lift.setSpeed(speed);
+    }
+    
+    public void setLiftHeight(double height)
+    {
+        lift.setHeight(height);
+    }
+    
+    /**
+     *how fast the arm moves
+     * @param speed
+     */
+    public void setArmSpeed(double speed)
+    {
+        arm.setSpeed(speed);
+    }
+
+    public void setArmHeight(double height)
+    {
+        arm.setHeight(height);
+    }
+    
+    /**
      * Grabber controls
      */
     
@@ -158,12 +171,12 @@ public class ManipulatorSystem extends SystemBase
     {
         return (lift.getPidError() <= 1);
     }
-
+    
     /**
      *what to do when on target
      * @return
      */
-    public boolean armPIDOnTarget()
+    public boolean armOnTarget()
     {
         return (arm.getPidError() <= 1);
     }
@@ -199,11 +212,5 @@ public class ManipulatorSystem extends SystemBase
     {
         arm.resetEncoder();
         lift.resetEncoder();
-    }
-    
-    public void reset()
-    {
-        //arm.resetEncoder();
-        //lift.resetEncoder();
     }
 }

@@ -70,6 +70,22 @@ public class Arm
     {
         return state;
     }
+
+    /**
+     *sets the speed of the arm
+     * @param speed
+     */
+    public void setSpeed(double speed)
+    {
+        pid.disable();
+        armJaguar.set(speed);
+    }
+    
+    public void setHeight(double height)
+    {
+        pid.setSetpoint(height);
+        pid.enable();
+    }
     
     /**
      *when to stop the pid
@@ -78,30 +94,33 @@ public class Arm
     public void stop()
     {
         pid.disable();
+        armJaguar.set(0.0);
     }
-/**
- *sets the speed of the arm
- * @param speed
- */
-    public void setSpeed(double speed)
-    {
-        pid.disable();
-        armJaguar.set(speed);
-    }
-/**
- *what to do when it gets an error.
- * @return
- */
+    
+    /**
+     *what to do when it gets an error.
+     * @return
+     */
     public double getPidError()
     {
         return pid.getError();
     }
     
-    public void  stopPID()
+    public void stopPID()
     {
         pid.disable();
     }
+
+    public boolean pidEnabled()
+    {
+        return pid.isEnable();
+    }
     
+    public double getEncoder()
+    {
+        return encoder.get();
+    }
+
     public void resetEncoder()
     {
         encoder.reset();

@@ -60,7 +60,6 @@ public class OperatorSystem extends SystemBase
          * Start routine buttons
          */
         
-        
         if(leftJoystick.getRawButton(11) && lineRoutine == null)
         {
             // middle line, go to left, bottom left peg. Get actual
@@ -156,37 +155,45 @@ public class OperatorSystem extends SystemBase
         if(!xboxJoystick.getRightBumper())
             xboxRightBumperLastState = false;
 
-        if(xboxJoystick.getRightTrigger() > 0.5)
+        
+        if(Math.abs(xboxJoystick.getLeftStickY())>.25)
         {
-            robot.manipulatorSystem.setArmSpeed(xboxJoystick.getLeftStickY()/4 );
-            
+            robot.manipulatorSystem.setArmSpeed(xboxJoystick.getLeftStickY()/4);
+        }
+        else
+        {
+            if(!robot.manipulatorSystem.arm.pidEnabled())
+            {
+                robot.manipulatorSystem.setArmHeight(robot.manipulatorSystem.arm.getEncoder());
+            }
+        }
+
+        if(Math.abs(xboxJoystick.getRightStickY())>.25)
+        {
             robot.manipulatorSystem.setLiftSpeed(-xboxJoystick.getRightStickY());
         }
         else
         {
-            if(xboxJoystick.getAButton())
-                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
-
-            else if(xboxJoystick.getBButton())
+            if(!robot.manipulatorSystem.lift.pidEnabled())
             {
-                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_MID_PEG);
-                log("Setting state to mid");
-            }
-            else if(xboxJoystick.getYButton())
-                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_TOP_PEG);
-
-            else if(xboxJoystick.getXButton())
-                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FEEDER);
-
-            if(xboxJoystick.getDpad() == 1.0)
-            {
-                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_DEFAULT);
-            }
-            else if(xboxJoystick.getDpad() == -1.0)
-            {
-                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FLOOR);
+                robot.manipulatorSystem.setLiftHeight(robot.manipulatorSystem.lift.getEncoder());
             }
         }
+        
+        if(xboxJoystick.getAButton())
+            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
+
+        else if(xboxJoystick.getBButton())
+            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_MID_PEG);
+        
+        else if(xboxJoystick.getYButton())
+            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_TOP_PEG);
+
+        else if(xboxJoystick.getXButton())
+            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_DEFAULT);
+
+        if(xboxJoystick.getDpad() == 1.0)
+            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FLOOR);
         
         /**
          * Gamepiece indicator controller of love
@@ -211,7 +218,6 @@ public class OperatorSystem extends SystemBase
         {
             robot.minibotSystem.setArmSpeed(0.5);
         }
-
         else
         {
         robot.minibotSystem.setArmSpeed(0.0);
@@ -221,15 +227,9 @@ public class OperatorSystem extends SystemBase
         {
             robot.minibotSystem.setDeployerSpeed(0.5);
         }
-
         else
         {
         robot.minibotSystem.setDeployerSpeed(0.0);
         }
-
-        /*
-         * Line tracking control
-         */
-
     }
 }

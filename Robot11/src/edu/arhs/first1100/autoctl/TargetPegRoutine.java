@@ -51,7 +51,7 @@ public class TargetPegRoutine extends Routine
     */
     public void tick()
     {
-        if(robot.manipulatorSystem.armPIDOnTarget())
+        if(robot.manipulatorSystem.armOnTarget())
             setDone();
 
     }

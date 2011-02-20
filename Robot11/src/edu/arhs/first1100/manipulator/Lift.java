@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.arhs.first1100.util.AdvJaguar;
 import edu.arhs.first1100.util.PID;
 
-
 /**
  *runs the lift
  * @author team1100
@@ -116,9 +115,15 @@ public class Lift
         liftPid.disable();
         liftJaguar.set(speed);
     }
-
+    
+    public void setHeight(double height)
+    {
+        liftPid.setSetpoint(height);
+        liftPid.enable();
+    }
+    
     /**
-     *when to stop
+     * when to stop
      */
     public void stop()
     {
@@ -127,8 +132,20 @@ public class Lift
         liftJaguar.set(0.0);
     }
 
+    public void startLiftPid()
+    {
+        //camPid.disable();
+        liftPid.enable();
+    }
+
+    public void startCamPid()
+    {
+        //camPid.enable();
+        liftPid.disable();
+    }
+
     /**
-     *what to do when it reieves an error
+     * what to do when it recieves an error
      * @return
      */
     public double getPidError()
@@ -148,36 +165,22 @@ public class Lift
         }
     }
     
-    /**
-     *when to start lift
-     */
-    public void startLiftPid()
-    {
-        //camPid.disable();
-        liftPid.enable();
-    }
-
-    /**
-     *when to start arm
-     */
-    public void startArmPid()
-    {
-        //camPid.enable();
-        liftPid.disable();
-    }
-    
-    /**
-     *when to stop lift
-     */
     public void stopPID()
     {
         //camPid.disable();
         liftPid.disable();
     }
 
-    /**
-     * Zero both arm and lift encoders
-     */
+    public boolean pidEnabled()
+    {
+        return liftPid.isEnable() || camPid.isEnable();
+    }
+    
+    public double getEncoder()
+    {
+        return encoder.get();
+    }
+
     public void resetEncoder()
     {
         encoder.reset();
