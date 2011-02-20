@@ -80,9 +80,9 @@ public class OperatorSystem extends SystemBase
          */
         if(lineRoutine == null)
         {
-            //robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
+            robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
             //robot.driveSystem.setSideSpeed(rightJoystick.getX()); // commented out by Alex 2-17-11 to try to get the robot to drive
-            robot.driveSystem.testCameraDrive(-rightJoystick.getY());
+            //robot.driveSystem.testCameraDrive(-rightJoystick.getY());
             
             /*
             if(rightJoystick.getRawButton(11))
@@ -214,18 +214,20 @@ public class OperatorSystem extends SystemBase
         /*
          * Minibot control
          */
-        if (xboxJoystick.getBackButton())
+        if (rightJoystick.getRawButton(6))
         {
-            robot.minibotSystem.setArmSpeed(0.5);
+            robot.minibotSystem.setArmSpeed(leftJoystick.getStickX());
+            robot.driveSystem.setDriveSpeed(0, 0);
         }
         else
         {
         robot.minibotSystem.setArmSpeed(0.0);
         }
 
-        if (xboxJoystick.getStartButton())
+        if (rightJoystick.getRawButton(6))
         {
-            robot.minibotSystem.setDeployerSpeed(0.5);
+            robot.minibotSystem.setDeployerSpeed(rightJoystick.getStickX());
+            robot.driveSystem.setDriveSpeed(0, 0);
         }
         else
         {

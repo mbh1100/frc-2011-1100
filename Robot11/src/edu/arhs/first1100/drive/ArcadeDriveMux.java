@@ -4,6 +4,8 @@
  */
 
 package edu.arhs.first1100.drive;
+
+
 /**
  *declares how the robot will drive
  * @author team1100
@@ -39,6 +41,7 @@ public class ArcadeDriveMux
  */
     public void setPower(double power)
     {
+
         this.power = power;
         cameraDrive();
     }

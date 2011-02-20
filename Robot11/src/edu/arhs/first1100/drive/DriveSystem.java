@@ -57,13 +57,13 @@ public class DriveSystem extends SystemBase
          rightTankmotor2 = new AdvJaguar(3, true);
          
          rd = new RobotDrive(leftTankmotor1, leftTankmotor2 , rightTankmotor1, rightTankmotor2);
-         sidestepDriveMotor = new AdvJaguar(5);
+         //sidestepDriveMotor = new AdvJaguar(5);
          
          //this.setDriveSpeed(0.0, 0.0);
          
          adm = new ArcadeDriveMux(this);
          cdc = new CameraDriveCurve(adm, robot.cameraSystem);
-         cdp = new CameraDrivePower(adm);
+         cdp = new CameraDrivePower(adm, robot.cameraSystem);
     }
     /**
      *says how fast to go
@@ -81,6 +81,10 @@ public class DriveSystem extends SystemBase
 
         // log("cdp.trackCamera()");
         cdp.trackCamera();
+    }
+    public void runCameraDrive()
+    {
+        adm.cameraDrive();
     }
     /**
      *declares robot drive

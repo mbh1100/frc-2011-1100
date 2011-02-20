@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Victor;
 
 /**
  *deploys the minibot
@@ -19,11 +20,13 @@ public class MinibotSystem extends SystemBase
      */
     private final int TOWER_SWITCH_CHANNEL = 14;
     private final int MINIBOT_SOLENOID_CHANNEL = 8;
-    private final int ADVJAGUAR_CHANEL = 10;
+    private final int ADVJAGUAR_CHANNEL = 7;
 
     private DigitalInput towerDetector;
     private AdvJaguar mBeltJaguar;
     private AdvJaguar mArmJaguar;
+    private Victor beltVic;
+    private Victor armVic;
     
     // Checks if the minibot deployer is down
     private boolean deployReady = false;
@@ -37,9 +40,11 @@ public class MinibotSystem extends SystemBase
     {
         super(robot, sleepTime);
         towerDetector = new DigitalInput(TOWER_SWITCH_CHANNEL);
-        mBeltJaguar = new AdvJaguar(9);
-        mBeltJaguar.set(0.0);
-        mArmJaguar = new AdvJaguar(ADVJAGUAR_CHANEL);
+        //mBeltJaguar = new AdvJaguar(9);
+        //mBeltJaguar.set(0.0);
+        beltVic = new Victor(5);
+        //mArmJaguar = new AdvJaguar(ADVJAGUAR_CHANNEL);
+        armVic = new Victor(ADVJAGUAR_CHANNEL);
     }
     /**
      * how fast the motor should be going
@@ -47,12 +52,14 @@ public class MinibotSystem extends SystemBase
      */
     public void setArmSpeed(double speed)
     {
-        mArmJaguar.set(speed);
+        //mArmJaguar.set(speed);
+        armVic.set(speed);
     }
 
     public void setDeployerSpeed(double speed)
     {
-        mBeltJaguar.set(speed);
+        //mBeltJaguar.set(speed);
+        beltVic.set(speed);
     }
 /**
  *sets how the minibot is deployed
@@ -65,7 +72,7 @@ public class MinibotSystem extends SystemBase
        // }
     }
 /**
- *when to put down the deployer
+ *when to deploy
  */
     public void down()
     {

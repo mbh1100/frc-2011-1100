@@ -17,18 +17,20 @@ public class CameraDrivePower
     PID pid;
     ZPIDSource source;
     ArcadeDriveMux output;
+    CameraSystem cs;
 
-    final private double P = .1;
-    final private double I = .01;
-    final private double D = .001;
+    final private double P = 1.0;
+    final private double I = .000;
+    final private double D = .0000;
 
     PIDOutput power;
 /**
  *declares output of the motors
  * @param adm
  */
-    public CameraDrivePower(ArcadeDriveMux adm)
+    public CameraDrivePower(ArcadeDriveMux adm, CameraSystem cs)
     {
+        this.cs = cs;
         output = adm;
         power = new PowerPIDWrite(adm);
         source = new ZPIDSource();

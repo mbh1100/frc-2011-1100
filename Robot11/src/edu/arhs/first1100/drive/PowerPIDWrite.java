@@ -27,7 +27,7 @@ public class PowerPIDWrite implements PIDOutput
     public void pidWrite(double power)
     {
         //System.out.println("PowerPIDWrite pidWrite() - "+power);
-        //adm.setPower(power);
+        adm.setPower(power);
     }
 
 }

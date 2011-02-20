@@ -173,7 +173,7 @@ public class Lift
 
     public boolean pidEnabled()
     {
-        return liftPid.isEnable() || camPid.isEnable();
+        return liftPid.isEnable(); // || camPid.isEnable();
     }
     
     public double getEncoder()
