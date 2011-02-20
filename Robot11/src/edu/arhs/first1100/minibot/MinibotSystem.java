@@ -23,9 +23,8 @@ public class MinibotSystem extends SystemBase
     private final int ADVJAGUAR_CHANEL = 10;
 
     private DigitalInput towerDetector;
-    private Solenoid mSolenoid;
-    private AdvJaguar mJaguar;
-    double mJagSpeed = 0.4;
+    private AdvJaguar mBeltJaguar;
+    private AdvJaguar mArmJaguar;
     
     // Checks if the minibot deployer is down
     private boolean deployReady = false;
@@ -38,28 +37,37 @@ public class MinibotSystem extends SystemBase
     {
         super(robot, sleepTime);
         towerDetector = new DigitalInput(TOWER_SWITCH_CHANNEL);
-        mSolenoid = new Solenoid(MINIBOT_SOLENOID_CHANNEL);
-        mSolenoid.set(true);
-        mJaguar = new AdvJaguar(ADVJAGUAR_CHANEL);
+        mBeltJaguar = new AdvJaguar(9);
+        mBeltJaguar.set(0.0);
+        mArmJaguar = new AdvJaguar(ADVJAGUAR_CHANEL);
+    }
+    public void setArmSpeed(double speed)
+    {
+        mArmJaguar.set(speed);
+    }
+
+    public void setDeployerSpeed(double speed)
+    {
+        mBeltJaguar.set(speed);
     }
 /**
  *
  */
     public void deploy()
     {
-        if (towerDetector.get())
-        {
-            mSolenoid.set(false);
-        }
+        //if (towerDetector.get())
+       // {
+            mBeltJaguar.set(0.5);
+       // }
     }
 /**
  *
  */
     public void down()
     {
-        if(!towerDetector.get())
-        {
-            mJaguar.set(mJagSpeed);
-        }
+        //if(!towerDetector.get())
+        //{
+            mArmJaguar.set(0.5);
+        //}
     }
 }

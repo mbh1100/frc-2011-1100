@@ -199,11 +199,22 @@ public class OperatorSystem extends SystemBase
          */
         if (xboxJoystick.getBackButton())
         {
-            robot.minibotSystem.down();
+            robot.minibotSystem.setArmSpeed(0.5);
         }
+
+        else
+        {
+        robot.minibotSystem.setArmSpeed(0.0);
+        }
+
         if (xboxJoystick.getStartButton())
         {
-            robot.minibotSystem.deploy();
+            robot.minibotSystem.setDeployerSpeed(0.5);
+        }
+
+        else
+        {
+        robot.minibotSystem.setDeployerSpeed(0.0);
         }
 
         /*
