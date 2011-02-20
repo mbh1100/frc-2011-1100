@@ -21,6 +21,9 @@ public class OperatorSystem extends SystemBase
     public AdvJoystick leftJoystick;  //controls the left side of the robot
     public AdvJoystick rightJoystick; //controls the right side of the robot.
     public XboxJoystick xboxJoystick; //controls the arm and other stuff. Hi.
+
+    public boolean xboxLeftBumperLastState = false;
+    public boolean xboxRightBumperLastState = false;
     
     //private ButtonBox buttonBox;
     private GamepieceIndicator ledIndicator;  //indicates the gamepiece that the human. 
@@ -126,8 +129,28 @@ public class OperatorSystem extends SystemBase
         /*
          * Arm control
          */
-        robot.manipulatorSystem.setClawState( xboxJoystick.getLeftBumper() );
-        robot.manipulatorSystem.setWristState( xboxJoystick.getRightBumper() );
+        
+        // Left Toggle Button
+        if(xboxJoystick.getLeftBumper() && !xboxLeftBumperLastState)
+        {
+            robot.manipulatorSystem.toggleClaw();
+            xboxLeftBumperLastState = true;
+        }
+
+        if(!xboxJoystick.getLeftBumper())
+            xboxLeftBumperLastState = false;
+        
+        // Right Bumper Toggle
+        if(xboxJoystick.getRightBumper() && !xboxLeftBumperLastState)
+        {
+            robot.manipulatorSystem.toggleWrist();
+            xboxRightBumperLastState = true;
+        }
+        
+        if(!xboxJoystick.getRightBumper())
+            xboxRightBumperLastState = false;
+        
+        
         robot.manipulatorSystem.setArmSpeed( xboxJoystick.getLeftStickY()/4 );
         
         //robot.manipulatorSystem.setLiftSpeed(-xboxJoystick.getRightStickY());
