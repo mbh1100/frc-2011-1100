@@ -10,7 +10,7 @@ import edu.arhs.first1100.util.PID;
 
 
 /**
- *
+ *runs the lift
  * @author team1100
  */
 public class Lift
@@ -42,7 +42,7 @@ public class Lift
     DigitalInput bottomLimitSwitch;
 
     /**
-     *
+     *what encoders the lift is on and stuff
      */
     public Lift()
     {
@@ -59,7 +59,7 @@ public class Lift
         liftPid.setOutputRange(-0.3, 0.6);
     }
     /**
-     *
+     *sets the state of the lift
      * @param state
      */
     public void setState(int state)
@@ -80,7 +80,7 @@ public class Lift
     }
     
     /**
-     *
+     *sets the speed of the lift
      * @param speed
      */
     public void setSpeed(double speed)
@@ -109,7 +109,7 @@ public class Lift
     }
 
     /**
-     *
+     *when to stop
      */
     public void stop()
     {
@@ -119,7 +119,7 @@ public class Lift
     }
 
     /**
-     *
+     *what to do when it reieves an error
      * @return
      */
     public double getPidError()
@@ -140,7 +140,7 @@ public class Lift
     }
     
     /**
-     *
+     *when to start lift
      */
     public void startLiftPid()
     {
@@ -149,7 +149,7 @@ public class Lift
     }
 
     /**
-     *
+     *when to start arm
      */
     public void startArmPid()
     {
@@ -158,7 +158,7 @@ public class Lift
     }
     
     /**
-     *
+     *when to stop lift
      */
     public void stopPID()
     {

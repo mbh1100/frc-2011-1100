@@ -7,7 +7,7 @@ import edu.arhs.first1100.util.AdvJaguar;
 import edu.arhs.first1100.util.PID;
 
 /**
- *
+ *how to run the arm
  * @author team1100
  */
 public class Arm
@@ -29,7 +29,7 @@ public class Arm
     
     private Jaguar armJaguar;
     /**
-     *
+     *runs the arm
      */
     public Arm()
     {
@@ -62,14 +62,14 @@ public class Arm
         }
     }
     /**
-     *
+     *when to stop the pid
      */
     public void stop()
     {
         pid.disable();
     }
 /**
- *
+ *sets the speed of the arm
  * @param speed
  */
     public void setSpeed(double speed)
@@ -78,7 +78,7 @@ public class Arm
         armJaguar.set(speed);
     }
 /**
- *
+ *what to do when it gets an error.
  * @return
  */
     public double getPidError()

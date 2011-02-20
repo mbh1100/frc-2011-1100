@@ -9,7 +9,7 @@ import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.util.AdvJaguar;
 
 /**
- *
+ *what peg the robot should go for and how the robot figures out what peg to go for
  * @author team1100
  */
 public class ManipulatorSystem extends SystemBase
@@ -39,7 +39,7 @@ public class ManipulatorSystem extends SystemBase
     private Solenoid wrist;
     private Solenoid claw;
     /**
-     *
+     *when to lift the arm claw and wrist and where they are
      * @param robot
      * @param sleepTime
      */
@@ -54,7 +54,7 @@ public class ManipulatorSystem extends SystemBase
         claw = new Solenoid(1);
     }
     /**
-     *
+     *how fast the lift moves
      * @param speed
      */
     public void setLiftSpeed(double speed)
@@ -62,7 +62,7 @@ public class ManipulatorSystem extends SystemBase
         lift.setSpeed(speed);
     }
     /**
-     *
+     *how fast the arm moves
      * @param speed
      */
     public void setArmSpeed(double speed)
@@ -70,7 +70,7 @@ public class ManipulatorSystem extends SystemBase
         arm.setSpeed(speed);
     }
     /**
-     *
+     *sets the state of the robot
      * @param state
      */
     public void setState(int state)
@@ -141,7 +141,7 @@ public class ManipulatorSystem extends SystemBase
     { wrist.set(!wrist.get()); }
     
     /**
-     *
+     *what to do when on target
      * @return
      */
     public boolean liftOnTarget()
@@ -150,7 +150,7 @@ public class ManipulatorSystem extends SystemBase
     }
 
     /**
-     *
+     *what to do when on target
      * @return
      */
     public boolean armPIDOnTarget()
@@ -159,7 +159,7 @@ public class ManipulatorSystem extends SystemBase
     }
     
     /**
-     *
+     *what to do when tick happens
      */
     public void tick()
     {
