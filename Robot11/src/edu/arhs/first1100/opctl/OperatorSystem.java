@@ -51,7 +51,7 @@ public class OperatorSystem extends SystemBase
      */
     public void tick()
     {
-        log("Tick");
+        //log("Tick");
         
         /*
          * Start routine buttons
@@ -71,11 +71,7 @@ public class OperatorSystem extends SystemBase
             // target from controller
             targetRoutine = new TargetPegRoutine(robot, 100, 100.0);
             targetRoutine.start();
-        }
-        
-
-        log("Compressor:"+robot.compressor.getPressureSwitchValue());
-       
+        }       
         
         /*
          * Driving
@@ -101,9 +97,14 @@ public class OperatorSystem extends SystemBase
             }
         }
 
-        if (rightJoystick.getRawButton(9))
+        if(rightJoystick.getRawButton(9))
         {
-            robot.cameraSystem.light.overrideTimer();
+            robot.cameraSystem.light.on();
+        }
+
+        if(rightJoystick.getRawButton(8))
+        {
+            robot.cameraSystem.light.onForAWhile();
         }
         
         /*
@@ -127,31 +128,32 @@ public class OperatorSystem extends SystemBase
          */
         robot.manipulatorSystem.setClawState( xboxJoystick.getLeftBumper() );
         robot.manipulatorSystem.setWristState( xboxJoystick.getRightBumper() );
-        robot.manipulatorSystem.setArmSpeed( -xboxJoystick.getLeftStickY()/4 );
+        robot.manipulatorSystem.setArmSpeed( xboxJoystick.getLeftStickY()/4 );
         
         //robot.manipulatorSystem.setLiftSpeed(-xboxJoystick.getRightStickY());
         if(xboxJoystick.getAButton())
             robot.manipulatorSystem.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
-
+            
         else if(xboxJoystick.getBButton())
+        {
             robot.manipulatorSystem.setState(ManipulatorSystem.STATE_MID_PEG);
-
+            log("Setting state to mid");
+        }
         else if(xboxJoystick.getYButton())
             robot.manipulatorSystem.setState(ManipulatorSystem.STATE_TOP_PEG);
 
         else if(xboxJoystick.getXButton())
             robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FEEDER);
-
+            
         if(xboxJoystick.getDpad() == 1.0)
         {
             robot.manipulatorSystem.setState(ManipulatorSystem.STATE_DEFAULT);
         }
-        else if(xboxJoystick.getDpad() == 1.0)
+        else if(xboxJoystick.getDpad() == -1.0)
         {
             robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FLOOR);
         }
 
-        
         
         /**
          * Gamepiece indicator controller of love

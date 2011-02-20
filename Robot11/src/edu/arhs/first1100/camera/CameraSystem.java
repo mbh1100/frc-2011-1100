@@ -73,7 +73,7 @@ public class CameraSystem extends SystemBase
         for(int i = 0; i< 10;i++)
         {
             light.toggle();
-            Timer.delay(.5);
+            Timer.delay(.1);
         }
         super.start();
 

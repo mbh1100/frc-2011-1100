@@ -67,7 +67,6 @@ public class XboxJoystick extends AdvJoystick
     
     public double getDpad()
     {
-        System.out.println(super.getRawAxis(6));
         return super.getRawAxis(6);
     }
     /*

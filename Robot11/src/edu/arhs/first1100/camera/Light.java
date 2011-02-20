@@ -13,7 +13,6 @@ public class Light
 {
     Solenoid solenoid;
     boolean state = false;
-    boolean overrideT = false;
     java.util.Timer timer;
     
     /**
@@ -53,27 +52,37 @@ public class Light
         System.out.println("Light toggled");
         solenoid.set(state);
     }
+
+    public void on()
+    {
+        if(timer != null)
+            timer.cancel();
+        
+        state = true;
+        solenoid.set(state);
+    }
+
+    public void off()
+    {
+        state = false;
+        solenoid.set(state);
+    }
+    
     /**
      *
      */
     public void onForAWhile()
     {
-        state = true;
-        if (!overrideT)
-            this.scheduleOff();
+        on();
+        this.scheduleOff();
     }
     /**
      *
      */
     public void scheduleOff()
-    {             
+    {
         timer = new Timer();
         timer.schedule(new Timeout(this), 2000);
-    }
-
-    public void overrideTimer()
-    {
-        overrideT = !overrideT;
     }
 }
 

@@ -23,7 +23,7 @@ public class ManipulatorSystem extends SystemBase
     public static final double PEG_BOTTOM2 = 10;
     
     public static final int STATE_DEFAULT    = 0;
-
+    
     public static final int STATE_TOP_PEG    = 3;
     public static final int STATE_MID_PEG    = 2;
     public static final int STATE_BOTTOM_PEG = 1;
@@ -33,8 +33,8 @@ public class ManipulatorSystem extends SystemBase
 
     private int state = STATE_DEFAULT;
     
-    private Lift lift;
-    private Arm arm;
+    public Lift lift;
+    public Arm arm;
     
     private Solenoid wrist;
     private Solenoid claw;
@@ -85,18 +85,14 @@ public class ManipulatorSystem extends SystemBase
                 //raiseWrist();
                 break;
             case STATE_MID_PEG:
-                //lift.setState(Lift.STATE_LOW);
+                lift.setState(Lift.STATE_LOW);
                 //arm.setState(Arm.STATE_MID);
                 //raiseWrist();
-                
-                lift.setState(Lift.STATE_MID); //TEMP
                 break;
             case STATE_BOTTOM_PEG:
-                //lift.setState(Lift.STATE_MID);
+                lift.setState(Lift.STATE_MID);
                 //arm.setState(Arm.STATE_LOW);
                 //raiseWrist();
-
-                lift.setState(Lift.STATE_LOW); //TEMP
                 break;
             case STATE_FEEDER:
                 lift.setState(Lift.STATE_LOW);
@@ -167,10 +163,18 @@ public class ManipulatorSystem extends SystemBase
      */
     public void tick()
     {
+        /*
         if(lift.liftPid.isEnable() && lift.getPidError() < 1.0)
         {
             log("Stopping lift pid");
             lift.stopPID();
         }
+        */
+        
+        log("Lift PID target: " + lift.liftPid.getSetpoint());
+        log("Lift Encoder:    " + lift.encoder.get());
+        log("Lift PID output: " + lift.liftPid.get());
+        
+        //log("Arm Encoder:"  + robot.manipulatorSystem.arm.encoder.get());
     }
 }

@@ -16,17 +16,16 @@ public class Arm
     private final double KI = 0.5;
     private final double KD = 0.5;
     
-    private final double HIGH_VALUE = 0.0;//Temp value
-    private final double MID_VALUE = 20.0;//Temp value
-    private final double LOW_VALUE = 40.0;//Temp value
+    private final double HIGH_VALUE = 0;
+    private final double MID_VALUE = 125;
+    private final double LOW_VALUE = 250;
     private PID pid;
-
+    
     public static final int STATE_HIGH = 2;
     public static final int STATE_MID  = 1;
     public static final int STATE_LOW  = 0;
 
-    private final double pulseDistance = 0.1;
-    private Encoder encoder;
+    public Encoder encoder;
     
     private Jaguar armJaguar;
     /**
@@ -38,7 +37,6 @@ public class Arm
         encoder = new Encoder(10, 11);
 
         encoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
-        encoder.setDistancePerPulse(pulseDistance);
         encoder.start();
         
         pid = new PID(KP, KI, KD, encoder, armJaguar);

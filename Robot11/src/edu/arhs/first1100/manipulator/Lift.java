@@ -22,21 +22,20 @@ public class Lift
     private final double kCAM_D = 0.005;
     private PID camPid;
 
-    private final double kLIFT_P = 0.1;
-    private final double kLIFT_I = 0.01;
-    private final double kLIFT_D = 0.001;
+    private final double kLIFT_P = 0.01;
+    private final double kLIFT_I = 0.001;
+    private final double kLIFT_D = 0.0001;
     public PID liftPid;
     
-    private final double VALUE_LOW = 10;
-    private final double VALUE_MID = 120;
-    private final double VALUE_HIGH = 230;
+    private final double VALUE_LOW = 100;
+    private final double VALUE_MID = 1200;
+    private final double VALUE_HIGH = 2300;
 
     public static final int STATE_LOW = 0;
     public static final int STATE_MID = 1;
     public static final int STATE_HIGH = 2;
     
-    private final double pulseDistance = .1;
-    private Encoder encoder;
+   public Encoder encoder;
     
     private Jaguar liftJaguar;
 
@@ -51,21 +50,20 @@ public class Lift
         encoder = new Encoder(8, 9);
         
         encoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
-        encoder.setDistancePerPulse(pulseDistance);
         encoder.start();
 
         bottomLimitSwitch = new DigitalInput(7);
         
         //camPid  = new PID(kCAM_P, kCAM_I, kCAM_D, null, liftJaguar);
         liftPid = new PID(kLIFT_P, kLIFT_I, kLIFT_D, encoder, liftJaguar);
+        liftPid.setOutputRange(-0.3, 0.6);
     }
-/**
- *
- * @param state
- */
+    /**
+     *
+     * @param state
+     */
     public void setState(int state)
     {
-        liftPid.enable();
         switch(state)
         {
             case STATE_HIGH:
@@ -78,6 +76,7 @@ public class Lift
                 liftPid.setSetpoint(VALUE_LOW);
                 break;
         }
+        liftPid.enable();
     }
     
     /**
@@ -86,10 +85,13 @@ public class Lift
      */
     public void setSpeed(double speed)
     {
+        /*
         if (bottomLimitSwitch.get())
         {
-            encoder.reset();
-            if(speed<0)
+            System.out.println("LIFT: Bottom switch pressed");
+            
+            //encoder.reset();
+            if(speed < 0)
             {
                 liftJaguar.set(0);
             }
@@ -100,6 +102,10 @@ public class Lift
             //camPid.disable();
             liftJaguar.set(speed);
         }
+         *
+         */
+        
+        liftJaguar.set(speed);
     }
 
     /**
