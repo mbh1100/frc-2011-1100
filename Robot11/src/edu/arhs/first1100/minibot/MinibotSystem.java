@@ -3,20 +3,19 @@ package edu.arhs.first1100.minibot;
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.util.AdvJaguar;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
- *
+ *deploys the minibot
  * @author team1100
  */
 public class MinibotSystem extends SystemBase
 {
     /**
-     *
+     *what the bot is going to do
      */
     private final int TOWER_SWITCH_CHANNEL = 14;
     private final int MINIBOT_SOLENOID_CHANNEL = 8;
@@ -29,7 +28,8 @@ public class MinibotSystem extends SystemBase
     // Checks if the minibot deployer is down
     private boolean deployReady = false;
     /**
-     *
+     *sets how long the robot should sleep
+     * sets when the robot should deploy the minibot
      * @param robot
      * @param sleepTime
      */
@@ -41,6 +41,10 @@ public class MinibotSystem extends SystemBase
         mBeltJaguar.set(0.0);
         mArmJaguar = new AdvJaguar(ADVJAGUAR_CHANEL);
     }
+    /**
+     * how fast the motor should be going
+     * @param speed
+     */
     public void setArmSpeed(double speed)
     {
         mArmJaguar.set(speed);
@@ -51,7 +55,7 @@ public class MinibotSystem extends SystemBase
         mBeltJaguar.set(speed);
     }
 /**
- *
+ *sets how the minibot is deployed
  */
     public void deploy()
     {
@@ -61,7 +65,7 @@ public class MinibotSystem extends SystemBase
        // }
     }
 /**
- *
+ *when to put down the deployer
  */
     public void down()
     {
