@@ -141,7 +141,7 @@ public class OperatorSystem extends SystemBase
             xboxLeftBumperLastState = false;
         
         // Right Bumper Toggle
-        if(xboxJoystick.getRightBumper() && !xboxLeftBumperLastState)
+        if(xboxJoystick.getRightBumper() && !xboxRightBumperLastState)
         {
             robot.manipulatorSystem.toggleWrist();
             xboxRightBumperLastState = true;
