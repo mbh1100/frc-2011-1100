@@ -4,3 +4,4 @@ finished jaguarpair
 xbox joystick class
 averager
 control diagram
+added spots for java docs in all the files
