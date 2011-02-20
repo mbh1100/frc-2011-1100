@@ -31,7 +31,7 @@ public class Light
         */
         public void run()
         {
-            light.state = false;
+            light.off();
         }
         
     }

@@ -81,9 +81,10 @@ public class OperatorSystem extends SystemBase
          */
         if(lineRoutine == null)
         {
-            robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
+            //robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
             //robot.driveSystem.setSideSpeed(rightJoystick.getX()); // commented out by Alex 2-17-11 to try to get the robot to drive
-            //robot.driveSystem.testCameraDrive(-rightJoystick.getY());
+            robot.driveSystem.testCameraDrive(-rightJoystick.getY());
+            
             /*
             if(rightJoystick.getRawButton(11))
                 robot.driveSystem.setDriveModeSideStep();
@@ -99,7 +100,7 @@ public class OperatorSystem extends SystemBase
                 lineRoutine = null;
             }
         }
-
+        
         if(rightJoystick.getRawButton(9))
         {
             robot.cameraSystem.light.on();
@@ -108,6 +109,11 @@ public class OperatorSystem extends SystemBase
         if(rightJoystick.getRawButton(8))
         {
             robot.cameraSystem.light.onForAWhile();
+        }
+
+        if(leftJoystick.getRawButton(9))
+        {
+            robot.manipulatorSystem.resetEncoders();
         }
         
         /*
@@ -149,34 +155,38 @@ public class OperatorSystem extends SystemBase
         
         if(!xboxJoystick.getRightBumper())
             xboxRightBumperLastState = false;
-        
-        
-        robot.manipulatorSystem.setArmSpeed( xboxJoystick.getLeftStickY()/4 );
-        
-        //robot.manipulatorSystem.setLiftSpeed(-xboxJoystick.getRightStickY());
-        if(xboxJoystick.getAButton())
-            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
-            
-        else if(xboxJoystick.getBButton())
-        {
-            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_MID_PEG);
-            log("Setting state to mid");
-        }
-        else if(xboxJoystick.getYButton())
-            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_TOP_PEG);
 
-        else if(xboxJoystick.getXButton())
-            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FEEDER);
+        if(xboxJoystick.getRightTrigger() > 0.5)
+        {
+            robot.manipulatorSystem.setArmSpeed(xboxJoystick.getLeftStickY()/4 );
             
-        if(xboxJoystick.getDpad() == 1.0)
-        {
-            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_DEFAULT);
+            robot.manipulatorSystem.setLiftSpeed(-xboxJoystick.getRightStickY());
         }
-        else if(xboxJoystick.getDpad() == -1.0)
+        else
         {
-            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FLOOR);
-        }
+            if(xboxJoystick.getAButton())
+                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
 
+            else if(xboxJoystick.getBButton())
+            {
+                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_MID_PEG);
+                log("Setting state to mid");
+            }
+            else if(xboxJoystick.getYButton())
+                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_TOP_PEG);
+
+            else if(xboxJoystick.getXButton())
+                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FEEDER);
+
+            if(xboxJoystick.getDpad() == 1.0)
+            {
+                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_DEFAULT);
+            }
+            else if(xboxJoystick.getDpad() == -1.0)
+            {
+                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FLOOR);
+            }
+        }
         
         /**
          * Gamepiece indicator controller of love
@@ -222,6 +232,4 @@ public class OperatorSystem extends SystemBase
          */
 
     }
-
-
 }

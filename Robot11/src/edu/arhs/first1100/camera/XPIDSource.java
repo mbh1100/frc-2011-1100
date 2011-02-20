@@ -13,12 +13,23 @@ import edu.wpi.first.wpilibj.PIDSource;
 public class XPIDSource implements PIDSource
 {
     CameraSystem cs;
-/**
- *returns the instance of the x pid when it finds center.
- * @return
- */
+    /**
+     *returns the instance of the x pid when it finds center.
+     * @return
+     */
+    public XPIDSource(CameraSystem cs)
+    {
+        this.cs = cs;
+    }
+    
     public double pidGet()
     {
+        if(cs == null)
+        {
+            // System.out.println("cs = null!!!!!!!!!!!!!");
+            return 0.0;
+        }
+        // System.out.println("XPIDSource: pidGet " + cs.getCenterX());
         return cs.getCenterX();
     }
 }

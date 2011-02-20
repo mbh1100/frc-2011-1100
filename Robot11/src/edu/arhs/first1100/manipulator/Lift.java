@@ -27,20 +27,22 @@ public class Lift
     private final double kLIFT_D = 0.0001;
     public PID liftPid;
     
-    private final double VALUE_LOW = 100;
-    private final double VALUE_MID = 1200;
-    private final double VALUE_HIGH = 2300;
+    private final double VALUE_LOW = 0;
+    private final double VALUE_MID = 1369;
+    private final double VALUE_HIGH = 2382;
 
     public static final int STATE_LOW = 0;
     public static final int STATE_MID = 1;
     public static final int STATE_HIGH = 2;
+
+    private int state = STATE_LOW;
     
-   public Encoder encoder;
+    public Encoder encoder;
     
     private Jaguar liftJaguar;
 
     DigitalInput bottomLimitSwitch;
-
+    
     /**
      *what encoders the lift is on and stuff
      */
@@ -58,12 +60,15 @@ public class Lift
         liftPid = new PID(kLIFT_P, kLIFT_I, kLIFT_D, encoder, liftJaguar);
         liftPid.setOutputRange(-0.3, 0.6);
     }
+    
     /**
      *sets the state of the lift
      * @param state
      */
     public void setState(int state)
     {
+        this.state = state;
+        
         switch(state)
         {
             case STATE_HIGH:
@@ -77,6 +82,11 @@ public class Lift
                 break;
         }
         liftPid.enable();
+    }
+
+    public int getState()
+    {
+        return state;
     }
     
     /**
@@ -102,9 +112,8 @@ public class Lift
             //camPid.disable();
             liftJaguar.set(speed);
         }
-         *
          */
-        
+        liftPid.disable();
         liftJaguar.set(speed);
     }
 
@@ -164,5 +173,13 @@ public class Lift
     {
         //camPid.disable();
         liftPid.disable();
+    }
+
+    /**
+     * Zero both arm and lift encoders
+     */
+    public void resetEncoder()
+    {
+        encoder.reset();
     }
 }

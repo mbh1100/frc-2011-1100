@@ -12,19 +12,21 @@ import edu.arhs.first1100.util.PID;
  */
 public class Arm
 {
-    private final double KP = 0.5;
-    private final double KI = 0.5;
-    private final double KD = 0.5;
+    private final double KP = 0.01;
+    private final double KI = 0.001;
+    private final double KD = 0.0001;
     
-    private final double HIGH_VALUE = 0;
-    private final double MID_VALUE = 125;
-    private final double LOW_VALUE = 250;
-    private PID pid;
+    private final double HIGH_VALUE = 62;
+    private final double MID_VALUE = 128;
+    private final double LOW_VALUE = 121;
+    PID pid;
     
     public static final int STATE_HIGH = 2;
     public static final int STATE_MID  = 1;
     public static final int STATE_LOW  = 0;
 
+    private int state = STATE_LOW;
+    
     public Encoder encoder;
     
     private Jaguar armJaguar;
@@ -40,15 +42,16 @@ public class Arm
         encoder.start();
         
         pid = new PID(KP, KI, KD, encoder, armJaguar);
+        pid.setOutputRange(-0.3, 0.2 );
     }
     /**
      *
      * @param value
      */
-    public void setState(int value)
+    public void setState(int state)
     {
-        pid.enable();
-        switch(value)
+        this.state = state;
+        switch(state)
         {
             case STATE_HIGH:
                 pid.setSetpoint(HIGH_VALUE);
@@ -60,9 +63,17 @@ public class Arm
                 pid.setSetpoint(LOW_VALUE);
                 break;
         }
+        pid.enable();
     }
+
+    public int getState()
+    {
+        return state;
+    }
+    
     /**
      *when to stop the pid
+     * @param speed
      */
     public void stop()
     {
@@ -85,5 +96,14 @@ public class Arm
     {
         return pid.getError();
     }
-
+    
+    public void  stopPID()
+    {
+        pid.disable();
+    }
+    
+    public void resetEncoder()
+    {
+        encoder.reset();
+    }
 }

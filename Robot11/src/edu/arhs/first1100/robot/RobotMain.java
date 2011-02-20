@@ -90,7 +90,7 @@ public class RobotMain extends SimpleRobot
         autonomousSystem.stop();
 
         log("Starting cam, drive, manip");
-        // cameraSystem.start();
+        cameraSystem.start();
         manipulatorSystem.start();
         driveSystem.start();
         lineSystem.start();

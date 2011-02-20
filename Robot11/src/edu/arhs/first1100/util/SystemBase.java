@@ -11,33 +11,32 @@ public class SystemBase extends Thread
 {
     public RobotMain robot;
     public int sleepTime = 100;
-    private boolean stopThread = true;
     
+    private boolean stopThread = true;
     private boolean threadStarted = false;
-   /**
-    *
-    */
-    public SystemBase() { }
-/**
- *
- * @param robot
- * @param sleep
- */
+    
+    /**
+     * Construct the system base
+     * @param robot
+     * @param sleep
+     */
     public SystemBase(RobotMain robot, int sleep)
     {
         setSleep(sleep);
         setRobotMain(robot);
     }
-   /**
-    *
-    * @param delay
-    */
+
+    /**
+     *
+     * @param delay
+     */
     public SystemBase(int delay)
     {
         setSleep(delay);
     }
+    
     /**
-     *
+     * Start the thread.
      */
     public void start()
     {
@@ -49,23 +48,25 @@ public class SystemBase extends Thread
         {
             super.start();
             threadStarted = true;
-        }/*
-        else
-        {
-            selfNotify();
-        }*/
+        }
+
+        reset();
     }
-/**
- *
- */
+    
+    /**
+     * Stop the thread.
+     */
     public void stop()
     {
         log("Stopping thread");
         stopThread = true;
     }
-   /**
-    *
-    */
+    
+    /**
+     * Run the thread.  Called by start(), do not call directly!
+     * If you need to have code run at the initialization of the thread,
+     * Put it in the constructor or override the rest() method
+     */
     public void run()
     {
         log("run() called");
@@ -106,8 +107,10 @@ public class SystemBase extends Thread
         log("run is looping again");
         }
     }
+    
     /**
-     *
+     * Makes the component wait
+     * 
      */
     public synchronized void selfWait()
     {
@@ -176,4 +179,7 @@ public class SystemBase extends Thread
     {
         sleepTime = time;
     }
+
+    public void reset()
+    { }
 }

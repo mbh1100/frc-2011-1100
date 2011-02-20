@@ -59,6 +59,7 @@ public class CameraSystem extends SystemBase
         ac.writeRotation(AxisCamera.RotationT.k0);
         ac.writeResolution(AxisCamera.ResolutionT.k160x120);
 
+        setThreshold(BLUE_THRESHOLD);
     }
 
      /**
@@ -73,12 +74,14 @@ public class CameraSystem extends SystemBase
         for(int i = 0; i< 10;i++)
         {
             light.toggle();
-            Timer.delay(.1);
+            Timer.delay(.2);
         }
         super.start();
 
-        while (!ac.freshImage())
+        int i = 0;
+        while (!ac.freshImage() && i < 30)
         {
+            ++i;
             Timer.delay(0.1);
         }
    }
@@ -170,14 +173,15 @@ public class CameraSystem extends SystemBase
                 setThresholdRGB(190, 255, 210, 255, 210, 255);
                 break;
             case BLUE_THRESHOLD:
-                setThresholdRGB(0, 60, 0, 60, 210, 255);
+                setThresholdRGB(0, 125, 210, 255, 210, 255);
                 break;
         }
     }
-/**
- *
- * @return
- */
+    
+    /**
+     *
+     * @return
+     */
     public double getCenterY()
     {
         light.onForAWhile();
@@ -186,6 +190,7 @@ public class CameraSystem extends SystemBase
         else
             return 0.0;
     }
+
     /**
      *gets the center x variable
      * @return
@@ -193,11 +198,15 @@ public class CameraSystem extends SystemBase
     public double getCenterX()
     {
         light.onForAWhile();
-        
-        if(!(pRep.length >= 0))
+
+        if(pRep.length > 0 && pRep[0] != null )
+        {
             return pRep[0].center_mass_x_normalized;
+        }
         else
+        {
             return 0.0;
+        }
     }
 
      /**

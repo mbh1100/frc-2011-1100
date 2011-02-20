@@ -35,18 +35,22 @@ public class CameraDrivePower
         pid = new PID( P, I, D, source, power);
         pid.setOutputRange(-0.4, 0.4);
     }
+
     /**
      *enables the camera
      */
     public void trackCamera()
     {
+        // System.out.println("CDP: trackCamera() - PID Enabled");
         pid.enable();
     }
+    
     /**
      *disables the camera
      */
     public void stopTrackCamera()
     {
+        System.out.println("CDP: stopTrackCamera() - PID Disabled");
         pid.disable();
     }
 }

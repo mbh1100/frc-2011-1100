@@ -39,8 +39,8 @@ public class DriveSystem extends SystemBase
     private AdvJaguar sidestepDriveMotor; // drives the side step wheel
     private RobotDrive rd;
     private ArcadeDriveMux adm;
-    private CameraDriveCurve cdc;
-    private CameraDrivePower cdp;
+    public CameraDriveCurve cdc;
+    public CameraDrivePower cdp;
 /**
  *states what motors go with what jags
  * @param robot
@@ -62,7 +62,7 @@ public class DriveSystem extends SystemBase
          //this.setDriveSpeed(0.0, 0.0);
          
          adm = new ArcadeDriveMux(this);
-         cdc = new CameraDriveCurve(adm);
+         cdc = new CameraDriveCurve(adm, robot.cameraSystem);
          cdp = new CameraDrivePower(adm);
     }
     /**
@@ -72,9 +72,14 @@ public class DriveSystem extends SystemBase
      */
     public void testCameraDrive(double speed)
     {
-        log("testCamereaDrive");
+        //log("testCameraDrive");
+
+        // log("cdc.trackCamera()");
         cdc.trackCamera();
+        
         adm.setPower(speed);
+
+        // log("cdp.trackCamera()");
         cdp.trackCamera();
     }
     /**
@@ -109,7 +114,7 @@ public class DriveSystem extends SystemBase
         {
             rd.stopMotor();
         }
-        log("curve:" + curve);
+       // log("curve:" + curve);
     }
     /**
      *

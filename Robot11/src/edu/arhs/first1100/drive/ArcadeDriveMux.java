@@ -47,6 +47,10 @@ public class ArcadeDriveMux
  */
     public void cameraDrive()
     {
-        //ds.drive(power,curve);
+        System.out.println("PID Power: " + power);
+        System.out.println("PID Curve: " + curve);
+        System.out.println("");
+        
+        ds.drive(power, -curve);
     }
 }

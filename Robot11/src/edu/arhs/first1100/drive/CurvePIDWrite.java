@@ -26,6 +26,7 @@ public class CurvePIDWrite implements PIDOutput
  */
     public void pidWrite(double curve)
     {
+        // System.out.println("CurvePIDWrite pidWrist() - "+curve);
         adm.setCurve(curve);
     }
 
