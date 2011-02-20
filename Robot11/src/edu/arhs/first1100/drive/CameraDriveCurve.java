@@ -22,9 +22,9 @@ public class CameraDriveCurve
     ArcadeDriveMux output;
     CameraSystem cs;
 
-    final private double P = .1;
-    final private double I = .001;
-    final private double D = .0001;
+    final private double P = 1.0;
+    final private double I = .000;
+    final private double D = .0000;
 
     PIDOutput curve;
 /**
@@ -61,7 +61,7 @@ public class CameraDriveCurve
      */
      public void stopTrackCamera()
     {
-        System.out.println("CDC: stopTrackCamera() - PID Disabled");
+        //System.out.println("CDC: stopTrackCamera() - PID Disabled");
         pid.disable();
     }
 } 

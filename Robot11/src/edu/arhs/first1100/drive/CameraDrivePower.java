@@ -50,7 +50,7 @@ public class CameraDrivePower
      */
     public void stopTrackCamera()
     {
-        System.out.println("CDP: stopTrackCamera() - PID Disabled");
+        //System.out.println("CDP: stopTrackCamera() - PID Disabled");
         pid.disable();
     }
 }
