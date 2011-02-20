@@ -24,7 +24,13 @@ public class AutonomousGoal
     // 1
     // 0
     public int row = 0;
-    
+    /**
+     * the pattern to score in autonomous
+     * @param startingPosition
+     * @param side
+     * @param column
+     * @param row
+     */
     public AutonomousGoal(int startingPosition, boolean side, int column, int row)
     {
         this.startingPosition = startingPosition;
@@ -32,22 +38,34 @@ public class AutonomousGoal
         this.column = column;
         this.row = row;
     }
-    
+    /**
+     * returns the starting position
+     * @return
+     */
     public int getStartingPosition()
     {
         return startingPosition;
     }
-    
+    /**
+     * returns what column we are on
+     * @return
+     */
     public int getColumn()
     {
         return column;
     }
-
+/**
+ * returns what row we are on
+ * @return
+ */
     public int getRow()
     {
         return row;
     }
-
+/**
+ * returns what side we are on.
+ * @return
+ */
     public boolean getSide()
     {
         return side;

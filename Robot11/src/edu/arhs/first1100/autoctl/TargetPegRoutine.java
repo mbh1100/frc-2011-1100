@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 
 import edu.arhs.first1100.robot.RobotMain;
 /**
- *
+ *how the robot is to find the peg to score
  * @author team1100
  */
 public class TargetPegRoutine extends Routine
@@ -37,7 +37,7 @@ public class TargetPegRoutine extends Routine
         log("launching TargetPegRoutine to height " + height);
     }
 /**
- *
+ *how the robot is to get the target hight
  * @param robot
  * @param sleep
  */
@@ -47,7 +47,7 @@ public class TargetPegRoutine extends Routine
         targetHeight = /*Get current lift height*/ 0;
     }
    /**
-    *
+    *what to do when done
     */
     public void tick()
     {

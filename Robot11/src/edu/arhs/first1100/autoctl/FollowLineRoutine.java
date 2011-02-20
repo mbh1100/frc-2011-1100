@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.line.LineSystem;
 /**
- *
+ *our line following routine
  * @author team1100
  */
 public class FollowLineRoutine extends Routine
@@ -13,7 +13,7 @@ public class FollowLineRoutine extends Routine
     private int path = 0;
     private final double TURN_DELAY = 0.6;
    /**
-    *
+    *the start of the public line routine
     * @param robot
     * @param sleep
     * @param startingPosition

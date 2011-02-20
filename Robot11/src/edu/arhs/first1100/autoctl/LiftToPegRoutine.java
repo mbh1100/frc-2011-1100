@@ -10,12 +10,17 @@ import edu.arhs.first1100.robot.RobotMain;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 
 /**
- *
- * @author akshay
+ *the routine to put pegs on the scoring board and to analysize the amount of particles that the axis camera sees.
+ * @author Connor Moroney
  */
 public class LiftToPegRoutine extends Routine
 {
-
+    ParticleAnalysisReport pegs;
+/**
+ *tells the robot how long to sleep
+ * @param robot
+ * @param sleep
+ */
     public LiftToPegRoutine(RobotMain robot, int sleep)
     {
         super(robot, sleep);

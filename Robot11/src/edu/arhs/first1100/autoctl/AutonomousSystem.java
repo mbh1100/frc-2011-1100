@@ -31,7 +31,7 @@ public class AutonomousSystem extends SystemBase
         super(robot, sleepTime);
     }
    /**
-    *
+    *start the run routine and wait for the routine to finish
     * @param r
     */
     public void runRoutine(Routine r)
@@ -40,7 +40,7 @@ public class AutonomousSystem extends SystemBase
         r.waitForDone();
     }
 /**
- *
+ *where the starting position is and how to score the uber ring
  * @param startingPosition
  */
     public void ScoreUberRing(int startingPosition)

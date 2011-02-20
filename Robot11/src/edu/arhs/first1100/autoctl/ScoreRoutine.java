@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.arhs.first1100.autoctl.Routine;
 import edu.arhs.first1100.robot.RobotMain;
 /**
- *
+ *how to score
  * @author team1100
  */
 public class ScoreRoutine extends Routine
 {
     /**
-     *
+     *how long the robot should sleep
      * @param robot
      * @param sleep
      */
@@ -26,7 +26,7 @@ public class ScoreRoutine extends Routine
         super(robot, sleep);
     }
 /**
- *
+ *how often the robot should read the tick
  */
     public void tick()
     {

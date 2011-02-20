@@ -13,7 +13,7 @@ public class Routine extends SystemBase
      */
     private boolean done = false;
     /**
-     *
+     *says how long the robot should be asleep in the routine
      * @param robot
      * @param sleep
      */
@@ -22,7 +22,7 @@ public class Routine extends SystemBase
         super(robot, sleep);
     }
 /**
- *
+ *says when the robot is done
  * @return
  */
     public boolean isDone()
@@ -30,7 +30,7 @@ public class Routine extends SystemBase
         return done;
     }
 /**
- *
+ *says what to do if done is not true
  */
     public synchronized void waitForDone()
     {
@@ -48,7 +48,7 @@ public class Routine extends SystemBase
         }
     }
     /**
-     *
+     *what to do when done = true
      */
     public synchronized void setDone()
     {
@@ -57,7 +57,7 @@ public class Routine extends SystemBase
         notify();
     }
 /**
- *
+ *what to do if not done
  */
     public synchronized void execute()
     {
