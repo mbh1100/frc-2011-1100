@@ -5,7 +5,7 @@ import edu.arhs.first1100.robot.RobotMain;
 
 
 /**
- *
+ *create a line system
  * @author team1100
  */
 public class LineSystem extends SystemBase
@@ -23,7 +23,8 @@ public class LineSystem extends SystemBase
     
     LineTracker lt;
 /**
- *
+ *creates new line trackers
+ * specifies how long the robot should sleep
  * @param robot
  * @param sleepTime
  */
@@ -54,7 +55,7 @@ public class LineSystem extends SystemBase
     */
     
    /**
-    * 
+    * how often the robot should tick when it sees the line
     */
     public void tick()
     {
@@ -72,7 +73,7 @@ public class LineSystem extends SystemBase
             lineStatus = STATE_SPLIT;
     }
 /**
- *
+ *returns the state of the line
  * @return
  */
     public int getState()

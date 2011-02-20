@@ -2,7 +2,7 @@ package edu.arhs.first1100.line;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 /**
- *
+ *runs the line tracker
  * @author team1100
  */
 public class LineTracker
@@ -12,7 +12,7 @@ public class LineTracker
     DigitalInput ltRight;
     DigitalInput ltBack;
  /**
-  *
+  *declares what inputs the line trackers are on
   */
     public LineTracker()
     {
@@ -22,7 +22,7 @@ public class LineTracker
         ltBack = new DigitalInput(1);
     }
     /**
-     *
+     *returns the left linetracker data
      * @return
      */
     public boolean leftline()
@@ -30,15 +30,15 @@ public class LineTracker
         return ltLeft.get();       
     }
     /**
-     *
+     *returns the right linetracker data
      * @return
      */
     public boolean rightline()
     {
-        return ltRight.get();       
+        return ltRight.get();
     }
     /**
-     *
+     *returns the middle linetracker data
      * @return
      */
     public boolean middleLine()
@@ -46,7 +46,7 @@ public class LineTracker
         return ltMiddle.get();
     }
     /**
-     *
+     *return the back linetracker
      * @return
      */
     public boolean backLine()
