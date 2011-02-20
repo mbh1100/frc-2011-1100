@@ -9,7 +9,7 @@ import edu.arhs.first1100.util.PID;
 import edu.arhs.first1100.camera.ZPIDSource;
 import edu.wpi.first.wpilibj.PIDOutput;
 /**
- *
+ *declare the power of the robot drive in camera operation
  * @author team1100
  */
 public class CameraDrivePower
@@ -24,7 +24,7 @@ public class CameraDrivePower
 
     PIDOutput power;
 /**
- *
+ *declares output of the motors
  * @param adm
  */
     public CameraDrivePower(ArcadeDriveMux adm)
@@ -36,14 +36,14 @@ public class CameraDrivePower
         pid.setOutputRange(-0.4, 0.4);
     }
     /**
-     *
+     *enables the camera
      */
     public void trackCamera()
     {
         pid.enable();
     }
     /**
-     *
+     *disables the camera
      */
     public void stopTrackCamera()
     {

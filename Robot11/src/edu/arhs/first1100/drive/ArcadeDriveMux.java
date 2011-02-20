@@ -5,19 +5,19 @@
 
 package edu.arhs.first1100.drive;
 /**
- *
+ *declares how the robot will drive
  * @author team1100
  */
 public class ArcadeDriveMux
 {
     DriveSystem ds;
 /**
- *
+ *how the robot will turn
  */
     public double power;
     public double curve;
 /**
- *
+ *declares the drive system
  * @param ds
  */
     public ArcadeDriveMux(DriveSystem ds)
@@ -25,7 +25,7 @@ public class ArcadeDriveMux
         this.ds = ds;
     }
 /**
- *
+ *sets the curve
  * @param curve
  */
     public void setCurve(double curve)
@@ -34,7 +34,7 @@ public class ArcadeDriveMux
         cameraDrive();
     }
 /**
- *
+ *sets the power
  * @param power
  */
     public void setPower(double power)
@@ -43,7 +43,7 @@ public class ArcadeDriveMux
         cameraDrive();
     }
 /**
- *
+ *sets camera drive
  */
     public void cameraDrive()
     {

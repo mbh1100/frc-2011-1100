@@ -17,7 +17,7 @@ import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.util.AdvJaguar;
 import edu.arhs.first1100.opctl.OperatorSystem;
 /**
- *
+ *declares how the robot is to drive.
  * @author team1100
  */
 public class DriveSystem extends SystemBase
@@ -42,7 +42,7 @@ public class DriveSystem extends SystemBase
     private CameraDriveCurve cdc;
     private CameraDrivePower cdp;
 /**
- *
+ *states what motors go with what jags
  * @param robot
  * @param sleepTime
  */
@@ -66,7 +66,8 @@ public class DriveSystem extends SystemBase
          cdp = new CameraDrivePower(adm);
     }
     /**
-     *
+     *says how fast to go
+     * declares camera drive also
      * @param speed
      */
     public void testCameraDrive(double speed)
@@ -77,7 +78,7 @@ public class DriveSystem extends SystemBase
         cdp.trackCamera();
     }
     /**
-     *
+     *declares robot drive
      * @param leftSide
      * @param rightSide
      */
@@ -126,7 +127,7 @@ public class DriveSystem extends SystemBase
         }
     }
     /**
-     *
+     *logs the # of ticks
      */
     public void tick()
     {
@@ -154,14 +155,16 @@ public class DriveSystem extends SystemBase
         }
     }
     /**
-     *
+     *how to drive in tank mode
      */
     public void setDriveModeTank()
     {
         if(state == STATE_SIDESTEP)
             state = STATE_RAISING;
     }
-
+/**
+ * how to drive with the side step motors
+ */
     public void setDriveModeSideStep()
     {
         if(state == STATE_TANK)

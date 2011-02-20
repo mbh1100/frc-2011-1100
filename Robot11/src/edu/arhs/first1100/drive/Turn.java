@@ -6,7 +6,7 @@
 package edu.arhs.first1100.drive;
 
 /**
- *
+ *says how to turn
  * @author team1100
  */
 public class Turn {

@@ -9,7 +9,7 @@ import edu.arhs.first1100.util.PID;
 import edu.arhs.first1100.camera.XPIDSource;
 import edu.wpi.first.wpilibj.PIDOutput;
 /**
- *
+ *how the bot will turn in camera drive
  * @author team1100
  */
 public class CameraDriveCurve
@@ -24,7 +24,7 @@ public class CameraDriveCurve
 
     PIDOutput curve;
 /**
- *
+ *how the motors output will react
  * @param adm
  */
     public CameraDriveCurve (ArcadeDriveMux adm)
@@ -36,14 +36,14 @@ public class CameraDriveCurve
         pid.setOutputRange(-0.3, 0.3);
     }
     /**
-     *
+     *enables camera drive
      */
      public void trackCamera()
     {
         pid.enable();
     }
     /**
-     * 
+     * turns off camera drive
      */
      public void stopTrackCamera()
     {

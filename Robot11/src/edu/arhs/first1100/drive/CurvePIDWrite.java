@@ -6,14 +6,14 @@
 package edu.arhs.first1100.drive;
 import edu.wpi.first.wpilibj.PIDOutput;
 /**
- *
+ *declares the pid curve
  * @author team1100
  */
 public class CurvePIDWrite implements PIDOutput
 {
     ArcadeDriveMux adm;
 /**
- * 
+ * declares the paramiter for ardade drivemux
  * @param adm
  */
     public CurvePIDWrite(ArcadeDriveMux adm)
@@ -21,7 +21,7 @@ public class CurvePIDWrite implements PIDOutput
         this.adm = adm;
     }
 /**
- *
+ *declares the curve
  * @param curve
  */
     public void pidWrite(double curve)

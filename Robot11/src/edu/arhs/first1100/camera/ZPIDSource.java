@@ -8,6 +8,7 @@ package edu.arhs.first1100.camera;
 import com.sun.squawk.debugger.Log;
 import edu.wpi.first.wpilibj.PIDSource;
 /**
+ *implaments the z axis pid for the camera.
  *
  * @author team1100
  */
@@ -15,7 +16,7 @@ public class ZPIDSource implements PIDSource
 {
     CameraSystem cs;
 /**
- *
+ *gets the instance of the pid including the hight of the axis camera.
  * @return
  */
     public double pidGet()

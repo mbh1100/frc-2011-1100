@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
- *
+ *the start of the camera system
  * @author team1100
  */
 public class CameraSystem extends SystemBase
 {
    /**
-    * 
+    * declares what the camera is lookng for in the threshold
     */
     public final int WHITE_THRESHOLD = 1;
     public final int RED_THRESHOLD = 2;
@@ -37,7 +37,7 @@ public class CameraSystem extends SystemBase
     BinaryImage bImg;
     ParticleAnalysisReport[] pRep = new ParticleAnalysisReport[PARTICLE_SIZE];
 /**
- *
+ *gets instance of the axis camera and declares the sleep time
  * @param robot
  * @param sleepTime
  */
@@ -68,7 +68,7 @@ public class CameraSystem extends SystemBase
     public void start()
     {
          /*
-         * FUN CODE
+         * FUN CODE(sets the light to blink)
          */
         for(int i = 0; i< 10;i++)
         {
@@ -83,7 +83,7 @@ public class CameraSystem extends SystemBase
         }
    }
     /**
-     *
+     *when told to tick processes the image that was just recieved
      */
     public void tick()
     {
@@ -187,7 +187,7 @@ public class CameraSystem extends SystemBase
             return 0.0;
     }
     /**
-     *
+     *gets the center x variable
      * @return
      */
     public double getCenterX()

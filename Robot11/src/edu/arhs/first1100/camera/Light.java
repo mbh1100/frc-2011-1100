@@ -6,7 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- *
+ *sets up the lights and turns on the light when the camera is turned on
  * @author team1100
  */
 public class Light
@@ -16,7 +16,7 @@ public class Light
     java.util.Timer timer;
     
     /**
-     *
+     *declares the timeout of the light
      */
     class Timeout extends TimerTask
     {
@@ -27,7 +27,7 @@ public class Light
             this.light = light;
         }
        /**
-        *
+        *says what to do when the light state is false
         */
         public void run()
         {
@@ -36,7 +36,7 @@ public class Light
         
     }
     /**
-     *
+     *says what chanel the light is on
      * @param ch
      */
     public Light(int ch)
@@ -44,7 +44,7 @@ public class Light
         solenoid = new Solenoid(ch);
     }
     /**
-     *
+     *toggles the light on and off
      */
     public void toggle()
     {
@@ -52,7 +52,9 @@ public class Light
         System.out.println("Light toggled");
         solenoid.set(state);
     }
-
+/**
+ * paramiters to turn the light on for
+ */
     public void on()
     {
         if(timer != null)
@@ -61,7 +63,9 @@ public class Light
         state = true;
         solenoid.set(state);
     }
-
+/**
+ * peramiters to turn the light off for
+ */
     public void off()
     {
         state = false;
@@ -69,7 +73,7 @@ public class Light
     }
     
     /**
-     *
+     *what to do if the light is left on for a great leingh of time
      */
     public void onForAWhile()
     {
@@ -77,7 +81,7 @@ public class Light
         this.scheduleOff();
     }
     /**
-     *
+     *says when the light off.
      */
     public void scheduleOff()
     {

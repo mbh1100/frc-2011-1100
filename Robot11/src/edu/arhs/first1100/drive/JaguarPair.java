@@ -3,7 +3,7 @@ package edu.arhs.first1100.drive;
 import edu.wpi.first.wpilibj.Jaguar;
 
 /**
- *
+ *sends commands to the jaguars
  * @author team1100
  */
 public class JaguarPair
@@ -16,7 +16,7 @@ public class JaguarPair
 
     private double targetSpeed = 0.0;
 /**
- *
+ *declares the channels that the jags are on and to invert them
  * @param ch1
  * @param ch2
  * @param invert
@@ -30,7 +30,7 @@ public class JaguarPair
         polarity = invert;
     }
 /**
- *
+ *declares both false
  * @param ch1
  * @param ch2
  */
@@ -39,7 +39,7 @@ public class JaguarPair
         this(ch1, ch2, false, 0);
     }
    /**
-    *
+    *sets the speed of the jags
     * @param speed
     */
     public void set(double speed)
@@ -54,6 +54,6 @@ public class JaguarPair
     public double get()
     {
         return j1.get();
+
     }
-    
 }
