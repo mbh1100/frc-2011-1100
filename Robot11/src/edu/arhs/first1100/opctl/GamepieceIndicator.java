@@ -40,18 +40,22 @@ public class GamepieceIndicator extends Thread
         blue  = new Relay(5, Relay.Direction.kForward); //Blue light on channel 5
     }
     /**
-     *
+     *triangle
      */
     public void setLightColorRed()
     {
         color = RED;
     }
-
+/**
+ * circle
+ */
     public void setLightColorWhite()
     {
         color = WHITE;        
     }
-    
+    /**
+     * square
+     */
     public void setLightColorBlue()
     {
         color = BLUE;        
@@ -62,7 +66,7 @@ public class GamepieceIndicator extends Thread
         color = OFF;
     }
 /**
- *
+ *says what light to turn on when
  * @param C
  */
     public void setLight(int C)
@@ -85,7 +89,7 @@ public class GamepieceIndicator extends Thread
     }
 
    /**
-    *
+    *what to do when sent the run command
     */
     public void run()
     {

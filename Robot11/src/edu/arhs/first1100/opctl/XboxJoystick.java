@@ -1,19 +1,24 @@
 package edu.arhs.first1100.opctl;
 import edu.arhs.first1100.util.Averager;
-
+/**
+ *what the xbox controller does
+ * @author team1100
+ */
 public class XboxJoystick extends AdvJoystick
 {
+    /**
+     *what functions the joystick axises control
+     */
     private Averager lsX;
     private Averager lsY;
     private Averager rsX;
     private Averager rsY;
 
     private int sampleSize = 4;
-
-    /**
-     *
-     * @param ch
-     */
+/**
+ *what chanel the xbox joystick works with
+ * @param ch
+ */
     public XboxJoystick(int ch)
     {
         super(ch);
@@ -22,31 +27,28 @@ public class XboxJoystick extends AdvJoystick
         rsX = new Averager(sampleSize);
         rsY = new Averager(sampleSize);
     }
-
-    /**
-     *
-     * @return
-     */
+/**
+ *what to do with the left x stick
+ * @return
+ */
     public double getLeftStickX()
     {
         lsX.feed(super.getRawAxis(1));
         return lsX.get();
     }
-
-    /**
-     *
-     * @return
-     */
+/**
+ *what to do with the left y stick
+ * @return
+ */
     public double getLeftStickY()
     {
         lsY.feed(super.getRawAxis(2));
         return lsY.get();
     }
-
-    /**
-     *
-     * @return
-     */
+/**
+ *what to do with the right x stick
+ * @return
+ */
     public double getRightStickX()
     {
         rsX.feed(super.getRawAxis(4));
@@ -54,7 +56,7 @@ public class XboxJoystick extends AdvJoystick
     }
     
     /**
-     *
+     *what to do with the right y stick
      * @return
      */
     public double getRightStickY()
@@ -62,10 +64,9 @@ public class XboxJoystick extends AdvJoystick
         rsY.feed(super.getRawAxis(5));
         return rsY.get();
     }
-
     /**
-     *
-     * @return dpad xaxis state (-1.0 - 0.0)
+     * what to do with the dpad
+     * @return
      */
     public double getDpad()
     {
@@ -88,7 +89,7 @@ public class XboxJoystick extends AdvJoystick
     }
     
     /**
-     *
+     *what to do with the right trigger
      * @return right trigger state (0.0 - 1.0)
      */
     public double getRightTrigger()

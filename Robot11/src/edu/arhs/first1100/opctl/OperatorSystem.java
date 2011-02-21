@@ -10,7 +10,7 @@ import edu.arhs.first1100.autoctl.ScoreRoutine;
 import edu.arhs.first1100.autoctl.FollowLineRoutine;
 
 /**
- *
+ *how the operator will drive the robot
  * @author team1100
  */
 public class OperatorSystem extends SystemBase
@@ -30,7 +30,7 @@ public class OperatorSystem extends SystemBase
     private FollowLineRoutine lineRoutine = null;
     
    /**
-    *
+    *what controllers will drive the robot
     * @param robot
     * @param sleepTime
     */
