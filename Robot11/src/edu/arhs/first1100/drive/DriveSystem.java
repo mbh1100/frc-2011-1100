@@ -63,7 +63,7 @@ public class DriveSystem extends SystemBase
          
          adm = new ArcadeDriveMux(this);
          cdc = new CameraDriveCurve(adm, robot.cameraSystem);
-         cdp = new CameraDrivePower(adm, robot.cameraSystem, 50.0);
+         cdp = new CameraDrivePower(adm, robot.cameraSystem, 10000.0);
     }
     
     /**
@@ -83,10 +83,7 @@ public class DriveSystem extends SystemBase
         // log("cdp.trackCamera()");
         cdp.trackCamera();
     }
-    public void runCameraDrive()
-    {
-        adm.cameraDrive();
-    }
+
     /**
      *declares robot drive
      * @param leftSide
@@ -94,6 +91,7 @@ public class DriveSystem extends SystemBase
      */
     public void setDriveSpeed(double leftSide, double rightSide)
     {
+        log("setDriveSpeed");
         cdp.stopTrackCamera();
         if(state == STATE_TANK)
         {

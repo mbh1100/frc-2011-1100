@@ -35,7 +35,7 @@ public class CameraDrivePower
         power = new PowerPIDWrite(adm);
         source = new ZPIDSource();
         pid = new PID( P, I, D, source, power);
-        pid.setOutputRange(-0.4, 0.4);
+        pid.setOutputRange(-0.2, 0.2);
         pid.setSetpoint(target);
     }
 

@@ -78,10 +78,12 @@ public class OperatorSystem extends SystemBase
          */
         if(xboxJoystick.getRightTrigger() > 0.5)
         {
+            log("right trigger down");
             robot.manipulatorSystem.lift.startCamPid();
         }
         else
         {
+            log("right trigger up");
             robot.manipulatorSystem.lift.stopCamPid();
             doStateButtons();
             doLift();
@@ -100,9 +102,9 @@ public class OperatorSystem extends SystemBase
          * Debug buttons
          * encoder reset & light buttons
          */
-        robot.cameraSystem.setBrightness(
-                (int)(rightJoystick.getRawAxis(3)/2 + 0.5)*100
-        );
+        int brightness = (int)(rightJoystick.getRawAxis(3)/2 + 0.5)*100;
+        log("setting brightness: " + brightness);
+        robot.cameraSystem.setBrightness(brightness);
         
         if(leftJoystick.getRawButton(9))
         {
@@ -125,6 +127,7 @@ public class OperatorSystem extends SystemBase
     private void doDrive()
     {
         robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
+        //robot.driveSystem.testCameraDrive(-leftJoystick.getY());
     }
 
     private void doLift()
@@ -139,10 +142,6 @@ public class OperatorSystem extends SystemBase
         {
             log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             robot.manipulatorSystem.setLiftSpeed(0.0);
-        }
-        else
-        {
-            log("nothing happening :( ");
         }
     }
 

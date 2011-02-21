@@ -169,15 +169,18 @@ public class Lift
     {
         if(liftPid.isEnable())
         {
+            System.out.println("Lift: returning lift Pid");
             return liftPid.getError();
         }
         
         else if(camPid.isEnable())
         {
+            System.out.println("Lift: returning cam Pid");
             return camPid.getError();
         }
         else
         {
+            System.out.println("Lift: returning no Pid");
             return 0.0;
         }
     }
