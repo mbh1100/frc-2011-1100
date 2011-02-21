@@ -18,18 +18,20 @@ public class MinibotSystem extends SystemBase
     /**
      *what the bot is going to do
      */
-    private final int TOWER_SWITCH_CHANNEL = 14;
-    private final int MINIBOT_SOLENOID_CHANNEL = 8;
-    private final int ADVJAGUAR_CHANNEL = 7;
-
-    private DigitalInput towerDetector;
-    private AdvJaguar mBeltJaguar;
-    private AdvJaguar mArmJaguar;
+    
+    private final int MINIBOT_IO_SLOT = 5;
+    
     private Victor beltVic;
     private Victor armVic;
+
+    private DigitalInput towerDetector;
+
+    private DigitalInput armTopDetector;
+    private DigitalInput armBottomDetector;
     
-    // Checks if the minibot deployer is down
-    private boolean deployReady = false;
+    private DigitalInput beltInDetector;
+    private DigitalInput beltOutDetector;
+    
     /**
      *sets how long the robot should sleep
      * sets when the robot should deploy the minibot
@@ -39,46 +41,56 @@ public class MinibotSystem extends SystemBase
     public MinibotSystem(RobotMain robot, int sleepTime)
     {
         super(robot, sleepTime);
-        towerDetector = new DigitalInput(TOWER_SWITCH_CHANNEL);
-        //mBeltJaguar = new AdvJaguar(9);
-        //mBeltJaguar.set(0.0);
-        beltVic = new Victor(5);
-        //mArmJaguar = new AdvJaguar(ADVJAGUAR_CHANNEL);
-        armVic = new Victor(ADVJAGUAR_CHANNEL);
+        
+        armTopDetector = new DigitalInput(MINIBOT_IO_SLOT, 1);
+        armBottomDetector = new DigitalInput(MINIBOT_IO_SLOT, 2);
+
+        beltInDetector = new DigitalInput(MINIBOT_IO_SLOT, 3);
+        beltOutDetector = new DigitalInput(MINIBOT_IO_SLOT, 4);
+
+        towerDetector = new DigitalInput(MINIBOT_IO_SLOT, 5);
+        
+        beltVic = new Victor(2);
+        armVic = new Victor(1);
     }
+    
     /**
-     * how fast the motor should be going
+     * Sets the speed of the
      * @param speed
      */
     public void setArmSpeed(double speed)
     {
-        //mArmJaguar.set(speed);
-        armVic.set(speed);
+        if(speed > 0)
+        {
+            if(!armBottomDetector.get())
+                armVic.set(speed);
+            else
+                armVic.set(0.0);
+        }
+        else if(speed < 0)
+        {
+            if(!armTopDetector.get())
+                armVic.set(speed);
+            else
+                armVic.set(0.0);
+        }
     }
-
+    
     public void setDeployerSpeed(double speed)
     {
-        //mBeltJaguar.set(speed);
-        beltVic.set(speed);
-    }
-/**
- *sets how the minibot is deployed
- */
-    public void deploy()
-    {
-        //if (towerDetector.get())
-       // {
-            mBeltJaguar.set(0.5);
-       // }
-    }
-/**
- *when to deploy
- */
-    public void down()
-    {
-        //if(!towerDetector.get())
-        //{
-            mArmJaguar.set(0.5);
-        //}
+        if(speed > 0)
+        {
+            if(!beltOutDetector.get())
+                beltVic.set(speed);
+            else
+                beltVic.set(0.0);
+        }
+        else if(speed < 0)
+        {
+            if(!beltInDetector.get())
+                beltVic.set(speed);
+            else
+                beltVic.set(0.0);
+        }
     }
 }

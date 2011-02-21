@@ -68,15 +68,12 @@ public class CameraSystem extends SystemBase
      */
     public void start()
     {
-         /*
-         * FUN CODE(sets the light to blink)
-         */
-        for(int i = 0; i< 10;i++)
-        {
-            light.toggle();
-            Timer.delay(.2);
-        }
         super.start();
+
+        for (int i = 0; i<5;i++)
+        {
+            FUNCODE();
+        }
 
         int i = 0;
         while (!ac.freshImage() && i < 30)
@@ -185,7 +182,7 @@ public class CameraSystem extends SystemBase
     public double getCenterY()
     {
         light.onForAWhile();
-        if(pRep.length > 0 && pRep[0] != null )
+        if(pRep[0] != null && pRep[0] != null )
             return pRep[0].center_mass_y_normalized;
         else
             return 0.0;
@@ -270,5 +267,15 @@ public class CameraSystem extends SystemBase
             sortedP[index] = p[i];
         }
         return sortedP;
+    }
+
+    public void stop() {
+        super.stop();
+    }
+
+    private void FUNCODE()
+    {
+        light.toggle();
+        Timer.delay(.2);
     }
 }

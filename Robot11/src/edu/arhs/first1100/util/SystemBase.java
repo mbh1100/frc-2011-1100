@@ -156,17 +156,6 @@ public class SystemBase extends Thread
      */
     public void log(String message)
     {
-        /*
-        int lastDot = 0        String name = this.getClass().getName();
-        
-        for(int n = 0; n<name.length(); n++){
-            if (name.charAt(n) == '.'){
-                lastDot = n+1;
-            }
-        }
-        name = name.substring(lastDot);
-        */
-        
         String name = this.getClass().getName();
         System.out.println(name.substring(name.lastIndexOf('.')+1)+": "+message);
     }
@@ -182,6 +171,11 @@ public class SystemBase extends Thread
     public void setSleep(int time)
     {
         sleepTime = time;
+    }
+    
+    public boolean isStopped()
+    {
+        return stopThread;
     }
 
     public void reset()

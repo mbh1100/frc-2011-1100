@@ -1,17 +1,14 @@
 package edu.arhs.first1100.opctl;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
-import edu.arhs.first1100.autoctl.AutonomousGoal;
 import edu.arhs.first1100.autoctl.TargetPegRoutine;
 import edu.arhs.first1100.autoctl.ScoreRoutine;
 import edu.arhs.first1100.autoctl.FollowLineRoutine;
 
-import edu.wpi.first.wpilibj.Joystick.ButtonType;
 /**
  *
  * @author team1100
@@ -47,20 +44,27 @@ public class OperatorSystem extends SystemBase
         
         ledIndicator  = new GamepieceIndicator();
         ledIndicator.start();
-
     }
     
     /**
-     *
+     * Tick
      */
     public void tick()
     {
-        //log("Tick");
-        
-        /*
-         * Start routine buttons
-         */
-        
+        doRoutines();
+        doDrive();
+        doCamLights();
+        doManipulator();
+        doMinibot();
+        doRoutines();
+    }
+
+
+    /**
+    * Checks for routines that need to be started
+    */
+    private void doRoutines()
+    {
         if(leftJoystick.getRawButton(11) && lineRoutine == null)
         {
             // middle line, go to left, bottom left peg. Get actual
@@ -74,11 +78,14 @@ public class OperatorSystem extends SystemBase
             // target from controller
             targetRoutine = new TargetPegRoutine(robot, 100, 100.0);
             targetRoutine.start();
-        }       
-        
-        /*
-         * Driving
-         */
+        }        
+    }
+
+    /**
+     * Operator controlled drive check
+     */
+    private void doDrive()
+    {
         if(lineRoutine == null)
         {
             robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
@@ -100,28 +107,40 @@ public class OperatorSystem extends SystemBase
                 lineRoutine = null;
             }
         }
-        
+    }
+
+    /**
+     * Checks if lights should be toggled
+     */
+    private void doCamLights()
+    {
+
         if(rightJoystick.getRawButton(9))
         {
             robot.cameraSystem.light.on();
         }
-
         if(rightJoystick.getRawButton(8))
         {
             robot.cameraSystem.light.onForAWhile();
         }
+    }
 
+    /**
+     * Checks for Manipluator System action
+     */
+    private void doManipulator()
+    {
         if(leftJoystick.getRawButton(9))
         {
             robot.manipulatorSystem.resetEncoders();
         }
-        
+
         /*
          * Lift control
          *
         if(targetRoutine == null)
         {
-            
+
         }
         else
         {
@@ -131,31 +150,28 @@ public class OperatorSystem extends SystemBase
                 targetRoutine = null;
             }
         }*/
-        
+
         /*
          * Arm control
          */
-        
         // Left Toggle Button
         if(xboxJoystick.getLeftBumper() && !xboxLeftBumperLastState)
         {
             robot.manipulatorSystem.toggleClaw();
             xboxLeftBumperLastState = true;
         }
-
         if(!xboxJoystick.getLeftBumper())
             xboxLeftBumperLastState = false;
-        
+
         // Right Bumper Toggle
         if(xboxJoystick.getRightBumper() && !xboxRightBumperLastState)
         {
             robot.manipulatorSystem.toggleWrist();
             xboxRightBumperLastState = true;
         }
-        
         if(!xboxJoystick.getRightBumper())
             xboxRightBumperLastState = false;
-        
+
         if(xboxJoystick.getRightTrigger() > 0.5)
         {
             log("Starting cam auto");
@@ -165,7 +181,7 @@ public class OperatorSystem extends SystemBase
         {
             log("Stopping cam auto");
             robot.manipulatorSystem.lift.stopCamPid();
-            
+
             if(Math.abs(xboxJoystick.getRightStickY())>.25)
             {
                 robot.manipulatorSystem.setLiftSpeed(-xboxJoystick.getRightStickY());
@@ -180,48 +196,40 @@ public class OperatorSystem extends SystemBase
         {
             robot.manipulatorSystem.setArmSpeed(xboxJoystick.getLeftStickY()/4);
         }
-        else
+        else if(!robot.manipulatorSystem.arm.pidEnabled())
         {
-            if(!robot.manipulatorSystem.arm.pidEnabled())
-            {
                 robot.manipulatorSystem.setArmHeight(robot.manipulatorSystem.arm.getEncoder());
-            }
         }
-        
+
         if(xboxJoystick.getAButton())
             robot.manipulatorSystem.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
-
         else if(xboxJoystick.getBButton())
             robot.manipulatorSystem.setState(ManipulatorSystem.STATE_MID_PEG);
-        
         else if(xboxJoystick.getYButton())
             robot.manipulatorSystem.setState(ManipulatorSystem.STATE_TOP_PEG);
-
         else if(xboxJoystick.getXButton())
             robot.manipulatorSystem.setState(ManipulatorSystem.STATE_DEFAULT);
-
         if(xboxJoystick.getDpad() == 1.0)
             robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FLOOR);
-        
-        /**
-         * Gamepiece indicator controller of love
-         */
+    }
+
+    /**
+     * Control GamePiece indicator lights
+     */
+    private void doGPIndicator()
+    {
         if(rightJoystick.getRawButton(4) || leftJoystick.getRawButton(4))
             ledIndicator.setLightColorRed();
-
         else if(rightJoystick.getRawButton(3) || leftJoystick.getRawButton(3))
             ledIndicator.setLightColorWhite();
-
         else if(rightJoystick.getRawButton(5) || leftJoystick.getRawButton(5))
             ledIndicator.setLightColorBlue();
-        
         else if(rightJoystick.getRawButton(2) || leftJoystick.getRawButton(2))
             ledIndicator.setLightColorClear();
-        
-        
-        /*
-         * Minibot control
-         */
+    }
+
+    private void doMinibot()
+    {
         if (rightJoystick.getRawButton(6))
         {
             robot.minibotSystem.setArmSpeed(leftJoystick.getStickX());
