@@ -99,6 +99,7 @@ public class ManipulatorSystem extends SystemBase
             case STATE_DEFAULT:
                 lift.setState(Lift.STATE_LOW);
                 arm.setState(Arm.STATE_HIGH);
+                claw.set(false);
                 //raiseWrist();
                 break;
         }
