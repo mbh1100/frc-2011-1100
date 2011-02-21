@@ -67,11 +67,7 @@ public class CameraSystem extends SystemBase
     public void start()
     {
         super.start();
-
-        for (int i = 0; i<5;i++)
-        {
-            FUNCODE();
-        }
+        FUNCODE();
 
         int i = 0;
         while (!ac.freshImage() && i < 30)
@@ -272,9 +268,7 @@ public class CameraSystem extends SystemBase
      */
     public void stop() {
         super.stop();
-        while(super.isStopped()){
-            FUNCODE();
-        }
+        FUNCODE();
     }
 
     /**
@@ -282,7 +276,10 @@ public class CameraSystem extends SystemBase
      */
     private void FUNCODE()
     {
-        light.toggle();
-        Timer.delay(.2);
+        for(int i =0; i< 5;i++)
+        {
+            light.toggle();
+            Timer.delay(.2);
+        }
     }
 }
