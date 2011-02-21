@@ -26,10 +26,10 @@ public class YPIDSource implements PIDSource
     {
         if(cs == null)
         {
-            // System.out.println("cs = null!!!!!!!!!!!!!");
+            System.out.println("cs = null!!!!!!!!!!!!!");
             return 0.0;
         }
-        // System.out.println("XPIDSource: pidGet " + cs.getCenterX());
+        System.out.println("YPIDSource: pidGet " + cs.getCenterY());
         return cs.getCenterY();
     }
 }

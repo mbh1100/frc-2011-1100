@@ -1,5 +1,6 @@
 package edu.arhs.first1100.manipulator;
 
+import edu.arhs.first1100.camera.YPIDSource;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Encoder;
@@ -50,7 +51,7 @@ public class ManipulatorSystem extends SystemBase
     {
         super(robot, sleepTime);
         
-        lift = new Lift();
+        lift = new Lift(new YPIDSource(robot.cameraSystem));
         arm = new Arm();
         
         wrist = new Solenoid(2);
@@ -58,7 +59,7 @@ public class ManipulatorSystem extends SystemBase
     }
 
     /**
-     *sets the state of the robot
+     * sets the state of the robot
      * @param state
      */
     public void setState(int state)
@@ -113,7 +114,37 @@ public class ManipulatorSystem extends SystemBase
      */
     public void setLiftSpeed(double speed)
     {
-        lift.setSpeed(speed);
+        if (lift.encoder.get() < 10)
+        {
+            System.out.println("LIFT: reached bottom");
+            
+            if(speed < 0)
+            {
+                lift.setSpeed(0);
+            }
+            //lift.resetEncoder();
+            else
+            {
+                lift.setSpeed(speed);
+            }
+        }
+        else if ( lift.encoder.get() > 2400)
+        {
+            System.out.println("LIFT: reached top");
+            if ( speed > 0)
+            {
+                lift.setSpeed(0);
+            }
+            else
+            {
+                lift.setSpeed(speed);
+            }
+
+        }
+        else
+        {
+            lift.setSpeed(speed);
+        }
     }
     
     public void setLiftHeight(double height)
@@ -194,17 +225,20 @@ public class ManipulatorSystem extends SystemBase
         }
         */
         
-        // log("Lift PID target: " + lift.liftPid.getSetpoint());
-        // log("Lift Encoder:    " + lift.encoder.get());
-        // log("Lift PID output: " + lift.liftPid.get());
+        log("Lift PID target: " + lift.camPid.getSetpoint());
+        log("Lift Encoder:    " + lift.encoder.get());
+        log("Lift PID output: " + lift.camPid.get());
+        log();
+        
         // log("Arm PID target: " + arm.pid.getSetpoint());
         // log("Arm encoder:    " + arm.encoder.get());
         //log("Arm PID output: " + arm.pid.get());
         //log("Arm Encoder:"  + robot.manipulatorSystem.arm.encoder.get());
-
-        if(arm.getPidError() < 1)
+        
+        if(lift.getPidError() < 1 && lift.pidEnabled())
         {
-            
+            log("Target Reached: Disabling pid");
+            lift.stopPID();
         }
     }
 

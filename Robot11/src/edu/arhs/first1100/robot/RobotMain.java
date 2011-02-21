@@ -7,6 +7,22 @@
 
 /*
  * Go team 1100!!!
+ *
+ *
+ *  - ROBOT -
+ *    - DISCO -
+ *           |
+ *           |
+ *         /###\
+ *         #####
+ *         \###/
+ *
+ *                   
+ *             ___ 
+ *  o[-_-]    (@=@) 
+ *   `[ ]-o  ~~( )~~
+ *    | \      / \     
+ *
  */
 
 package edu.arhs.first1100.robot;
@@ -35,9 +51,10 @@ public class RobotMain extends SimpleRobot
     public MinibotSystem minibotSystem;
     public OperatorSystem operatorSystem;
     public Compressor compressor;
-/**
- *
- */
+    
+    /**
+     *
+     */
     public void robotInit()
     {
         autonomousSystem = new AutonomousSystem(this, 100);
@@ -100,7 +117,7 @@ public class RobotMain extends SimpleRobot
     }
     
     /**
-     *
+     * 
      */
     public void disabled()
     {

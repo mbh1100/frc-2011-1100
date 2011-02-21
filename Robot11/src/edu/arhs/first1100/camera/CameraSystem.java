@@ -154,12 +154,12 @@ public class CameraSystem extends SystemBase
      */
     public synchronized void setThresholdRGB(int r, int R, int g, int G, int b, int B)
     {
-        minRed = (r >= 0 && r <= 255 && r <= R)? r : 0;
-        maxRed = (R >= 0 && R <= 255 && r >= r)? R : 255;
+        minRed   = (r >= 0 && r <= 255 && r <= R)? r : 0;
+        maxRed   = (R >= 0 && R <= 255 && r >= r)? R : 255;
         minGreen = (g >= 0 && g <= 255 && g <= G)? g : 0;
         maxGreen = (G >= 0 && G <= 255 && G >= g)? G : 255;
-        minBlue = (b >= 0 && b <= 255 && b <= B)? b : 0;
-        maxBlue = (B >= 0 && B <= 255 && B >= b)? B : 255;
+        minBlue  = (b >= 0 && b <= 255 && b <= B)? b : 0;
+        maxBlue  = (B >= 0 && B <= 255 && B >= b)? B : 255;
     }
 
      /**
@@ -173,7 +173,7 @@ public class CameraSystem extends SystemBase
                 setThresholdRGB(190, 255, 210, 255, 210, 255);
                 break;
             case BLUE_THRESHOLD:
-                setThresholdRGB(0, 125, 210, 255, 210, 255);
+                setThresholdRGB(0, 125, 160, 255, 210, 255);
                 break;
         }
     }
@@ -185,7 +185,7 @@ public class CameraSystem extends SystemBase
     public double getCenterY()
     {
         light.onForAWhile();
-        if(!(pRep.length >= 0))
+        if(pRep.length > 0 && pRep[0] != null )
             return pRep[0].center_mass_y_normalized;
         else
             return 0.0;
@@ -199,7 +199,7 @@ public class CameraSystem extends SystemBase
     {
         light.onForAWhile();
 
-        if(pRep.length > 0 && pRep[0] != null )
+        if(pRep.length > 0 && pRep[0] != null)
         {
             return pRep[0].center_mass_x_normalized;
         }

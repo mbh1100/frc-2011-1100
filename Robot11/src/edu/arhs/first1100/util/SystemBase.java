@@ -170,7 +170,11 @@ public class SystemBase extends Thread
         String name = this.getClass().getName();
         System.out.println(name.substring(name.lastIndexOf('.')+1)+": "+message);
     }
-    
+
+    public void log()
+    {
+        log("");
+    }
     /**
      * Set the amount of time that the system should sleep
      * @param int time How long the component should sleep in milliseconds

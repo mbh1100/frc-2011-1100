@@ -47,6 +47,7 @@ public class OperatorSystem extends SystemBase
         
         ledIndicator  = new GamepieceIndicator();
         ledIndicator.start();
+
     }
     
     /**
@@ -154,9 +155,28 @@ public class OperatorSystem extends SystemBase
         
         if(!xboxJoystick.getRightBumper())
             xboxRightBumperLastState = false;
-
         
-        if(Math.abs(xboxJoystick.getLeftStickY())>.25)
+        if(xboxJoystick.getRightTrigger() > 0.5)
+        {
+            log("Starting cam auto");
+            robot.manipulatorSystem.lift.startCamPid();
+        }
+        else
+        {
+            log("Stopping cam auto");
+            robot.manipulatorSystem.lift.stopCamPid();
+            
+            if(Math.abs(xboxJoystick.getRightStickY())>.25)
+            {
+                robot.manipulatorSystem.setLiftSpeed(-xboxJoystick.getRightStickY());
+            }
+            else if(robot.manipulatorSystem.lift.getSpeed() != 0.0)
+            {
+                robot.manipulatorSystem.setLiftSpeed(0.0);
+            }
+        }
+
+        if(Math.abs(xboxJoystick.getLeftStickY()) > 0.25)
         {
             robot.manipulatorSystem.setArmSpeed(xboxJoystick.getLeftStickY()/4);
         }
@@ -165,18 +185,6 @@ public class OperatorSystem extends SystemBase
             if(!robot.manipulatorSystem.arm.pidEnabled())
             {
                 robot.manipulatorSystem.setArmHeight(robot.manipulatorSystem.arm.getEncoder());
-            }
-        }
-
-        if(Math.abs(xboxJoystick.getRightStickY())>.25)
-        {
-            robot.manipulatorSystem.setLiftSpeed(-xboxJoystick.getRightStickY());
-        }
-        else
-        {
-            if(!robot.manipulatorSystem.lift.pidEnabled())
-            {
-                robot.manipulatorSystem.setLiftHeight(robot.manipulatorSystem.lift.getEncoder());
             }
         }
         

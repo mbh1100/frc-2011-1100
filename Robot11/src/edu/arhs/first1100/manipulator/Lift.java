@@ -1,12 +1,12 @@
 package edu.arhs.first1100.manipulator;
 
-import edu.wpi.first.wpilibj.PIDController;
+import edu.arhs.first1100.camera.YPIDSource;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.DigitalInput;
-
-import edu.arhs.first1100.util.AdvJaguar;
 import edu.arhs.first1100.util.PID;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.arhs.first1100.opctl.AdvJoystick;
 
 /**
  *runs the lift
@@ -16,10 +16,10 @@ public class Lift
 {
     // Config for PID controller
     // Will need to calibrate later
-    private final double kCAM_P = 0.5;
-    private final double kCAM_I = 0.05;
-    private final double kCAM_D = 0.005;
-    private PID camPid;
+    private final double kCAM_P = 1;
+    private final double kCAM_I = 0;
+    private final double kCAM_D = 0;
+    public PID camPid;
 
     private final double kLIFT_P = 0.01;
     private final double kLIFT_I = 0.001;
@@ -41,23 +41,24 @@ public class Lift
     private Jaguar liftJaguar;
 
     DigitalInput bottomLimitSwitch;
-    
+
     /**
      *what encoders the lift is on and stuff
      */
-    public Lift()
+    public Lift(YPIDSource ypids)
     {
         liftJaguar = new Jaguar(6);
         encoder = new Encoder(8, 9);
         
         encoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
         encoder.start();
-
+        
         bottomLimitSwitch = new DigitalInput(7);
         
-        //camPid  = new PID(kCAM_P, kCAM_I, kCAM_D, null, liftJaguar);
+        camPid  = new PID(kCAM_P, kCAM_I, kCAM_D, ypids , liftJaguar);
+        camPid.setOutputRange(-0.4, 0.6);
         liftPid = new PID(kLIFT_P, kLIFT_I, kLIFT_D, encoder, liftJaguar);
-        liftPid.setOutputRange(-0.3, 0.6);
+        liftPid.setOutputRange(-0.6, 1.0);
     }
     
     /**
@@ -94,26 +95,13 @@ public class Lift
      */
     public void setSpeed(double speed)
     {
-        /*
-        if (bottomLimitSwitch.get())
-        {
-            System.out.println("LIFT: Bottom switch pressed");
-            
-            //encoder.reset();
-            if(speed < 0)
-            {
-                liftJaguar.set(0);
-            }
-        }
-        else
-        {
-            liftPid.disable();
-            //camPid.disable();
-            liftJaguar.set(speed);
-        }
-         */
         liftPid.disable();
         liftJaguar.set(speed);
+    }
+
+    public double getSpeed()
+    {
+        return liftJaguar.get();
     }
     
     public void setHeight(double height)
@@ -127,20 +115,20 @@ public class Lift
      */
     public void stop()
     {
-        //camPid.disable();
+        camPid.disable();
         liftPid.disable();
         liftJaguar.set(0.0);
     }
 
     public void startLiftPid()
     {
-        //camPid.disable();
+        camPid.disable();
         liftPid.enable();
     }
 
     public void startCamPid()
     {
-        //camPid.enable();
+        camPid.enable();
         liftPid.disable();
     }
 
@@ -154,11 +142,11 @@ public class Lift
         {
             return liftPid.getError();
         }
-        /*
+        
         else if(camPid.isEnable())
         {
             return camPid.getError();
-        }*/
+        }
         else
         {
             return 0.0;
@@ -167,15 +155,35 @@ public class Lift
     
     public void stopPID()
     {
-        //camPid.disable();
+        camPid.disable();
+        liftPid.disable();
+    }
+
+    public void stopCamPid()
+    {
+        camPid.disable();
+    }
+
+    public void stopLiftPid()
+    {
         liftPid.disable();
     }
 
     public boolean pidEnabled()
     {
-        return liftPid.isEnable(); // || camPid.isEnable();
+        return liftPid.isEnable() || camPid.isEnable();
     }
-    
+
+    public boolean liftPidEnabled()
+    {
+        return liftPid.isEnable();
+    }
+
+    public boolean camPidEnabled()
+    {
+        return camPid.isEnable();
+    }
+
     public double getEncoder()
     {
         return encoder.get();
