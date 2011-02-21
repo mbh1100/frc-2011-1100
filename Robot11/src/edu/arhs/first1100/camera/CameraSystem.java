@@ -14,9 +14,7 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class CameraSystem extends SystemBase
 {
-   /**
-    * declares what the camera is lookng for in the threshold
-    */
+
     public final int WHITE_THRESHOLD = 1;
     public final int RED_THRESHOLD = 2;
     public final int BLUE_THRESHOLD =3;
@@ -37,7 +35,7 @@ public class CameraSystem extends SystemBase
     BinaryImage bImg;
     ParticleAnalysisReport[] pRep = new ParticleAnalysisReport[PARTICLE_SIZE];
 /**
- *gets instance of the axis camera and declares the sleep time
+ * constructor: gets instance of the axis camera and declares the sleep time
  * @param robot
  * @param sleepTime
  */
@@ -83,7 +81,7 @@ public class CameraSystem extends SystemBase
         }
    }
     /**
-     *when told to tick processes the image that was just recieved
+     * One tick : processes the most recent image from the camera
      */
     public void tick()
     {
@@ -189,8 +187,8 @@ public class CameraSystem extends SystemBase
     }
 
     /**
-     *gets the center x variable
-     * @return
+     * Gets the cnter X of the largest particle
+     * @return double center mass x normalized
      */
     public double getCenterX()
     {
@@ -269,10 +267,19 @@ public class CameraSystem extends SystemBase
         return sortedP;
     }
 
+    /**
+     * Stops the thread
+     */
     public void stop() {
         super.stop();
+        while(super.isStopped()){
+            FUNCODE();
+        }
     }
 
+    /**
+     * FUNCODE blinks the lights
+     */
     private void FUNCODE()
     {
         light.toggle();
