@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.arhs.first1100.util.PID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.arhs.first1100.opctl.AdvJoystick;
+import edu.wpi.first.wpilibj.DriverStationLCD.Line;
 
 /**
  *runs the lift
@@ -52,7 +53,6 @@ public class Lift
         
         encoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
         encoder.start();
-        
         bottomLimitSwitch = new DigitalInput(7);
         
         camPid  = new PID(kCAM_P, kCAM_I, kCAM_D, ypids , liftJaguar);
@@ -95,7 +95,7 @@ public class Lift
      */
     public void setSpeed(double speed)
     {
-        System.out.println("Lift: setSpeed:" + speed);
+        System.out.println("Lift: setSpeed:" + -speed);
         liftPid.disable();
         
         if(!bottomLimitSwitch.get())
@@ -103,26 +103,27 @@ public class Lift
             System.out.println("LIFT: reached bottom");
             
             resetEncoder();
-            if(speed<0)
+            if(-speed < 0)
                 liftJaguar.set(0.0);
             else
-                liftJaguar.set(speed);
+                liftJaguar.set(-speed);
         }
         else if(encoder.get() > 2400)
         {
             System.out.println("LIFT: reached top");
-            if (speed > 0)
+            if (-speed > 0)
             {
                 liftJaguar.set(0);
             }
             else
             {
-                liftJaguar.set(speed);
+                liftJaguar.set(-speed);
             }
         }
         else
         {
-            liftJaguar.set(speed);
+            System.out.println("Lift driving" + -speed);
+            liftJaguar.set(-speed);
         }
     }
 

@@ -94,7 +94,7 @@ public class OperatorSystem extends SystemBase
         doClawWrist();
         
         // doGPI();
-        // doMinibot();
+        doMinibot();
         
         /*
          * Debug buttons

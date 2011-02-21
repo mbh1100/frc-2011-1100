@@ -16,10 +16,10 @@ public class LineTracker
   */
     public LineTracker()
     {
-        ltLeft = new DigitalInput(5, 2);
-        ltMiddle = new DigitalInput(5, 3);
-        ltRight = new DigitalInput(5, 4);
-        ltBack = new DigitalInput(5, 1);
+        ltLeft = new DigitalInput( 2);
+        ltMiddle = new DigitalInput( 3);
+        ltRight = new DigitalInput( 4);
+        ltBack = new DigitalInput( 1);
     }
     /**
      *returns the left linetracker data
