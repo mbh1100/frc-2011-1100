@@ -63,8 +63,9 @@ public class DriveSystem extends SystemBase
          
          adm = new ArcadeDriveMux(this);
          cdc = new CameraDriveCurve(adm, robot.cameraSystem);
-         cdp = new CameraDrivePower(adm, robot.cameraSystem);
+         cdp = new CameraDrivePower(adm, robot.cameraSystem, 50.0);
     }
+    
     /**
      *says how fast to go
      * declares camera drive also

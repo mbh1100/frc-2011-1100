@@ -51,53 +51,18 @@ public class OperatorSystem extends SystemBase
      */
     public void tick()
     {
-        doRoutines();
-        doDrive();
-        doCamLights();
-        doManipulator();
-        doMinibot();
-        doRoutines();
-    }
-
-
-    /**
-    * Checks for routines that need to be started
-    */
-    private void doRoutines()
-    {
+        /*
+         * Drive and line routines
+         */
         if(leftJoystick.getRawButton(11) && lineRoutine == null)
         {
-            // middle line, go to left, bottom left peg. Get actual
-            // target from controller
             lineRoutine = new FollowLineRoutine(robot, 100);
             lineRoutine.start();
         }
-        if(xboxJoystick.getAButton() && targetRoutine == null)
-        {
-            // middle line, go to left, bottom left peg. Get actual
-            // target from controller
-            targetRoutine = new TargetPegRoutine(robot, 100, 100.0);
-            targetRoutine.start();
-        }        
-    }
-
-    /**
-     * Operator controlled drive check
-     */
-    private void doDrive()
-    {
+        
         if(lineRoutine == null)
         {
-            robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
-            //robot.driveSystem.setSideSpeed(rightJoystick.getX()); // commented out by Alex 2-17-11 to try to get the robot to drive
-            //robot.driveSystem.testCameraDrive(-rightJoystick.getY());
-            
-            /*
-            if(rightJoystick.getRawButton(11))
-                robot.driveSystem.setDriveModeSideStep();
-            else if(rightJoystick.getRawButton(10))
-                robot.driveSystem.setDriveModeTank();
-             */
+            doDrive();
         }
         else
         {
@@ -107,14 +72,43 @@ public class OperatorSystem extends SystemBase
                 lineRoutine = null;
             }
         }
-    }
+        
+        /*
+         * Lift and R trigger targetting
+         */
+        if(xboxJoystick.getRightTrigger() > 0.5)
+        {
+            robot.manipulatorSystem.lift.startCamPid();
+        }
+        else
+        {
+            robot.manipulatorSystem.lift.stopCamPid();
+            doStateButtons();
+            doLift();
+        }
 
-    /**
-     * Checks if lights should be toggled
-     */
-    private void doCamLights()
-    {
-
+        /*
+         * Arm and claw wrist
+         */
+        doArm();
+        doClawWrist();
+        
+        // doGPI();
+        // doMinibot();
+        
+        /*
+         * Debug buttons
+         * encoder reset & light buttons
+         */
+        robot.cameraSystem.setBrightness(
+                (int)(rightJoystick.getRawAxis(3)/2 + 0.5)*100
+        );
+        
+        if(leftJoystick.getRawButton(9))
+        {
+            robot.manipulatorSystem.resetEncoders();
+        }
+        
         if(rightJoystick.getRawButton(9))
         {
             robot.cameraSystem.light.on();
@@ -124,99 +118,71 @@ public class OperatorSystem extends SystemBase
             robot.cameraSystem.light.onForAWhile();
         }
     }
-
+    
     /**
-     * Checks for Manipluator System action
+     * Operator controlled drive check
      */
-    private void doManipulator()
+    private void doDrive()
     {
-        if(leftJoystick.getRawButton(9))
+        robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
+    }
+
+    private void doLift()
+    {
+        log("doLift");
+        if(Math.abs(xboxJoystick.getRightStickY()) > 0.25)
         {
-            robot.manipulatorSystem.resetEncoders();
+            log("9 from outerspace");
+            robot.manipulatorSystem.setLiftSpeed(xboxJoystick.getRightStickY());
         }
-
-        /*
-         * Lift control
-         *
-        if(targetRoutine == null)
+        else if(robot.manipulatorSystem.lift.getSpeed() != 0)
         {
-
-        }
-        else
-        {
-            if(xboxJoystick.getLeftBumper() || targetRoutine.isDone())
-            {
-                targetRoutine.stop();
-                targetRoutine = null;
-            }
-        }*/
-
-        /*
-         * Arm control
-         */
-        // Left Toggle Button
-        if(xboxJoystick.getLeftBumper() && !xboxLeftBumperLastState)
-        {
-            robot.manipulatorSystem.toggleClaw();
-            xboxLeftBumperLastState = true;
-        }
-        if(!xboxJoystick.getLeftBumper())
-            xboxLeftBumperLastState = false;
-
-        // Right Bumper Toggle
-        if(xboxJoystick.getRightBumper() && !xboxRightBumperLastState)
-        {
-            robot.manipulatorSystem.toggleWrist();
-            xboxRightBumperLastState = true;
-        }
-        if(!xboxJoystick.getRightBumper())
-            xboxRightBumperLastState = false;
-
-        if(xboxJoystick.getRightTrigger() > 0.5)
-        {
-            log("Starting cam auto");
-            robot.manipulatorSystem.lift.startCamPid();
+            log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            robot.manipulatorSystem.setLiftSpeed(0.0);
         }
         else
         {
-            log("Stopping cam auto");
-            robot.manipulatorSystem.lift.stopCamPid();
-
-            if(Math.abs(xboxJoystick.getRightStickY())>.25)
-            {
-                robot.manipulatorSystem.setLiftSpeed(-xboxJoystick.getRightStickY());
-            }
-            else if(robot.manipulatorSystem.lift.getSpeed() != 0.0)
-            {
-                robot.manipulatorSystem.setLiftSpeed(0.0);
-            }
+            log("nothing happening :( ");
         }
+    }
 
+    private void doArm()
+    {
         if(Math.abs(xboxJoystick.getLeftStickY()) > 0.25)
         {
             robot.manipulatorSystem.setArmSpeed(xboxJoystick.getLeftStickY()/4);
         }
         else if(!robot.manipulatorSystem.arm.pidEnabled())
         {
-                robot.manipulatorSystem.setArmHeight(robot.manipulatorSystem.arm.getEncoder());
+            robot.manipulatorSystem.setArmHeight(robot.manipulatorSystem.arm.getEncoder());
         }
-
+    }
+    
+    /**
+     * Checks for Manipluator System action
+     */
+    private void doStateButtons()
+    {
         if(xboxJoystick.getAButton())
             robot.manipulatorSystem.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
+        
         else if(xboxJoystick.getBButton())
             robot.manipulatorSystem.setState(ManipulatorSystem.STATE_MID_PEG);
+
         else if(xboxJoystick.getYButton())
             robot.manipulatorSystem.setState(ManipulatorSystem.STATE_TOP_PEG);
+
         else if(xboxJoystick.getXButton())
             robot.manipulatorSystem.setState(ManipulatorSystem.STATE_DEFAULT);
+
         if(xboxJoystick.getDpad() == 1.0)
             robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FLOOR);
     }
-
+    
     /**
      * Control GamePiece indicator lights
      */
-    private void doGPIndicator()
+    private void doGPI()
     {
         if(rightJoystick.getRawButton(4) || leftJoystick.getRawButton(4))
             ledIndicator.setLightColorRed();
@@ -249,5 +215,26 @@ public class OperatorSystem extends SystemBase
         {
         robot.minibotSystem.setDeployerSpeed(0.0);
         }
+    }
+    
+    private void doClawWrist()
+    {
+        // Left Toggle Button
+        if(xboxJoystick.getLeftBumper() && !xboxLeftBumperLastState)
+        {
+            robot.manipulatorSystem.toggleClaw();
+            xboxLeftBumperLastState = true;
+        }
+        if(!xboxJoystick.getLeftBumper())
+            xboxLeftBumperLastState = false;
+
+        // Right Bumper Toggle
+        if(xboxJoystick.getRightBumper() && !xboxRightBumperLastState)
+        {
+            robot.manipulatorSystem.toggleWrist();
+            xboxRightBumperLastState = true;
+        }
+        if(!xboxJoystick.getRightBumper())
+            xboxRightBumperLastState = false;
     }
 }

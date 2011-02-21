@@ -28,7 +28,7 @@ public class CameraDrivePower
  *declares output of the motors
  * @param adm
  */
-    public CameraDrivePower(ArcadeDriveMux adm, CameraSystem cs)
+    public CameraDrivePower(ArcadeDriveMux adm, CameraSystem cs, double target)
     {
         this.cs = cs;
         output = adm;
@@ -36,6 +36,7 @@ public class CameraDrivePower
         source = new ZPIDSource();
         pid = new PID( P, I, D, source, power);
         pid.setOutputRange(-0.4, 0.4);
+        pid.setSetpoint(target);
     }
 
     /**

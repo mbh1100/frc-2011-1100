@@ -95,8 +95,35 @@ public class Lift
      */
     public void setSpeed(double speed)
     {
+        System.out.println("Lift: setSpeed:" + speed);
         liftPid.disable();
-        liftJaguar.set(speed);
+        
+        if(!bottomLimitSwitch.get())
+        {
+            System.out.println("LIFT: reached bottom");
+            
+            resetEncoder();
+            if(speed<0)
+                liftJaguar.set(0.0);
+            else
+                liftJaguar.set(speed);
+        }
+        else if(encoder.get() > 2400)
+        {
+            System.out.println("LIFT: reached top");
+            if (speed > 0)
+            {
+                liftJaguar.set(0);
+            }
+            else
+            {
+                liftJaguar.set(speed);
+            }
+        }
+        else
+        {
+            liftJaguar.set(speed);
+        }
     }
 
     public double getSpeed()
@@ -132,7 +159,7 @@ public class Lift
         camPid.enable();
         liftPid.disable();
     }
-
+    
     /**
      * what to do when it recieves an error
      * @return

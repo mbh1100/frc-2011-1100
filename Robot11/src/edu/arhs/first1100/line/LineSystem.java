@@ -22,37 +22,18 @@ public class LineSystem extends SystemBase
     boolean done = false;
     
     LineTracker lt;
-/**
- *creates new line trackers
- * specifies how long the robot should sleep
- * @param robot
- * @param sleepTime
- */
+    
+    /**
+     *creates new line trackers
+     * specifies how long the robot should sleep
+     * @param robot
+     * @param sleepTime
+     */
     public LineSystem(RobotMain robot, int sleepTime)
     {
         super(robot, sleepTime);
         lt = new LineTracker();
     }
-
-    /*
-    synchronized public void waitUntilDone()
-    {
-        if (!done)
-        {
-            try
-            {
-                wait();
-            }
-            catch (InterruptedException x) {}
-        }
-    }
-
-    synchronized void imDone()
-    {
-        done = true;
-        this.notify();
-    }
-    */
     
     /**
      * how often the robot should tick when it sees the line

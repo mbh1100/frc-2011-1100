@@ -19,7 +19,7 @@ public class MinibotSystem extends SystemBase
      *what the bot is going to do
      */
     
-    private final int MINIBOT_IO_SLOT = 5;
+    private final int MINIBOT_IO_SLOT = 6;
     
     private Victor beltVic;
     private Victor armVic;
@@ -50,8 +50,8 @@ public class MinibotSystem extends SystemBase
 
         towerDetector = new DigitalInput(MINIBOT_IO_SLOT, 5);
         
-        beltVic = new Victor(2);
-        armVic = new Victor(1);
+        beltVic = new Victor(MINIBOT_IO_SLOT, 2);
+        armVic = new Victor(MINIBOT_IO_SLOT, 1);
     }
     
     /**

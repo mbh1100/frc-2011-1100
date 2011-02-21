@@ -20,6 +20,7 @@ public class ScoreRoutine extends Routine
 {
     DriveSystem ds;
     ManipulatorSystem ms;
+    
     /**
      *how long the robot should sleep
      * @param robot
@@ -31,27 +32,25 @@ public class ScoreRoutine extends Routine
         ds = robot.driveSystem;
         ms = robot.manipulatorSystem;
     }
-/**
- *how often the robot should read the tick
- */
+    
+    /**
+     * how often the robot should read the tick
+     */
     public void run()
     {
-        //read camera, position lift
-        new LiftToPegRoutine(robot, ManipulatorSystem.STATE_TOP_PEG).execute();
-
         ms.releaseTube();
         Timer.delay(0.5);
 
-        ms.setLiftHeight(ms.getLiftHeight() - 50);
+        ms.setLiftHeight(ms.lift.getEncoder() - 50);
         while (!ms.liftOnTarget())
         {
             Timer.delay(0.5);
         }
-
+        
         ds.drive(-0.5, 0.0);
         Timer.delay(1);
         ds.drive(0.0, 0.0);
-
+        
         super.setDone();
     }
 }

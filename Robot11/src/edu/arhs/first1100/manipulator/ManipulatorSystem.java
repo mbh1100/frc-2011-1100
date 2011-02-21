@@ -116,37 +116,7 @@ public class ManipulatorSystem extends SystemBase
      */
     public void setLiftSpeed(double speed)
     {
-        if (lift.encoder.get() < 10)
-        {
-            System.out.println("LIFT: reached bottom");
-            
-            if(speed < 0)
-            {
-                lift.setSpeed(0);
-            }
-            //lift.resetEncoder();
-            else
-            {
-                lift.setSpeed(speed);
-            }
-        }
-        else if ( lift.encoder.get() > 2400)
-        {
-            System.out.println("LIFT: reached top");
-            if ( speed > 0)
-            {
-                lift.setSpeed(0);
-            }
-            else
-            {
-                lift.setSpeed(speed);
-            }
-
-        }
-        else
-        {
-            lift.setSpeed(speed);
-        }
+        lift.setSpeed(speed);
     }
     
     public void setLiftHeight(double height)
@@ -225,17 +195,11 @@ public class ManipulatorSystem extends SystemBase
     public void tick()
     {
         /*
-        if(lift.liftPid.isEnable() && lift.getPidError() < 1.0)
-        {
-            log("Stopping lift pid");
-            lift.stopPID();
-        }
-        */
-        
         log("Lift PID target: " + lift.camPid.getSetpoint());
         log("Lift Encoder:    " + lift.encoder.get());
         log("Lift PID output: " + lift.camPid.get());
         log();
+        */
         
         // log("Arm PID target: " + arm.pid.getSetpoint());
         // log("Arm encoder:    " + arm.encoder.get());

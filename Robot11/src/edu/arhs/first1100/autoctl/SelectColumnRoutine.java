@@ -18,22 +18,24 @@ public class SelectColumnRoutine extends Routine
 {
     private int startingColumn = 0;
     private int targetColumn = 0;
-/**
- *declares which starting column to use
- * @param robot
- * @param sleep
- * @param startingColumn
- * @param targetColumn
- */
+    
+    /**
+     *declares which starting column to use
+     * @param robot
+     * @param sleep
+     * @param startingColumn
+     * @param targetColumn
+     */
     public SelectColumnRoutine(RobotMain robot, int sleep, int startingColumn, int targetColumn)
     {
         super(robot, sleep);
         this.startingColumn = startingColumn;
         this.targetColumn = targetColumn;
     }
-/**
- *how to decide whether or not it is done
- */
+    
+    /**
+     *how to decide whether or not it is done
+     */
     public void tick()
     {
         Timer.delay(3);

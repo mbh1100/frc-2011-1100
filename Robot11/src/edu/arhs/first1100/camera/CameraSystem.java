@@ -56,11 +56,16 @@ public class CameraSystem extends SystemBase
         ac.writeExposureControl(AxisCamera.ExposureT.hold);
         ac.writeRotation(AxisCamera.RotationT.k0);
         ac.writeResolution(AxisCamera.ResolutionT.k160x120);
-
+        
         setThreshold(BLUE_THRESHOLD);
     }
 
-     /**
+    public void setBrightness(int b)
+    {
+        ac.writeBrightness(b);
+    }
+    
+    /**
      * Adjusts camera settings. Then processes camera images until
      * the thread is terminated.
      */

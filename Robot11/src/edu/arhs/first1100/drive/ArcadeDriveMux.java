@@ -13,47 +13,53 @@ package edu.arhs.first1100.drive;
 public class ArcadeDriveMux
 {
     DriveSystem ds;
-/**
- *how the robot will turn
- */
+    
+    /**
+     *how the robot will turn
+     */
     public double power;
     public double curve;
-/**
- *declares the drive system
- * @param ds
- */
+
+    /**
+     *declares the drive system
+     * @param ds
+     */
     public ArcadeDriveMux(DriveSystem ds)
     {
         this.ds = ds;
     }
-/**
- *sets the curve
- * @param curve
- */
+
+    /**
+     *sets the curve
+     * @param curve
+     */
     public void setCurve(double curve)
     {
         this.curve = curve;
         cameraDrive();
     }
-/**
- *sets the power
- * @param power
- */
+
+    /**
+     *sets the power
+     * @param power
+     */
     public void setPower(double power)
     {
 
         this.power = power;
         cameraDrive();
     }
-/**
- *sets camera drive
- */
+
+    /**
+     *sets camera drive
+     */
     public void cameraDrive()
     {
-        System.out.println("PID Power: " + power);
-        System.out.println("PID Curve: " + curve);
+        /*
+        System.out.println("ArcadeDriveMux: PID Power: " + power);
+        System.out.println("ArcadeDriveMux: PID Curve: " + curve);
         System.out.println("");
-        
+        */
         ds.drive(power, -curve);
     }
 }
