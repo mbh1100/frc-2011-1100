@@ -41,6 +41,7 @@ public class ManipulatorSystem extends SystemBase
     
     private Solenoid wrist;
     private Solenoid claw;
+
     
     /**
      *when to lift the arm claw and wrist and where they are
@@ -151,6 +152,11 @@ public class ManipulatorSystem extends SystemBase
     {
         lift.setHeight(height);
     }
+
+    public double getLiftHeight()
+    {
+        return lift.getEncoder();
+    }
     
     /**
      *how fast the arm moves
@@ -170,10 +176,10 @@ public class ManipulatorSystem extends SystemBase
      * Grabber controls
      */
     
-    public void openClaw()
-    { setClawState(true); }
+    public void releaseTube()
+    { setClawState(false); }
     
-    public void closeClaw()
+    public void grabTube()
     { setClawState(true); }
 
     public void setClawState(boolean state)
@@ -183,7 +189,7 @@ public class ManipulatorSystem extends SystemBase
     { claw.set(!claw.get()); }
 
     public void raiseWrist()
-    { setWristState(true); }
+    { setWristState(false); }
     
     public void lowerWrist()
     { setWristState(true); }
@@ -235,7 +241,7 @@ public class ManipulatorSystem extends SystemBase
         //log("Arm PID output: " + arm.pid.get());
         //log("Arm Encoder:"  + robot.manipulatorSystem.arm.encoder.get());
         
-        if(lift.getPidError() < 1 && lift.pidEnabled())
+        if(liftOnTarget() && lift.pidEnabled())
         {
             log("Target Reached: Disabling pid");
             lift.stopPID();
