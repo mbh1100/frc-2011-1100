@@ -106,6 +106,7 @@ public class Lift
     
     public void setHeight(double height)
     {
+        System.out.println("setting the lift height to " + height);
         liftPid.setSetpoint(height);
         liftPid.enable();
     }
