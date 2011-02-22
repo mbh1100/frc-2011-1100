@@ -15,7 +15,12 @@ import edu.wpi.first.wpilibj.PIDSource;
 public class ZPIDSource implements PIDSource
 {
     CameraSystem cs;
-    
+
+    public ZPIDSource(CameraSystem cs)
+    {
+        this.cs = cs;
+    }
+
     /**
      *gets the instance of the pid including the hight of the axis camera.
      * @return
