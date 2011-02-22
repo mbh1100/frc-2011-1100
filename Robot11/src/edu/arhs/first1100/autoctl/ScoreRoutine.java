@@ -46,7 +46,7 @@ public class ScoreRoutine extends Routine
         {
             Timer.delay(0.5);
         }
-        
+        log("SCORE ROUTINE IS BEING CALLED");
         ds.drive(-0.5, 0.0);
         Timer.delay(1);
         ds.drive(0.0, 0.0);

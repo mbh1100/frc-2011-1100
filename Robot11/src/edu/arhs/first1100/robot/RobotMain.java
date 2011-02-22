@@ -44,7 +44,7 @@ public class RobotMain extends SimpleRobot
         
         cameraSystem = new CameraSystem(this, 100);
         driveSystem = new DriveSystem(this, 100);
-        lineSystem = new LineSystem(this, 50);
+        lineSystem = new LineSystem(this, 10000);
         manipulatorSystem = new ManipulatorSystem(this, 100);
         minibotSystem = new MinibotSystem(this, 100);
 

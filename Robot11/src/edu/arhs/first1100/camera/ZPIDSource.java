@@ -22,13 +22,17 @@ public class ZPIDSource implements PIDSource
      */
     public double pidGet()
     {
-        if (cs.pRep.length == 0)
+
+        System.out.println("Z-pid get");
+        if (cs == null || cs.pRep == null || cs.pRep.length == 0 || cs.pRep[0] == null)
         {
+            System.out.println("bad stuff happening to Camera System ++++++++++++++++++++++");
             return 0;
         }
         
         else
         {
+            cs.getCenterX();
             System.out.println("ZPIDSource: pidGet() return:" + cs.pRep[0].particleArea);
             return cs.pRep[0].particleArea;
         }

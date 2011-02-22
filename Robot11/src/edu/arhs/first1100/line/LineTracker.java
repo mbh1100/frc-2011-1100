@@ -10,16 +10,16 @@ public class LineTracker
     DigitalInput ltLeft;
     DigitalInput ltMiddle;
     DigitalInput ltRight;
-    DigitalInput ltBack;
+    //DigitalInput ltBack;
  /**
   *declares what inputs the line trackers are on
   */
     public LineTracker()
     {
-        ltLeft = new DigitalInput( 2);
+        ltLeft = new DigitalInput( 1);
         ltMiddle = new DigitalInput( 3);
-        ltRight = new DigitalInput( 4);
-        ltBack = new DigitalInput( 1);
+        ltRight = new DigitalInput( 2);
+        //ltBack = new DigitalInput( 1);
     }
     /**
      *returns the left linetracker data
@@ -49,8 +49,9 @@ public class LineTracker
      *return the back linetracker
      * @return
      */
+    /*
     public boolean backLine()
     {
         return ltBack.get();    
-    }
+    }*/
 }

@@ -57,7 +57,7 @@ public class OperatorSystem extends SystemBase
          */
         if(leftJoystick.getRawButton(11) && lineRoutine == null)
         {
-            lineRoutine = new FollowLineRoutine(robot, 100);
+            lineRoutine = new FollowLineRoutine(robot, 50);
             lineRoutine.start();
         }
         
@@ -79,12 +79,12 @@ public class OperatorSystem extends SystemBase
          */
         if(xboxJoystick.getRightTrigger() > 0.5)
         {
-            log("right trigger down");
+            //log("right trigger down");
             robot.manipulatorSystem.lift.startCamPid();
         }
         else
         {
-            log("right trigger up");
+            //log("right trigger up");
             robot.manipulatorSystem.lift.stopCamPid();
             doStateButtons();
             doLift();
@@ -105,7 +105,7 @@ public class OperatorSystem extends SystemBase
          * encoder reset & light buttons
          */
         int brightness = (int)((rightJoystick.getRawAxis(3)/2 + 0.5)*100);
-        log("setting brightness: " + brightness);
+        //log("setting brightness: " + brightness);
         robot.cameraSystem.setBrightness(brightness);
         
         if(leftJoystick.getRawButton(9))
@@ -136,15 +136,15 @@ public class OperatorSystem extends SystemBase
     
     private void doLift()
     {
-        log("doLift");
+        //log("doLift");
         if(Math.abs(xboxJoystick.getRightStickY()) > 0.25)
         {
-            log("9 from outerspace");
+            //log("9 from outerspace");
             robot.manipulatorSystem.setLiftSpeed(xboxJoystick.getRightStickY());
         }
         else if(robot.manipulatorSystem.lift.getSpeed() != 0)
         {
-            log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            //log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             robot.manipulatorSystem.setLiftSpeed(0.0);
         }
     }

@@ -14,8 +14,8 @@ public class FollowLineRoutine extends Routine
     private double turn = 0.0;
 
     private final double TURN_DELAY = 0.6;
-    private final double TURN_RATE = 0.05;
-    private final double TURN_LIMIT = 0.2;
+    private final double TURN_RATE = 0.2;
+    private final double TURN_LIMIT = 0.3;
     
     /**
      *the start of the public line routine
@@ -43,11 +43,40 @@ public class FollowLineRoutine extends Routine
     /**
      *
      */
+
+    public void workingTick()
+    {
+        int s = robot.lineSystem.getState();
+        log("TICK!!! :" + s);
+        switch(s)
+        {
+            case LineSystem.STATE_LEFT:
+            case LineSystem.STATE_SPLIT:
+                robot.driveSystem.setDriveSpeed(.35, .65);
+                log("drivin' LEFT!");
+                break;
+            case LineSystem.STATE_MIDDLE:
+                robot.driveSystem.setDriveSpeed(.55, .55);
+                log("drivin' STRAIGHT!");
+                break;
+            case LineSystem.STATE_RIGHT:
+                robot.driveSystem.setDriveSpeed(.65, .35);
+                log("drivin' RIGHT!");
+                break;
+            case LineSystem.STATE_ALL:
+                robot.driveSystem.setDriveSpeed(0, 0);
+                break;
+
+        }
+    }
+
+
     public void tick()
     {
         switch(robot.lineSystem.getState())
         {
             case LineSystem.STATE_ALL:
+                robot.driveSystem.setDriveSpeed(0, 0);
                 log("State all");
                 setDone();
                 break;
@@ -78,14 +107,14 @@ public class FollowLineRoutine extends Routine
                 log("State Split");
                 path = (robot.operatorSystem.rightJoystick.getRawButton(11))? -1:1;
                 if(path == 1)
-                    robot.driveSystem.setDriveSpeed(0.3, 0.0);
+                    robot.driveSystem.setDriveSpeed(0.65, 0.35);
                 else if(path == -1)
-                    robot.driveSystem.setDriveSpeed(0.0, 0.3);
+                    robot.driveSystem.setDriveSpeed(0.35, 0.65);
                 Timer.delay(TURN_DELAY);
                 turn = 0.0;
                 break;
         }
-
+        log("log robot state, turn: " + turn);
         robot.driveSystem.drive(0.3, -turn);
     }
 }

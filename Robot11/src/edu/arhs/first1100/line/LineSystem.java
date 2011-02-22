@@ -38,29 +38,21 @@ public class LineSystem extends SystemBase
     /**
      * how often the robot should tick when it sees the line
      */
-    public void tick()
+    public int getState()
     {
         if(lt.leftline() && lt.middleLine() && lt.rightline())
             lineStatus = STATE_ALL;
         else if(!lt.leftline() && !lt.middleLine() && !lt.rightline())
             lineStatus = STATE_NONE;
+        else if(lt.leftline() && !lt.middleLine() && lt.rightline())
+            lineStatus = STATE_SPLIT;
         else if(lt.middleLine())
             lineStatus = STATE_MIDDLE;
         else if(lt.leftline())
             lineStatus = STATE_LEFT;
         else if(lt.rightline())
             lineStatus = STATE_RIGHT;
-        else if(lt.leftline() && !lt.middleLine() && lt.rightline())
-            lineStatus = STATE_SPLIT;
-    }
-    
-    /**
-     *returns the state of the line
-     * @return
-     */
-    public int getState()
-    {
+        
         return lineStatus;
     }
-    
 }

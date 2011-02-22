@@ -35,8 +35,9 @@ public class ArcadeDriveMux
      */
     public void setCurve(double curve)
     {
+        System.out.println("ArcadeDriveMux running setCurve    BAD!");
         this.curve = curve;
-        cameraDrive();
+       // cameraDrive();
     }
 
     /**
@@ -45,21 +46,22 @@ public class ArcadeDriveMux
      */
     public void setPower(double power)
     {
-
+        System.out.println("ArcadeDriveMux running setPower    BAD!");
         this.power = power;
-        cameraDrive();
+        //cameraDrive();
     }
 
     /**
      *sets camera drive
      */
-    public void cameraDrive()
+    private void cameraDrive()
     {
+        System.out.println("ADM  camDrive CALLED!");
         /*
         System.out.println("ArcadeDriveMux: PID Power: " + power);
         System.out.println("ArcadeDriveMux: PID Curve: " + curve);
         System.out.println("");
         */
-        ds.drive(power, -curve);
+       //ds.drive(power, -curve);
     }
 }

@@ -78,7 +78,7 @@ public class DriveSystem extends SystemBase
         // log("cdc.trackCamera()");
         cdc.trackCamera();
         
-        adm.setPower(speed);
+        //adm.setPower(speed);
 
         // log("cdp.trackCamera()");
         cdp.trackCamera();
@@ -91,7 +91,6 @@ public class DriveSystem extends SystemBase
      */
     public void setDriveSpeed(double leftSide, double rightSide)
     {
-        log("setDriveSpeed");
         cdp.stopTrackCamera();
         if(state == STATE_TANK)
         {
@@ -101,6 +100,8 @@ public class DriveSystem extends SystemBase
         {
             rd.stopMotor();
         }
+
+        log("setDriveSpeed(): " + leftTankmotor1.get() + " : " + rightTankmotor1.get());
     }
     /**
      *
@@ -117,7 +118,7 @@ public class DriveSystem extends SystemBase
         {
             rd.stopMotor();
         }
-       // log("curve:" + curve);
+        log("drive() :" + leftTankmotor1.get() + " : " + rightTankmotor1.get());
     }
     /**
      *
@@ -161,6 +162,8 @@ public class DriveSystem extends SystemBase
             // move motors down slowly basd on POT reading
             // when wheels are all the way down, state = STATE_SIDESTEP
         }
+
+        
     }
     /**
      *how to drive in tank mode

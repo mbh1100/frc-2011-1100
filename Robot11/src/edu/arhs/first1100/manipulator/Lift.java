@@ -28,8 +28,8 @@ public class Lift
     public PID liftPid;
     
     private final double VALUE_LOW = 0;
-    private final double VALUE_MID = 1369;
-    private final double VALUE_HIGH = 2382;
+    private final double VALUE_MID = 621;
+    private final double VALUE_HIGH = 1680;
 
     public static final int STATE_LOW = 0;
     public static final int STATE_MID = 1;
@@ -171,18 +171,18 @@ public class Lift
     {
         if(liftPid.isEnable())
         {
-            System.out.println("Lift: returning lift Pid");
+            //System.out.println("Lift: returning lift Pid");
             return liftPid.getError();
         }
         
         else if(camPid.isEnable())
         {
-            System.out.println("Lift: returning cam Pid");
+            //System.out.println("Lift: returning cam Pid");
             return camPid.getError();
         }
         else
         {
-            System.out.println("Lift: returning no Pid");
+            //System.out.println("Lift: returning no Pid");
             return 0.0;
         }
     }
