@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.PIDSource;
 public class XPIDSource implements PIDSource
 {
     CameraSystem cs;
+    
     /**
      *returns the instance of the x pid when it finds center.
      * @return

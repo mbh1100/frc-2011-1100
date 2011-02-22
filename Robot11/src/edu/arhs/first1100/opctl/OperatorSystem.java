@@ -19,8 +19,9 @@ public class OperatorSystem extends SystemBase
     public AdvJoystick rightJoystick; //controls the right side of the robot.
     public XboxJoystick xboxJoystick; //controls the arm and other stuff. Hi.
 
-    public boolean xboxLeftBumperLastState = false;
-    public boolean xboxRightBumperLastState = false;
+    private boolean xboxLeftBumperLastState = false;
+    private boolean xboxRightBumperLastState = false;
+    private boolean avgToggleLastState = false;
     
     //private ButtonBox buttonBox;
     private GamepieceIndicator ledIndicator;  //indicates the gamepiece that the human. 
@@ -93,6 +94,7 @@ public class OperatorSystem extends SystemBase
          * Arm and claw wrist
          */
         doArm();
+        
         doClawWrist();
         
         // doGPI();
@@ -102,7 +104,7 @@ public class OperatorSystem extends SystemBase
          * Debug buttons
          * encoder reset & light buttons
          */
-        int brightness = (int)(rightJoystick.getRawAxis(3)/2 + 0.5)*100;
+        int brightness = (int)((rightJoystick.getRawAxis(3)/2 + 0.5)*100);
         log("setting brightness: " + brightness);
         robot.cameraSystem.setBrightness(brightness);
         
@@ -119,6 +121,8 @@ public class OperatorSystem extends SystemBase
         {
             robot.cameraSystem.light.onForAWhile();
         }
+
+        doAVG();
     }
     
     /**
@@ -129,7 +133,7 @@ public class OperatorSystem extends SystemBase
         robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
         //robot.driveSystem.testCameraDrive(-leftJoystick.getY());
     }
-
+    
     private void doLift()
     {
         log("doLift");
@@ -197,22 +201,18 @@ public class OperatorSystem extends SystemBase
     {
         if (rightJoystick.getRawButton(6))
         {
+            log("Minibot delpoy thing: " + leftJoystick.getStickX());
+            log("Minibot arm speed: " + robot.minibotSystem.getArmSpeed());
+            
             robot.minibotSystem.setArmSpeed(leftJoystick.getStickX());
-            robot.driveSystem.setDriveSpeed(0, 0);
-        }
-        else
-        {
-        robot.minibotSystem.setArmSpeed(0.0);
-        }
-
-        if (rightJoystick.getRawButton(6))
-        {
             robot.minibotSystem.setDeployerSpeed(rightJoystick.getStickX());
+            
             robot.driveSystem.setDriveSpeed(0, 0);
         }
         else
         {
-        robot.minibotSystem.setDeployerSpeed(0.0);
+            robot.minibotSystem.setArmSpeed(0.0);
+            robot.minibotSystem.setDeployerSpeed(0.0);
         }
     }
     
@@ -235,5 +235,21 @@ public class OperatorSystem extends SystemBase
         }
         if(!xboxJoystick.getRightBumper())
             xboxRightBumperLastState = false;
+    }
+
+    /**
+     * toggles the Averager
+     */
+    private void doAVG()
+    {
+        if (leftJoystick.getRawButton(6) && !avgToggleLastState)
+        {
+            leftJoystick.toggleAVG();
+            rightJoystick.toggleAVG();
+            avgToggleLastState = true;
+        }
+        else if (!leftJoystick.getRawButton(6)){
+            avgToggleLastState = false;
+        }
     }
 }

@@ -42,6 +42,7 @@ public class Lift
     private Jaguar liftJaguar;
 
     DigitalInput bottomLimitSwitch;
+    DigitalInput topLimitSwitch;
 
     /**
      *what encoders the lift is on and stuff
@@ -54,6 +55,7 @@ public class Lift
         encoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
         encoder.start();
         bottomLimitSwitch = new DigitalInput(7);
+        topLimitSwitch = new DigitalInput(5);
         
         camPid  = new PID(kCAM_P, kCAM_I, kCAM_D, ypids , liftJaguar);
         camPid.setOutputRange(-0.4, 0.6);
@@ -108,7 +110,7 @@ public class Lift
             else
                 liftJaguar.set(-speed);
         }
-        else if(encoder.get() > 2400)
+        else if(!topLimitSwitch.get())
         {
             System.out.println("LIFT: reached top");
             if (-speed > 0)

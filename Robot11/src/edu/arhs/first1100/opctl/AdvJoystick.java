@@ -8,10 +8,9 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class AdvJoystick extends Joystick
 {
-    private Averager averager;
     private Averager averagerX;
     private Averager averagerY;
-    private int sampleSize = 4;
+    private final int SAMPLE_SIZE = 4;
 /**
  *says what port the joystick is on
  * @param port
@@ -19,9 +18,8 @@ public class AdvJoystick extends Joystick
     public AdvJoystick(int port)
     {
         super(port);
-        averager = new Averager(sampleSize);
-        averagerX = new Averager(sampleSize);
-        averagerY = new Averager(sampleSize);
+        averagerX = new Averager(SAMPLE_SIZE);
+        averagerY = new Averager(SAMPLE_SIZE);
     }
 /**
  *get the x axis
@@ -40,5 +38,10 @@ public class AdvJoystick extends Joystick
     {
         averagerY.feed(super.getRawAxis(2));
         return averagerY.get();
+    }
+
+    public void toggleAVG(){
+        averagerX.toggle();
+        averagerY.toggle();
     }
 }

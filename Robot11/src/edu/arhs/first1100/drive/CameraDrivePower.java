@@ -24,10 +24,11 @@ public class CameraDrivePower
     final private double D = .0000;
 
     PIDOutput power;
-/**
- *declares output of the motors
- * @param adm
- */
+    
+    /**
+     *declares output of the motors
+     * @param adm
+     */
     public CameraDrivePower(ArcadeDriveMux adm, CameraSystem cs, double target)
     {
         this.cs = cs;

@@ -7,6 +7,9 @@
  */
 
 package edu.arhs.first1100.util;
+
+import com.sun.squawk.debugger.DataType;
+
 /**
  *
  * @author team1100
@@ -16,10 +19,13 @@ public class Averager
     /**
      *
      */
-    double avg = 0; //average
-    int magnitude = 1;
-    double data[];
-    int index;
+    private double avg = 0; //average
+    private int magnitude = 1;
+    private double data[];
+    private int index;
+    private boolean avgOff = false;
+    private int size;
+
     
     /**
      * Make a new Averager object.
@@ -42,6 +48,7 @@ public class Averager
      */
     public Averager(int sampleSize, double starting)
     {
+        size = sampleSize;
         avg = starting;
         data = new double[sampleSize];
         for (int i = 0; i<sampleSize;i++){
@@ -83,6 +90,27 @@ public class Averager
     public double get()
     {
         return avg;
+    }
+
+    /**
+     * Toggles whether the Averager is on or off.
+     */
+    public void toggle()
+    {
+        avgOff = !avgOff;
+        if (avgOff)
+        {
+            data = new double[1];
+            data[0] = avg;
+        }
+        else
+        {
+            data = new double[size];
+            for (int i = 0; i<size;i++)
+            {
+                data[i] = avg;
+            }
+        }
     }
 }
 

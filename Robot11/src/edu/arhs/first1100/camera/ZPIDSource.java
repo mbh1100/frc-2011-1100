@@ -29,7 +29,7 @@ public class ZPIDSource implements PIDSource
         
         else
         {
-            System.out.println("z-axis return:" + cs.pRep[0].particleArea);
+            System.out.println("ZPIDSource: pidGet() return:" + cs.pRep[0].particleArea);
             return cs.pRep[0].particleArea;
         }
     }

@@ -60,6 +60,7 @@ public class MinibotSystem extends SystemBase
      */
     public void setArmSpeed(double speed)
     {
+        /*
         if(speed > 0)
         {
             if(!armBottomDetector.get())
@@ -73,11 +74,15 @@ public class MinibotSystem extends SystemBase
                 armVic.set(speed);
             else
                 armVic.set(0.0);
-        }
+        }*/
+
+        armVic.set(speed);
+
     }
     
     public void setDeployerSpeed(double speed)
     {
+        /*
         if(speed > 0)
         {
             if(!beltOutDetector.get())
@@ -92,5 +97,13 @@ public class MinibotSystem extends SystemBase
             else
                 beltVic.set(0.0);
         }
+        */
+
+        beltVic.set(speed);
+    }
+
+    public double getArmSpeed()
+    {
+        return armVic.get();
     }
 }

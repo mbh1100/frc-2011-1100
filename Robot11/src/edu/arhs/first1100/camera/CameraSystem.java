@@ -49,7 +49,7 @@ public class CameraSystem extends SystemBase
         sleepTime = 200;
 
         light = new Light(3);
-
+        
         //Camera Settings
         ac.writeCompression(0);
         ac.writeBrightness(10);

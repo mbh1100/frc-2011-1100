@@ -177,6 +177,7 @@ public class ManipulatorSystem extends SystemBase
      */
     public boolean liftOnTarget()
     {
+        System.out.println("lift on Target----------------------------------------------");
         return (lift.getPidError() <= 1);
     }
     
@@ -194,12 +195,12 @@ public class ManipulatorSystem extends SystemBase
      */
     public void tick()
     {
-        /*
-        log("Lift PID target: " + lift.camPid.getSetpoint());
+        
+        //log("Lift PID target: " + lift.camPid.getSetpoint());
         log("Lift Encoder:    " + lift.encoder.get());
-        log("Lift PID output: " + lift.camPid.get());
-        log();
-        */
+        //log("Lift PID output: " + lift.camPid.get());
+        //log();
+        
         
         // log("Arm PID target: " + arm.pid.getSetpoint());
         // log("Arm encoder:    " + arm.encoder.get());
