@@ -15,7 +15,7 @@ public class FollowLineRoutine extends Routine
 
     private final double TURN_DELAY = 0.6;
     private final double TURN_RATE = 0.05;
-    private final double TURN_LIMIT = 0.5;
+    private final double TURN_LIMIT = 0.2;
     
     /**
      *the start of the public line routine
@@ -48,36 +48,44 @@ public class FollowLineRoutine extends Routine
         switch(robot.lineSystem.getState())
         {
             case LineSystem.STATE_ALL:
+                log("State all");
                 setDone();
                 break;
                 
             case LineSystem.STATE_MIDDLE:
+                log("State Middle");
                 if(turn>0.0)
-                    turn -= TURN_RATE;
+                    turn -= TURN_RATE * 2;
                 else if(turn<0.0)
-                    turn -= TURN_RATE;
+                    turn += TURN_RATE * 2;
+                if(Math.abs(turn) <= TURN_RATE)
+                    turn = 0;
                 break;
                 
             case LineSystem.STATE_LEFT://Move robot left
+                log("State Left");
                 if(turn > -TURN_LIMIT)
                     turn -= TURN_RATE;
                 break;
 
             case LineSystem.STATE_RIGHT://Move robot right
+                log("State Right");
                 if(turn < TURN_LIMIT)
                     turn += TURN_RATE;
                 break;
                 
             case LineSystem.STATE_SPLIT:
+                log("State Split");
+                path = (robot.operatorSystem.rightJoystick.getRawButton(11))? -1:1;
                 if(path == 1)
-                    robot.driveSystem.setDriveSpeed(0.5, 0.0);
+                    robot.driveSystem.setDriveSpeed(0.3, 0.0);
                 else if(path == -1)
-                    robot.driveSystem.setDriveSpeed(0.0, 0.5);
+                    robot.driveSystem.setDriveSpeed(0.0, 0.3);
                 Timer.delay(TURN_DELAY);
                 turn = 0.0;
                 break;
         }
 
-        robot.driveSystem.drive(0.5, turn);
+        robot.driveSystem.drive(0.3, -turn);
     }
 }
