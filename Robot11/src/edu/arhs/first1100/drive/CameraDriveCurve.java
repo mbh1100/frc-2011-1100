@@ -59,7 +59,7 @@ public class CameraDriveCurve
     /**
      * turns off camera drive
      */
-     public void stopTrackCamera()
+    public void stopTrackCamera()
     {
         //System.out.println("CDC: stopTrackCamera() - PID Disabled");
         pid.disable();

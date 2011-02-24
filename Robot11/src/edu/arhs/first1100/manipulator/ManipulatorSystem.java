@@ -119,9 +119,9 @@ public class ManipulatorSystem extends SystemBase
         lift.setSpeed(speed);
     }
     
-    public void setLiftHeight(double height)
+    public void setLiftPosition(double height)
     {
-        lift.setHeight(height);
+        lift.setPosition(height);
     }
 
     public double getLiftHeight()
@@ -138,9 +138,9 @@ public class ManipulatorSystem extends SystemBase
         arm.setSpeed(speed);
     }
 
-    public void setArmHeight(double height)
+    public void setArmPosition(double height)
     {
-        arm.setHeight(height);
+        arm.setPosition(height);
     }
     
     /**

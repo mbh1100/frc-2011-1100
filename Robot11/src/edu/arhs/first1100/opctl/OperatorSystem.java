@@ -15,6 +15,8 @@ import edu.arhs.first1100.autoctl.FollowLineRoutine;
  */
 public class OperatorSystem extends SystemBase
 {
+    private DriverStationDataFeeder driverStation;
+    
     public AdvJoystick leftJoystick;  //controls the left side of the robot
     public AdvJoystick rightJoystick; //controls the right side of the robot.
     public XboxJoystick xboxJoystick; //controls the arm and other stuff. Hi.
@@ -24,20 +26,26 @@ public class OperatorSystem extends SystemBase
     private boolean avgToggleLastState = false;
     
     //private ButtonBox buttonBox;
-    private GamepieceIndicator ledIndicator;  //indicates the gamepiece that the human. 
+    private GamepieceIndicator ledIndicator;  //indicates the gamepiece that the human.
+    
     // These are supposed to start as null
     private TargetPegRoutine targetRoutine = null;
     private ScoreRoutine scoreRoutine = null;
     private FollowLineRoutine lineRoutine = null;
+    //private ManipulatorStateRoutine mStateRoutine = null;
     
-   /**
-    *what controllers will drive the robot
-    * @param robot
-    * @param sleepTime
-    */
+    //private PickUpRoutine pickupRoutine = null;
+    
+    /**
+     *what controllers will drive the robot
+     * @param robot
+     * @param sleepTime
+     */
     public OperatorSystem(RobotMain robot, int sleepTime)
     {
         super(robot, sleepTime);
+
+        driverStation.start();
         
         leftJoystick  = new AdvJoystick(1);
         rightJoystick = new AdvJoystick(2);
@@ -55,23 +63,25 @@ public class OperatorSystem extends SystemBase
         /*
          * Drive and line routines
          */
-        if(leftJoystick.getRawButton(11) && lineRoutine == null)
+        if(leftJoystick.getRawButton(11))
         {
-            lineRoutine = new FollowLineRoutine(robot, 50);
-            lineRoutine.start();
-        }
-        
-        if(lineRoutine == null)
-        {
-            doDrive();
+            if(lineRoutine == null)
+            {
+                lineRoutine = new FollowLineRoutine(robot, 50);
+                lineRoutine.start();
+            }
+            else
+            {
+                if(leftJoystick.getRawButton(10))
+                {
+                    lineRoutine.stop();
+                    lineRoutine = null;
+                }
+            }
         }
         else
         {
-            if(leftJoystick.getRawButton(10))
-            {
-                lineRoutine.stop();
-                lineRoutine = null;
-            }
+            doDrive();
         }
         
         /*
@@ -84,12 +94,37 @@ public class OperatorSystem extends SystemBase
         }
         else
         {
+            if(Math.abs(xboxJoystick.getRightStickY()) > 0.25)
+            {
+                //log("9 from outerspace");
+                robot.manipulatorSystem.setLiftSpeed(xboxJoystick.getRightStickY());
+            }
+            else if(robot.manipulatorSystem.lift.getSpeed() != 0)
+            {
+                //log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                robot.manipulatorSystem.setLiftSpeed(0.0);
+            }
             //log("right trigger up");
             robot.manipulatorSystem.lift.stopCamPid();
-            doStateButtons();
+
+            if(xboxJoystick.getAButton())
+                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
+
+            else if(xboxJoystick.getBButton())
+                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_MID_PEG);
+
+            else if(xboxJoystick.getYButton())
+                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_TOP_PEG);
+
+            else if(xboxJoystick.getXButton())
+                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_DEFAULT);
+
+            if(xboxJoystick.getDpad() == 1.0)
+                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FLOOR);
+
             doLift();
         }
-
+        
         /*
          * Arm and claw wrist
          */
@@ -112,7 +147,6 @@ public class OperatorSystem extends SystemBase
         {
             robot.manipulatorSystem.resetEncoders();
         }
-        
         if(rightJoystick.getRawButton(9))
         {
             robot.cameraSystem.light.on();
@@ -157,7 +191,7 @@ public class OperatorSystem extends SystemBase
         }
         else if(!robot.manipulatorSystem.arm.pidEnabled())
         {
-            robot.manipulatorSystem.setArmHeight(robot.manipulatorSystem.arm.getEncoder());
+            robot.manipulatorSystem.setArmPosition(robot.manipulatorSystem.arm.getEncoder());
         }
     }
     
@@ -166,20 +200,7 @@ public class OperatorSystem extends SystemBase
      */
     private void doStateButtons()
     {
-        if(xboxJoystick.getAButton())
-            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
         
-        else if(xboxJoystick.getBButton())
-            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_MID_PEG);
-
-        else if(xboxJoystick.getYButton())
-            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_TOP_PEG);
-
-        else if(xboxJoystick.getXButton())
-            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_DEFAULT);
-
-        if(xboxJoystick.getDpad() == 1.0)
-            robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FLOOR);
     }
     
     /**

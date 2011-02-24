@@ -2,26 +2,28 @@ package edu.arhs.first1100.line;
 
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.robot.RobotMain;
-
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  *create a line system
  * @author team1100
  */
 public class LineSystem extends SystemBase
-{   //these need to be static for FollowLineRoutine;
+{
     public static final int STATE_MIDDLE = 0;
     public static final int STATE_RIGHT = -1;
     public static final int STATE_LEFT = 1;
     public static final int STATE_NONE = 2;
     public static final int STATE_ALL = 3;
     public static final int STATE_SPLIT = 4;
-   
-    int lineStatus = STATE_MIDDLE;
-
+    
+    int lineStatus = STATE_NONE;
+    
     boolean done = false;
     
-    LineTracker lt;
+    DigitalInput left;
+    DigitalInput middle;
+    DigitalInput right;
     
     /**
      *creates new line trackers
@@ -32,7 +34,25 @@ public class LineSystem extends SystemBase
     public LineSystem(RobotMain robot, int sleepTime)
     {
         super(robot, sleepTime);
-        lt = new LineTracker();
+        
+        left = new DigitalInput(1);
+        middle = new DigitalInput(3);
+        right = new DigitalInput(2);
+    }
+
+    public boolean getLeft()
+    {
+        return left.get();
+    }
+
+    public boolean getMiddle()
+    {
+        return middle.get();
+    }
+
+    public boolean getRight()
+    {
+        return right.get();
     }
     
     /**
@@ -40,17 +60,17 @@ public class LineSystem extends SystemBase
      */
     public int getState()
     {
-        if(lt.leftline() && lt.middleLine() && lt.rightline())
+        if(left.get() && middle.get() && right.get())
             lineStatus = STATE_ALL;
-        else if(!lt.leftline() && !lt.middleLine() && !lt.rightline())
+        else if(!left.get() && !middle.get() && !right.get())
             lineStatus = STATE_NONE;
-        else if(lt.leftline() && !lt.middleLine() && lt.rightline())
+        else if(left.get() && !middle.get() && right.get())
             lineStatus = STATE_SPLIT;
-        else if(lt.middleLine())
+        else if(middle.get())
             lineStatus = STATE_MIDDLE;
-        else if(lt.leftline())
+        else if(left.get())
             lineStatus = STATE_LEFT;
-        else if(lt.rightline())
+        else if(right.get())
             lineStatus = STATE_RIGHT;
         
         return lineStatus;

@@ -59,6 +59,7 @@ public class Lift
         
         camPid  = new PID(kCAM_P, kCAM_I, kCAM_D, ypids , liftJaguar);
         camPid.setOutputRange(-0.4, 0.6);
+        
         liftPid = new PID(kLIFT_P, kLIFT_I, kLIFT_D, encoder, liftJaguar);
         liftPid.setOutputRange(-0.6, 1.0);
     }
@@ -134,7 +135,7 @@ public class Lift
         return liftJaguar.get();
     }
     
-    public void setHeight(double height)
+    public void setPosition(double height)
     {
         System.out.println("setting the lift height to " + height);
         liftPid.setSetpoint(height);

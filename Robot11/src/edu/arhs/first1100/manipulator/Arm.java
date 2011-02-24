@@ -30,6 +30,7 @@ public class Arm
     public Encoder encoder;
     
     private Jaguar armJaguar;
+    
     /**
      *runs the arm
      */
@@ -81,7 +82,7 @@ public class Arm
         armJaguar.set(speed);
     }
     
-    public void setHeight(double height)
+    public void setPosition(double height)
     {
         pid.setSetpoint(height);
         pid.enable();

@@ -16,9 +16,9 @@ public class LineTracker
   */
     public LineTracker()
     {
-        ltLeft = new DigitalInput( 1);
-        ltMiddle = new DigitalInput( 3);
-        ltRight = new DigitalInput( 2);
+        ltLeft = new DigitalInput(1);
+        ltMiddle = new DigitalInput(3);
+        ltRight = new DigitalInput(2);
         //ltBack = new DigitalInput( 1);
     }
     /**

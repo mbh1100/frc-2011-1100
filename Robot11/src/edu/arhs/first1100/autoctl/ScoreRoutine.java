@@ -41,7 +41,7 @@ public class ScoreRoutine extends Routine
         ms.releaseTube();
         Timer.delay(0.5);
 
-        ms.setLiftHeight(ms.lift.getEncoder() - 50);
+        ms.setLiftPosition(ms.lift.getEncoder() - 50);
         while (!ms.liftOnTarget())
         {
             Timer.delay(0.5);

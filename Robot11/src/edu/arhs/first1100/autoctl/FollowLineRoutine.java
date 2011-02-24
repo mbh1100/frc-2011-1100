@@ -23,12 +23,12 @@ public class FollowLineRoutine extends Routine
      * @param sleep
      * @param startingPosition
      */
-    public FollowLineRoutine(RobotMain robot, int sleep, int startingPosition)
+    public FollowLineRoutine(RobotMain robot, int sleep, int path)
     {
         super(robot, sleep);
-        path = startingPosition;
+        this.path = path;
     }
-
+    
     /**
      *
      * @param robot
@@ -37,12 +37,54 @@ public class FollowLineRoutine extends Routine
     public FollowLineRoutine(RobotMain robot, int sleep)
     {
         super(robot, sleep);
-        path = 2;
     }
-
+    
     /**
      *
      */
+    public void tick()
+    {
+        if(robot.lineSystem.getState() == LineSystem.STATE_ALL)
+        {
+            setDone();
+        }
+        
+        if(robot.lineSystem.getState() == LineSystem.STATE_SPLIT)
+        {
+            if(path == -1)
+            {
+                robot.driveSystem.setDriveSpeed(-0.5, 0.5);
+            }
+            else if(path == 1)
+            {
+                robot.driveSystem.setDriveSpeed(-0.5, 0.5);
+            }
+
+            Timer.delay(TURN_DELAY);
+
+            robot.driveSystem.setDriveSpeed(0.5, 0.5);
+
+            Timer.delay(TURN_DELAY);
+        }
+
+
+        if(robot.lineSystem.getLeft())
+        {
+            robot.driveSystem.setDriveSpeed(0.6, 0.2);
+        }
+        else if(robot.lineSystem.getRight())
+        {
+            robot.driveSystem.setDriveSpeed(0.2, 0.6);
+        }
+        else if(robot.lineSystem.getMiddle())
+        {
+            robot.driveSystem.setDriveSpeed(0.45, 0.4);
+        }
+        else if(!robot.lineSystem.getMiddle())
+        {
+            robot.driveSystem.setDriveSpeed(0.4, 0.45);
+        }
+    }
 
     public void workingTick()
     {
@@ -71,7 +113,7 @@ public class FollowLineRoutine extends Routine
     }
 
 
-    public void tick()
+    public void OldTick()
     {
         switch(robot.lineSystem.getState())
         {

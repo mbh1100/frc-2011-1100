@@ -180,4 +180,7 @@ public class SystemBase extends Thread
 
     public void reset()
     { }
+
+    public void disable()
+    { }
 }

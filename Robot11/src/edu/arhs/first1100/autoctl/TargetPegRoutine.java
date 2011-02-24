@@ -26,7 +26,7 @@ public class TargetPegRoutine extends Routine
     public TargetPegRoutine(RobotMain robot, int sleep, double height)
     {
         super(robot, sleep);
-        //robot.manipulatorSystem.setLiftHeight(height);
+        //robot.manipulatorSystem.setLiftPosition(height);
         //robot.manipulatorSystem.waitUntilDone();
         //robot.manipulatorSystem.trackWithCamera();
         //robot.manipulatorSystem.waitUntilDone();

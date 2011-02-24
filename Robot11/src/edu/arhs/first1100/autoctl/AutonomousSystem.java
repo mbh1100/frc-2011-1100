@@ -14,13 +14,6 @@ import edu.arhs.first1100.robot.RobotMain;
 
 public class AutonomousSystem extends SystemBase
 {
-    private final int STATE_IDLE = 0;                  // Doing nothing
-    //private final int STATE_SCORE_RING = 0;
-    
-    private int state = 0;
-
-    private boolean targetRack = false;
-    private int targetPeg = 0;
     /**
      *
      * @param robot
@@ -30,20 +23,12 @@ public class AutonomousSystem extends SystemBase
     {
         super(robot, sleepTime);
     }
-   /**
-    *start the run routine and wait for the routine to finish
-    * @param r
-    */
-    public void runRoutine(Routine r)
-    {
-        r.start();
-        r.waitForDone();
-    }
-/**
- *where the starting position is and how to score the uber ring
- * @param startingPosition
- */
-    public void ScoreUberRing(int startingPosition)
+    
+    /**
+     *where the starting position is and how to score the uber ring
+     * @param startingPosition
+     */
+    public void ScoreUberRing(int startingPosition, boolean rack, int column, int row)
     {
         /*
          * starting position input:
@@ -67,24 +52,31 @@ public class AutonomousSystem extends SystemBase
          * 
          */
 
-        /*
 
-        // Follow the line.  Will automaticly know which way to go down the split
-        new FollowLineRoutine(robot, 100).execute();
-
+        if(startingPosition == 0) //Middle
+        {
+            if(rack == false)
+                new FollowLineRoutine(robot, 100, -1).execute();
+            else
+                new FollowLineRoutine(robot, 100, 1).execute();
+        }
+        else
+        {
+            new FollowLineRoutine(robot, 100).execute();
+        }
+        
         // Position robot in front of the right column
-        new SelectColumnRoutine(robot, 100).execute();
+        //new SelectColumnRoutine(robot, 100).execute();
         
         // Set the right lift height
-        new TargetPegRoutine(robot, 100).execute();
+        //new TargetPegRoutine(robot, 100).execute();
         
         // move the lift and arm out and release the gripper to score a tube
-        new ScoreRoutine(robot, 100).execute();
+        //new ScoreRoutine(robot, 100).execute();
         
-        */
-
         
     }
+    
     /**
      *
      */
