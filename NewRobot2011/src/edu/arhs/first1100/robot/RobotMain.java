@@ -5,8 +5,6 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-
-
 package edu.arhs.first1100.robot;
 
 import edu.wpi.first.wpilibj.SimpleRobot;
@@ -18,9 +16,6 @@ import edu.arhs.first1100.line.LineSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.minibot.MinibotSystem;
 import edu.arhs.first1100.opctl.OperatorSystem;
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  *
@@ -30,21 +25,57 @@ public class RobotMain extends SimpleRobot
 {
     public void robotInit()
     {
+        OperatorSystem.getInstance().setSleep(100);
         AutonomousSystem.getInstance().setSleep(100);
+        
+        DriveSystem.getInstance().setSleep(100);
+        ManipulatorSystem.getInstance().setSleep(100);
+
+        CameraSystem.getInstance().setSleep(100);
+        LineSystem.getInstance().setSleep(100);
+
+        MinibotSystem.getInstance().setSleep(100);
     }
     
     public void autonomous()
     {
+        OperatorSystem.getInstance().stop();
         AutonomousSystem.getInstance().start();
+        
+        DriveSystem.getInstance().start();
+        ManipulatorSystem.getInstance().start();
+
+        CameraSystem.getInstance().start();
+        LineSystem.getInstance().start();
+
+        MinibotSystem.getInstance().start();
     }
 
     public void operatorControl()
     {
+        OperatorSystem.getInstance().start();
         AutonomousSystem.getInstance().stop();
+
+        DriveSystem.getInstance().start();
+        ManipulatorSystem.getInstance().start();
+
+        CameraSystem.getInstance().start();
+        LineSystem.getInstance().start();
+
+        MinibotSystem.getInstance().start();
     }
     
     public void disabled()
     {
+        OperatorSystem.getInstance().stop();
         AutonomousSystem.getInstance().stop();
+
+        DriveSystem.getInstance().stop();
+        ManipulatorSystem.getInstance().stop();
+
+        CameraSystem.getInstance().stop();
+        LineSystem.getInstance().stop();
+
+        MinibotSystem.getInstance().stop();
     }
 }

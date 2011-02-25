@@ -20,6 +20,6 @@ public class AutonomousSystem extends SystemBase
 
     public void tick()
     {
-        System.out.println("Autonomous tick");
+        
     }
 }

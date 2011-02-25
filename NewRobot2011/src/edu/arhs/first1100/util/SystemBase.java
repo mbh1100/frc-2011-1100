@@ -29,9 +29,8 @@ public class SystemBase extends Thread
             threadStarted = true;
         }
     }
-
     /**
-     * Stop the thread.
+     *
      */
     public void stop()
     {
@@ -50,8 +49,7 @@ public class SystemBase extends Thread
             while(!stopThread)
             {
                 tick();
-
-                Timer.delay( ((double)(sleepTime))/1000 );
+                Timer.delay(sleepTime/1000.0);
             }
 
             while(stopThread)
@@ -59,28 +57,6 @@ public class SystemBase extends Thread
                 Timer.delay(0.1);
             }
         }
-    }
-
-    /**
-     * Makes the component wait
-     *
-     */
-    public synchronized void selfWait()
-    {
-        try
-        {
-            wait();
-        }
-        catch(InterruptedException e)
-        { }
-    }
-
-    /**
-     *
-     */
-    public synchronized void selfNotify()
-    {
-        notify();
     }
 
     /**
@@ -104,10 +80,5 @@ public class SystemBase extends Thread
     public int getSleep()
     {
         return sleepTime;
-    }
-
-    public boolean isStopped()
-    {
-        return stopThread;
     }
 }
