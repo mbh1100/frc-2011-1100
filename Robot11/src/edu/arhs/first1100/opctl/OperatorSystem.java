@@ -45,6 +45,7 @@ public class OperatorSystem extends SystemBase
     {
         super(robot, sleepTime);
 
+        driverStation = new DriverStationDataFeeder(robot, 500);
         driverStation.start();
         
         leftJoystick  = new AdvJoystick(1);
@@ -97,6 +98,7 @@ public class OperatorSystem extends SystemBase
             if(Math.abs(xboxJoystick.getRightStickY()) > 0.25)
             {
                 //log("9 from outerspace");
+                log("Sending: " + xboxJoystick.getRightStickY());
                 robot.manipulatorSystem.setLiftSpeed(xboxJoystick.getRightStickY());
             }
             else if(robot.manipulatorSystem.lift.getSpeed() != 0)
@@ -121,8 +123,6 @@ public class OperatorSystem extends SystemBase
 
             if(xboxJoystick.getDpad() == 1.0)
                 robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FLOOR);
-
-            doLift();
         }
         
         /*
@@ -170,15 +170,15 @@ public class OperatorSystem extends SystemBase
     
     private void doLift()
     {
-        //log("doLift");
+        log("doLift");
         if(Math.abs(xboxJoystick.getRightStickY()) > 0.25)
         {
-            //log("9 from outerspace");
+            log("9 from outerspace");
             robot.manipulatorSystem.setLiftSpeed(xboxJoystick.getRightStickY());
         }
         else if(robot.manipulatorSystem.lift.getSpeed() != 0)
         {
-            //log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             robot.manipulatorSystem.setLiftSpeed(0.0);
         }
     }

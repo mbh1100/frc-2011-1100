@@ -19,6 +19,8 @@ import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.minibot.MinibotSystem;
 import edu.arhs.first1100.opctl.OperatorSystem;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 /**
  *
  * @author team1100
@@ -33,21 +35,39 @@ public class RobotMain extends SimpleRobot
     public MinibotSystem minibotSystem;
     public OperatorSystem operatorSystem;
     public Compressor compressor;
-    
+
+    public DiagnosticRobot diagnosticRobot;
+    private DigitalInput diagSwitch;
+
+    boolean diagnostic = false;
     /**
      *
      */
     public void robotInit()
     {
-        autonomousSystem = new AutonomousSystem(this, 100);
-        operatorSystem = new OperatorSystem(this, 100);
-        
-        cameraSystem = new CameraSystem(this, 100);
-        driveSystem = new DriveSystem(this, 100);
-        lineSystem = new LineSystem(this, 10000);
-        manipulatorSystem = new ManipulatorSystem(this, 100);
-        minibotSystem = new MinibotSystem(this, 100);
+        diagSwitch = new DigitalInput(13);
+        diagnostic = !diagSwitch.get();
+        if(!diagnostic)
+        {
+            log("+------------------------+");
+            log("| USING REGULAR ROBOT    |");
+            log("+------------------------+");
+            autonomousSystem = new AutonomousSystem(this, 100);
+            operatorSystem = new OperatorSystem(this, 100);
 
+            cameraSystem = new CameraSystem(this, 100);
+            driveSystem = new DriveSystem(this, 100);
+            lineSystem = new LineSystem(this, 10000);
+            manipulatorSystem = new ManipulatorSystem(this, 100);
+            minibotSystem = new MinibotSystem(this, 100);
+        }
+        else if (diagnostic)
+        {
+            log("+------------------------+");
+            log("| USING DIAGNOSTIC ROBOT |");
+            log("+------------------------+");
+            diagnosticRobot = new DiagnosticRobot();
+        }
         compressor = new Compressor(6, 1);
         compressor.start();
         
@@ -63,16 +83,23 @@ public class RobotMain extends SimpleRobot
      */
     public void autonomous()
     {
-        operatorSystem.stop();
-        autonomousSystem.start();
-        
-        cameraSystem.start();
-        manipulatorSystem.start();
-        driveSystem.start();
-        lineSystem.start();
-        minibotSystem.start();
+        log("AUTONOMOUS");
 
-        log("enabled autonomous");
+        if(!diagnostic)
+        {
+            operatorSystem.stop();
+            autonomousSystem.start();
+
+            cameraSystem.start();
+            manipulatorSystem.start();
+            driveSystem.start();
+            lineSystem.start();
+            minibotSystem.start();
+        }
+        else if (diagnostic)
+        {
+            log("DIAGNOSTIC AUTONOMOUS");
+        }
     }
 
     /**
@@ -80,22 +107,33 @@ public class RobotMain extends SimpleRobot
      */
     public void operatorControl()
     {
-        log("Enabling teleop.n m   GO GO GO G OOOOOOOOOO.");
+        if (!diagnostic){
 
-        log("Starting opsys");
-        operatorSystem.start();
+            log("Enabling teleop");
 
-        log("stopping ausys");
-        autonomousSystem.stop();
+            log("Starting opsys");
+            operatorSystem.start();
 
-        log("Starting cam, drive, manip");
-        cameraSystem.start();
-        manipulatorSystem.start();
-        driveSystem.start();
-        lineSystem.start();
-        minibotSystem.start();
+            log("stopping ausys");
+            autonomousSystem.stop();
 
-        log("Enabled teleop");
+            log("Starting cam, drive, manip");
+            cameraSystem.start();
+            manipulatorSystem.start();
+            driveSystem.start();
+            lineSystem.start();
+            minibotSystem.start();
+
+            log("Enabled teleop");
+        }
+        else if (diagnostic)
+        {
+            while(isOperatorControl())
+            {
+                diagnosticRobot.teleop();
+                Timer.delay(.1);
+            }
+        }
     }
     
     /**
@@ -103,22 +141,29 @@ public class RobotMain extends SimpleRobot
      */
     public void disabled()
     {
-        log("Enabling disabling...");
+        if (!diagnostic)
+        {
+            log("Enabling disabling...");
 
-        log("stopping opsys");
-        operatorSystem.stop();
+            log("stopping opsys");
+            operatorSystem.stop();
 
-        log("stopping ausys");
-        autonomousSystem.stop();
+            log("stopping ausys");
+            autonomousSystem.stop();
 
-        log("stopping cam, line, manip, and drive");
-        cameraSystem.stop();
-        manipulatorSystem.stop();
-        driveSystem.stop();
-        lineSystem.stop();
-        minibotSystem.stop();
-        
-        log("disabled");
+            log("stopping cam, line, manip, and drive");
+            cameraSystem.stop();
+            manipulatorSystem.stop();
+            driveSystem.stop();
+            lineSystem.stop();
+            minibotSystem.stop();
+
+            log("disabled");
+        }
+        else if(diagnostic)
+        {
+            diagnosticRobot.disable();
+        }
     }
     
     /**

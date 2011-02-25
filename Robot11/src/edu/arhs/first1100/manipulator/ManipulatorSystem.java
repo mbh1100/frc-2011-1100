@@ -177,7 +177,7 @@ public class ManipulatorSystem extends SystemBase
      */
     public boolean liftOnTarget()
     {
-        System.out.println("lift on Target----------------------------------------------");
+        //System.out.println("lift on Target----------------------------------------------");
         return (lift.getPidError() <= 1);
     }
     
@@ -213,7 +213,7 @@ public class ManipulatorSystem extends SystemBase
             lift.stopPID();
         }
     }
-
+    
     public void resetEncoders()
     {
         arm.resetEncoder();

@@ -3,7 +3,7 @@ package edu.arhs.first1100.opctl;
 /**
  * @author   William Dell
  * @author   Team 647
- * @version  v7, January 26, 2011
+ * @version  v7, January 26, 201
  * @version  FRC Java version 2011.4
  */
 

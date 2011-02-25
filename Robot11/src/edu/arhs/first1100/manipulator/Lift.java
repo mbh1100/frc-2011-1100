@@ -4,7 +4,7 @@ import edu.arhs.first1100.camera.YPIDSource;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.arhs.first1100.util.PID;
+import edu.arhs.first1100.util.PID; 
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.arhs.first1100.opctl.AdvJoystick;
 import edu.wpi.first.wpilibj.DriverStationLCD.Line;
@@ -100,7 +100,7 @@ public class Lift
     {
         System.out.println("Lift: setSpeed:" + -speed);
         liftPid.disable();
-        
+        /*
         if(!bottomLimitSwitch.get())
         {
             System.out.println("LIFT: reached bottom");
@@ -124,10 +124,9 @@ public class Lift
             }
         }
         else
-        {
-            System.out.println("Lift driving" + -speed);
+        {*/
             liftJaguar.set(-speed);
-        }
+        //}
     }
 
     public double getSpeed()
