@@ -12,6 +12,7 @@ public class DiagnosticRobot
     Joystick left, right, xbox;
     Jaguar r1, r2, l1, l2, arm, lift;
 
+
     public DiagnosticRobot()
     {
         left = new Joystick(1);
@@ -34,7 +35,8 @@ public class DiagnosticRobot
         r1.set(right.getY());
         r2.set(right.getY());
         //Manipulator
-        //arm.set(xbox.getRawAxis());
+        arm.set(xbox.getRawAxis(2));
+        lift.set(xbox.getRawAxis(5));
 
 
     }
