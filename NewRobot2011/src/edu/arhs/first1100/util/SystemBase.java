@@ -1,7 +1,6 @@
 package edu.arhs.first1100.util;
 
 import edu.arhs.first1100.robot.RobotMain;
-import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Timer;
 /**
  *
