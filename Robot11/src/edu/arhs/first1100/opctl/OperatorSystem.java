@@ -8,6 +8,7 @@ import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.autoctl.TargetPegRoutine;
 import edu.arhs.first1100.autoctl.ScoreRoutine;
 import edu.arhs.first1100.autoctl.FollowLineRoutine;
+import edu.arhs.first1100.camera.CameraSystem;
 
 /**
  *how the operator will drive the robot
@@ -150,6 +151,7 @@ public class OperatorSystem extends SystemBase
         if(rightJoystick.getRawButton(9))
         {
             robot.cameraSystem.light.on();
+            
         }
         if(rightJoystick.getRawButton(8))
         {

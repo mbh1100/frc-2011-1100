@@ -44,6 +44,9 @@ public class Lift
     DigitalInput bottomLimitSwitch;
     DigitalInput topLimitSwitch;
 
+    private boolean hasTopLimitSwitch = false;
+    private boolean hasBottomLimitSwitch = false;
+
     /**
      *what encoders the lift is on and stuff
      */
@@ -86,7 +89,7 @@ public class Lift
         }
         liftPid.enable();
     }
-
+    
     public int getState()
     {
         return state;
@@ -101,7 +104,7 @@ public class Lift
         System.out.println("Lift: setSpeed:" + -speed);
         liftPid.disable();
         /*
-        if(!bottomLimitSwitch.get())
+        if(!bottomLimitSwitch.get() && hasBottomLimitSwitch)
         {
             System.out.println("LIFT: reached bottom");
             
@@ -111,7 +114,7 @@ public class Lift
             else
                 liftJaguar.set(-speed);
         }
-        else if(!topLimitSwitch.get())
+        else if(!topLimitSwitch.get() && hasTopLimitSwitch)
         {
             System.out.println("LIFT: reached top");
             if (-speed > 0)
@@ -137,6 +140,8 @@ public class Lift
     public void setPosition(double height)
     {
         System.out.println("setting the lift height to " + height);
+        camPid.disable();
+        
         liftPid.setSetpoint(height);
         liftPid.enable();
     }

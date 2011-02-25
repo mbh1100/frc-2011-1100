@@ -14,7 +14,7 @@ public class SystemBase extends Thread
     
     private boolean stopThread = true;
     private boolean threadStarted = false;
-    
+
     /**
      * Construct the system base
      * @param robot
@@ -34,7 +34,7 @@ public class SystemBase extends Thread
     {
         setSleep(delay);
     }
-    
+
     /**
      * Start the thread.
      */

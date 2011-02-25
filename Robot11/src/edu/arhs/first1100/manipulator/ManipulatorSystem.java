@@ -15,16 +15,6 @@ import edu.arhs.first1100.util.AdvJaguar;
  */
 public class ManipulatorSystem extends SystemBase
 {
-    /*
-    public static final double PEG_TOP1 = 245;
-    public static final double PEG_MIDDLE1 = 80.7;
-    public static final double PEG_BOTTOM1 = 10;
-    
-    public static final double PEG_TOP2 = 245;
-    public static final double PEG_MIDDLE = 105;
-    public static final double PEG_BOTTOM2 = 10;
-    */
-    
     public static final int STATE_DEFAULT    = 0;
     
     public static final int STATE_TOP_PEG    = 3;
@@ -36,8 +26,8 @@ public class ManipulatorSystem extends SystemBase
 
     private int state = STATE_DEFAULT;
     
-    public Lift lift;
-    public Arm arm;
+    private Lift lift;
+    private Arm arm;
     
     private Solenoid wrist;
     private Solenoid claw;
