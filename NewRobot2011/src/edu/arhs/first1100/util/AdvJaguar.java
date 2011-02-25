@@ -15,14 +15,27 @@
 package edu.arhs.first1100.util;
 
 import edu.wpi.first.wpilibj.Jaguar;
-import edu.wpi.first.wpilibj.Timer;
 /**
  *
  * @author team1100
  */
-public class AdvJaguar extends Jaguar
+public class AdvJaguar
 {
     private boolean polarity;
+    private Jaguar j1;
+    private Jaguar j2;
+
+    /**
+     *
+     * @param ch
+     * @param inverted
+     */
+    public AdvJaguar(int slot, int ch1, int ch2, boolean inverted)
+    {
+        super(ch);
+        polarity = inverted;
+    }
+
    /**
     *
     * @param ch
@@ -31,21 +44,22 @@ public class AdvJaguar extends Jaguar
     {
         this(ch, false);
     }
-    
+
+    public AdvJaguar(int slot, int ch)
+    {
+
+    }
+
+    public AdvJaguar(int slot, int ch1, int ch2)
+    {
+
+    }
+
+
     /**
      *
-     * @param ch
-     * @param inverted
+     * @param speed
      */
-    public AdvJaguar(int ch, boolean inverted)
-    {
-        super(ch);
-        polarity = inverted;
-    }
-   /**
-    *
-    * @param speed
-    */
     public void set(double speed)
     {
         super.set( polarity ? -speed : speed);
