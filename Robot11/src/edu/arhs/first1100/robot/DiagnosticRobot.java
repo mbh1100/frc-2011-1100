@@ -3,6 +3,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Encoder;
 
 /**
  *
@@ -24,6 +25,11 @@ public class DiagnosticRobot
     //Solenoids
     final int WRIST = 2;
     final int CLAW = 1;
+    //Encoders
+    final int LIFT_ENCODER_A = 1;
+    final int LIFT_ENCODER_B = 2;
+    final int ARM_ENCODER_A = 3;
+    final int ARM_ENCODER_B = 4;
     //XBOX controller channels
     final int XBOX_CONTROLLER_CHANNEL = 3;
     final int XBOX_LEFT_STICK_Y = 2;
@@ -41,6 +47,7 @@ public class DiagnosticRobot
     Jaguar r1, r2, l1, l2, arm, lift;
     Solenoid wrist, claw;
     Victor mbArm, mbBelt;
+    Encoder liftEncoder, armEncoder;
     boolean lastWristState, lastClawState;
     boolean minibotActive = false;
 
@@ -59,6 +66,8 @@ public class DiagnosticRobot
         //Manipulator init
         arm = new Jaguar(ARM_JAG);
         lift = new Jaguar(LIFT_JAG);
+        liftEncoder = new Encoder(5, LIFT_ENCODER_A, 5, LIFT_ENCODER_B);
+        armEncoder = new Encoder(5, ARM_ENCODER_A, 5, ARM_ENCODER_B);
         wrist = new Solenoid(WRIST);
         lastWristState = wrist.get();
         claw = new Solenoid(CLAW);
@@ -71,6 +80,8 @@ public class DiagnosticRobot
     public void teleop()
     {
         log("TELEOP CYCLE");
+        log("armEncoder" + armEncoder.get());
+        log("liftEncoder" + liftEncoder.get());
         minibotActive = left.getRawButton(MINIBOT_TOGGLE_BUTTON);
         //Driving
         if(!minibotActive)
