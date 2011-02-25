@@ -15,13 +15,14 @@ public class JaguarPair
     private boolean polarity;
 
     private double targetSpeed = 0.0;
-/**
- *declares the channels that the jags are on and to invert them
- * @param ch1
- * @param ch2
- * @param invert
- * @param sampleSize
- */
+    
+    /**
+     *declares the channels that the jags are on and to invert them
+     * @param ch1
+     * @param ch2
+     * @param invert
+     * @param sampleSize
+     */
     public JaguarPair(int ch1, int ch2, boolean invert, int sampleSize)
     {        
         j1 = new Jaguar(ch1);

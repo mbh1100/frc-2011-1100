@@ -51,8 +51,7 @@ public class AutonomousSystem extends SystemBase
          * 
          * 
          */
-
-
+        
         if(startingPosition == 0) //Middle
         {
             if(rack == false)

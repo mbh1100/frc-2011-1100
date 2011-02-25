@@ -39,7 +39,7 @@ public class RobotMain extends SimpleRobot
     public DiagnosticRobot diagnosticRobot;
     private DigitalInput diagSwitch;
 
-    boolean diagnostic = false;
+    boolean diagnostic = true;
     /**
      *
      */

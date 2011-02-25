@@ -26,10 +26,10 @@ public class DiagnosticRobot
     final int WRIST = 2;
     final int CLAW = 1;
     //Encoders
-    final int LIFT_ENCODER_A = 1;
-    final int LIFT_ENCODER_B = 2;
-    final int ARM_ENCODER_A = 3;
-    final int ARM_ENCODER_B = 4;
+    final int LIFT_ENCODER_A = 8;
+    final int LIFT_ENCODER_B = 9;
+    final int ARM_ENCODER_A = 10;
+    final int ARM_ENCODER_B = 11;
     //XBOX controller channels
     final int XBOX_CONTROLLER_CHANNEL = 3;
     final int XBOX_LEFT_STICK_Y = 2;
@@ -37,7 +37,7 @@ public class DiagnosticRobot
     final int XBOX_LEFT_BUMBER = 5;
     final int XBOX_RIGHT_BUMBER = 6;
     //Minbot
-    final int MINIBOT_SIDECAR = 5;
+    final int MINIBOT_SIDECAR = 6;
     final int MINIBOT_ARM_VICTOR = 1;
     final int MINIBOT_BELT_VICTOR = 2;
     final int MINIBOT_TOGGLE_BUTTON = 6;
@@ -66,8 +66,8 @@ public class DiagnosticRobot
         //Manipulator init
         arm = new Jaguar(ARM_JAG);
         lift = new Jaguar(LIFT_JAG);
-        liftEncoder = new Encoder(5, LIFT_ENCODER_A, 5, LIFT_ENCODER_B);
-        armEncoder = new Encoder(5, ARM_ENCODER_A, 5, ARM_ENCODER_B);
+        liftEncoder = new Encoder(4, LIFT_ENCODER_A, 4, LIFT_ENCODER_B);
+        armEncoder = new Encoder(4, ARM_ENCODER_A, 4, ARM_ENCODER_B);
         wrist = new Solenoid(WRIST);
         lastWristState = wrist.get();
         claw = new Solenoid(CLAW);
