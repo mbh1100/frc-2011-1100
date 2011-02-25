@@ -52,6 +52,9 @@ public class DiagnosticRobot
     boolean minibotActive = false;
 
 
+    /**
+     * Constructor
+     */
     public DiagnosticRobot()
     {        
         //Control init
@@ -76,12 +79,15 @@ public class DiagnosticRobot
         mbArm = new Victor(MINIBOT_SIDECAR, MINIBOT_ARM_VICTOR);
         mbBelt = new Victor(MINIBOT_SIDECAR, MINIBOT_BELT_VICTOR);
     }
-    
+
+    /**
+     *
+     */
     public void teleop()
     {
         log("TELEOP CYCLE");
-        log("armEncoder" + armEncoder.get());
-        log("liftEncoder" + liftEncoder.get());
+        log("armEncoder : " + armEncoder.get());
+        log("liftEncoder : " + liftEncoder.get());
         minibotActive = left.getRawButton(MINIBOT_TOGGLE_BUTTON);
         //Driving
         if(!minibotActive)
@@ -120,6 +126,7 @@ public class DiagnosticRobot
             mbArm.set(left.getRawAxis(MINIBOT_DEPLOY_AXIS));
             mbBelt.set(right.getRawAxis(MINIBOT_DEPLOY_AXIS));
         }
+        log("-----------------------------");
     }
 
     public void disable()
