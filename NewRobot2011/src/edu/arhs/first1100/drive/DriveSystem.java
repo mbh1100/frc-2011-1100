@@ -16,10 +16,7 @@ public class DriveSystem extends SystemBase
 {
     private static DriveSystem instance = null;
 
-    private AdvJaguar leftJaguar1;
-    private AdvJaguar rightJaguar1;
-    private AdvJaguar leftJaguar2;
-    private AdvJaguar rightJaguar2;
+    
     
     public DriveSystem()
     {

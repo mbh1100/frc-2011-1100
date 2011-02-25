@@ -8,7 +8,6 @@
 
 package edu.arhs.first1100.util;
 
-import com.sun.squawk.debugger.DataType;
 
 /**
  *
@@ -64,23 +63,9 @@ public class Averager
     {
         index = (index+1)%data.length;
         avg = 0;
-        data[index] = value * magnitude;
-        for (int i = 0; i < data.length; i++)
-        {
-            avg += data[i];
-        }
-        avg /= (data.length + (magnitude - 1));
-    }
-    
-        
-
-    /**
-     * Sets the speed magnitude of averager. This changes how much new value affects the average. 
-     * @param m magnitude
-     */
-    public void setMagnitude(int m)
-    {
-        magnitude = m;
+        data[index] = value;
+        for (int i = 0; i < data.length; i++) avg += data[i];
+        avg /= (data.length);
     }
     
     /**
@@ -106,10 +91,7 @@ public class Averager
         else
         {
             data = new double[size];
-            for (int i = 0; i<size;i++)
-            {
-                data[i] = avg;
-            }
+            for (int i = 0; i<size;i++) data[i] = avg;
         }
     }
 }
