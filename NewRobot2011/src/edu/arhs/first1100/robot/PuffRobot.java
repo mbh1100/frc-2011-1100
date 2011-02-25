@@ -5,6 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+
+
 package edu.arhs.first1100.robot;
 
 import edu.wpi.first.wpilibj.SimpleRobot;
@@ -19,11 +21,12 @@ import edu.arhs.first1100.opctl.OperatorSystem;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
+
 /**
  *
  * @author team1100
  */
-public class PuffRobot extends SimpleRobot {
+public class PuffRobot extends SimpleRobot
 {
     public AutonomousSystem autonomousSystem;
     public CameraSystem cameraSystem;
@@ -32,72 +35,55 @@ public class PuffRobot extends SimpleRobot {
     public ManipulatorSystem manipulatorSystem;
     public MinibotSystem minibotSystem;
     public OperatorSystem operatorSystem;
-    public Compressor compressor;
-
-    public DiagnosticRobot diagnosticRobot;
-    private DigitalInput diagSwitch;
-
-    boolean diagnostic = false;
-    /**
-     *
-     */
+    
     public void robotInit()
     {
-        diagSwitch = new DigitalInput(13);
-        diagnostic = !diagSwitch.get();
-        if(!diagnostic)
-        {
-            log("+------------------------+");
-            log("| USING REGULAR ROBOT    |");
-            log("+------------------------+");
-            autonomousSystem = new AutonomousSystem(this, 100);
-            operatorSystem = new OperatorSystem(this, 100);
+        autonomousSystem = new AutonomousSystem(this, 100);
+        operatorSystem = new OperatorSystem(this, 100);
 
-            cameraSystem = new CameraSystem(this, 100);
-            driveSystem = new DriveSystem(this, 100);
-            lineSystem = new LineSystem(this, 10000);
-            manipulatorSystem = new ManipulatorSystem(this, 100);
-            minibotSystem = new MinibotSystem(this, 100);
-        }
-        else if (diagnostic)
-        {
-            log("+------------------------+");
-            log("| USING DIAGNOSTIC ROBOT |");
-            log("+------------------------+");
-            diagnosticRobot = new DiagnosticRobot();
-        }
-        compressor = new Compressor(6, 1);
-        compressor.start();
-
-        // operator & autonomous threads started/stopped by teleopInit and autonomousInit
-
+        cameraSystem = new CameraSystem(this, 100);
+        driveSystem = new DriveSystem(this, 100);
+        lineSystem = new LineSystem(this, 10000);
+        manipulatorSystem = new ManipulatorSystem(this, 100);
+        minibotSystem = new MinibotSystem(this, 100);
     }
-
-    // Periodic = called when driver station data is updated
-    // Continuous = called as fast as possible
-
-    /**
-     *
-     */
+    
     public void autonomous()
     {
-        log("AUTONOMOUS");
+        operatorSystem.stop();
+        autonomousSystem.start();
+        
+        cameraSystem.start();
+        manipulatorSystem.start();
+        driveSystem.start();
+        lineSystem.start();
+        minibotSystem.start();
+    }
 
-        if(!diagnostic)
-        {
-            operatorSystem.stop();
-            autonomousSystem.start();
+    public void operatorControl()
+    {
+        operatorSystem.start();
+        autonomousSystem.stop();
+        
+        cameraSystem.start();
+        manipulatorSystem.start();
+        driveSystem.start();
+        lineSystem.start();
+        minibotSystem.start();
+    }
+    
+    public void disabled()
+    {
+        operatorSystem.stop();
+        autonomousSystem.stop();
 
-            cameraSystem.start();
-            manipulatorSystem.start();
-            driveSystem.start();
-            lineSystem.start();
-            minibotSystem.start();
-        }
-        else if (diagnostic)
-        {
-            log("DIAGNOSTIC AUTONOMOUS");
-        }
+        cameraSystem.stop();
+        manipulatorSystem.stop();
+        driveSystem.stop();
+        lineSystem.stop();
+        minibotSystem.stop();
+
+        log("disabled");
     }
 
     /**
