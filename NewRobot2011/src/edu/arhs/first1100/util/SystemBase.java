@@ -8,31 +8,13 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class SystemBase extends Thread
 {
-    public RobotMain robot;
-    public int sleepTime = 100;
+    protected int sleepTime = 100;
 
     private boolean stopThread = true;
     private boolean threadStarted = false;
 
-    /**
-     * Construct the system base
-     * @param robot
-     * @param sleep
-     */
-    public SystemBase(RobotMain robot, int sleep)
-    {
-        setSleep(sleep);
-        setRobotMain(robot);
-    }
-
-    /**
-     *
-     * @param delay
-     */
-    public SystemBase(int delay)
-    {
-        setSleep(delay);
-    }
+    public SystemBase()
+    { }
 
     /**
      * Start the thread.
@@ -109,11 +91,6 @@ public class SystemBase extends Thread
      */
     public void tick()
     { }
-
-    public void setRobotMain(RobotMain r)
-    {
-        robot = r;
-    }
     
     /**
      * Set the amount of time that the system should sleep
@@ -122,6 +99,11 @@ public class SystemBase extends Thread
     public void setSleep(int time)
     {
         sleepTime = time;
+    }
+
+    public int getSleep()
+    {
+        return sleepTime;
     }
 
     public boolean isStopped()

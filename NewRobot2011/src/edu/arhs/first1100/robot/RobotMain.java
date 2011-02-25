@@ -28,66 +28,23 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class RobotMain extends SimpleRobot
 {
-    public AutonomousSystem autonomousSystem;
-    public CameraSystem cameraSystem;
-    public DriveSystem driveSystem;
-    public LineSystem lineSystem;
-    public ManipulatorSystem manipulatorSystem;
-    public MinibotSystem minibotSystem;
-    public OperatorSystem operatorSystem;
-    
     public void robotInit()
     {
-        autonomousSystem = new AutonomousSystem(100);
-        operatorSystem = new OperatorSystem(100);
-
-        cameraSystem = new CameraSystem(100);
-        driveSystem = new DriveSystem(100);
-        lineSystem = new LineSystem(100);
-        manipulatorSystem = new ManipulatorSystem(100);
-        minibotSystem = new MinibotSystem(100);
+        AutonomousSystem.getInstance().setSleep(100);
     }
     
     public void autonomous()
     {
-        operatorSystem.stop();
-        autonomousSystem.start();
-        
-        cameraSystem.start();
-        manipulatorSystem.start();
-        driveSystem.start();
-        lineSystem.start();
-        minibotSystem.start();
+        AutonomousSystem.getInstance().start();
     }
 
     public void operatorControl()
     {
-        operatorSystem.start();
-        autonomousSystem.stop();
-        
-        cameraSystem.start();
-        manipulatorSystem.start();
-        driveSystem.start();
-        lineSystem.start();
-        minibotSystem.start();
+        AutonomousSystem.getInstance().stop();
     }
     
     public void disabled()
     {
-        operatorSystem.stop();
-        autonomousSystem.stop();
-
-        cameraSystem.stop();
-        manipulatorSystem.stop();
-        driveSystem.stop();
-        lineSystem.stop();
-        minibotSystem.stop();
-
-        log("disabled");
-    }
-    
-    public void log(String message)
-    {
-        System.out.println("RobotMain: " + message);
+        AutonomousSystem.getInstance().stop();
     }
 }

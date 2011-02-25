@@ -1,26 +1,25 @@
 package edu.arhs.first1100.autoctl;
 
+import edu.arhs.first1100.util.SystemBase;
+
 /**
  *
  * @author team1100
  */
-public class AutonomousSystem
+public class AutonomousSystem extends SystemBase
 {
-    private static AutonomousSystem instance;
-
-    public AutonomousSystem(int sleepTime)
-    {
-        if(instance != null)
-            instance = new AutonomousSystem(sleepTime);
-    }
+    private static AutonomousSystem instance = null;
+    
+    public AutonomousSystem() { }
     
     public static AutonomousSystem getInstance()
     {
+        if(instance == null) instance = new AutonomousSystem();
         return instance;
     }
 
-    public void doSomething()
+    public void tick()
     {
-        System.out.println("Something");
+        System.out.println("Autonomous tick");
     }
 }
