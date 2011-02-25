@@ -7,15 +7,21 @@
 
 package edu.arhs.first1100.robot;
 
-
 import edu.wpi.first.wpilibj.SimpleRobot;
 
+import edu.arhs.first1100.autoctl.AutonomousSystem;
+import edu.arhs.first1100.camera.CameraSystem;
+import edu.arhs.first1100.drive.DriveSystem;
+import edu.arhs.first1100.line.LineSystem;
+import edu.arhs.first1100.manipulator.ManipulatorSystem;
+import edu.arhs.first1100.minibot.MinibotSystem;
+import edu.arhs.first1100.opctl.OperatorSystem;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 /**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the SimpleRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
+ *
+ * @author team1100
  */
 public class PuffRobot extends SimpleRobot {
 {
