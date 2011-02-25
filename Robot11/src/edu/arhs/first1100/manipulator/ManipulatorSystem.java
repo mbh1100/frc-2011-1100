@@ -26,8 +26,8 @@ public class ManipulatorSystem extends SystemBase
 
     private int state = STATE_DEFAULT;
     
-    private Lift lift;
-    private Arm arm;
+    public  Lift lift;
+    public  Arm arm;
     
     private Solenoid wrist;
     private Solenoid claw;
