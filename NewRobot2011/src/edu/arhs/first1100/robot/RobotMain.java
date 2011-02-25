@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.Timer;
  *
  * @author team1100
  */
-public class PuffRobot extends SimpleRobot
+public class RobotMain extends SimpleRobot
 {
     public AutonomousSystem autonomousSystem;
     public CameraSystem cameraSystem;
@@ -38,14 +38,14 @@ public class PuffRobot extends SimpleRobot
     
     public void robotInit()
     {
-        autonomousSystem = new AutonomousSystem(this, 100);
-        operatorSystem = new OperatorSystem(this, 100);
+        autonomousSystem = new AutonomousSystem(100);
+        operatorSystem = new OperatorSystem(100);
 
-        cameraSystem = new CameraSystem(this, 100);
-        driveSystem = new DriveSystem(this, 100);
-        lineSystem = new LineSystem(this, 10000);
-        manipulatorSystem = new ManipulatorSystem(this, 100);
-        minibotSystem = new MinibotSystem(this, 100);
+        cameraSystem = new CameraSystem(100);
+        driveSystem = new DriveSystem(100);
+        lineSystem = new LineSystem(100);
+        manipulatorSystem = new ManipulatorSystem(100);
+        minibotSystem = new MinibotSystem(100);
     }
     
     public void autonomous()
@@ -85,75 +85,7 @@ public class PuffRobot extends SimpleRobot
 
         log("disabled");
     }
-
-    /**
-     *
-     */
-    public void operatorControl()
-    {
-        if (!diagnostic){
-
-            log("Enabling teleop");
-
-            log("Starting opsys");
-            operatorSystem.start();
-
-            log("stopping ausys");
-            autonomousSystem.stop();
-
-            log("Starting cam, drive, manip");
-            cameraSystem.start();
-            manipulatorSystem.start();
-            driveSystem.start();
-            lineSystem.start();
-            minibotSystem.start();
-
-            log("Enabled teleop");
-        }
-        else if (diagnostic)
-        {
-            while(isOperatorControl())
-            {
-                diagnosticRobot.teleop();
-                Timer.delay(.1);
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    public void disabled()
-    {
-        if (!diagnostic)
-        {
-            log("Enabling disabling...");
-
-            log("stopping opsys");
-            operatorSystem.stop();
-
-            log("stopping ausys");
-            autonomousSystem.stop();
-
-            log("stopping cam, line, manip, and drive");
-            cameraSystem.stop();
-            manipulatorSystem.stop();
-            driveSystem.stop();
-            lineSystem.stop();
-            minibotSystem.stop();
-
-            log("disabled");
-        }
-        else if(diagnostic)
-        {
-            diagnosticRobot.disable();
-        }
-    }
-
-    /**
-     *
-     * @param message
-     */
+    
     public void log(String message)
     {
         System.out.println("RobotMain: " + message);
