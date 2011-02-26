@@ -1,7 +1,8 @@
 package edu.arhs.first1100.util;
 
-import edu.arhs.first1100.robot.RobotMain;
+import edu.arhs.first1100.util.Log;
 import edu.wpi.first.wpilibj.Timer;
+
 /**
  *
  * @author team1100
@@ -9,13 +10,17 @@ import edu.wpi.first.wpilibj.Timer;
 public class SystemBase extends Thread
 {
     protected int sleepTime = 100;
-
+    
     private boolean stopThread = true;
     private boolean threadStarted = false;
-
-    public SystemBase()
-    { }
-
+    
+    /**
+     * Construct the system base
+     * @param robot
+     * @param sleep
+     */
+    public SystemBase() { }
+    
     /**
      * Start the thread.
      */
@@ -29,8 +34,9 @@ public class SystemBase extends Thread
             threadStarted = true;
         }
     }
+    
     /**
-     *
+     * Stop the thread.
      */
     public void stop()
     {
@@ -48,8 +54,25 @@ public class SystemBase extends Thread
         {
             while(!stopThread)
             {
-                tick();
-                Timer.delay(sleepTime/1000.0);
+                /*
+                try
+                {*/
+
+                tick(); // User code
+                
+                /*}
+                catch(Exception e)
+                {
+                    log("********************************");
+                    log("  Fatal Thread Error!");
+                    log(e.getMessage());
+                    log(e.toString());
+
+                    log("********************************");
+                    robot.disabled();
+                }*/
+                
+                Timer.delay( ((double)(sleepTime))/1000 );
             }
 
             while(stopThread)
@@ -58,7 +81,7 @@ public class SystemBase extends Thread
             }
         }
     }
-
+    
     /**
      * Put your own code here to run.
      *
@@ -66,8 +89,25 @@ public class SystemBase extends Thread
      * the delay time is stored in 'sleepTime'.
      */
     public void tick()
-    { }
+    {
+        Log.log(this, "tick()!");
+    }
     
+    /**
+     * Prints out messages to the console
+     * @param String message
+     */
+    public void log(String message)
+    {
+        String name = this.getClass().getName();
+        System.out.println(name.substring(name.lastIndexOf('.')+1)+": "+message);
+    }
+    
+    public void log()
+    {
+        log("");
+    }
+
     /**
      * Set the amount of time that the system should sleep
      * @param int time How long the component should sleep in milliseconds
@@ -77,8 +117,8 @@ public class SystemBase extends Thread
         sleepTime = time;
     }
 
-    public int getSleep()
+    public boolean isStopped()
     {
-        return sleepTime;
+        return stopThread;
     }
 }

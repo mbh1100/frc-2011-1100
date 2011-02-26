@@ -10,6 +10,8 @@ import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.util.PID;
 import edu.arhs.first1100.util.SystemBase;
 
+import edu.arhs.first1100.util.Log;
+
 /**
  *
  * @author team1100
@@ -34,23 +36,26 @@ public class OperatorSystem extends SystemBase
         
         xboxJoystick = new XboxJoystick(3);
 
-        pid = new PID(0.1, 0.01, 0.001);
+        pid = new PID(0.1, 0, 0);
         pid.setTarget(1.0);
+        pid.setOutputRange(-0.2, 0.2);
+        
+        pid.enable();
     }
-
+    
     public static OperatorSystem getInstance()
     {
         if(instance == null) instance = new OperatorSystem();
         return instance;
     }
-
+    
     public void tick()
     {
         DriveSystem ds = DriveSystem.getInstance();
         ManipulatorSystem ms = ManipulatorSystem.getInstance();
         
         pid.feed(leftJoystick.getStickY());
-        System.out.println(pid.get());
+        Log.defcon2(this, "Pid output: "+pid.get());
         
         //ds.setTankSpeed(-leftJoystick.getStickY(), -rightJoystick.getStickY());
         

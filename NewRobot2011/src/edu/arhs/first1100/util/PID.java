@@ -43,8 +43,8 @@ public class PID
     }
     
     private Input pidSource;
-    private Output pidInput;
-
+    private Output pidOutput;
+    
     public void setTarget(double value)
     {
         pid.setSetpoint(value);
@@ -57,20 +57,28 @@ public class PID
     
     public double get()
     {
-        return pidInput.output;
+        return pidOutput.output;
     }
 
     private PIDController pid;
     public PID(double p, double i, double d)
     {
-        pid = new PIDController(p, i, d, pidSource, pidInput);
+        pidSource = new Input(this);
+        pidOutput = new Output(this);
+        
+        pid = new PIDController(p, i, d, pidSource, pidOutput);
     }
 
+    public void setOutputRange(double min, double max)
+    {
+        pid.setOutputRange(min, max);
+    }
+    
     public void enable()
     {
         pid.enable();
     }
-
+    
     public void disable()
     {
         pid.disable();

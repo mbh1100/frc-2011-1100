@@ -17,6 +17,8 @@ import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.minibot.MinibotSystem;
 import edu.arhs.first1100.opctl.OperatorSystem;
 
+import edu.arhs.first1100.util.Log;
+
 /**
  *
  * @author team1100
@@ -25,6 +27,10 @@ public class RobotMain extends SimpleRobot
 {
     public void robotInit()
     {
+        Log.setDefconLevel(3);
+        
+        Log.defcon3(this, "Robot Init");
+        
         OperatorSystem.getInstance().setSleep(100);
         AutonomousSystem.getInstance().setSleep(100);
         
@@ -39,6 +45,8 @@ public class RobotMain extends SimpleRobot
     
     public void autonomous()
     {
+        Log.defcon3(this, "Autonomous Mode Activated");
+        
         OperatorSystem.getInstance().stop();
         AutonomousSystem.getInstance().start();
         
@@ -53,6 +61,8 @@ public class RobotMain extends SimpleRobot
 
     public void operatorControl()
     {
+        Log.defcon3(this, "Operator Mode Activated");
+
         OperatorSystem.getInstance().start();
         AutonomousSystem.getInstance().stop();
 
@@ -67,6 +77,8 @@ public class RobotMain extends SimpleRobot
     
     public void disabled()
     {
+        Log.defcon3(this, "Robot Disabled");
+        
         OperatorSystem.getInstance().stop();
         AutonomousSystem.getInstance().stop();
 
