@@ -28,6 +28,7 @@ public class RobotMain extends SimpleRobot
     public void robotInit()
     {
         Log.setDefconLevel(3);
+        Log.addClass(AutonomousSystem.class);
         
         Log.defcon3(this, "Robot Init");
         

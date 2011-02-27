@@ -46,9 +46,9 @@ public class Log
         defcon = level;
     }
 
-    public static void addClass(Class herpderp)
+    public static void addClass(Class aClass)
     {
-        records.addElement(herpderp);
+        records.addElement(aClass);
     }
 
     public static boolean checkClass(Object obj)
