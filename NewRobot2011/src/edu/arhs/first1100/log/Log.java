@@ -5,7 +5,7 @@ import java.util.Vector;
 public class Log
 {
     private static int defcon = 4;
-    private static Vector records;
+    private static Vector records = new Vector();
     
     public static void defcon3(Object obj, String message)
     {
