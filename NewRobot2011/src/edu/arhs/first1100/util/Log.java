@@ -43,7 +43,7 @@ public class Log
         defcon = level;
     }
     
-    public static void log(Object obj, String message)
+    private static void log(Object obj, String message)
     {
         String name = obj.getClass().getName();
         System.out.println(name.substring(name.lastIndexOf('.')+1)+": "+message);

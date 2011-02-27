@@ -93,7 +93,7 @@ public class SystemBase extends Thread
      */
     public void tick()
     {
-        Log.log(this, "tick()!");
+        Log.defcon1(this, "tick()!");
     }
     
     /**

@@ -5,10 +5,8 @@
 
 package edu.arhs.first1100.opctl;
 
-import edu.arhs.first1100.autoctl.AutonomousSystem;
 import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
-import edu.arhs.first1100.util.PID;
 import edu.arhs.first1100.util.SystemBase;
 
 import edu.arhs.first1100.util.Log;
@@ -24,11 +22,9 @@ public class OperatorSystem extends SystemBase
     public AdvJoystick leftJoystick;  //controls the left side of the robot
     public AdvJoystick rightJoystick; //controls the right side of the robot.
     public XboxJoystick xboxJoystick; //controls the arm and other stuff. Hi.
-
+    
     private boolean xboxLeftBumperLastState = false;
     private boolean xboxRightBumperLastState = false;
-
-    private PID pid;
     
     public OperatorSystem()
     {
@@ -36,12 +32,6 @@ public class OperatorSystem extends SystemBase
         rightJoystick = new AdvJoystick(2);
         
         xboxJoystick = new XboxJoystick(3);
-
-        pid = new PID(0.1, 0, 0);
-        pid.setTarget(1.0);
-        pid.setOutputRange(-0.2, 0.2);
-        
-        pid.enable();
     }
     
     public static OperatorSystem getInstance()
@@ -78,6 +68,7 @@ public class OperatorSystem extends SystemBase
          */
         if(xboxJoystick.getRightTrigger() > 0.5)
         {
+            Log.defcon2(this, "Using CamPID");
             ms.useCamPID();
         }
         else
@@ -128,10 +119,29 @@ public class OperatorSystem extends SystemBase
         {
             ms.setArmPosition(ms.getArmEncoder());
         }
+
+        // Left Toggle Button
+        if(xboxJoystick.getLeftBumper() && !xboxLeftBumperLastState)
+        {
+            ManipulatorSystem.getInstance().toggleClaw();
+            xboxLeftBumperLastState = true;
+        }
+        if(!xboxJoystick.getLeftBumper())
+            xboxLeftBumperLastState = false;
+
+        // Right Bumper Toggle
+        if(xboxJoystick.getRightBumper() && !xboxRightBumperLastState)
+        {
+            ManipulatorSystem.getInstance().toggleWrist();
+            xboxRightBumperLastState = true;
+        }
+        if(!xboxJoystick.getRightBumper())
+            xboxRightBumperLastState = false;
         
         /*
          * Drive Controls
          */
         ds.setTankSpeed(-leftJoystick.getStickY(), -rightJoystick.getStickY());
+        
     }
 }

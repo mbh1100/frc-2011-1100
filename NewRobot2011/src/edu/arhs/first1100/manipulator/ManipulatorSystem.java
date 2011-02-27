@@ -12,6 +12,7 @@ import edu.arhs.first1100.util.AdvJaguar;
 import edu.arhs.first1100.util.PID;
 import edu.arhs.first1100.util.SystemBase;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  *
@@ -46,6 +47,9 @@ public class ManipulatorSystem extends SystemBase
     private PID armPID;
     
     private PID camPID;
+
+    private Solenoid claw;
+    private Solenoid wrist;
     
     public ManipulatorSystem()
     {
@@ -65,6 +69,9 @@ public class ManipulatorSystem extends SystemBase
         
         camPID = new PID(0.1, 0.0, 0.0);
         camPID.setOutputRange(-0.2, 0.2);
+
+        claw = new Solenoid(1);
+        wrist = new Solenoid(2);
     }
     
     public static ManipulatorSystem getInstance()
@@ -120,7 +127,6 @@ public class ManipulatorSystem extends SystemBase
      */
     public void setState(int state)
     {
-        // TODO: Fill in some variables
         switch(state)
         {
             case STATE_DEFAULT:
@@ -202,4 +208,26 @@ public class ManipulatorSystem extends SystemBase
         return armEncoder.get();
     }
 
+    /*
+     * Claw and wrist
+     */
+    public void toggleClaw()
+    {
+        claw.set(!claw.get());
+    }
+
+    public boolean getClawState()
+    {
+        return claw.get();
+    }
+
+    public void toggleWrist()
+    {
+        wrist.set(!wrist.get());
+    }
+
+    public boolean getWristState()
+    {
+        return wrist.get();
+    }
 }
