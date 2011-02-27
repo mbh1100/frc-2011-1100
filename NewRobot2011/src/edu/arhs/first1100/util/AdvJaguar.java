@@ -41,4 +41,9 @@ public class AdvJaguar
         j1.set( polarity ? -speed : speed);
         if(j2 != null) j2.set( polarity ? -speed : speed);
     }
+
+    public double get()
+    {
+        return j1.get();
+    }
 }

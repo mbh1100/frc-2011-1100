@@ -74,6 +74,11 @@ public class PID
         pid.setOutputRange(min, max);
     }
     
+    public double getError()
+    {
+        return pid.getError();
+    }
+    
     public void enable()
     {
         pid.enable();
@@ -82,5 +87,10 @@ public class PID
     public void disable()
     {
         pid.disable();
+    }
+
+    public boolean isEnabled()
+    {
+        return pid.isEnable();
     }
 }

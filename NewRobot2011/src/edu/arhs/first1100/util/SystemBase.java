@@ -58,6 +58,8 @@ public class SystemBase extends Thread
                 try
                 {*/
 
+                Log.defcon1(this, "Looping while stopThread is false");
+                
                 tick(); // User code
                 
                 /*}
@@ -72,11 +74,12 @@ public class SystemBase extends Thread
                     robot.disabled();
                 }*/
                 
-                Timer.delay( ((double)(sleepTime))/1000 );
+                Timer.delay(sleepTime / 1000.0);
             }
 
             while(stopThread)
             {
+                Log.defcon1(this, "waiting for stopThread to equal false");
                 Timer.delay(0.1);
             }
         }
@@ -117,8 +120,20 @@ public class SystemBase extends Thread
         sleepTime = time;
     }
 
-    public boolean isStopped()
+    public synchronized void waitTillDone()
     {
-        return stopThread;
+        try
+        {
+            wait();
+        }
+        catch(InterruptedException e)
+        {
+            
+        }
+    }
+
+    public synchronized void imDone()
+    {
+        notify();
     }
 }

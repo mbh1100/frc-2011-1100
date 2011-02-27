@@ -1,5 +1,7 @@
 package edu.arhs.first1100.autoctl;
 
+import edu.arhs.first1100.drive.DriveSystem;
+import edu.arhs.first1100.line.LineSystem;
 import edu.arhs.first1100.util.SystemBase;
 
 /**
@@ -21,5 +23,22 @@ public class AutonomousSystem extends SystemBase
     public void tick()
     {
         
+    }
+
+    public void scoreUberTube(boolean rack, int colum, int row)
+    {
+        
+    }
+
+    public void followLine()
+    { followLine(false); }
+
+    public void followLine(boolean splitDir)
+    {
+        LineSystem ln = LineSystem.getInstance();
+        DriveSystem ds = DriveSystem.getInstance();
+        
+        ln.followLine(splitDir);
+        ln.getInstance();
     }
 }
