@@ -1,12 +1,15 @@
-package edu.arhs.first1100.util;
+package edu.arhs.first1100.log;
+
+import java.util.Vector;
 
 public class Log
 {
     private static int defcon = 4;
+    private static Vector records;
     
     public static void defcon3(Object obj, String message)
     {
-        if(defcon == 3)
+        if(defcon <= 3 && checkClass(obj))
         {
             System.out.print("[3] ");
             log(obj, message);
@@ -15,7 +18,7 @@ public class Log
 
     public static void defcon2(Object obj, String message)
     {
-        if(defcon == 2 || defcon == 3)
+        if(defcon <= 2 && checkClass(obj))
         {
             System.out.print("[2] ");
             log(obj, message);
@@ -24,7 +27,7 @@ public class Log
     
     public static void defcon1(Object obj, String message)
     {
-        if(defcon == 1 || defcon == 2 || defcon == 3)
+        if(defcon <= 1 && checkClass(obj))
         {
             System.out.print("[1] ");
             log(obj, message);
@@ -41,6 +44,21 @@ public class Log
             System.out.println("DEFCON 1 ACTIVATED");
         }
         defcon = level;
+    }
+
+    public static void addClass(Class herpderp)
+    {
+        records.addElement(herpderp);
+    }
+
+    public static boolean checkClass(Object obj)
+    {
+        boolean record = false;
+        for(int i = 0; i < records.size() && !record; i++)
+        {
+            if(obj.getClass().equals(records.elementAt(i))) record = true;
+        }
+        return record;
     }
     
     private static void log(Object obj, String message)

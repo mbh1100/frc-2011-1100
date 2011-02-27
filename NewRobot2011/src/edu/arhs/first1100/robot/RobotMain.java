@@ -17,7 +17,7 @@ import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.minibot.MinibotSystem;
 import edu.arhs.first1100.opctl.OperatorSystem;
 
-import edu.arhs.first1100.util.Log;
+import edu.arhs.first1100.log.Log;
 
 /**
  *

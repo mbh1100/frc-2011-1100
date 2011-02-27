@@ -9,7 +9,7 @@ import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.util.SystemBase;
 
-import edu.arhs.first1100.util.Log;
+import edu.arhs.first1100.log.Log;
 
 /**
  *

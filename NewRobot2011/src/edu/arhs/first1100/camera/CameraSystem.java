@@ -1,6 +1,6 @@
 package edu.arhs.first1100.camera;
 
-import edu.arhs.first1100.util.Log;
+import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.util.SystemBase;
 
 /**
