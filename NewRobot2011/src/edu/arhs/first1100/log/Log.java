@@ -63,12 +63,13 @@ public class Log
         for(int i = 0; i < records.size() && !record; i++)
         {
             if(obj.getClass().equals(((AdvLogger)records.elementAt(i)).getaClass()) &&
-                    defcon <= ((AdvLogger) records.elementAt(i)).getDefcon())
+                    defcon >= ((AdvLogger) records.elementAt(i)).getDefcon())
             {
                 record = true;
             }
         }
-        return record;
+        return record
+                ;
     }
     
     private static void log(Object obj, String message, int defcon)

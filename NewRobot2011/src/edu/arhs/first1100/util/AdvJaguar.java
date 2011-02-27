@@ -20,8 +20,8 @@ public class AdvJaguar
      */
     public AdvJaguar(int slot, int ch1, int ch2, boolean inverted)
     {
-        j1 = new Jaguar(ch1);
-        if(ch2 != 0) j2 = new Jaguar(ch2);
+        j1 = new Jaguar(slot, ch1);
+        if(ch2 != 0) j2 = new Jaguar(slot, ch2);
 
         polarity = inverted;
     }

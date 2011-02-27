@@ -10,6 +10,7 @@ import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.util.SystemBase;
 
 import edu.arhs.first1100.log.Log;
+import edu.arhs.first1100.minibot.MinibotSystem;
 
 /**
  *
@@ -62,6 +63,7 @@ public class OperatorSystem extends SystemBase
 
         DriveSystem ds = DriveSystem.getInstance();
         ManipulatorSystem ms = ManipulatorSystem.getInstance();
+        MinibotSystem minis = MinibotSystem.getInstance();
         
         /*
          * Arm Controls
@@ -142,6 +144,28 @@ public class OperatorSystem extends SystemBase
          * Drive Controls
          */
         ds.setTankSpeed(-leftJoystick.getStickY(), -rightJoystick.getStickY());
-        
+
+        /*
+         * Minbot Controls
+         */
+        if(xboxJoystick.getBackButton())
+        {
+            minis.setArmSpeed(0.5);
+        }
+
+        else
+        {
+            minis.setArmSpeed(0.0);
+        }
+
+        if(xboxJoystick.getStartButton())
+        {
+            minis.setBeltSpeed(0.5);
+        }
+
+        else
+        {
+            minis.setBeltSpeed(-0.5);
+        }
     }
 }

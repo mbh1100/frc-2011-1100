@@ -92,24 +92,7 @@ public class SystemBase extends Thread
      * the delay time is stored in 'sleepTime'.
      */
     public void tick()
-    {
-        Log.defcon1(this, "tick()!");
-    }
-    
-    /**
-     * Prints out messages to the console
-     * @param String message
-     */
-    public void log(String message)
-    {
-        String name = this.getClass().getName();
-        System.out.println(name.substring(name.lastIndexOf('.')+1)+": "+message);
-    }
-    
-    public void log()
-    {
-        log("");
-    }
+    { }
 
     /**
      * Set the amount of time that the system should sleep
