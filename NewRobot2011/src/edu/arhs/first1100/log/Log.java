@@ -2,68 +2,78 @@ package edu.arhs.first1100.log;
 
 import java.util.Vector;
 
+class AdvLogger
+{
+    private Class aClass;
+    private int defcon;
+
+    AdvLogger(Class aClass, int defcon)
+    {
+        this.aClass = aClass;
+        this.defcon = defcon;
+    }
+
+    public int getDefcon()
+    {
+        return defcon;
+    }
+    public Class getaClass()
+    {
+        return aClass;
+    }
+
+}
+
 public class Log
 {
-    private static int defcon = 4;
     private static Vector records = new Vector();
     
     public static void defcon3(Object obj, String message)
     {
-        if(defcon <= 3 && checkClass(obj))
+        if(checkClass(obj, 3))
         {
-            System.out.print("[3] ");
-            log(obj, message);
+            log(obj, message, 3);
         }
     }
 
     public static void defcon2(Object obj, String message)
     {
-        if(defcon <= 2 && checkClass(obj))
+        if(checkClass(obj, 2))
         {
-            System.out.print("[2] ");
-            log(obj, message);
+            log(obj, message, 2);
         }
     }
     
     public static void defcon1(Object obj, String message)
     {
-        if(defcon <= 1 && checkClass(obj))
+        if(checkClass(obj, 1))
         {
-            System.out.print("[1] ");
-            log(obj, message);
+            log(obj, message, 1);
         }
     }
 
-    public static void setDefconLevel(int level)
+    public static void addClass(Class aClass, int defcon)
     {
-        if(level == 1)
-        {
-            System.out.println("***********");
-            System.out.println("* WARNING *");
-            System.out.println("***********");
-            System.out.println("DEFCON 1 ACTIVATED");
-        }
-        defcon = level;
+        records.addElement(new AdvLogger(aClass, defcon));
     }
 
-    public static void addClass(Class aClass)
-    {
-        records.addElement((Class) aClass);
-    }
-
-    private static boolean checkClass(Object obj)
+    private static boolean checkClass(Object obj, int defcon)
     {
         boolean record = false;
         for(int i = 0; i < records.size() && !record; i++)
         {
-            if(obj.getClass().equals(records.elementAt(i))) record = true;
+            if(obj.getClass().equals(((AdvLogger)records.elementAt(i)).getaClass()) &&
+                    defcon <= ((AdvLogger) records.elementAt(i)).getDefcon())
+            {
+                record = true;
+            }
         }
         return record;
     }
     
-    private static void log(Object obj, String message)
+    private static void log(Object obj, String message, int defcon)
     {
         String name = obj.getClass().getName();
-        System.out.println(name.substring(name.lastIndexOf('.')+1)+": "+message);
+        System.out.println("[" + defcon + "] " + name.substring(name.lastIndexOf('.')+1)+": "+message);
     }
 }

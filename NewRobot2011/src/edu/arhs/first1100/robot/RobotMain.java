@@ -28,10 +28,9 @@ public class RobotMain extends SimpleRobot
     public void robotInit()
     {
         //Set Logging Levels
-        Log.setDefconLevel(2);
-        Log.addClass(ManipulatorSystem.class);
-        Log.addClass(OperatorSystem.class);
-        Log.addClass(RobotMain.class);
+        Log.addClass(ManipulatorSystem.class, 3);
+        Log.addClass(OperatorSystem.class, 3);
+        Log.addClass(RobotMain.class, 3);
         
         
         Log.defcon3(this, "Robot Init");
