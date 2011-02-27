@@ -48,7 +48,7 @@ public class Log
 
     public static void addClass(Class aClass)
     {
-        records.addElement(aClass);
+        records.addElement((Class) aClass);
     }
 
     public static boolean checkClass(Object obj)
