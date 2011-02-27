@@ -51,7 +51,7 @@ public class Log
         records.addElement((Class) aClass);
     }
 
-    public static boolean checkClass(Object obj)
+    private static boolean checkClass(Object obj)
     {
         boolean record = false;
         for(int i = 0; i < records.size() && !record; i++)

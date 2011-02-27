@@ -8,16 +8,8 @@
 
 package edu.arhs.first1100.util;
 
-
-/**
- *
- * @author team1100
- */
 public class Averager
 {
-    /**
-     *
-     */
     private double avg = 0; //average
     private int magnitude = 1;
     private double data[];
@@ -49,10 +41,8 @@ public class Averager
     {
         size = sampleSize;
         avg = starting;
-        data = new double[sampleSize];
-        for (int i = 0; i<sampleSize;i++){
-            data[i] = starting;
-        }
+        data = new double[size];
+        for (int i = 0; i < size; i++) data[i] = starting;
     }
 
     /**
@@ -64,8 +54,7 @@ public class Averager
         index = (index+1)%data.length;
         avg = 0;
         data[index] = value;
-        for (int i = 0; i < data.length; i++) avg += data[i];
-        avg /= (data.length);
+        for (int i = 0; i < data.length; i++) avg += data[i]/data.length;
     }
     
     /**

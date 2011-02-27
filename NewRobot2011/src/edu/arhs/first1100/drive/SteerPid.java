@@ -10,8 +10,8 @@ import edu.arhs.first1100.camera.CameraSystem;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDOutput;
+
 /**
- *
  * @author markbh
  */
 class SteerSource implements PIDSource

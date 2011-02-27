@@ -15,7 +15,6 @@ public class AdvJaguar
     private Jaguar j2;
     
     /**
-     *
      * @param ch
      * @param inverted
      */

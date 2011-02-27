@@ -27,28 +27,28 @@ public class XboxJoystick extends AdvJoystick
         rsX = new Averager(sampleSize);
         rsY = new Averager(sampleSize);
     }
-/**
- *what to do with the left x stick
- * @return
- */
+
+    /**
+     * @return
+     */
     public double getLeftStickX()
     {
         lsX.feed(super.getRawAxis(1));
         return lsX.get();
     }
-/**
- *what to do with the left y stick
- * @return
- */
+
+    /**
+     * @return
+     */
     public double getLeftStickY()
     {
         lsY.feed(super.getRawAxis(2));
         return lsY.get();
     }
-/**
- *what to do with the right x stick
- * @return
- */
+
+    /**
+     * @return
+     */
     public double getRightStickX()
     {
         rsX.feed(super.getRawAxis(4));
@@ -56,7 +56,6 @@ public class XboxJoystick extends AdvJoystick
     }
     
     /**
-     *what to do with the right y stick
      * @return
      */
     public double getRightStickY()
@@ -64,8 +63,8 @@ public class XboxJoystick extends AdvJoystick
         rsY.feed(super.getRawAxis(5));
         return rsY.get();
     }
+
     /**
-     * what to do with the dpad
      * @return
      */
     public double getDpad()
@@ -80,7 +79,6 @@ public class XboxJoystick extends AdvJoystick
      */
      
     /**
-     *
      * @return left trigger state (0.0 - 1.0)
      */
     public double getLeftTrigger()
@@ -89,7 +87,6 @@ public class XboxJoystick extends AdvJoystick
     }
     
     /**
-     *what to do with the right trigger
      * @return right trigger state (0.0 - 1.0)
      */
     public double getRightTrigger()
@@ -104,7 +101,6 @@ public class XboxJoystick extends AdvJoystick
      */
      
     /**
-     * 
      * @return the state of both triggers
      */
     public double getTriggers()
@@ -113,7 +109,6 @@ public class XboxJoystick extends AdvJoystick
     }
 
     /**
-     *
      * @return state of the x button
      */
     public boolean getXButton()
@@ -122,7 +117,6 @@ public class XboxJoystick extends AdvJoystick
     }
 
     /**
-     *
      * @return state of the y button
      */
     public boolean getYButton()
@@ -131,15 +125,14 @@ public class XboxJoystick extends AdvJoystick
     }
 
     /**
-     *
      * @return state of the a button
-     */ public boolean getAButton()
+     */
+    public boolean getAButton()
     {
         return super.getRawButton(1);
     }
 
     /**
-     *
      * @return state of the b button
      */
     public boolean getBButton()
@@ -149,7 +142,6 @@ public class XboxJoystick extends AdvJoystick
     }
 
     /**
-     *
      * @return state of the left bumper
      */
     public boolean getLeftBumper()
@@ -158,7 +150,6 @@ public class XboxJoystick extends AdvJoystick
     }
 
     /**
-     *
      * @return state of the right bumper
      */
     public boolean getRightBumper()
@@ -167,7 +158,6 @@ public class XboxJoystick extends AdvJoystick
     }
 
     /**
-     *
      * @return state of the back button
      */
     public boolean getBackButton()
@@ -176,7 +166,6 @@ public class XboxJoystick extends AdvJoystick
     }
 
     /**
-     *
      * @return state of the start button
      */
     public boolean getStartButton()

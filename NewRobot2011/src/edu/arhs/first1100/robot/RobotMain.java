@@ -27,11 +27,12 @@ public class RobotMain extends SimpleRobot
 {
     public void robotInit()
     {
+        //Set Logging Levels
         Log.setDefconLevel(2);
-
         Log.addClass(ManipulatorSystem.class);
         Log.addClass(OperatorSystem.class);
         Log.addClass(RobotMain.class);
+        
         
         Log.defcon3(this, "Robot Init");
         

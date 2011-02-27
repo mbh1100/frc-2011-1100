@@ -26,7 +26,7 @@ public class OperatorSystem extends SystemBase
     private boolean xboxLeftBumperLastState = false;
     private boolean xboxRightBumperLastState = false;
     
-    public OperatorSystem()
+    private OperatorSystem()
     {
         leftJoystick = new AdvJoystick(1);
         rightJoystick = new AdvJoystick(2);
