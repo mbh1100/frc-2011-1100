@@ -38,10 +38,7 @@ public class Log
 
     public static void defcon2(Object obj, String message)
     {
-        if(checkClass(obj, 2))
-        {
-            log(obj, message, 2);
-        }
+        if(checkClass(obj, 2)) log(obj, message, 2);
     }
     
     public static void defcon1(Object obj, String message)
