@@ -15,9 +15,9 @@ public class LiftToPegRoutine extends Routine
     public final static int MIDDLE = 2;
     public final static int LOW = 3;
 
-    private final static int TopPegHeight = 1800;
-    private final static int MiddlePegHeight = 1100;
-    private final static int BottomPegHeight = 10;
+    private final static int TopPegHeight = 1680;
+    private final static int MiddlePegHeight = 620;
+    private final static int BottomPegHeight = 5;
     
     private int positionState;
 
