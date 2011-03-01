@@ -148,24 +148,8 @@ public class OperatorSystem extends SystemBase
         /*
          * Minbot Controls
          */
-        if(xboxJoystick.getBackButton())
-        {
-            minis.setArmSpeed(0.5);
-        }
-
-        else
-        {
-            minis.setArmSpeed(0.0);
-        }
-
-        if(xboxJoystick.getStartButton())
-        {
-            minis.setBeltSpeed(0.5);
-        }
-
-        else
-        {
-            minis.setBeltSpeed(-0.5);
-        }
+        
+        minis.setStartButton(xboxJoystick.getStartButton());
+        minis.setBackButton(xboxJoystick.getBackButton());
     }
 }

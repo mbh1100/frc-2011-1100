@@ -28,13 +28,13 @@ public class RobotMain extends SimpleRobot
     public void robotInit()
     {
         //Set Logging Levels
-        Log.addClass(MinibotSystem.class, 2);
+        Log.addClass(MinibotSystem.class, 1);
         Log.addClass(OperatorSystem.class, 2);
         Log.addClass(RobotMain.class, 3);
         
         
         Log.defcon3(this, "Robot Init");
-        
+
         OperatorSystem.getInstance().setSleep(100);
         AutonomousSystem.getInstance().setSleep(100);
         

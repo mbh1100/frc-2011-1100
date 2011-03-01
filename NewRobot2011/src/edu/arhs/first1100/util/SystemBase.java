@@ -33,6 +33,7 @@ public class SystemBase extends Thread
             super.start();
             threadStarted = true;
         }
+        else Log.defcon2(this, "SystemBase thread already started");
     }
     
     /**
@@ -58,7 +59,7 @@ public class SystemBase extends Thread
                 try
                 {*/
 
-                Log.defcon1(this, "Looping while stopThread is false");
+                //Log.defcon1(this, "Looping while stopThread is false");
                 
                 tick(); // User code
                 
@@ -79,7 +80,7 @@ public class SystemBase extends Thread
 
             while(stopThread)
             {
-                Log.defcon1(this, "waiting for stopThread to equal false");
+                //Log.defcon1(this, "waiting for stopThread to equal false");
                 Timer.delay(0.1);
             }
         }

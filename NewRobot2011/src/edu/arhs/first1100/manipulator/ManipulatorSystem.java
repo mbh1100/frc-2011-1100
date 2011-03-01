@@ -58,17 +58,17 @@ public class ManipulatorSystem extends SystemBase
         liftEncoder = new Encoder(8, 9);
 
         liftPID = new PID(0.1, 0.0, 0.0);
-        liftPID.setOutputRange(-0.2, 0.2);
+        liftPID.setOutputRange(-0.2, 0.2);  // maybe it should be a bit higher like .3 ?
 
         armJaguar = new AdvJaguar(4, 8, false);
 
         armEncoder = new Encoder(10, 11);
 
         armPID = new PID(0.1, 0.0, 0.0);
-        armPID.setOutputRange(-0.2, 0.2);
+        armPID.setOutputRange(-0.2, 0.2);  // maybe it should be a bit higher like .3 ?
         
         camPID = new PID(0.1, 0.0, 0.0);
-        camPID.setOutputRange(-0.2, 0.2);
+        camPID.setOutputRange(-0.2, 0.2);  // maybe it should be a bit higher like .3 ?
 
         claw = new Solenoid(1);
         wrist = new Solenoid(2);

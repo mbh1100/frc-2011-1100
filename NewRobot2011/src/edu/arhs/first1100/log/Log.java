@@ -65,8 +65,7 @@ public class Log
                 record = true;
             }
         }
-        return record
-                ;
+        return record;
     }
     
     private static void log(Object obj, String message, int defcon)
