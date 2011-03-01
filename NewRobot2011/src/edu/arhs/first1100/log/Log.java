@@ -2,6 +2,9 @@ package edu.arhs.first1100.log;
 
 import java.util.Vector;
 
+/**
+ * @author Raymond Mead
+ */
 class AdvLogger
 {
     private Class aClass;
@@ -12,7 +15,6 @@ class AdvLogger
         this.aClass = aClass;
         this.defcon = defcon;
     }
-
     public int getDefcon()
     {
         return defcon;
@@ -21,9 +23,11 @@ class AdvLogger
     {
         return aClass;
     }
-
 }
 
+/**
+ * @author Raymond Mead
+ */
 public class Log
 {
     private static Vector records = new Vector();

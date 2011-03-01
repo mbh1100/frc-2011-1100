@@ -216,6 +216,14 @@ public class ManipulatorSystem extends SystemBase
         claw.set(!claw.get());
     }
 
+    public void openClaw()
+    {
+        claw.set(true);
+
+    }public void closeClaw()
+    {
+        claw.set(false);
+    }
     public boolean getClawState()
     {
         return claw.get();
@@ -224,6 +232,16 @@ public class ManipulatorSystem extends SystemBase
     public void toggleWrist()
     {
         wrist.set(!wrist.get());
+    }
+
+    public void wristUp()
+    {
+        wrist.set(true);
+    }
+
+    public void wristDown()
+    {
+        wrist.set(false);
     }
 
     public boolean getWristState()
