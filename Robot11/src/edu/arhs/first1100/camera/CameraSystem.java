@@ -175,7 +175,7 @@ public class CameraSystem extends SystemBase
     }
     
     /**
-     *
+     * Gets the center Y of the largest particle
      * @return
      */
     public double getCenterY()
