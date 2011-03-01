@@ -1,6 +1,7 @@
 
 package edu.arhs.first1100.autoctl;
 
+import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.util.SystemBase;
 
 public class Routine extends SystemBase
@@ -27,7 +28,7 @@ public class Routine extends SystemBase
         }
         catch(InterruptedException e)
         {
-            log("Error: "+e.getMessage());
+            Log.defcon1(this, "Error: "+e.getMessage());
         }
     }
 
