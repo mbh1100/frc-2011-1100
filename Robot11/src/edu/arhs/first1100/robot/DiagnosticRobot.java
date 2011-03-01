@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.Encoder;
  */
 public class DiagnosticRobot
 {
+    private static DiagnosticRobot instance;
+    
     //Channel numbers
     final int LEFT_JOYSTICK_CHANNEL = 1;
     final int RIGHT_JOYSTICK_CHANNEL = 2;
@@ -51,6 +53,11 @@ public class DiagnosticRobot
     boolean lastWristState, lastClawState;
     boolean minibotActive = false;
 
+    public static DiagnosticRobot getInstance()
+    {
+        if(instance == null) instance = new DiagnosticRobot();
+        return instance;
+    }
 
     /**
      * Constructor

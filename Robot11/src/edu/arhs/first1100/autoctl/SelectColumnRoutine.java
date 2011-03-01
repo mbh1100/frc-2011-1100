@@ -26,9 +26,9 @@ public class SelectColumnRoutine extends Routine
      * @param startingColumn
      * @param targetColumn
      */
-    public SelectColumnRoutine(RobotMain robot, int sleep, int startingColumn, int targetColumn)
+    public SelectColumnRoutine(int startingColumn, int targetColumn)
     {
-        super(robot, sleep);
+        super(100);
         this.startingColumn = startingColumn;
         this.targetColumn = targetColumn;
     }

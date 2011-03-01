@@ -26,11 +26,11 @@ public class ScoreRoutine extends Routine
      * @param robot
      * @param sleep
      */
-    public ScoreRoutine(RobotMain robot)
+    public ScoreRoutine()
     {
-        super(robot, 1000);
-        ds = robot.driveSystem;
-        ms = robot.manipulatorSystem;
+        super(1000);
+        ds = DriveSystem.getInstance();
+        ms = ManipulatorSystem.getInstance();
     }
     
     /**

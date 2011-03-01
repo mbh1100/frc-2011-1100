@@ -1,12 +1,11 @@
 package edu.arhs.first1100.manipulator;
 
-import edu.arhs.first1100.camera.YPIDSource;
+import edu.arhs.first1100.camera.CameraSystem;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Encoder;
 
 import edu.arhs.first1100.util.SystemBase;
-import edu.arhs.first1100.robot.RobotMain;
 import edu.arhs.first1100.util.AdvJaguar;
 
 /**
@@ -15,17 +14,10 @@ import edu.arhs.first1100.util.AdvJaguar;
  */
 public class ManipulatorSystem extends SystemBase
 {
-    public static final int STATE_DEFAULT    = 0;
-    
-    public static final int STATE_TOP_PEG    = 3;
-    public static final int STATE_MID_PEG    = 2;
-    public static final int STATE_BOTTOM_PEG = 1;
-    
-    public static final int STATE_FEEDER     = 4;
-    public static final int STATE_FLOOR      = 5;
 
-    private int state = STATE_DEFAULT;
-    
+    static private ManipulatorSystem instance;
+    static private int sleepTime = 100;
+
     public  Lift lift;
     public  Arm arm;
     
@@ -38,66 +30,21 @@ public class ManipulatorSystem extends SystemBase
      * @param robot
      * @param sleepTime
      */
-    public ManipulatorSystem(RobotMain robot, int sleepTime)
+    private ManipulatorSystem()
     {
-        super(robot, sleepTime);
+        super(sleepTime);
         
-        lift = new Lift(new YPIDSource(robot.cameraSystem));
+        lift = new Lift();
         arm = new Arm();
         
         wrist = new Solenoid(2);
         claw = new Solenoid(1);
     }
 
-    /**
-     * sets the state of the robot
-     * @param state
-     */
-    public void setState(int state)
+    public static ManipulatorSystem getInstance()
     {
-        log("Set State:"+state);
-        this.state = state;
-
-        switch(state)
-        {
-            case STATE_TOP_PEG:
-                lift.setState(Lift.STATE_HIGH);
-                arm.setState(Arm.STATE_HIGH);
-                //raiseWrist();
-                break;
-            case STATE_MID_PEG:
-                lift.setState(Lift.STATE_MID);
-                arm.setState(Arm.STATE_MID);
-                //raiseWrist();
-                break;
-            case STATE_BOTTOM_PEG:
-                lift.setState(Lift.STATE_LOW);
-                arm.setState(Arm.STATE_LOW);
-                //raiseWrist();
-                break;
-                /*
-            case STATE_FEEDER:
-                lift.setState(Lift.STATE_LOW);
-                arm.setState(Arm.STATE_MID);
-                //raiseWrist();
-                break;
-            case STATE_FLOOR:
-                lift.setState(Lift.STATE_MID);
-                arm.setState(Arm.STATE_LOW);
-                //lowerWrist();
-                break;*/
-            case STATE_DEFAULT:
-                lift.setState(Lift.STATE_LOW);
-                arm.setState(Arm.STATE_HIGH);
-                claw.set(false);
-                //raiseWrist();
-                break;
-        }
-    }
-
-    public int getState()
-    {
-        return state;
+        if(instance == null) instance = new ManipulatorSystem();
+        return instance;
     }
     
     /**
@@ -108,7 +55,7 @@ public class ManipulatorSystem extends SystemBase
     {
         lift.setSpeed(speed);
     }
-    
+
     public void setLiftPosition(double height)
     {
         lift.setPosition(height);
@@ -131,6 +78,11 @@ public class ManipulatorSystem extends SystemBase
     public void setArmPosition(double height)
     {
         arm.setPosition(height);
+    }
+
+    public double getArmPosition()
+    {
+        return arm.getEncoder();
     }
     
     /**

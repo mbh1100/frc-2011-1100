@@ -14,14 +14,22 @@ import edu.arhs.first1100.robot.RobotMain;
 
 public class AutonomousSystem extends SystemBase
 {
+    static private AutonomousSystem instance;
+    static private int sleepTime = 100;
+
+    public static AutonomousSystem getInstance()
+    {
+        if(instance == null) instance = new AutonomousSystem();
+        return instance;
+    }
     /**
      *
      * @param robot
      * @param sleepTime
      */
-    public AutonomousSystem(RobotMain robot, int sleepTime)
+    public AutonomousSystem()
     {
-        super(robot, sleepTime);
+        super(sleepTime);
     }
     
     /**
@@ -55,13 +63,13 @@ public class AutonomousSystem extends SystemBase
         if(startingPosition == 0) //Middle
         {
             if(rack == false)
-                new FollowLineRoutine(robot, 100, -1).execute();
+                new FollowLineRoutine(-1).execute();
             else
-                new FollowLineRoutine(robot, 100, 1).execute();
+                new FollowLineRoutine(1).execute();
         }
         else
         {
-            new FollowLineRoutine(robot, 100).execute();
+            new FollowLineRoutine().execute();
         }
         
         // Position robot in front of the right column

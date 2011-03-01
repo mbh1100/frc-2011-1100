@@ -81,6 +81,11 @@ public class Arm
         pid.disable();
         armJaguar.set(speed);
     }
+
+    void setPidSpeed(double speed)
+    {
+        armJaguar.set(speed);
+    }
     
     public void setPosition(double height)
     {

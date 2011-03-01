@@ -5,45 +5,46 @@
 
 package edu.arhs.first1100.autoctl;
 
-import edu.arhs.first1100.manipulator.ManipulatorSystem;
-import edu.wpi.first.wpilibj.Timer;
-import edu.arhs.first1100.robot.RobotMain;
-import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
-
 /**
  *the routine to put pegs on the scoring board and to analysize the amount of particles that the axis camera sees.
  * @author Connor Moroney
  */
 public class LiftToPegRoutine extends Routine
 {
-    ManipulatorSystem m;
-    int positionState;
+    public final static int HIGH = 1;
+    public final static int MIDDLE = 2;
+    public final static int LOW = 3;
+
+    private final static int TopPegHeight = 1800;
+    private final static int MiddlePegHeight = 1100;
+    private final static int BottomPegHeight = 10;
+    
+    private int positionState;
 
 /**
- *tells the robot how long to sleep
- * @param robot
- * @param sleep
+ *
+ * This is a bit silly, the state case could easily be in LiftToPositionRoutine
+ * 
  */
-    public LiftToPegRoutine(RobotMain robot, int state)
+    public LiftToPegRoutine(int state)
     {
-        super(robot, 200);
-        m = robot.manipulatorSystem;
-        positionState = state;
-    }
-
-    public void start()
-    {
-        m.setState(positionState);
-        super.start();
-    }
-
-    public void tick()
-    {
-        // see if it's done
-        if (m.liftOnTarget())
+        super(200);
+        switch (state)
         {
-            setDone();
+            case HIGH:
+                positionState = TopPegHeight;
+                break;
+            case MIDDLE:
+                positionState = MiddlePegHeight;
+                break;
+            case LOW:
+                positionState = BottomPegHeight;
+                break;
         }
     }
 
+    public void run()
+    {
+        new LiftToPositionRoutine(positionState).execute();
+    }
 }

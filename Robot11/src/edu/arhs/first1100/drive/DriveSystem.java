@@ -10,6 +10,7 @@
  */
 
 package edu.arhs.first1100.drive;
+import edu.arhs.first1100.camera.CameraSystem;
 import edu.wpi.first.wpilibj.RobotDrive;
 
 import edu.arhs.first1100.util.SystemBase;
@@ -22,33 +23,37 @@ import edu.arhs.first1100.opctl.OperatorSystem;
  */
 public class DriveSystem extends SystemBase
 {
-    private final int STATE_TANK = 0;
-    private final int STATE_RAISING = 1;
-    private final int STATE_LOWERING = 2;
-    private final int STATE_SIDESTEP = 3;
+    static private DriveSystem instance;
+    static private int sleepTime = 500;
 
-    private int state = STATE_TANK;
-    
-    //private JaguarPair leftTankMotor;
-    //private JaguarPair rightTankMotor;
+    private double pidCurve;
+    private double pidPower;
+
     private AdvJaguar rightTankmotor1;
     private AdvJaguar rightTankmotor2;
     private AdvJaguar leftTankmotor1;//left tank 1
     private AdvJaguar leftTankmotor2;//left tank 2
-    private AdvJaguar liftMotor; //motor that raises lowers the side step wheels
-    private AdvJaguar sidestepDriveMotor; // drives the side step wheel
     private RobotDrive rd;
-    private ArcadeDriveMux adm;
-    public CameraDriveCurve cdc;
-    public CameraDrivePower cdp;
+    private SteerPid cdc;
+    private PowerPid cdp;
+
+    /**
+     * access the DriveSystem singleton
+     * @return the one and only Drive system object
+     */
+    public static DriveSystem getInstance()
+    {
+        if(instance == null) instance = new DriveSystem();
+        return instance;
+    }
 /**
  *states what motors go with what jags
  * @param robot
  * @param sleepTime
  */
-    public DriveSystem(RobotMain robot, int sleepTime)
+    private DriveSystem()
     {
-         super(robot, sleepTime);
+         super(sleepTime);
          
          // JaguarPair(ch1, ch2, invert, averager sample size);
          leftTankmotor1  = new AdvJaguar(2, false);
@@ -57,13 +62,9 @@ public class DriveSystem extends SystemBase
          rightTankmotor2 = new AdvJaguar(3, true);
          
          rd = new RobotDrive(leftTankmotor1, leftTankmotor2 , rightTankmotor1, rightTankmotor2);
-         //sidestepDriveMotor = new AdvJaguar(5);
          
-         //this.setDriveSpeed(0.0, 0.0);
-         
-         adm = new ArcadeDriveMux(this);
-         cdc = new CameraDriveCurve(adm, robot.cameraSystem);
-         cdp = new CameraDrivePower(adm, robot.cameraSystem, 10000.0);
+         cdc = new SteerPid();
+         cdp = new PowerPid();
     }
     
     /**
@@ -71,17 +72,40 @@ public class DriveSystem extends SystemBase
      * declares camera drive also
      * @param speed
      */
-    public void testCameraDrive(double speed)
+    public void enableCameraSteering()
     {
-        //log("testCameraDrive");
-
         // log("cdc.trackCamera()");
-        cdc.trackCamera();
-        
-        //adm.setPower(speed);
+        cdc.enable();
+    }
 
+    public void enableCameraDriving(double targetArea)
+    {   
         // log("cdp.trackCamera()");
-        cdp.trackCamera();
+        cdp.setSetpoint(targetArea);
+        cdp.enable();
+    }
+
+    public void disableCameraControl()
+    {
+        cdc.disable();
+        cdp.disable();
+    }
+
+    void setPidCurve(double curve)
+    {
+        pidCurve = curve;
+        driveByPid();
+    }
+
+    public void setPidPower(double power)
+    {
+        pidPower = power;
+        driveByPid();
+    }
+
+    void driveByPid()
+    {
+        rd.drive(pidPower, pidCurve);
     }
 
     /**
@@ -91,15 +115,8 @@ public class DriveSystem extends SystemBase
      */
     public void setDriveSpeed(double leftSide, double rightSide)
     {
-        cdp.stopTrackCamera();
-        if(state == STATE_TANK)
-        {
-            rd.tankDrive(leftSide, rightSide);
-        }
-        else
-        {
-            rd.stopMotor();
-        }
+        disableCameraControl();
+        rd.tankDrive(leftSide, rightSide);
 
         log("setDriveSpeed(): " + leftTankmotor1.get() + " : " + rightTankmotor1.get());
     }
@@ -110,31 +127,12 @@ public class DriveSystem extends SystemBase
      */
     public void drive(double power, double curve)
     {
-        if(state == STATE_TANK)
-        {
-            rd.drive(power, curve);
-        }
-        else
-        {
-            rd.stopMotor();
-        }
+        disableCameraControl();
+        rd.drive(power, curve);
+
         log("drive() :" + leftTankmotor1.get() + " : " + rightTankmotor1.get());
     }
-    /**
-     *
-     * @param speed
-     */
-    public void setSideSpeed(double speed)
-    {
-        if(state == STATE_SIDESTEP)
-        {
-            sidestepDriveMotor.set(speed);
-        }
-        else
-        {
-            sidestepDriveMotor.set(0.0);
-        }
-    }
+
     /**
      *logs the # of ticks
      */
@@ -151,34 +149,5 @@ public class DriveSystem extends SystemBase
             log("Right:"+rightTankmotor2.get());
             log("");
         }
-        
-        if(state == STATE_RAISING)
-        {
-            // move motors up based on POT value
-            // when wheels are all the way up, state = STATE_TANK
-        }
-        else if(state == STATE_LOWERING)
-        {
-            // move motors down slowly basd on POT reading
-            // when wheels are all the way down, state = STATE_SIDESTEP
-        }
-
-        
-    }
-    /**
-     *how to drive in tank mode
-     */
-    public void setDriveModeTank()
-    {
-        if(state == STATE_SIDESTEP)
-            state = STATE_RAISING;
-    }
-/**
- * how to drive with the side step motors
- */
-    public void setDriveModeSideStep()
-    {
-        if(state == STATE_TANK)
-            state = STATE_LOWERING;
     }
 }

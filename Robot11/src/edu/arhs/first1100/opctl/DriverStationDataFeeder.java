@@ -25,6 +25,8 @@ import edu.arhs.first1100.robot.RobotMain;
 public class DriverStationDataFeeder extends SystemBase
 {
 
+    private static int sleepTime = 500;
+
     // going to treat the LCD as a stack, in reverse here because
     // new lines appear on the bottom and scroll upwards (mostly)
     DriverStationLCD.Line[] lcdLines = {
@@ -41,11 +43,9 @@ public class DriverStationDataFeeder extends SystemBase
 
     RobotMain robbie;
 
-    public DriverStationDataFeeder(RobotMain mainBot, int sleepTime)
+    public DriverStationDataFeeder()
     {
-        super(mainBot, sleepTime);
-        
-        robbie = mainBot;
+        super(sleepTime);
     } // end constructor
     
     /**

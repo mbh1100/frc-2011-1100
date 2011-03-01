@@ -52,21 +52,21 @@ public class RobotMain extends SimpleRobot
             log("+------------------------+");
             log("| USING REGULAR ROBOT    |");
             log("+------------------------+");
-            autonomousSystem = new AutonomousSystem(this, 100);
-            operatorSystem = new OperatorSystem(this, 100);
+            autonomousSystem = AutonomousSystem.getInstance();
+            operatorSystem = OperatorSystem.getInstance();
 
-            cameraSystem = new CameraSystem(this, 100);
-            driveSystem = new DriveSystem(this, 100);
-            lineSystem = new LineSystem(this, 10000);
-            manipulatorSystem = new ManipulatorSystem(this, 100);
-            minibotSystem = new MinibotSystem(this, 100);
+            cameraSystem = CameraSystem.getInstance();
+            driveSystem = DriveSystem.getInstance();
+            lineSystem = LineSystem.getInstance();
+            manipulatorSystem = ManipulatorSystem.getInstance();
+            minibotSystem = MinibotSystem.getInstance();
         }
         else if (diagnostic)
         {
             log("+------------------------+");
             log("| USING DIAGNOSTIC ROBOT |");
             log("+------------------------+");
-            diagnosticRobot = new DiagnosticRobot();
+            diagnosticRobot = DiagnosticRobot.getInstance();
         }
         compressor = new Compressor(6, 1);
         compressor.start();

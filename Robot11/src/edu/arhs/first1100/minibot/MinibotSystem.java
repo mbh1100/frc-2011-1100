@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.Victor;
  */
 public class MinibotSystem extends SystemBase
 {
+    static private MinibotSystem instance;
+    static private int sleepTime = 100;
     /**
      *what the bot is going to do
      */
@@ -32,15 +34,20 @@ public class MinibotSystem extends SystemBase
     private DigitalInput beltInDetector;
     private DigitalInput beltOutDetector;
     
+    public static MinibotSystem getInstance()
+    {
+        if(instance == null) instance = new MinibotSystem();
+        return instance;
+    }
     /**
      *sets how long the robot should sleep
      * sets when the robot should deploy the minibot
      * @param robot
      * @param sleepTime
      */
-    public MinibotSystem(RobotMain robot, int sleepTime)
+    public MinibotSystem()
     {
-        super(robot, sleepTime);
+        super(sleepTime);
         
         armTopDetector = new DigitalInput(MINIBOT_IO_SLOT, 1);
         armBottomDetector = new DigitalInput(MINIBOT_IO_SLOT, 2);

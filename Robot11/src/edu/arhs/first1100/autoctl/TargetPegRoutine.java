@@ -7,8 +7,6 @@
 package edu.arhs.first1100.autoctl;
 
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
-import edu.wpi.first.wpilibj.camera.*;
-import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 
 import edu.arhs.first1100.robot.RobotMain;
 /**
@@ -23,15 +21,15 @@ public class TargetPegRoutine extends Routine
     double targetHeight = 0;
     int cam_resX;
     int cam_resY;
-    public TargetPegRoutine(RobotMain robot, int sleep, double height)
+    public TargetPegRoutine(int sleep, double height)
     {
-        super(robot, sleep);
+        super(sleep);
         //robot.manipulatorSystem.setLiftPosition(height);
         //robot.manipulatorSystem.waitUntilDone();
         //robot.manipulatorSystem.trackWithCamera();
         //robot.manipulatorSystem.waitUntilDone();
-        cam_resX = AxisCamera.getInstance().getResolution().width;
-        cam_resY = AxisCamera.getInstance().getResolution().height;
+        //cam_resX = AxisCamera.getInstance().getResolution().width;
+        //cam_resY = AxisCamera.getInstance().getResolution().height;
 
 
         log("launching TargetPegRoutine to height " + height);
@@ -43,7 +41,7 @@ public class TargetPegRoutine extends Routine
  */
     public TargetPegRoutine(RobotMain robot, int sleep)
     {
-        super(robot, sleep);
+        super(sleep);
         targetHeight = /*Get current lift height*/ 0;
     }
    /**
@@ -51,7 +49,7 @@ public class TargetPegRoutine extends Routine
     */
     public void tick()
     {
-        if(robot.manipulatorSystem.armOnTarget())
+        if(ManipulatorSystem.getInstance().armOnTarget())
             setDone();
 
     }

@@ -9,6 +9,8 @@ import edu.arhs.first1100.autoctl.TargetPegRoutine;
 import edu.arhs.first1100.autoctl.ScoreRoutine;
 import edu.arhs.first1100.autoctl.FollowLineRoutine;
 import edu.arhs.first1100.camera.CameraSystem;
+import edu.arhs.first1100.drive.DriveSystem;
+import edu.arhs.first1100.minibot.MinibotSystem;
 
 /**
  *how the operator will drive the robot
@@ -16,6 +18,9 @@ import edu.arhs.first1100.camera.CameraSystem;
  */
 public class OperatorSystem extends SystemBase
 {
+    private static OperatorSystem instance;
+    private static int sleepTime = 100;
+
     private DriverStationDataFeeder driverStation;
     
     public AdvJoystick leftJoystick;  //controls the left side of the robot
@@ -34,19 +39,29 @@ public class OperatorSystem extends SystemBase
     private ScoreRoutine scoreRoutine = null;
     private FollowLineRoutine lineRoutine = null;
     //private ManipulatorStateRoutine mStateRoutine = null;
+
+    private ManipulatorSystem ms;
+    private CameraSystem cs;
+    private DriveSystem ds;
+    private MinibotSystem mbot;
     
     //private PickUpRoutine pickupRoutine = null;
+    public static OperatorSystem getInstance()
+    {
+        if(instance == null) instance = new OperatorSystem();
+        return instance;
+    }
     
     /**
      *what controllers will drive the robot
      * @param robot
      * @param sleepTime
      */
-    public OperatorSystem(RobotMain robot, int sleepTime)
+    public OperatorSystem()
     {
-        super(robot, sleepTime);
+        super(sleepTime);
 
-        driverStation = new DriverStationDataFeeder(robot, 500);
+        driverStation = new DriverStationDataFeeder();
         driverStation.start();
         
         leftJoystick  = new AdvJoystick(1);
@@ -55,6 +70,11 @@ public class OperatorSystem extends SystemBase
         
         ledIndicator  = new GamepieceIndicator();
         ledIndicator.start();
+
+        ms = ManipulatorSystem.getInstance();
+        cs = CameraSystem.getInstance();
+        ds = DriveSystem.getInstance();
+        mbot = MinibotSystem.getInstance();
     }
     
     /**
@@ -69,7 +89,7 @@ public class OperatorSystem extends SystemBase
         {
             if(lineRoutine == null)
             {
-                lineRoutine = new FollowLineRoutine(robot, 50);
+                lineRoutine = new FollowLineRoutine();
                 lineRoutine.start();
             }
             else
@@ -92,38 +112,40 @@ public class OperatorSystem extends SystemBase
         if(xboxJoystick.getRightTrigger() > 0.5)
         {
             //log("right trigger down");
-            robot.manipulatorSystem.lift.startCamPid();
+            ms.lift.startCamPid();
         }
         else
         {
+            // trigger up
             if(Math.abs(xboxJoystick.getRightStickY()) > 0.25)
             {
-                //log("9 from outerspace");
                 log("Sending: " + xboxJoystick.getRightStickY());
-                robot.manipulatorSystem.setLiftSpeed(xboxJoystick.getRightStickY());
+                ms.setLiftSpeed(xboxJoystick.getRightStickY());
             }
-            else if(robot.manipulatorSystem.lift.getSpeed() != 0)
+            else
             {
-                //log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                robot.manipulatorSystem.setLiftSpeed(0.0);
+                ms.lift.stop();
             }
-            //log("right trigger up");
-            robot.manipulatorSystem.lift.stopCamPid();
 
+            /*
+             * use these buttons to launch routines.
+             *
             if(xboxJoystick.getAButton())
-                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
+                ms.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
 
             else if(xboxJoystick.getBButton())
-                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_MID_PEG);
+                ms.setState(ManipulatorSystem.STATE_MID_PEG);
 
             else if(xboxJoystick.getYButton())
-                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_TOP_PEG);
+                ms.setState(ManipulatorSystem.STATE_TOP_PEG);
 
             else if(xboxJoystick.getXButton())
-                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_DEFAULT);
+                ms.setState(ManipulatorSystem.STATE_DEFAULT);
 
             if(xboxJoystick.getDpad() == 1.0)
-                robot.manipulatorSystem.setState(ManipulatorSystem.STATE_FLOOR);
+                ms.setState(ManipulatorSystem.STATE_FLOOR);
+             * 
+             */
         }
         
         /*
@@ -142,20 +164,20 @@ public class OperatorSystem extends SystemBase
          */
         int brightness = (int)((rightJoystick.getRawAxis(3)/2 + 0.5)*100);
         //log("setting brightness: " + brightness);
-        robot.cameraSystem.setBrightness(brightness);
+        cs.setBrightness(brightness);
         
         if(leftJoystick.getRawButton(9))
         {
-            robot.manipulatorSystem.resetEncoders();
+            ms.resetEncoders();
         }
         if(rightJoystick.getRawButton(9))
         {
-            robot.cameraSystem.light.on();
+            cs.light.on();
             
         }
         if(rightJoystick.getRawButton(8))
         {
-            robot.cameraSystem.light.onForAWhile();
+            cs.light.onForAWhile();
         }
 
         doAVG();
@@ -166,7 +188,7 @@ public class OperatorSystem extends SystemBase
      */
     private void doDrive()
     {
-        robot.driveSystem.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
+        ds.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
         //robot.driveSystem.testCameraDrive(-leftJoystick.getY());
     }
     
@@ -176,12 +198,12 @@ public class OperatorSystem extends SystemBase
         if(Math.abs(xboxJoystick.getRightStickY()) > 0.25)
         {
             log("9 from outerspace");
-            robot.manipulatorSystem.setLiftSpeed(xboxJoystick.getRightStickY());
+            ms.setLiftSpeed(xboxJoystick.getRightStickY());
         }
-        else if(robot.manipulatorSystem.lift.getSpeed() != 0)
+        else if(ms.lift.getSpeed() != 0)
         {
             log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            robot.manipulatorSystem.setLiftSpeed(0.0);
+            ms.setLiftSpeed(0.0);
         }
     }
 
@@ -189,11 +211,11 @@ public class OperatorSystem extends SystemBase
     {
         if(Math.abs(xboxJoystick.getLeftStickY()) > 0.25)
         {
-            robot.manipulatorSystem.setArmSpeed(xboxJoystick.getLeftStickY()/4);
+            ms.setArmSpeed(xboxJoystick.getLeftStickY()/4);
         }
-        else if(!robot.manipulatorSystem.arm.pidEnabled())
+        else if(!ms.arm.pidEnabled())
         {
-            robot.manipulatorSystem.setArmPosition(robot.manipulatorSystem.arm.getEncoder());
+            ms.setArmPosition(ms.arm.getEncoder());
         }
     }
     
@@ -225,17 +247,17 @@ public class OperatorSystem extends SystemBase
         if (rightJoystick.getRawButton(6))
         {
             log("Minibot delpoy thing: " + leftJoystick.getStickX());
-            log("Minibot arm speed: " + robot.minibotSystem.getArmSpeed());
+            log("Minibot arm speed: " + mbot.getArmSpeed());
             
-            robot.minibotSystem.setArmSpeed(leftJoystick.getStickX());
-            robot.minibotSystem.setDeployerSpeed(rightJoystick.getStickX());
+            mbot.setArmSpeed(leftJoystick.getStickX());
+            mbot.setDeployerSpeed(rightJoystick.getStickX());
             
-            robot.driveSystem.setDriveSpeed(0, 0);
+            ds.setDriveSpeed(0, 0);
         }
         else
         {
-            robot.minibotSystem.setArmSpeed(0.0);
-            robot.minibotSystem.setDeployerSpeed(0.0);
+            mbot.setArmSpeed(0.0);
+            mbot.setDeployerSpeed(0.0);
         }
     }
     
@@ -244,7 +266,7 @@ public class OperatorSystem extends SystemBase
         // Left Toggle Button
         if(xboxJoystick.getLeftBumper() && !xboxLeftBumperLastState)
         {
-            robot.manipulatorSystem.toggleClaw();
+            ms.toggleClaw();
             xboxLeftBumperLastState = true;
         }
         if(!xboxJoystick.getLeftBumper())
@@ -253,7 +275,7 @@ public class OperatorSystem extends SystemBase
         // Right Bumper Toggle
         if(xboxJoystick.getRightBumper() && !xboxRightBumperLastState)
         {
-            robot.manipulatorSystem.toggleWrist();
+            ms.toggleWrist();
             xboxRightBumperLastState = true;
         }
         if(!xboxJoystick.getRightBumper())

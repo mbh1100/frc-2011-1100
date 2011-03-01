@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.DigitalInput;
  */
 public class LineSystem extends SystemBase
 {
+    static private LineSystem instance;
+    static private int sleepTime = 100;
+
     public static final int STATE_MIDDLE = 0;
     public static final int STATE_RIGHT = -1;
     public static final int STATE_LEFT = 1;
@@ -25,15 +28,20 @@ public class LineSystem extends SystemBase
     DigitalInput middle;
     DigitalInput right;
     
-    /**
+    public static LineSystem getInstance()
+    {
+        if(instance == null) instance = new LineSystem();
+        return instance;
+    }
+/**
      *creates new line trackers
      * specifies how long the robot should sleep
      * @param robot
      * @param sleepTime
      */
-    public LineSystem(RobotMain robot, int sleepTime)
+    private LineSystem()
     {
-        super(robot, sleepTime);
+        super(sleepTime);
         
         left = new DigitalInput(1);
         middle = new DigitalInput(3);

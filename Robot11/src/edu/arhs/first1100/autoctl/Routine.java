@@ -17,9 +17,9 @@ public class Routine extends SystemBase
      * @param robot
      * @param sleep
      */
-    public Routine(RobotMain robot, int sleep)
+    public Routine(int sleep)
     {
-        super(robot, sleep);
+        super(sleep);
     }
 /**
  *says when the robot is done

@@ -14,7 +14,9 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class CameraSystem extends SystemBase
 {
-
+    private static CameraSystem instance;
+    private static int sleepTime = 100;
+    
     public final int WHITE_THRESHOLD = 1;
     public final int RED_THRESHOLD = 2;
     public final int BLUE_THRESHOLD =3;
@@ -34,14 +36,20 @@ public class CameraSystem extends SystemBase
     ColorImage cImg;
     BinaryImage bImg;
     ParticleAnalysisReport[] pRep = new ParticleAnalysisReport[PARTICLE_SIZE];
+
+    public static CameraSystem getInstance()
+    {
+        if(instance == null) instance = new CameraSystem();
+        return instance;
+    }
 /**
  * constructor: gets instance of the axis camera and declares the sleep time
  * @param robot
  * @param sleepTime
  */
-    public CameraSystem(RobotMain robot, int sleepTime)
+    private CameraSystem()
     {
-        super(robot, sleepTime);
+        super(sleepTime);
         
         ac = AxisCamera.getInstance();
         cImg = null;
