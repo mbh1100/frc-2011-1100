@@ -13,6 +13,7 @@ public class SystemBase extends Thread
     
     private boolean stopThread = true;
     private boolean threadStarted = false;
+    private boolean killed = true;
 
     /**
      * Construct the system base
@@ -50,6 +51,11 @@ public class SystemBase extends Thread
         log("Stopping thread");
         stopThread = true;
     }
+
+    public void kill()
+    {
+        killed = true;
+    }
     
     /**
      * Run the thread.  Called by start(), do not call directly!
@@ -60,7 +66,7 @@ public class SystemBase extends Thread
     {
         log("run() called");
         
-        while(true)
+        while(!killed)
         {
             while(!stopThread)
             {
@@ -85,7 +91,7 @@ public class SystemBase extends Thread
 
             log("Stopping thread");
             
-            while(stopThread)
+            while(stopThread && !killed)
             {
                 Timer.delay(0.1);
             }

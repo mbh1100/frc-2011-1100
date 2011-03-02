@@ -22,11 +22,17 @@ public class ArmToPositionRoutine extends Routine
     public void run()
     {
         ManipulatorSystem.getInstance().setArmPosition(encoder);
-        while (Math.abs(ManipulatorSystem.getInstance().getArmPosition() - encoder) > 5)
+        while (Math.abs(ManipulatorSystem.getInstance().getArmPosition() - encoder) > 5 &&
+                ! isCancelled())
         {
             Timer.delay(.2);
         }
 
         this.setDone();
+    }
+
+    protected void doCancel()
+    {
+
     }
 }

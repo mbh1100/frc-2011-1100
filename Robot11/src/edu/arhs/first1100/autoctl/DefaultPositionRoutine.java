@@ -11,6 +11,10 @@ package edu.arhs.first1100.autoctl;
  */
 public class DefaultPositionRoutine extends Routine
 {
+    WristUpRoutine wdr = new WristUpRoutine();
+    LiftToPositionRoutine ltpr = new LiftToPositionRoutine(5);
+    ArmToPositionRoutine atpr = new ArmToPositionRoutine(5);  //encoder needs to be fixed
+
     public DefaultPositionRoutine()
     {
         super(100);
@@ -18,10 +22,6 @@ public class DefaultPositionRoutine extends Routine
 
     public void run()
     {
-        WristUpRoutine wdr = new WristUpRoutine();
-        LiftToPositionRoutine ltpr = new LiftToPositionRoutine(5);
-        ArmToPositionRoutine atpr = new ArmToPositionRoutine(5);  //encoder needs to be fixed
-
         wdr.start();
         ltpr.start();
         atpr.start();
@@ -31,5 +31,12 @@ public class DefaultPositionRoutine extends Routine
         atpr.waitForDone();
 
         this.setDone();
+    }
+
+    protected void doCancel()
+    {
+        wdr.cancel();
+        ltpr.cancel();
+        atpr.start();
     }
 }

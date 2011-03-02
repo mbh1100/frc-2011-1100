@@ -41,4 +41,10 @@ public class SelectColumnRoutine extends Routine
         Timer.delay(3);
         super.setDone();
     }
+    
+    protected void doCancel()
+    {
+        kill();
+        setDone();
+    }
 }

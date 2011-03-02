@@ -53,4 +53,10 @@ public class TargetPegRoutine extends Routine
             setDone();
 
     }
+
+    protected void doCancel()
+    {
+        kill();
+        setDone();
+    }
 }

@@ -6,12 +6,14 @@ import edu.arhs.first1100.util.SystemBase;
  *
  * @author team1100
  */
-public class Routine extends SystemBase
+public abstract class Routine extends SystemBase
 {
     /**
      *
      */
     private boolean done = false;
+    private boolean cancelled = false;
+
     /**
      *says how long the robot should be asleep in the routine
      * @param robot
@@ -52,6 +54,11 @@ public class Routine extends SystemBase
      */
     public synchronized void setDone()
     {
+        if (done)
+        {
+            // only notify once in the event of multiple setDone calls
+            return;
+        }
         done = true;
         stop();
         notify();
@@ -64,4 +71,14 @@ public class Routine extends SystemBase
         start();
         waitForDone();
     }
+    public final void cancel()
+    {
+        cancelled = true;
+        doCancel();
+    }
+    public boolean isCancelled()
+    {
+        return cancelled;
+    }
+    protected abstract void doCancel();
 }

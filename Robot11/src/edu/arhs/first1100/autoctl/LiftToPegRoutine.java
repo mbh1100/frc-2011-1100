@@ -21,6 +21,8 @@ public class LiftToPegRoutine extends Routine
     
     private int positionState;
 
+    Routine ltpr;
+
 /**
  *
  * This is a bit silly, the state case could easily be in LiftToPositionRoutine
@@ -41,10 +43,17 @@ public class LiftToPegRoutine extends Routine
                 positionState = BottomPegHeight;
                 break;
         }
+
+        ltpr = new LiftToPositionRoutine(positionState);
     }
 
     public void run()
     {
-        new LiftToPositionRoutine(positionState).execute();
+        ltpr.execute();
+    }
+
+    protected void doCancel()
+    {
+        ltpr.cancel();
     }
 }

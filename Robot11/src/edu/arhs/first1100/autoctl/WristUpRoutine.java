@@ -22,4 +22,9 @@ public class WristUpRoutine extends Routine
         Timer.delay(1);
         this.setDone();
     }
+
+    protected void doCancel()
+    {
+        this.setDone();
+    }
 }

@@ -7,6 +7,9 @@ package edu.arhs.first1100.autoctl;
 
 public class PickUpTubeFromFloorRoutine extends Routine
 {
+    GrabATubeRoutine gatr = new GrabATubeRoutine();
+    DefaultPositionRoutine dpr = new DefaultPositionRoutine();
+
     public PickUpTubeFromFloorRoutine()
     {
         super(100);
@@ -14,12 +17,15 @@ public class PickUpTubeFromFloorRoutine extends Routine
 
     public void run()
     {
-        GrabATubeRoutine gatr = new GrabATubeRoutine();
         gatr.execute();
-
-        DefaultPositionRoutine dpr = new DefaultPositionRoutine();
         dpr.execute();
 
         this.setDone();
+    }
+
+    protected void doCancel()
+    {
+        gatr.cancel();
+        dpr.cancel();
     }
 }

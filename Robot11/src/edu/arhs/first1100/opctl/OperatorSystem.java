@@ -8,6 +8,8 @@ import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.autoctl.TargetPegRoutine;
 import edu.arhs.first1100.autoctl.ScoreRoutine;
 import edu.arhs.first1100.autoctl.FollowLineRoutine;
+import edu.arhs.first1100.autoctl.Routine;
+import edu.arhs.first1100.autoctl.TestEverythingRoutine;
 import edu.arhs.first1100.camera.CameraSystem;
 import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.minibot.MinibotSystem;
@@ -30,6 +32,7 @@ public class OperatorSystem extends SystemBase
     private boolean xboxLeftBumperLastState = false;
     private boolean xboxRightBumperLastState = false;
     private boolean avgToggleLastState = false;
+    private boolean leftButton10State = false;
     
     //private ButtonBox buttonBox;
     private GamepieceIndicator ledIndicator;  //indicates the gamepiece that the human.
@@ -38,6 +41,7 @@ public class OperatorSystem extends SystemBase
     private TargetPegRoutine targetRoutine = null;
     private ScoreRoutine scoreRoutine = null;
     private FollowLineRoutine lineRoutine = null;
+    private TestEverythingRoutine testRoutine = null;
     //private ManipulatorStateRoutine mStateRoutine = null;
 
     private ManipulatorSystem ms;
@@ -85,6 +89,7 @@ public class OperatorSystem extends SystemBase
         /*
          * Drive and line routines
          */
+        /*
         if(leftJoystick.getRawButton(11))
         {
             if(lineRoutine == null)
@@ -103,6 +108,39 @@ public class OperatorSystem extends SystemBase
         }
         else
         {
+
+            doDrive();
+        }
+         *
+         */
+        if (leftJoystick.getRawButton(11))
+        {
+            if (testRoutine == null)
+            {
+                log("starting TestEverythingRoutine");
+                testRoutine = new TestEverythingRoutine();
+                testRoutine.start();
+            }
+            if (leftJoystick.getRawButton(10) && !leftButton10State)
+            {
+                log("advancing");
+                testRoutine.advance();
+                leftButton10State = true;
+            }
+            else if (!leftJoystick.getRawButton(10))
+            {
+                leftButton10State = false;
+            }
+        }
+        else
+        {
+            if (testRoutine != null)
+            {
+                testRoutine.cancel();
+                testRoutine.waitForDone();
+                log("test routine cancelled!");
+                testRoutine = null;
+            }
             doDrive();
         }
         

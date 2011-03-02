@@ -22,4 +22,9 @@ public class ReleaseATubeRoutine extends Routine
         Timer.delay(.75);
         this.setDone();
     }
+
+    protected void doCancel()
+    {
+        this.setDone();
+    }
 }

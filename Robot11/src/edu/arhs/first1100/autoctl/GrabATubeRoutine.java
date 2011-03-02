@@ -22,4 +22,9 @@ public class GrabATubeRoutine extends Routine
         Timer.delay(.75);
         this.setDone();
     }
+
+    protected void doCancel()
+    {
+        setDone();
+    }
 }

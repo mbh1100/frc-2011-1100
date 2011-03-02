@@ -54,6 +54,12 @@ public class FollowLineRoutine extends Routine
      */
     public void tick()
     {
+        if (isCancelled())
+        {
+            kill();
+            setDone();
+            return;
+        }
         switch(ls.getState())
         {
             case LineSystem.STATE_ALL:
@@ -97,5 +103,10 @@ public class FollowLineRoutine extends Routine
         }
         log("log robot state, turn: " + turn);
         ds.drive(0.3, -turn);
+    }
+
+    protected void doCancel()
+    {
+        // we check isCancelled in the tick() loop
     }
 }

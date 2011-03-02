@@ -22,11 +22,17 @@ public class LiftToPositionRoutine extends Routine
     public void run()
     {
         ManipulatorSystem.getInstance().setLiftPosition(encoder);
-        while (Math.abs(ManipulatorSystem.getInstance().getLiftHeight() - encoder) > 5)
+        while (Math.abs(ManipulatorSystem.getInstance().getLiftHeight() - encoder) > 5 &&
+                ! isCancelled())
         {
             Timer.delay(.2);
         }
 
         this.setDone();
+    }
+
+    protected void doCancel()
+    {
+        ManipulatorSystem.getInstance().setLiftSpeed(0.0);
     }
 }

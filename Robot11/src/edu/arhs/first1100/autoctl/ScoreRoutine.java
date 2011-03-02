@@ -21,6 +21,8 @@ public class ScoreRoutine extends Routine
     DriveSystem ds;
     ManipulatorSystem ms;
     
+    ReleaseATubeRoutine ratr = new ReleaseATubeRoutine();
+    
     /**
      *how long the robot should sleep
      * @param robot
@@ -38,8 +40,7 @@ public class ScoreRoutine extends Routine
      */
     public void run()
     {
-        ms.releaseTube();
-        Timer.delay(0.5);
+        ratr.execute();
 
         ms.setLiftPosition(ms.lift.getEncoder() - 50);
         while (!ms.liftOnTarget())
@@ -47,10 +48,22 @@ public class ScoreRoutine extends Routine
             Timer.delay(0.5);
         }
         log("SCORE ROUTINE IS BEING CALLED");
-        ds.drive(-0.5, 0.0);
+        if (! isCancelled())
+        {
+            ds.drive(-0.5, 0.0);
+        }
+
         Timer.delay(1);
-        ds.drive(0.0, 0.0);
+
+        if (! isCancelled())
+            ds.drive(0.0, 0.0);
         
-        super.setDone();
+        setDone();
+    }
+    
+    protected void doCancel()
+    {
+        ratr.cancel();
+        setDone();
     }
 }
