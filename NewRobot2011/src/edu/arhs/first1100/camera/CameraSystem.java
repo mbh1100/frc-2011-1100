@@ -2,12 +2,10 @@ package edu.arhs.first1100.camera;
 
 import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.util.SystemBase;
-import edu.arhs.first1100.robot.RobotMain;
 import edu.wpi.first.wpilibj.camera.*;
 import edu.wpi.first.wpilibj.image.ColorImage;
 import edu.wpi.first.wpilibj.image.BinaryImage;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  * the start of the camera system
@@ -16,7 +14,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class CameraSystem extends SystemBase
 {
-      public final int WHITE_THRESHOLD = 1;
+    public final int WHITE_THRESHOLD = 1;
     public final int RED_THRESHOLD = 2;
     public final int BLUE_THRESHOLD =3;
     private final int PARTICLE_SIZE = 3;
@@ -121,7 +119,7 @@ public class CameraSystem extends SystemBase
                         +pRep[i].center_mass_y_normalized+"\n\n";
                 
             }
-            Log.defcon3(this, info);
+            Log.defcon2(this, info);
         }
     }
     
@@ -167,8 +165,7 @@ public class CameraSystem extends SystemBase
     */
     public double getCenterY()
     {
-        Log.defcon3(this,"getCenterY() needs code!");
-               // light.onForAWhile();
+        // light.onForAWhile();
         if(pRep[0] != null && pRep[0] != null )
             return pRep[0].center_mass_y_normalized;
         else
@@ -181,8 +178,6 @@ public class CameraSystem extends SystemBase
     */
     public double getCenterX()
     {
-
-        Log.defcon3(this,"getCenterX() needs code!");
         //light.onForAWhile();
         if(pRep.length > 0 && pRep[0] != null)
             return pRep[0].center_mass_x_normalized;
