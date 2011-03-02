@@ -62,7 +62,7 @@ public class RobotMain extends SimpleRobot
         }
             Log.defcon3(this, "+------------------------+");
             Log.defcon3(this, "| USING "
-                    +((diagnostic)?"DIAGNOSTIC ":"  REGULAR ")
+                    +((diagnostic)?"DIAGNOSTIC ":"  REGULAR  ")
                     +"ROBOT |");
             Log.defcon3(this, "+------------------------+");
     }
