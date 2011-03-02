@@ -19,8 +19,8 @@ public class MinibotSystem extends SystemBase
 {
     private static MinibotSystem instance = null;
 
-    private final int ARM_UP_POT_VALUE = 5;
-    private final int ARM_DOWN_POT_VALUE = 500;
+    private final int ARM_UP_POT_VALUE = 180;
+    private final int ARM_DOWN_POT_VALUE = 475;
     
     private final int STATE_DROPARM = 0;
     private final int STATE_DEPLOY = 1;
@@ -61,7 +61,7 @@ public class MinibotSystem extends SystemBase
             if(backButton)
             {
                 Log.defcon1(this, "back button: drop arm");
-                setArmSpeed(0.5);
+                setArmSpeed(0.1);
             }
             else
             {
@@ -71,7 +71,7 @@ public class MinibotSystem extends SystemBase
 
             setBeltSpeed(0.0);
             
-            if(Math.abs(armPOT.getValue()-ARM_DOWN_POT_VALUE) < 10)
+            if(Math.abs(armPOT.getValue() - ARM_DOWN_POT_VALUE) < 15)
                 state = STATE_DEPLOY;
 
             Log.defcon1(this, "***************");
@@ -84,7 +84,7 @@ public class MinibotSystem extends SystemBase
             if(backButton)
             {
                 Log.defcon1(this, "back button: drop arm");
-                setArmSpeed(0.5);
+                setArmSpeed(0.1);
             }
             else
             {
@@ -111,11 +111,11 @@ public class MinibotSystem extends SystemBase
             
             if(minibotDeployed && !beltBackSwitch.get())
             {
-                Log.defcon1(this, "SETTING STATE TO DROPARM");
+                Log.defcon1(this, "SETTING STATE TO LIFTARM");
                 state = STATE_LIFTARM;
             }
 
-            Log.defcon1(this, "MINIBOT VARIABLES: "+minibotDeployed);
+            Log.defcon1(this, "minibotDeployed: "+minibotDeployed);
             
             Log.defcon1(this, "***************");
         }
@@ -125,16 +125,19 @@ public class MinibotSystem extends SystemBase
             Log.defcon1(this, "*****State liftarm");
             
             Log.defcon1(this, "Rasing arm");
-            setArmSpeed(0.5);
             
-            if(Math.abs(armPOT.getValue()-ARM_UP_POT_VALUE) < 10)
+            setArmSpeed(-0.25);
+            
+            if(Math.abs(armPOT.getValue() - ARM_UP_POT_VALUE) < 15)
             {
                 Log.defcon1(this, "arm value reached");
-                Log.defcon1(this, "minbot deploted trigger = false");
+                Log.defcon1(this, "minbot deployed trigger = false");
                 minibotDeployed = false;
+
+                setArmSpeed(0.0);
                 
                 Log.defcon1(this, "SETTING STATE TO DROPARM");
-                state = STATE_DEPLOY;
+                state = STATE_DROPARM;
             }
 
             Log.defcon1(this, "***************");

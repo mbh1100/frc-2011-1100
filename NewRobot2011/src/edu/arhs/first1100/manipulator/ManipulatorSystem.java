@@ -191,31 +191,28 @@ public class ManipulatorSystem extends SystemBase
         armMUX = ARMMUX_OPERATOR;
         armJaguar.set(speed);
     }
-
     public void setArmPosition(double position)
     {
         armMUX = ARMMUX_PID;
         armPID.setTarget(position);
     }
-
     public double getArmSpeed()
     {
         return armJaguar.get();
     }
-    
     public double getArmEncoder()
     {
         return armEncoder.get();
     }
 
+
     /*
-     * Claw and wrist
+     * Claw and Wrist
      */
     public void toggleClaw()
     {
         claw.set(!claw.get());
     }
-
     public void openClaw()
     {
         claw.set(true);
@@ -228,12 +225,10 @@ public class ManipulatorSystem extends SystemBase
     {
         return claw.get();
     }
-
     public void toggleWrist()
     {
         wrist.set(!wrist.get());
     }
-
     public void wristUp()
     {
         wrist.set(true);

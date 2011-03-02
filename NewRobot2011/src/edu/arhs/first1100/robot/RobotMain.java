@@ -16,8 +16,10 @@ import edu.arhs.first1100.line.LineSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.minibot.MinibotSystem;
 import edu.arhs.first1100.opctl.OperatorSystem;
+import edu.arhs.first1100.diag.DiagnosticRobot;
 
 import edu.arhs.first1100.log.Log;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  *
@@ -25,73 +27,107 @@ import edu.arhs.first1100.log.Log;
  */
 public class RobotMain extends SimpleRobot
 {
+    private DigitalInput diagSwitch;
+    private boolean diagnostic;
+    private DiagnosticRobot diagRobot;
+
     public void robotInit()
-    {
-        //Set Logging Levels
-        Log.addClass(MinibotSystem.class, 1);
-        Log.addClass(OperatorSystem.class, 2);
-        Log.addClass(RobotMain.class, 3);
-        
-        
+    {        
         Log.defcon3(this, "Robot Init");
 
-        OperatorSystem.getInstance().setSleep(100);
-        AutonomousSystem.getInstance().setSleep(100);
-        
-        DriveSystem.getInstance().setSleep(100);
-        ManipulatorSystem.getInstance().setSleep(100);
+        diagSwitch = new DigitalInput(13);
+        diagnostic = !diagSwitch.get();
 
-        CameraSystem.getInstance().setSleep(100);
-        LineSystem.getInstance().setSleep(100);
 
-        MinibotSystem.getInstance().setSleep(100);
+        if(!diagnostic)
+        {
+            //Set Logging Levels
+            Log.addClass(MinibotSystem.class, 1);
+            Log.addClass(OperatorSystem.class, 2);
+            Log.addClass(RobotMain.class, 3);
+            OperatorSystem.getInstance().setSleep(100);
+            AutonomousSystem.getInstance().setSleep(100);
+
+            DriveSystem.getInstance().setSleep(100);
+            ManipulatorSystem.getInstance().setSleep(100);
+
+            CameraSystem.getInstance().setSleep(100);
+            LineSystem.getInstance().setSleep(100);
+
+            MinibotSystem.getInstance().setSleep(100);
+        }
+        else
+        {
+            diagRobot = new DiagnosticRobot();
+        }
+            Log.defcon3(this, "+------------------------+");
+            Log.defcon3(this, "| USING "
+                    +((diagnostic)?"DIAGNOSTIC ":"  REGULAR ")
+                    +"ROBOT |");
+            Log.defcon3(this, "+------------------------+");
     }
     
     public void autonomous()
     {
-        Log.defcon3(this, "Autonomous Mode Activated");
-        
-        OperatorSystem.getInstance().stop();
-        AutonomousSystem.getInstance().start();
-        
-        DriveSystem.getInstance().start();
-        ManipulatorSystem.getInstance().start();
+        if(!diagnostic)
+        {
+            Log.defcon3(this, "Autonomous Mode Activated");
 
-        CameraSystem.getInstance().start();
-        LineSystem.getInstance().start();
+            OperatorSystem.getInstance().stop();
+            AutonomousSystem.getInstance().start();
 
-        MinibotSystem.getInstance().start();
+            DriveSystem.getInstance().start();
+            ManipulatorSystem.getInstance().start();
+
+            CameraSystem.getInstance().start();
+            LineSystem.getInstance().start();
+
+            MinibotSystem.getInstance().start();
+        }
     }
 
     public void operatorControl()
     {
-        Log.defcon3(this, "Operator Mode Activated");
+        if(!diagnostic)
+        {
+            Log.defcon3(this, "Operator Mode Activated");
 
-        OperatorSystem.getInstance().start();
-        AutonomousSystem.getInstance().stop();
+            OperatorSystem.getInstance().start();
+            AutonomousSystem.getInstance().stop();
 
-        DriveSystem.getInstance().start();
-        ManipulatorSystem.getInstance().start();
+            DriveSystem.getInstance().start();
+            ManipulatorSystem.getInstance().start();
 
-        CameraSystem.getInstance().start();
-        LineSystem.getInstance().start();
+            CameraSystem.getInstance().start();
+            LineSystem.getInstance().start();
 
-        MinibotSystem.getInstance().start();
+            MinibotSystem.getInstance().start();
+        }
+        else
+        {
+            while(this.isOperatorControl())
+            {
+                diagRobot.teleop();
+            }
+        }
     }
     
     public void disabled()
     {
-        Log.defcon3(this, "Robot Disabled");
-        
-        OperatorSystem.getInstance().stop();
-        AutonomousSystem.getInstance().stop();
+        if(!diagnostic)
+        {
+            Log.defcon3(this, "Robot Disabled");
 
-        DriveSystem.getInstance().stop();
-        ManipulatorSystem.getInstance().stop();
+            OperatorSystem.getInstance().stop();
+            AutonomousSystem.getInstance().stop();
 
-        CameraSystem.getInstance().stop();
-        LineSystem.getInstance().stop();
+            DriveSystem.getInstance().stop();
+            ManipulatorSystem.getInstance().stop();
 
-        MinibotSystem.getInstance().stop();
+            CameraSystem.getInstance().stop();
+            LineSystem.getInstance().stop();
+
+            MinibotSystem.getInstance().stop();
+        }
     }
 }
