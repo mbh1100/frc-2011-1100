@@ -36,7 +36,7 @@ public class RobotMain extends SimpleRobot
     public OperatorSystem operatorSystem;
     public Compressor compressor;
 
-    public DiagnosticRobot diagnosticRobot;
+   // public DiagnosticRobot diagnosticRobot;
     private DigitalInput diagSwitch;
 
     boolean diagnostic = true;
@@ -66,7 +66,7 @@ public class RobotMain extends SimpleRobot
             log("+------------------------+");
             log("| USING DIAGNOSTIC ROBOT |");
             log("+------------------------+");
-            diagnosticRobot = DiagnosticRobot.getInstance();
+            //diagnosticRobot = DiagnosticRobot.getInstance();
         }
         compressor = new Compressor(6, 1);
         compressor.start();
@@ -110,19 +110,18 @@ public class RobotMain extends SimpleRobot
         if (!diagnostic){
 
             log("Enabling teleop");
-
-            log("Starting opsys");
-            operatorSystem.start();
-
+            
             log("stopping ausys");
             autonomousSystem.stop();
 
             log("Starting cam, drive, manip");
-            cameraSystem.start();
+            //cameraSystem.start();
             manipulatorSystem.start();
-            driveSystem.start();
-            lineSystem.start();
-            minibotSystem.start();
+            //driveSystem.start();
+            //lineSystem.start();
+            //minibotSystem.start();
+            log("Starting opsys");
+            operatorSystem.start();
 
             log("Enabled teleop");
         }
@@ -130,7 +129,7 @@ public class RobotMain extends SimpleRobot
         {
             while(isOperatorControl())
             {
-                diagnosticRobot.teleop();
+              //  diagnosticRobot.teleop();
                 Timer.delay(.1);
             }
         }
@@ -162,7 +161,7 @@ public class RobotMain extends SimpleRobot
         }
         else if(diagnostic)
         {
-            diagnosticRobot.disable();
+           // diagnosticRobot.disable();
         }
     }
     

@@ -90,28 +90,28 @@ public class ManipulatorSystem extends SystemBase
      */
     
     public void releaseTube()
-    { setClawState(false); }
+    { setClawState(true); }
     
     public void grabTube()
-    { setClawState(true); }
+    { setClawState(false); }
 
-    public void setClawState(boolean state)
+    private void setClawState(boolean state)
     { claw.set(state); }
 
     public void toggleClaw()
-    { claw.set(!claw.get()); }
+    { setClawState(!claw.get()); }
 
     public void raiseWrist()
-    { setWristState(false); }
+    { setWristState(true); }
     
     public void lowerWrist()
-    { setWristState(true); }
+    { setWristState(false); }
 
     private void setWristState(boolean state)
     { wrist.set(state); }
     
     public void toggleWrist()
-    { wrist.set(!wrist.get()); }
+    { setWristState(!wrist.get()); }
     
     /**
      *what to do when on target
@@ -139,7 +139,7 @@ public class ManipulatorSystem extends SystemBase
     {
         
         //log("Lift PID target: " + lift.camPid.getSetpoint());
-        log("Lift Encoder:    " + lift.encoder.get());
+        //log("Lift Encoder:    " + lift.encoder.get());
         //log("Lift PID output: " + lift.camPid.get());
         //log();
         
@@ -155,7 +155,12 @@ public class ManipulatorSystem extends SystemBase
             lift.stopPID();
         }
     }
-    
+
+    public void disable()
+    {
+        lowerWrist();
+        grabTube();
+    }
     public void resetEncoders()
     {
         arm.resetEncoder();

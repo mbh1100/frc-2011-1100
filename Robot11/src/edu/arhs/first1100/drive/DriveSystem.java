@@ -118,7 +118,7 @@ public class DriveSystem extends SystemBase
         disableCameraControl();
         rd.tankDrive(leftSide, rightSide);
 
-        log("setDriveSpeed(): " + leftTankmotor1.get() + " : " + rightTankmotor1.get());
+        //log("setDriveSpeed(): " + leftTankmotor1.get() + " : " + rightTankmotor1.get());
     }
     /**
      *
@@ -130,7 +130,7 @@ public class DriveSystem extends SystemBase
         disableCameraControl();
         rd.drive(power, curve);
 
-        log("drive() :" + leftTankmotor1.get() + " : " + rightTankmotor1.get());
+        //log("drive() :" + leftTankmotor1.get() + " : " + rightTankmotor1.get());
     }
 
     /**

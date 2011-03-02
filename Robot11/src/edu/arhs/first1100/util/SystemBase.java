@@ -9,11 +9,12 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class SystemBase extends Thread
 {
-    public int sleepTime = 100;
+    protected int sleepTime = 100;
     
     private boolean stopThread = true;
     private boolean threadStarted = false;
-    private boolean killed = true;
+    private boolean killed = false;
+    private boolean disabled = true;
 
     /**
      * Construct the system base
@@ -24,15 +25,14 @@ public class SystemBase extends Thread
     {
         setSleep(sleep);
     }
-
+    
     /**
      * Start the thread.
      */
     public void start()
     {
-        log("Starting thread");
-        
         stopThread = false;
+        disabled = false;
         
         if(!threadStarted)
         {
@@ -48,7 +48,6 @@ public class SystemBase extends Thread
      */
     public void stop()
     {
-        log("Stopping thread");
         stopThread = true;
     }
 
@@ -64,8 +63,6 @@ public class SystemBase extends Thread
      */
     public void run()
     {
-        log("run() called");
-        
         while(!killed)
         {
             while(!stopThread)
@@ -86,47 +83,19 @@ public class SystemBase extends Thread
                     robot.disabled();
                 }*/
                 
-                Timer.delay( ((double)(sleepTime))/1000 );
+                Timer.delay( sleepTime/1000.0 );
             }
-
-            log("Stopping thread");
             
             while(stopThread && !killed)
             {
+                if (!disabled)
+                {
+                    disable();
+                    disabled = true;
+                }
                 Timer.delay(0.1);
             }
-            /*
-            log("Starting to wait");
-            selfWait();
-            */
-        log("run is looping again");
         }
-    }
-    
-    /**
-     * Makes the component wait
-     * 
-     */
-    public synchronized void selfWait()
-    {
-        log("Waiting!");
-        try
-        {
-            wait();
-        }
-        catch(InterruptedException e)
-        {
-            log("Wait error!");
-        }
-    }
-    
-    /**
-     *
-     */
-    public synchronized void selfNotify()
-    {
-        log("Notify!");
-        notify();
     }
     
     /**
@@ -137,9 +106,9 @@ public class SystemBase extends Thread
      */
     public void tick()
     {
-        //log("Tick!");
+        //Log.deep(this, "tick()!");
     }
-   
+    
     /**
      * Prints out messages to the console
      * @param String message
@@ -154,6 +123,7 @@ public class SystemBase extends Thread
     {
         log("");
     }
+    
     /**
      * Set the amount of time that the system should sleep
      * @param int time How long the component should sleep in milliseconds

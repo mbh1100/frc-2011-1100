@@ -14,42 +14,68 @@ public class TestEverythingRoutine extends Routine
     Routine cancelMe;
 
     boolean waiting = false;
-    Double monitor; // random object for wait/notify monitor
+    Double monitor = new Double(42); // random object for wait/notify monitor
 
     public TestEverythingRoutine()
     {
         super(1000);
     }
 
-    public synchronized void advance()
+    public void advance()
     {
-        if (waiting)
-            monitor.notify();
+        synchronized (monitor)
+        {
+            if (waiting)
+            {
+                monitor.notify();
+                waiting = false;
+            }
+        }
     }
     
-    public synchronized void waitForAdvance()
+    public void waitForAdvance()
     {
-        waiting = true;
-        try
+        synchronized  (monitor)
         {
-            monitor.wait();
+            try
+            {
+                waiting = true;
+                monitor.wait();
+            }
+            catch (Exception e)
+            { log("monitor exception: " + e);}
         }
-        catch (Exception e)
-        {}
     }
 
     public void run()
     {
-        System.out.println("press trigger to run WristDownRoutine");
-        waitForAdvance();
+        testOpenGrip();
+        testCloseGrip();
+        testWristUp();
+        testWristDown();
+        setDone();
+        log("complete");
+    }
+
+    private void testWristDown()
+    {
+        if (!isCancelled())
+        {
+            log("press trigger to run WristDownRoutine");
+            waitForAdvance();
+        }
         if (!isCancelled())
         {
             cancelMe = new WristDownRoutine();
             cancelMe.execute();
         }
+    }
+
+    private void testWristUp()
+    {
         if (!isCancelled())
         {
-            System.out.println("press trigger to run WristUpRoutine");
+            log("press trigger to run WristUpRoutine");
             waitForAdvance();
         }
         if (!isCancelled())
@@ -57,9 +83,13 @@ public class TestEverythingRoutine extends Routine
             cancelMe = new WristUpRoutine();
             cancelMe.execute();
         }
+    }
+
+    private void testCloseGrip()
+    {
         if (!isCancelled())
         {
-            System.out.println("press trigger to run GrabATubeRoutine");
+            log("press trigger to run GrabATubeRoutine");
             waitForAdvance();
         }
         if (!isCancelled())
@@ -67,13 +97,22 @@ public class TestEverythingRoutine extends Routine
             cancelMe = new GrabATubeRoutine();
             cancelMe.execute();
         }
+    }
+
+    private void testOpenGrip()
+    {
+        if (!isCancelled())
+        {
+            log("press trigger to run ReleaseATubeRoutine");
+            waitForAdvance();
+        }
         if (!isCancelled())
         {
             cancelMe = new ReleaseATubeRoutine();
             cancelMe.execute();
         }
-        this.setDone();
     }
+    
     protected void doCancel()
     {
         if (cancelMe != null)

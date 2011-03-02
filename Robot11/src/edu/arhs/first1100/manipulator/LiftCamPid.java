@@ -27,7 +27,7 @@ class LiftCamOutput implements PIDOutput
     public void pidWrite(double output)
     {
         // assuming a DriveSystem interface that incorporates the behavior of the ArcadeDriveMux
-        ManipulatorSystem.getInstance().setLiftSpeed(output);
+        ManipulatorSystem.getInstance().lift.setPidSpeed(output);
     }
 }
 

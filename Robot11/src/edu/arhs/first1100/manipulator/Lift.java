@@ -69,7 +69,7 @@ public class Lift
      */
     public void setSpeed(double speed)
     {
-        System.out.println("Lift: setSpeed:" + -speed);
+        //System.out.println("Lift: setSpeed:" + -speed);
         stopPID();
 
         liftJaguar.set(-speed);

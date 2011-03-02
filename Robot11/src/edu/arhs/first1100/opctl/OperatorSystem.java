@@ -33,6 +33,7 @@ public class OperatorSystem extends SystemBase
     private boolean xboxRightBumperLastState = false;
     private boolean avgToggleLastState = false;
     private boolean leftButton10State = false;
+    private boolean testDone;
     
     //private ButtonBox buttonBox;
     private GamepieceIndicator ledIndicator;  //indicates the gamepiece that the human.
@@ -65,8 +66,8 @@ public class OperatorSystem extends SystemBase
     {
         super(sleepTime);
 
-        driverStation = new DriverStationDataFeeder();
-        driverStation.start();
+        //driverStation = new DriverStationDataFeeder();
+        //driverStation.start();
         
         leftJoystick  = new AdvJoystick(1);
         rightJoystick = new AdvJoystick(2);
@@ -78,7 +79,7 @@ public class OperatorSystem extends SystemBase
         ms = ManipulatorSystem.getInstance();
         cs = CameraSystem.getInstance();
         ds = DriveSystem.getInstance();
-        mbot = MinibotSystem.getInstance();
+        //mbot = MinibotSystem.getInstance();
     }
     
     /**
@@ -121,9 +122,12 @@ public class OperatorSystem extends SystemBase
                 testRoutine = new TestEverythingRoutine();
                 testRoutine.start();
             }
-            if (leftJoystick.getRawButton(10) && !leftButton10State)
+            else if (testRoutine.isDone())
             {
-                log("advancing");
+                // ignore the advance button if the test is done
+            }
+            else if(leftJoystick.getRawButton(10) && !leftButton10State)
+            {
                 testRoutine.advance();
                 leftButton10State = true;
             }
@@ -136,9 +140,12 @@ public class OperatorSystem extends SystemBase
         {
             if (testRoutine != null)
             {
-                testRoutine.cancel();
-                testRoutine.waitForDone();
-                log("test routine cancelled!");
+                if (!testRoutine.isDone())
+                {
+                    testRoutine.cancel();
+                    testRoutine.waitForDone();
+                    log("test routine cancelled!");
+                }
                 testRoutine = null;
             }
             doDrive();
@@ -149,7 +156,7 @@ public class OperatorSystem extends SystemBase
          */
         if(xboxJoystick.getRightTrigger() > 0.5)
         {
-            //log("right trigger down");
+            log("right trigger down");
             ms.lift.startCamPid();
         }
         else
@@ -189,20 +196,20 @@ public class OperatorSystem extends SystemBase
         /*
          * Arm and claw wrist
          */
-        doArm();
+        //doArm();
         
-        doClawWrist();
+        //doClawWrist();
         
         // doGPI();
-        doMinibot();
+        //doMinibot();
         
         /*
          * Debug buttons
          * encoder reset & light buttons
          */
-        int brightness = (int)((rightJoystick.getRawAxis(3)/2 + 0.5)*100);
+        //int brightness = (int)((rightJoystick.getRawAxis(3)/2 + 0.5)*100);
         //log("setting brightness: " + brightness);
-        cs.setBrightness(brightness);
+        //cs.setBrightness(brightness);
         
         if(leftJoystick.getRawButton(9))
         {
@@ -218,7 +225,7 @@ public class OperatorSystem extends SystemBase
             cs.light.onForAWhile();
         }
 
-        doAVG();
+        //doAVG();
     }
     
     /**
@@ -226,6 +233,7 @@ public class OperatorSystem extends SystemBase
      */
     private void doDrive()
     {
+        //log("doDrive");
         ds.setDriveSpeed(-leftJoystick.getY(), -rightJoystick.getY());
         //robot.driveSystem.testCameraDrive(-leftJoystick.getY());
     }
