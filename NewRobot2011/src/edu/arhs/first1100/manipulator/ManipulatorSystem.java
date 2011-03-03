@@ -8,6 +8,7 @@
 package edu.arhs.first1100.manipulator;
 
 import edu.arhs.first1100.camera.CameraSystem;
+import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.util.AdvJaguar;
 import edu.arhs.first1100.util.PID;
 import edu.arhs.first1100.util.SystemBase;
@@ -87,6 +88,8 @@ public class ManipulatorSystem extends SystemBase
          */
         if(liftMUX == LIFTMUX_PID)
         {
+            Log.defcon1(this, "PID Running...");
+            
             liftPID.feed(liftEncoder.get());
             liftJaguar.set(liftPID.get());
 
@@ -120,6 +123,7 @@ public class ManipulatorSystem extends SystemBase
                 imDone();
             }
         }
+        Log.defcon2(this, ("Lift Encoder : "+liftEncoder.get()));
     }
 
     /*
