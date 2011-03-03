@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.Encoder;
  */
 public class DiagnosticRobot
 {
-    private static DiagnosticRobot instance;
     
     //Channel numbers
     final int LEFT_JOYSTICK_CHANNEL = 1;

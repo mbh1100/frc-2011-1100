@@ -60,19 +60,16 @@ public class RobotMain extends SimpleRobot
         {
             diagRobot = new DiagnosticRobot();
         }
-            Log.defcon3(this, "+------------------------+");
-            Log.defcon3(this, "| USING "
-                    +((diagnostic)?"DIAGNOSTIC ":"  REGULAR  ")
-                    +"ROBOT |");
-            Log.defcon3(this, "+------------------------+");
+        Log.defcon3(this, "+------------------------+");
+        Log.defcon3(this, "| USING " + ((diagnostic) ? "DIAGNOSTIC " : "  REGULAR  ") + "ROBOT |");
+        Log.defcon3(this, "+------------------------+");
     }
     
     public void autonomous()
     {
+        Log.defcon3(this, "Autonomous Mode Activated");
         if(!diagnostic)
         {
-            Log.defcon3(this, "Autonomous Mode Activated");
-
             OperatorSystem.getInstance().stop();
             AutonomousSystem.getInstance().start();
 
@@ -88,9 +85,10 @@ public class RobotMain extends SimpleRobot
 
     public void operatorControl()
     {
+        Log.defcon3(this, "Operator Mode Activated");
         if(!diagnostic)
         {
-            Log.defcon3(this, "Operator Mode Activated");
+            
 
             OperatorSystem.getInstance().start();
             AutonomousSystem.getInstance().stop();
@@ -105,7 +103,7 @@ public class RobotMain extends SimpleRobot
         }
         else
         {
-            while(this.isOperatorControl())
+            while(isOperatorControl())
             {
                 diagRobot.teleop();
             }
@@ -114,10 +112,9 @@ public class RobotMain extends SimpleRobot
     
     public void disabled()
     {
+        Log.defcon3(this, "Robot Disabled");
         if(!diagnostic)
-        {
-            Log.defcon3(this, "Robot Disabled");
-
+        {        
             OperatorSystem.getInstance().stop();
             AutonomousSystem.getInstance().stop();
 
