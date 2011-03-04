@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Encoder;
 
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.util.AdvJaguar;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  *what peg the robot should go for and how the robot figures out what peg to go for
@@ -23,6 +24,7 @@ public class ManipulatorSystem extends SystemBase
     
     private Solenoid wrist;
     private Solenoid claw;
+    private DigitalInput armLimitSwitch;
 
     
     /**
@@ -39,6 +41,7 @@ public class ManipulatorSystem extends SystemBase
         
         wrist = new Solenoid(2);
         claw = new Solenoid(1);
+        armLimitSwitch = new DigitalInput(12);
     }
 
     public static ManipulatorSystem getInstance()
@@ -120,7 +123,7 @@ public class ManipulatorSystem extends SystemBase
     public boolean liftOnTarget()
     {
         //System.out.println("lift on Target----------------------------------------------");
-        return (lift.getPidError() <= 1);
+        return (lift.getLiftPidError() <= 1);
     }
     
     /**
@@ -149,11 +152,17 @@ public class ManipulatorSystem extends SystemBase
         //log("Arm PID output: " + arm.pid.get());
         //log("Arm Encoder:"  + robot.manipulatorSystem.arm.encoder.get());
         
-        if(liftOnTarget() && lift.pidEnabled())
+        if(liftOnTarget() && lift.liftPidEnabled())
         {
             log("Target Reached: Disabling pid");
-            lift.stopPID();
+            lift.stopLiftPid();
         }
+
+        if (!armLimitSwitch.get()) // false when switch is actuated
+        {
+            arm.resetEncoder();
+        }
+        //log("arm encoder: " + arm.getEncoder());
     }
 
     public void disable()

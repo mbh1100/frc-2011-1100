@@ -62,6 +62,8 @@ public class CameraSystem extends SystemBase
         ac.writeCompression(0);
         ac.writeBrightness(10);
         ac.writeExposureControl(AxisCamera.ExposureT.hold);
+        ac.writeExposurePriority(AxisCamera.ExposurePriorityT.none);
+        ac.writeColorLevel(90);
         ac.writeRotation(AxisCamera.RotationT.k0);
         ac.writeResolution(AxisCamera.ResolutionT.k160x120);
         
@@ -80,7 +82,7 @@ public class CameraSystem extends SystemBase
     public void start()
     {
         super.start();
-        FUNCODE();
+        //FUNCODE();
 
         int i = 0;
         while (!ac.freshImage() && i < 30)
@@ -117,7 +119,7 @@ public class CameraSystem extends SystemBase
             {
                 log(e.getMessage());
             }
-            printPRep();
+            //printPRep();
         }
 
     }
@@ -133,14 +135,15 @@ public class CameraSystem extends SystemBase
             for (int i = 0;i< 1;i++)
             {
                 System.out.println("PARTICLE "+i);
-                System.out.println("Top:    "+pRep[i].boundingRectTop);
-                System.out.println("Left:   "+pRep[i].boundingRectLeft);
-                System.out.println("Width:  "+pRep[i].boundingRectWidth);
-                System.out.println("Height: "+pRep[i].boundingRectHeight);
+                //System.out.println("Top:    "+pRep[i].boundingRectTop);
+                //System.out.println("Left:   "+pRep[i].boundingRectLeft);
+                //System.out.println("Width:  "+pRep[i].boundingRectWidth);
+                //System.out.println("Height: "+pRep[i].boundingRectHeight);
                 System.out.println("Center: "
                         +pRep[i].center_mass_x_normalized
                         +", "
                         +pRep[i].center_mass_y_normalized);
+                System.out.println("Area:   "+pRep[i].particleArea);
                 System.out.println();
             }
         }
@@ -189,14 +192,14 @@ public class CameraSystem extends SystemBase
     public double getCenterY()
     {
         light.onForAWhile();
-        if(pRep[0] != null && pRep[0] != null )
+        if(pRep.length > 0 && pRep[0] != null)
             return pRep[0].center_mass_y_normalized;
         else
             return 0.0;
     }
 
     /**
-     * Gets the cnter X of the largest particle
+     * Gets the center X of the largest particle
      * @return double center mass x normalized
      */
     public double getCenterX()

@@ -18,7 +18,15 @@ class LiftCamSource implements PIDSource
 {
     public double pidGet()
     {
-        return CameraSystem.getInstance().getCenterY();
+        try
+        {
+            return CameraSystem.getInstance().getCenterY();
+        }
+        catch (Exception e)
+        {
+            System.out.println("exception in LiftCamSource(): " + e);
+        }
+        return 0.0;
     }
 }
 
@@ -26,16 +34,24 @@ class LiftCamOutput implements PIDOutput
 {
     public void pidWrite(double output)
     {
-        // assuming a DriveSystem interface that incorporates the behavior of the ArcadeDriveMux
-        ManipulatorSystem.getInstance().lift.setPidSpeed(output);
+        try
+        {
+            // assuming a DriveSystem interface that incorporates the behavior of the ArcadeDriveMux
+            //System.out.println("lift cam pid setting pid speed to " + -output);
+            ManipulatorSystem.getInstance().lift.setPidSpeed(-output);
+        }
+        catch (Exception e)
+        {
+            System.out.println("exception in pidWrite" + e);
+        }
     }
 }
 
 public class LiftCamPid extends PIDController
 {
-    static private final double P = 0.1;
-    static private final double I = 0.01;
-    static private final double D = 0.001;
+    static private final double P = 2.0;
+    static private final double I = 0.00;
+    static private final double D = 0.00;
 
     LiftCamPid()
     {

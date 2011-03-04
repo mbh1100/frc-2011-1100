@@ -27,7 +27,7 @@ class ArmCamOutput implements PIDOutput
     public void pidWrite(double output)
     {
         // assuming a DriveSystem interface that incorporates the behavior of the ArcadeDriveMux
-        ManipulatorSystem.getInstance().arm.setPidSpeed(output);
+        ManipulatorSystem.getInstance().arm.setPidSpeed(-output);
     }
 }
 

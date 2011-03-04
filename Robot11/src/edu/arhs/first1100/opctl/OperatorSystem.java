@@ -155,12 +155,14 @@ public class OperatorSystem extends SystemBase
          * Lift and R trigger targetting
          */
         if(xboxJoystick.getRightTrigger() > 0.5)
-        {
+        {/*
             log("right trigger down");
             ms.lift.startCamPid();
         }
         else
         {
+          * 
+          */
             // trigger up
             if(Math.abs(xboxJoystick.getRightStickY()) > 0.25)
             {

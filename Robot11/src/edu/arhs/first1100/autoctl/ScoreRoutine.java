@@ -40,6 +40,7 @@ public class ScoreRoutine extends Routine
      */
     public void run()
     {
+        ms.lift.startCamPid();
         ratr.execute();
 
         ms.setLiftPosition(ms.lift.getEncoder() - 50);

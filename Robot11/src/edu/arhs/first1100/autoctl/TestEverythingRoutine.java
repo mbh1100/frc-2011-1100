@@ -5,6 +5,8 @@
 
 package edu.arhs.first1100.autoctl;
 
+import edu.arhs.first1100.manipulator.ManipulatorSystem;
+
 /**
  *
  * @author team1100
@@ -49,14 +51,42 @@ public class TestEverythingRoutine extends Routine
 
     public void run()
     {
-        testOpenGrip();
+        //testOpenGrip();
         testCloseGrip();
-        testWristUp();
+        //testWristUp();
+        //testArmUp();
+        testLiftTracking();
         testWristDown();
         setDone();
         log("complete");
     }
 
+    private void testLiftTracking()
+    {
+        if (!isCancelled())
+        {
+            log("press trigger to run testLiftTracking");
+            waitForAdvance();
+        }
+        ManipulatorSystem.getInstance().lift.startCamPid();
+        log("press trigger to stop lift tracking");
+        waitForAdvance();
+        ManipulatorSystem.getInstance().lift.stop();
+    }
+    private void testArmUp()
+    {
+        if (!isCancelled())
+        {
+            log("press trigger to run ArmToPositionRoutine(0)");
+            waitForAdvance();
+        }
+        if (!isCancelled())
+        {
+            cancelMe = new ArmToPositionRoutine(0);
+            cancelMe.execute();
+        }
+
+    }
     private void testWristDown()
     {
         if (!isCancelled())

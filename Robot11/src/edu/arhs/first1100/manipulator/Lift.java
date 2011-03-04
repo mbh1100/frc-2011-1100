@@ -106,23 +106,31 @@ public class Lift
 
     public void startCamPid()
     {
+        //System.out.println("starting cam pid");
         stopLiftPid();
         camPid.enable();
     }
     
     /**
-     * what to do when it recieves an error
+     * what to do when it receives an error
      * @return
      */
-    public double getPidError()
+    public double getLiftPidError()
     {
         if(liftPid.isEnable())
         {
             //System.out.println("Lift: returning lift Pid");
             return liftPid.getError();
         }
+        else{
+            return 0.0;
+        }
+    }
+
+    public double getCamPidError()
+    {
         
-        else if(camPid.isEnable())
+        if(camPid.isEnable())
         {
             //System.out.println("Lift: returning cam Pid");
             return camPid.getError();
@@ -142,10 +150,11 @@ public class Lift
 
     private void stopCamPid()
     {
+        //System.out.println("stopping cam pid");
         camPid.disable();
     }
 
-    private void stopLiftPid()
+    void stopLiftPid()
     {
         liftPid.disable();
     }
@@ -155,12 +164,12 @@ public class Lift
         return liftPidEnabled() || camPidEnabled();
     }
 
-    private boolean liftPidEnabled()
+    boolean liftPidEnabled()
     {
         return liftPid.isEnable();
     }
 
-    private boolean camPidEnabled()
+    boolean camPidEnabled()
     {
         return camPid.isEnable();
     }

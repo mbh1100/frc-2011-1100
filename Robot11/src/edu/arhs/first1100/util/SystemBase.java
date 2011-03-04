@@ -67,11 +67,10 @@ public class SystemBase extends Thread
         {
             while(!stopThread)
             {
-                /*
                 try
-                {*/
+                {
                     tick(); // User code
-                /*}
+                }
                 catch(Exception e)
                 {
                     log("********************************");
@@ -80,8 +79,9 @@ public class SystemBase extends Thread
                     log(e.toString());
 
                     log("********************************");
-                    robot.disabled();
-                }*/
+                    stopThread = true;
+                    disable();
+                }
                 
                 Timer.delay( sleepTime/1000.0 );
             }

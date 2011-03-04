@@ -7,6 +7,7 @@ import edu.arhs.first1100.camera.CameraSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.robot.RobotMain;
 
+import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 /**
  *
  * @author team1100
@@ -16,6 +17,13 @@ public class AutonomousSystem extends SystemBase
 {
     static private AutonomousSystem instance;
     static private int sleepTime = 100;
+
+    FollowLineRoutine flrt;
+    DriverStationEnhancedIO dsio;
+    ArmToPositionRoutine atpr;
+    LiftToPositionRoutine ltpr;
+    ReleaseATubeRoutine ratr;
+    WristUpRoutine wur;
 
     public static AutonomousSystem getInstance()
     {
@@ -87,8 +95,26 @@ public class AutonomousSystem extends SystemBase
     /**
      *
      */
-    public void tick()
+    public void run()
     {
-        log("tick");
+        int path = 0;
+        double targetPegHeight = 0;
+        double targetArmHeight = 0;
+        flrt = new FollowLineRoutine(path);
+        ltpr = new LiftToPositionRoutine(targetPegHeight);
+        atpr = new ArmToPositionRoutine(targetArmHeight);
+        ratr = new ReleaseATubeRoutine();
+        wur = new WristUpRoutine();
+
+        flrt.execute();
+        ltpr.start();
+        atpr.start();
+        wur.start();
+
+        ltpr.waitForDone();
+        atpr.waitForDone();
+        wur.waitForDone();
+
+        ratr.execute();
     }
 }
