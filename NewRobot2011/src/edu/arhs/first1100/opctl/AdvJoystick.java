@@ -48,6 +48,7 @@ public class AdvJoystick extends Joystick
         double output;
         averagerY.feed(super.getRawAxis(2));
         output = Math.max(-1.0, Math.min((averagerY.get()-tareY), 1.0));
+        output = output*getRawAxis(3);
         return output;
     }
     
