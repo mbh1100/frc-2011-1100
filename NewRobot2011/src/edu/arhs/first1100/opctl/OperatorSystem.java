@@ -79,7 +79,12 @@ public class OperatorSystem extends SystemBase
         }
         else
         {
-            if(ms.isUsingCamPID())
+            /*
+             * BRB...
+             *
+             * -Nick
+             */
+            if()
             {
                 ms.setLiftSpeed(0.0);
             }

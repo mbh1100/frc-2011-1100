@@ -41,11 +41,11 @@ public class AutonomousSystem extends SystemBase
         OperatorSystem op = OperatorSystem.getInstance();
         
         new SetManipulatorStateRoutine(ManipulatorSystem.STATE_DEFAULT).execute();
-
-        new FollowLineRoutine(op.buttonBox.getRack()).execute();
+        
+        new FollowLineRoutine(rack).execute();
         
         new SelectColumRoutine().execute();
-
+        
         switch(row)
         {
             case 0:
@@ -58,7 +58,5 @@ public class AutonomousSystem extends SystemBase
                 new SetManipulatorStateRoutine(ManipulatorSystem.STATE_TOP_PEG).execute();
                 break;
         }
-
-        
     }
 }
