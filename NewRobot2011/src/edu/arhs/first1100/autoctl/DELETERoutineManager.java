@@ -5,7 +5,7 @@ import edu.arhs.first1100.manipulator.ManipulatorSystem;
  * Runs routines
  * @author akshay
  */
-public class RoutineManager extends SystemBase {
+public class DELETERoutineManager extends SystemBase {
 
     public final int ROUTINE_NONE = 0;
     public final int ROUTINE_ARM_TO_FLOOR = 1;
@@ -15,14 +15,14 @@ public class RoutineManager extends SystemBase {
     public final int ROUTINE_TUBE_FROM_FLOOR = 5;
     public final int ROUTINE_RELEASE_TUBE = 6;
     
-    private static RoutineManager instance = null;
+    private static DELETERoutineManager instance = null;
     private int state = 0;
     private boolean running = false;
 
-    public RoutineManager(){ }
+    public DELETERoutineManager(){ }
 
-    public static RoutineManager getInstance(){
-        if (instance == null) instance = new RoutineManager();
+    public static DELETERoutineManager getInstance(){
+        if (instance == null) instance = new DELETERoutineManager();
         return instance;
     }
 
@@ -63,7 +63,7 @@ public class RoutineManager extends SystemBase {
     }
 
     /**
-     * Return the current Routine that RoutineManager is set to run
+     * Return the current Routine that DELETERoutineManager is set to run
      * @return current routine
      */
     public int getRoutine(){

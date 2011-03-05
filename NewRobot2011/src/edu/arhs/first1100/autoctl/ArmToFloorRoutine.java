@@ -5,10 +5,11 @@
 
 package edu.arhs.first1100.autoctl;
 
+import edu.arhs.first1100.autoctl.lowlevel.ReleaseATubeRoutine;
+import edu.arhs.first1100.autoctl.lowlevel.WristDownRoutine;
+
 public class ArmToFloorRoutine extends Routine
 {
-
-
     public ArmToFloorRoutine()
     {
         super(100);
@@ -25,7 +26,7 @@ public class ArmToFloorRoutine extends Routine
         ltpr.start();
         atpr.start();
         ratr.start();
-
+        
         wdr.waitForDone();
         ltpr.waitForDone();
         atpr.waitForDone();

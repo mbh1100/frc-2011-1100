@@ -77,7 +77,7 @@ public class SystemBase extends Thread
                 
                 Timer.delay(sleepTime / 1000.0);
             }
-
+            
             while(stopThread)
             {
                 //Log.defcon1(this, "waiting for stopThread to equal false");
@@ -103,7 +103,7 @@ public class SystemBase extends Thread
     {
         sleepTime = time;
     }
-
+    
     public synchronized void waitTillDone()
     {
         try
@@ -115,7 +115,7 @@ public class SystemBase extends Thread
             
         }
     }
-
+    
     public synchronized void imDone()
     {
         notify();

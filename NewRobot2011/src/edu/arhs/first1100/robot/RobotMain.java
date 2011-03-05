@@ -34,11 +34,10 @@ public class RobotMain extends SimpleRobot
     public void robotInit()
     {        
         Log.defcon3(this, "Robot Init");
-
+        
         diagSwitch = new DigitalInput(13);
         diagnostic = !diagSwitch.get();
-
-
+        
         if(!diagnostic)
         {
             //Set Logging Levels
@@ -90,8 +89,6 @@ public class RobotMain extends SimpleRobot
         Log.defcon3(this, "Operator Mode Activated");
         if(!diagnostic)
         {
-            
-
             OperatorSystem.getInstance().start();
             AutonomousSystem.getInstance().stop();
 

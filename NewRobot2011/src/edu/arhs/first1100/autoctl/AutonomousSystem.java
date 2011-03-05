@@ -2,17 +2,18 @@ package edu.arhs.first1100.autoctl;
 
 import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.line.LineSystem;
+import edu.arhs.first1100.manipulator.ManipulatorSystem;
+import edu.arhs.first1100.opctl.OperatorSystem;
 import edu.arhs.first1100.util.SystemBase;
 
-/**
- *
- * @author team1100
- */
 public class AutonomousSystem extends SystemBase
 {
     private static AutonomousSystem instance = null;
     
-    public AutonomousSystem() { }
+    public AutonomousSystem()
+    {
+        win();
+    }
     
     public static AutonomousSystem getInstance()
     {
@@ -25,20 +26,39 @@ public class AutonomousSystem extends SystemBase
         
     }
 
-    public void scoreUberTube(boolean rack, int colum, int row)
+    public void win()
     {
+        ButtonBox bb = op.buttonBox;
         
+        scoreUberTube(bb.getStartingPosition(),
+                      bb.getRack(),
+                      bb.getColumn(),
+                      bb.getRow());
     }
-
-    public void followLine()
-    { followLine(false); }
-
-    public void followLine(boolean splitDir)
+    
+    public void scoreUberTube(int starting, boolean rack, int column, int row)
     {
-        LineSystem ln = LineSystem.getInstance();
-        DriveSystem ds = DriveSystem.getInstance();
+        OperatorSystem op = OperatorSystem.getInstance();
         
-        ln.followLine(splitDir);
-        ln.getInstance();
+        new SetManipulatorStateRoutine(ManipulatorSystem.STATE_DEFAULT).execute();
+
+        new FollowLineRoutine(op.buttonBox.getRack()).execute();
+        
+        new SelectColumRoutine().execute();
+
+        switch(row)
+        {
+            case 0:
+                new SetManipulatorStateRoutine(ManipulatorSystem.STATE_BOTTOM_PEG).execute();
+                break;
+            case 1:
+                new SetManipulatorStateRoutine(ManipulatorSystem.STATE_MIDDLE_PEG).execute();
+                break;
+            case 2:
+                new SetManipulatorStateRoutine(ManipulatorSystem.STATE_TOP_PEG).execute();
+                break;
+        }
+
+        
     }
 }

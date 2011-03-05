@@ -5,6 +5,8 @@
 
 package edu.arhs.first1100.autoctl;
 
+import edu.arhs.first1100.autoctl.lowlevel.WristUpRoutine;
+
 /**
  *
  * @author team1100
@@ -15,21 +17,21 @@ public class DefaultPositionRoutine extends Routine
     {
         super(100);
     }
-
+    
     public void run()
     {
         WristUpRoutine wdr = new WristUpRoutine();
         LiftToPositionRoutine ltpr = new LiftToPositionRoutine(5);
-        ArmToPositionRoutine atpr = new ArmToPositionRoutine(5);  //encoder needs to be fixed
+        ArmToPositionRoutine atpr = new ArmToPositionRoutine(5);
 
         wdr.start();
         ltpr.start();
         atpr.start();
-
+        
         wdr.waitForDone();
         ltpr.waitForDone();
         atpr.waitForDone();
-
+        
         this.setDone();
     }
 }

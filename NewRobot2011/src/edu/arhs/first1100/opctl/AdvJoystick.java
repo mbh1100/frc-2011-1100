@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class AdvJoystick extends Joystick
 {
-    private final int TARE_BUTTON = 8;
     private Averager averagerX;
     private Averager averagerY;
     private final int SAMPLE_SIZE = 4;
@@ -48,7 +47,6 @@ public class AdvJoystick extends Joystick
         double output;
         averagerY.feed(super.getRawAxis(2));
         output = Math.max(-1.0, Math.min((averagerY.get()-tareY), 1.0));
-        output = output*getRawAxis(3);
         return output;
     }
     

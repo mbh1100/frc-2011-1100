@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class ManipulatorSystem extends SystemBase
 {
     private static ManipulatorSystem instance = null;
-
+    
     public static final int STATE_DEFAULT    = 0;
     public static final int STATE_TOP_PEG    = 3;
     public static final int STATE_MIDDLE_PEG = 2;
@@ -41,13 +41,13 @@ public class ManipulatorSystem extends SystemBase
     
     private AdvJaguar liftJaguar;
     private Encoder liftEncoder;
-    private PID liftPID;
+    private LiftPID liftPID;
     
     private AdvJaguar armJaguar;
     private Encoder armEncoder;
-    private PID armPID;
+    private ArmPID armPID;
     
-    private PID camPID;
+    private CamPID liftCamPID;
 
     private Solenoid claw;
     private Solenoid wrist;
@@ -68,8 +68,8 @@ public class ManipulatorSystem extends SystemBase
         armPID = new PID(0.1, 0.0, 0.0);
         armPID.setOutputRange(-0.2, 0.2);  // maybe it should be a bit higher like .3 ?
         
-        camPID = new PID(0.1, 0.0, 0.0);
-        camPID.setOutputRange(-0.2, 0.2);  // maybe it should be a bit higher like .3 ?
+        liftCamPID = new PID(0.1, 0.0, 0.0);
+        liftCamPID.setOutputRange(-0.2, 0.2);  // maybe it should be a bit higher like .3 ?
 
         claw = new Solenoid(1);
         wrist = new Solenoid(2);
@@ -84,45 +84,66 @@ public class ManipulatorSystem extends SystemBase
     public void tick()
     {
         /*
-         * Lift code
+         * MUX Control
+         *
+         * All PIDS revert back to the operator state after moving, and
+         * calls a notify.  Operator state = no pids enabled.
          */
-        if(liftMUX == LIFTMUX_PID)
+        switch(liftMUX)
         {
-            Log.defcon1(this, "PID Running...");
-            
-            liftPID.feed(liftEncoder.get());
-            liftJaguar.set(liftPID.get());
-
-            if(liftPID.getError() <= 1.0)
-            {
+            case LIFTMUX_OPERATOR:
                 liftPID.disable();
-                imDone();
-            }
-        }
-        else if(liftMUX == LIFTMUX_CAM)
-        {
-            camPID.feed(CameraSystem.getInstance().getCenterY());
-            liftJaguar.set(camPID.get());
+                liftCamPID.disable();
+                break;
 
-            if(camPID.getError() <= 1.0)
-            {
-                imDone();
-            }
+            case LIFTMUX_PID:
+                liftPID.enable();
+                liftCamPID.disable();
+                
+                if(liftPID.getError() <= 1.0)
+                {
+                    liftMUX = LIFTMUX_OPERATOR;
+                    imDone();
+                }
+                break;
+
+            case LIFTMUX_CAM:
+                liftPID.disable();
+                liftCamPID.enable();
+
+                if(liftCamPID.getError() <= 1.0)
+                {
+                    imDone();
+                }
+                break;
         }
         
         /*
          * Arm Code
          */
-        if(armMUX == ARMMUX_PID)
+        switch(armMUX)
         {
-            armPID.feed(armEncoder.get());
-            armJaguar.set(armPID.get());
-            
-            if(armPID.getError() <= 1.0)
-            {
-                imDone();
-            }
+            case ARMMUX_OPERATOR:
+                armPID.disable();
+                break;
+            case ARMMUX_PID:
+                armPID.enable();
+                if(armPID.getError() <= 1.0)
+                {
+                    imDone();
+                }
+                break;
         }
+
+        /*
+         * Limit switch
+         */
+        if(!bottoLiftLimitSwitch.get())
+        {
+            resetLiftEncoder();
+            liftJaguar.set(0.0);
+        }
+        
         Log.defcon2(this, ("Lift Encoder : "+liftEncoder.get()));
     }
 
@@ -156,9 +177,10 @@ public class ManipulatorSystem extends SystemBase
                 break;
         }
     }
+
     
     /*
-     * Lift Controls
+     * Lift Interfaces
      */
     public void setLiftSpeed(double speed)
     {
@@ -172,23 +194,32 @@ public class ManipulatorSystem extends SystemBase
         liftPID.setTarget(height);
     }
 
-    public void useCamPID()
-    {
-        liftMUX = LIFTMUX_CAM;
-    }
-    
     public double getLiftSpeed()
     {
         return liftJaguar.get();
     }
-
-    public double getLiftEncoder()
-    {
-        return liftEncoder.get();
-    }
-
+    
+    
     /*
-     * Arm Controls
+     * PID Interfaces
+     */
+    public void enableCamPID()
+    {
+        liftMUX = LIFTMUX_CAM;
+    }
+    
+    public int getLiftMUXState()
+    {
+        return liftMUX;
+    }
+    
+    public void boolean getLiftPIDError()
+    {
+        liftPID.getError();
+    }
+    
+    /*
+     * Arm Interface
      */
     public void setArmSpeed(double speed)
     {
@@ -204,12 +235,30 @@ public class ManipulatorSystem extends SystemBase
     {
         return armJaguar.get();
     }
+    
+    /*
+     * Encoders
+     */
+    public double getLiftEncoder()
+    {
+        return liftEncoder.get();
+    }
+
     public double getArmEncoder()
     {
         return armEncoder.get();
     }
 
+    public void resetLiftEncoder()
+    {
+        liftEncoder.reset();
+    }
 
+    public void resetArmEncoder()
+    {
+        armEncoder.reset();
+    }
+    
     /*
      * Claw and Wrist
      */
@@ -220,8 +269,8 @@ public class ManipulatorSystem extends SystemBase
     public void openClaw()
     {
         claw.set(true);
-
-    }public void closeClaw()
+    }
+    public void closeClaw()
     {
         claw.set(false);
     }
@@ -237,12 +286,10 @@ public class ManipulatorSystem extends SystemBase
     {
         wrist.set(true);
     }
-
     public void wristDown()
     {
         wrist.set(false);
     }
-
     public boolean getWristState()
     {
         return wrist.get();
