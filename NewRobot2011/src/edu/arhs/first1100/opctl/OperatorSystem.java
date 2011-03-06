@@ -74,31 +74,26 @@ public class OperatorSystem extends SystemBase
          */
         if(xboxJoystick.getRightTrigger() > 0.5)
         {
-            Log.defcon2(this, "Using CamPID");
+            Log.defcon1(this, "Using CamPID");
             ms.enableCamPID();
+            stopLift = true;
         }
         else
         {
-            /*
-             * BRB...
-             *
-             * -Nick
-             */
-            if()
-            {
-                ms.setLiftSpeed(0.0);
-            }
-            
             if(Math.abs(xboxJoystick.getRightStickY()) > 0.20)
             {
+                Log.defcon1(this, "Setting lift speed "+xboxJoystick.getRightStickY()/2);
                 ms.setLiftSpeed(xboxJoystick.getRightStickY()/2);
-
+                
+                ms.stopLiftPIDs();
+                
                 // Will make sure lift won't drift when joystick re-enters
                 // deadband
                 stopLift = true;
             }
             else if(stopLift)
             {
+                Log.defcon1(this, "Stopping lift within deadband");
                 stopLift = false;
                 ms.setLiftSpeed(0.0);
             }
@@ -106,52 +101,62 @@ public class OperatorSystem extends SystemBase
             {
                 if(xboxJoystick.getXButton())
                 {
-                    Log.defcon2(this, "Setting state to default");
+                    Log.defcon1(this, "Setting state to default");
                     ms.setState(ManipulatorSystem.STATE_DEFAULT);
                 }
                 else if(xboxJoystick.getAButton())
                 {
-                    Log.defcon2(this, "Setting state to bottom");
+                    Log.defcon1(this, "Setting state to bottom");
                     ms.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
                 }
                 else if(xboxJoystick.getBButton())
                 {
-                    Log.defcon2(this, "Setting state to middle");
+                    Log.defcon1(this, "Setting state to middle");
                     ms.setState(ManipulatorSystem.STATE_MIDDLE_PEG);
                 }
                 else if(xboxJoystick.getYButton())
                 {
-                    Log.defcon2(this, "Setting state to top");
+                    Log.defcon1(this, "Setting state to top");
                     ms.setState(ManipulatorSystem.STATE_TOP_PEG);
                 }
                 else if(xboxJoystick.getDpad() == 1.0)
                 {
-                    Log.defcon2(this, "Setting state to floor");
+                    Log.defcon1(this, "Setting state to floor");
                     ms.setState(ManipulatorSystem.STATE_FLOOR);
                 }
             }
         }
-        
         
         /*
          * Arm control
          */
         if(Math.abs(xboxJoystick.getLeftStickY()) > 0.20)
         {
+            ms.stopArmPIDs();
             if(xboxJoystick.getLeftStickY() > 0.0)
             {
-                ms.setArmSpeed(xboxJoystick.getRightStickY()/2);
+                Log.defcon1(this, "Setting arm speed" + xboxJoystick.getLeftStickY()/4);
+                ms.setArmSpeed(xboxJoystick.getLeftStickY()/4);
             }
             else //Lower than 0
             {
-                ms.setArmSpeed(xboxJoystick.getRightStickY()/4);
+                Log.defcon1(this, "Setting arm speed" + xboxJoystick.getLeftStickY()/2);
+                ms.setArmSpeed(xboxJoystick.getLeftStickY()/2);
             }
+            
+            stopArm = true;
         }
+        else if(stopArm)
+        {
+            Log.defcon1(this, "Stopping arm within deadband");
+            ms.setArmSpeed(0.0);
+            stopArm = false;
+        }/*
         else
         {
             ms.setArmPosition(ms.getArmEncoder());
-        }
-
+        }*/
+        
         /*
          * Gripper and wrist
          */
@@ -174,12 +179,22 @@ public class OperatorSystem extends SystemBase
         /*
          * Drive Controls
          * 
-         * with trim
+         * Trim:
+         *   Each joystick has a trim axis below buttons 8-9 with a range of 0-1
+         *   The drive output is multiplied by this value when setTankSpeed is called.
+         *   To avoid accidental moving, the trim will only work if the axis is over 75 percent.
          */
+        double leftSpeed = -leftJoystick.getStickY()   * Math.max(-((leftJoystick.getZ() /2)-0.5), 0.75);
+        double rightSpeed = -rightJoystick.getStickY() * Math.max(-((rightJoystick.getZ()/2)-0.5), 0.75);
+        
         ds.setTankSpeed(
-                -leftJoystick.getStickY()*leftJoystick.getZ(),
-                -rightJoystick.getStickY()*rightJoystick.getZ()
+                -leftJoystick.getStickY()  * -((leftJoystick.getZ() /2)-0.5),
+                -rightJoystick.getStickY() * -((rightJoystick.getZ()/2)-0.5)
                 );
+        
+        Log.defcon1(this, "SETTING TANK SPEED WITH TRIM:\n"+
+                          leftSpeed+"\n"+
+                          rightSpeed);
         
         /*
          * Minbot Controls
@@ -198,5 +213,14 @@ public class OperatorSystem extends SystemBase
         {
             rightJoystick.reset();
         }
+    }
+    
+    public void start()
+    {
+        Log.defcon2(this, "Resetting joystick centers...");
+        super.start();
+        
+        rightJoystick.reset();
+        leftJoystick.reset();
     }
 }

@@ -19,6 +19,8 @@ import edu.arhs.first1100.opctl.OperatorSystem;
 import edu.arhs.first1100.diag.DiagnosticRobot;
 
 import edu.arhs.first1100.log.Log;
+import edu.arhs.first1100.opctl.AdvJoystick;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
@@ -30,9 +32,10 @@ public class RobotMain extends SimpleRobot
     private DigitalInput diagSwitch;
     private boolean diagnostic;
     private DiagnosticRobot diagRobot;
-
+    public Compressor compressor;
+    
     public void robotInit()
-    {        
+    {
         Log.defcon3(this, "Robot Init");
         
         diagSwitch = new DigitalInput(13);
@@ -42,9 +45,11 @@ public class RobotMain extends SimpleRobot
         {
             //Set Logging Levels
             //Log.addClass(MinibotSystem.class, 1);
-            Log.addClass(OperatorSystem.class, 2);
+            Log.addClass(OperatorSystem.class, 1);
             Log.addClass(RobotMain.class, 3);
-            Log.addClass(ManipulatorSystem.class, 1);
+            Log.addClass(ManipulatorSystem.class, 3);
+            //Log.addClass(AdvJoystick.class, 3);
+
 
             OperatorSystem.getInstance().setSleep(100);
             AutonomousSystem.getInstance().setSleep(100);
@@ -61,6 +66,10 @@ public class RobotMain extends SimpleRobot
         {
             diagRobot = new DiagnosticRobot();
         }
+        
+        compressor = new Compressor(6, 1);
+        compressor.start();
+        
         Log.defcon3(this, "+------------------------+");
         Log.defcon3(this, "| USING " + ((diagnostic) ? "DIAGNOSTIC " : "  REGULAR  ") + "ROBOT |");
         Log.defcon3(this, "+------------------------+");

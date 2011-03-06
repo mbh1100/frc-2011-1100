@@ -12,7 +12,7 @@ public class AutonomousSystem extends SystemBase
     
     public AutonomousSystem()
     {
-        win();
+        //win();
     }
     
     public static AutonomousSystem getInstance()
@@ -25,7 +25,8 @@ public class AutonomousSystem extends SystemBase
     {
         
     }
-
+    
+    /*
     public void win()
     {
         ButtonBox bb = op.buttonBox;
@@ -59,4 +60,5 @@ public class AutonomousSystem extends SystemBase
                 break;
         }
     }
+     */
 }

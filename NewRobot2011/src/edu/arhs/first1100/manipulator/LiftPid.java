@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Encoder -> Jaguar
  */
 
 package edu.arhs.first1100.manipulator;
@@ -14,7 +13,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 /**
  * @author markbh
  */
-class LiftCamSource implements PIDSource
+class LiftSource implements PIDSource
 {
     public double pidGet()
     {
@@ -22,12 +21,12 @@ class LiftCamSource implements PIDSource
     }
 }
 
-class LiftCamOutput implements PIDOutput
+class LiftOutput implements PIDOutput
 {
     public void pidWrite(double output)
     {
         // assuming a DriveSystem interface that incorporates the behavior of the ArcadeDriveMux
-        ManipulatorSystem.getInstance().setLiftSpeed(output);
+        ManipulatorSystem.getInstance().setLiftSpeed(-output);
     }
 }
 
@@ -39,7 +38,7 @@ public class LiftPid extends PIDController
 
     LiftPid()
     {
-	super(P, I, D, new LiftCamSource(), new LiftCamOutput());
+	super(P, I, D, new LiftSource(), new LiftOutput());
     }
 
     // this class exposes all the methods of PIDController, such as enable(), disable(), setSetpoint(), etc.

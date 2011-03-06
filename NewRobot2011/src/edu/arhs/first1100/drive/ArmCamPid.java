@@ -3,10 +3,9 @@
  * and open the template in the editor.
  */
 
-package edu.arhs.first1100.manipulator;
+package edu.arhs.first1100.drive;
 
 import edu.arhs.first1100.camera.CameraSystem;
-import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.log.Log;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -37,8 +36,8 @@ public class ArmCamPid extends PIDController
 {
     static private final double P = 0.1;
     static private final double I = 0.01;
-    static private final double D = 0.001;
-
+    private static final double D = 0.001;
+    
     ArmCamPid()
     {
 	super(P, I, D, new ArmCamSource(), new ArmCamOutput());
