@@ -136,5 +136,9 @@ public class DiagnosticRobot
             mbArm.set(0.0);
             mbBelt.set(0.0);
         }
+
+        System.out.println("Lift Encoder:" + liftEncoder.get());
+        System.out.println("Arm Encoder: " + armEncoder.get());
+        System.out.println();
     }
 }

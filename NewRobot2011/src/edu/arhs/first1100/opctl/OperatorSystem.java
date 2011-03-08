@@ -95,6 +95,7 @@ public class OperatorSystem extends SystemBase
             {
                 Log.defcon1(this, "Stopping lift within deadband");
                 stopLift = false;
+                ms.stopLiftPIDs();
                 ms.setLiftSpeed(0.0);
             }
             else
@@ -187,10 +188,7 @@ public class OperatorSystem extends SystemBase
         double leftSpeed = -leftJoystick.getStickY()   * Math.max(-((leftJoystick.getZ() /2)-0.5), 0.75);
         double rightSpeed = -rightJoystick.getStickY() * Math.max(-((rightJoystick.getZ()/2)-0.5), 0.75);
         
-        ds.setTankSpeed(
-                -leftJoystick.getStickY()  * -((leftJoystick.getZ() /2)-0.5),
-                -rightJoystick.getStickY() * -((rightJoystick.getZ()/2)-0.5)
-                );
+        ds.setTankSpeed(leftSpeed, rightSpeed);
         
         Log.defcon1(this, "SETTING TANK SPEED WITH TRIM:\n"+
                           leftSpeed+"\n"+

@@ -33,9 +33,9 @@ class LiftCamOutput implements PIDOutput
 
 public class LiftCamPid extends PIDController
 {
-    static private final double P = 0.1;
-    static private final double I = 0.01;
-    static private final double D = 0.001;
+    static private final double P = 2.0;
+    static private final double I = 0.0;
+    static private final double D = 0.0;
 
     LiftCamPid()
     {

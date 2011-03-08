@@ -18,7 +18,7 @@ public class CameraSystem extends SystemBase
     public final int RED_THRESHOLD = 2;
     public final int BLUE_THRESHOLD =3;
     private final int PARTICLE_SIZE = 3;
-    //public Light light;
+    public Light light;
 
     //RGB Threshold
     private int minRed = 0;
@@ -41,7 +41,7 @@ public class CameraSystem extends SystemBase
         cImg = null;
         bImg = null;
         sleepTime = 200;
-        //light = new Light(3);
+        light = new Light(3);
 
         //Camera Settings
         ac.writeCompression(0);
@@ -50,7 +50,8 @@ public class CameraSystem extends SystemBase
         ac.writeRotation(AxisCamera.RotationT.k0);
         ac.writeResolution(AxisCamera.ResolutionT.k160x120);
 
-        setThreshold(BLUE_THRESHOLD);}
+        setThreshold(BLUE_THRESHOLD);
+    }
 
     public static CameraSystem getInstance()
     {
@@ -165,20 +166,20 @@ public class CameraSystem extends SystemBase
     */
     public double getCenterY()
     {
-        // light.onForAWhile();
-        if(pRep[0] != null && pRep[0] != null )
+        light.onForAWhile();
+        if(pRep.length > 0 && pRep[0] != null )
             return pRep[0].center_mass_y_normalized;
         else
             return 0.0;
     }
 
     /**
-    * Gets the cnter X of the largest particle
+    * Gets the center X of the largest particle
     * @return double center mass x normalized
     */
     public double getCenterX()
     {
-        //light.onForAWhile();
+        light.onForAWhile();
         if(pRep.length > 0 && pRep[0] != null)
             return pRep[0].center_mass_x_normalized;
         else
@@ -191,7 +192,7 @@ public class CameraSystem extends SystemBase
     */
     public synchronized ParticleAnalysisReport getBiggestParticle()
     {
-        //light.onForAWhile();
+        light.onForAWhile();
         if (pRep != null && pRep.length != 0)
         {
             return pRep[0];
@@ -208,7 +209,7 @@ public class CameraSystem extends SystemBase
      */
     public synchronized ParticleAnalysisReport[] getParticles()
     {
-        //light.onForAWhile();
+        light.onForAWhile();
         return pRep;
     }
     /**
@@ -218,7 +219,7 @@ public class CameraSystem extends SystemBase
      */
     public synchronized ParticleAnalysisReport[] getParticles(int n)
     {
-        //light.onForAWhile();
+        light.onForAWhile();
         ParticleAnalysisReport[] p = new ParticleAnalysisReport[n];
         System.arraycopy(pRep, 0, p, 0, n);
         return p;

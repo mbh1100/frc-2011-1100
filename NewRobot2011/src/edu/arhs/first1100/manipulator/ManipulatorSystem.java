@@ -77,7 +77,7 @@ public class ManipulatorSystem extends SystemBase
         armBackLimitSwitch = new DigitalInput(12);
         
         liftCamPID = new LiftCamPid();
-        liftCamPID.setOutputRange(-0.2, 0.2);  // maybe it should be a bit higher like .3 ?
+        liftCamPID.setOutputRange(-0.4, 0.6);
         
         claw = new Solenoid(1);
         wrist = new Solenoid(2);
@@ -107,14 +107,20 @@ public class ManipulatorSystem extends SystemBase
                 
             case LIFTMUX_PID:
                 Log.defcon2(this, "LiftMux: Pid");
-                liftPID.enable();
+
                 if(liftCamPID.isEnable()) liftCamPID.disable();
-                
-                if(liftPID.getError() <= 1.0)
+                if (liftPID.isEnable())
                 {
-                    stopLiftPIDs();
-                    Log.defcon2(this, "LiftPid: TARGET REACHED");
-                    imDone();
+                    Log.defcon2(this, ("LiftPID Error : " + liftPID.getError()));
+                    if(Math.abs(liftPID.getError()) <= 1.0)
+                    {
+                        stopLiftPIDs();
+                        Log.defcon2(this, "LiftPid: TARGET REACHED");
+                    }
+                }
+                else
+                {
+                    liftPID.enable();
                 }
                 break;
 
@@ -123,10 +129,9 @@ public class ManipulatorSystem extends SystemBase
                 if(liftPID.isEnable()) liftPID.disable();
                 liftCamPID.enable();
                 
-                if(liftCamPID.getError() <= 1.0)
+                if(Math.abs(liftCamPID.getError()) <= 1.0)
                 {
-                    stopLiftPIDs();
-                    imDone();
+                    //stopLiftPIDs();
                 }
                 break;
         }
@@ -138,7 +143,7 @@ public class ManipulatorSystem extends SystemBase
         {
             case ARMMUX_OPERATOR:
                 Log.defcon2(this, "ArmMux: Op");
-                armPID.disable();
+                if(armPID.isEnable()) armPID.disable();
                 break;
             
             case ARMMUX_PID:
@@ -147,9 +152,8 @@ public class ManipulatorSystem extends SystemBase
                 
                 if(armPID.getError() <= 1.0)
                 {
-                    stopArmPIDs();
+                    //stopArmPIDs();
                     Log.defcon2(this, "ArmPid: TARGET REACHED");
-                    imDone();
                 }
                 break;
         }
