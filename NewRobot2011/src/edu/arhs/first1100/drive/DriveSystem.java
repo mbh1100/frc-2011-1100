@@ -6,6 +6,7 @@
 package edu.arhs.first1100.drive;
 
 import com.sun.squawk.util.MathUtils;
+import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.util.AdvJaguar;
 
@@ -16,12 +17,20 @@ import edu.arhs.first1100.util.AdvJaguar;
 public class DriveSystem extends SystemBase
 {
     private static DriveSystem instance = null;
+
+    private SteerPid steerPid;
     
     private AdvJaguar leftJaguars;
     private AdvJaguar rightJaguars;
 
+    private double curve = 0.0;
+    private double power = 0.0;
+    
     public DriveSystem()
     {
+        steerPid = new SteerPid();
+        steerPid.enable();
+        
         leftJaguars  = new AdvJaguar(4, 2, 4, false);
         rightJaguars = new AdvJaguar(4, 1, 3, false);
     }
@@ -34,6 +43,9 @@ public class DriveSystem extends SystemBase
     
     public void tick()
     {
+        Log.defcon1(this, "Left:  "+leftJaguars.get());
+        Log.defcon1(this, "Right: "+rightJaguars.get());
+        Log.defcon1(this, "");
         
     }
 
@@ -81,4 +93,19 @@ public class DriveSystem extends SystemBase
         }
         setTankSpeed(leftOutput, rightOutput);
     }
+    
+    public void setCurve(double curve)
+    {
+        Log.defcon1(this, "Setting Curve to "+curve);
+        this.curve = curve;
+        setArcadeSpeed(this.power, this.curve);
+    }
+
+    public void setPower(double power)
+    {
+        this.power = power;
+        setArcadeSpeed(this.power, this.curve);
+    }
+
+
 }

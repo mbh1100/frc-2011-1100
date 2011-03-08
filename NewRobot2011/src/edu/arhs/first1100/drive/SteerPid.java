@@ -18,7 +18,7 @@ class SteerSource implements PIDSource
 {
     public double pidGet()
     {
-        return 0.0; //CameraSystem.getInstance().getCenterX();
+        return CameraSystem.getInstance().getCenterX();
     }
 }
 
@@ -27,15 +27,15 @@ class SteerOutput implements PIDOutput
     public void pidWrite(double output)
     {
         // assuming a DriveSystem interface that incorporates the behavior of the ArcadeDriveMux
-        // DriveSystem.getInstance().setCurve(output);
+        DriveSystem.getInstance().setCurve(output);
     }
 }
 
 public class SteerPid extends PIDController
 {
-    static private final double P = 0.1;
-    static private final double I = 0.01;
-    static private final double D = 0.001;
+    static private final double P = 2;
+    static private final double I = 0.0;
+    static private final double D = 0.0;
 
     SteerPid()
     {

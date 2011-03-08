@@ -47,6 +47,8 @@ public class RobotMain extends SimpleRobot
             Log.addClass(OperatorSystem.class, 3);
             Log.addClass(RobotMain.class, 3);
             Log.addClass(ManipulatorSystem.class, 1);
+            Log.addClass(DriveSystem.class, 1);
+
             //Log.addClass(AdvJoystick.class, 3);
             
             OperatorSystem.getInstance().setSleep(100);
