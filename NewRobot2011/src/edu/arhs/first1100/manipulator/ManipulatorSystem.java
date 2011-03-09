@@ -161,7 +161,7 @@ public class ManipulatorSystem extends SystemBase
                 {
                     if (armPID.getError() <= 1.0)
                     {
-                        //stopArmPIDs();
+                        stopArmPIDs();
                         Log.defcon2(this, "ArmPid: TARGET REACHED");
                     }
                 }
@@ -179,6 +179,7 @@ public class ManipulatorSystem extends SystemBase
                 {
                     if (armPID.getError() <= 1.0)
                     {
+                        stopArmPIDs();
                         Log.defcon2(this, "ArmCam: TARGET REACHED");
                     }
                 }
