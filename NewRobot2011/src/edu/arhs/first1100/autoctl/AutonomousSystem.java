@@ -1,8 +1,7 @@
 package edu.arhs.first1100.autoctl;
 
-import edu.arhs.first1100.drive.DriveSystem;
-import edu.arhs.first1100.line.LineSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
+import edu.arhs.first1100.opctl.ButtonBox;
 import edu.arhs.first1100.opctl.OperatorSystem;
 import edu.arhs.first1100.util.SystemBase;
 
@@ -12,7 +11,7 @@ public class AutonomousSystem extends SystemBase
     
     public AutonomousSystem()
     {
-        //win();
+        win();
     }
     
     public static AutonomousSystem getInstance()
@@ -26,10 +25,9 @@ public class AutonomousSystem extends SystemBase
         
     }
     
-    /*
     public void win()
     {
-        ButtonBox bb = op.buttonBox;
+        ButtonBox bb = OperatorSystem.getInstance().buttonBox;
         
         scoreUberTube(bb.getStartingPosition(),
                       bb.getRack(),
@@ -49,16 +47,15 @@ public class AutonomousSystem extends SystemBase
         
         switch(row)
         {
-            case 0:
-                new SetManipulatorStateRoutine(ManipulatorSystem.STATE_BOTTOM_PEG).execute();
+            case 2:
+                new SetManipulatorStateRoutine(ManipulatorSystem.STATE_TOP_PEG).execute();
                 break;
             case 1:
                 new SetManipulatorStateRoutine(ManipulatorSystem.STATE_MIDDLE_PEG).execute();
                 break;
-            case 2:
-                new SetManipulatorStateRoutine(ManipulatorSystem.STATE_TOP_PEG).execute();
+            case 0:
+                new SetManipulatorStateRoutine(ManipulatorSystem.STATE_BOTTOM_PEG).execute();
                 break;
         }
     }
-     */
 }

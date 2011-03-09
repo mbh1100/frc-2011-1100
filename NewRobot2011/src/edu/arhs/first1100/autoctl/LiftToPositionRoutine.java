@@ -26,7 +26,7 @@ public class LiftToPositionRoutine extends Routine
         {
             Timer.delay(.2);
         }
-
+        
         this.setDone();
     }
 }

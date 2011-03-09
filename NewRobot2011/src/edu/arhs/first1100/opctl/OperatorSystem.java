@@ -30,6 +30,7 @@ public class OperatorSystem extends SystemBase
     private boolean stopLift = false;
     private boolean stopArm = false;
 
+    public ButtonBox buttonBox;
     
     private OperatorSystem()
     {
@@ -37,6 +38,8 @@ public class OperatorSystem extends SystemBase
         rightJoystick = new AdvJoystick(2);
         
         xboxJoystick = new XboxJoystick(3);
+
+        buttonBox = new ButtonBox();
     }
     
     public static OperatorSystem getInstance()
@@ -72,110 +75,135 @@ public class OperatorSystem extends SystemBase
         /*
          * Lift Controls
          */
-        if(xboxJoystick.getRightTrigger() > 0.5)
+        if(xboxJoystick.getStartButton())
         {
-            Log.defcon1(this, "Using CamPID");
-            ms.enableCamPID();
-            stopLift = true;
-        }
-        else
-        {
-            if(Math.abs(xboxJoystick.getRightStickY()) > 0.20)
+            if(xboxJoystick.getBackButton())
             {
-                Log.defcon1(this, "Setting lift speed "+xboxJoystick.getRightStickY()/2);
-                ms.setLiftSpeed(xboxJoystick.getRightStickY()/2);
-                
-                ms.stopLiftPIDs();
-                
-                // Will make sure lift won't drift when joystick re-enters
-                // deadband
-                stopLift = true;
-            }
-            else if(stopLift)
-            {
-                Log.defcon1(this, "Stopping lift within deadband");
-                stopLift = false;
-                ms.stopLiftPIDs();
-                ms.setLiftSpeed(0.0);
+                minis.setBeltSpeed(0.3);
             }
             else
             {
-                if(xboxJoystick.getXButton())
-                {
-                    Log.defcon1(this, "Setting state to default");
-                    ms.setState(ManipulatorSystem.STATE_DEFAULT);
-                }
-                else if(xboxJoystick.getAButton())
-                {
-                    Log.defcon1(this, "Setting state to bottom");
-                    ms.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
-                }
-                else if(xboxJoystick.getBButton())
-                {
-                    Log.defcon1(this, "Setting state to middle");
-                    ms.setState(ManipulatorSystem.STATE_MIDDLE_PEG);
-                }
-                else if(xboxJoystick.getYButton())
-                {
-                    Log.defcon1(this, "Setting state to top");
-                    ms.setState(ManipulatorSystem.STATE_TOP_PEG);
-                }
-                else if(xboxJoystick.getDpad() == 1.0)
-                {
-                    Log.defcon1(this, "Setting state to floor");
-                    ms.setState(ManipulatorSystem.STATE_FLOOR);
-                }
+                if(Math.abs(xboxJoystick.getLeftStickY()) > 0.20)
+                    if(xboxJoystick.getLeftStickY()>0)
+                        minis.setArmSpeed(xboxJoystick.getLeftStickY()/5);
+                    else
+                        minis.setArmSpeed(xboxJoystick.getLeftStickY()/2);
+                else
+                    minis.setArmSpeed(0.0);
+                
+                minis.setBeltSpeed(-0.2);
             }
         }
-        
-        /*
-         * Arm control
-         */
-        if(Math.abs(xboxJoystick.getLeftStickY()) > 0.20)
-        {
-            ms.stopArmPIDs();
-            if(xboxJoystick.getLeftStickY() > 0.0)
-            {
-                Log.defcon1(this, "Setting arm speed" + xboxJoystick.getLeftStickY()/4);
-                ms.setArmSpeed(xboxJoystick.getLeftStickY()/4);
-            }
-            else //Lower than 0
-            {
-                Log.defcon1(this, "Setting arm speed" + xboxJoystick.getLeftStickY()/2);
-                ms.setArmSpeed(xboxJoystick.getLeftStickY()/2);
-            }
-            
-            stopArm = true;
-        }
-        else if(stopArm)
-        {
-            Log.defcon1(this, "Stopping arm within deadband");
-            ms.setArmSpeed(0.0);
-            stopArm = false;
-        }/*
         else
         {
-            ms.setArmPosition(ms.getArmEncoder());
-        }*/
-        
-        /*
-         * Gripper and wrist
-         */
-        if(xboxJoystick.getLeftBumper() && !xboxLeftBumperLastState)
-        {
-            ManipulatorSystem.getInstance().toggleClaw();
-            xboxLeftBumperLastState = true;
+            minis.setArmSpeed(0000000000000.00000000000000000000000000000000000000000);
+            minis.setBeltSpeed(0000000000000.00000000000000000000000000000000000000000);//supa zero
+            
+            if(xboxJoystick.getRightTrigger() > 0.5)
+            {
+                Log.defcon1(this, "Using CamPID");
+                ms.enableCamPID();
+                stopLift = true;
+            }
+            else
+            {
+                if(Math.abs(xboxJoystick.getRightStickY()) > 0.20)
+                {
+                    Log.defcon1(this, "Setting lift speed " + xboxJoystick.getRightStickY()/2);
+                    ms.setLiftSpeed(xboxJoystick.getRightStickY()/2);
+
+                    ms.stopLiftPIDs();
+                    
+                    // Will make sure lift won't drift when joystick re-enters
+                    // deadband
+                    stopLift = true;
+                }
+                else if(stopLift)
+                {
+                    Log.defcon1(this, "Stopping lift within deadband");
+                    stopLift = false;
+                    ms.stopLiftPIDs();
+                    ms.setLiftSpeed(0.0);
+                }
+                else
+                {
+                    if(xboxJoystick.getXButton())
+                    {
+                        Log.defcon1(this, "Setting state to default");
+                        ms.setState(ManipulatorSystem.STATE_DEFAULT);
+                    }
+                    else if(xboxJoystick.getAButton())
+                    {
+                        Log.defcon1(this, "Setting state to bottom");
+                        ms.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
+                    }
+                    else if(xboxJoystick.getBButton())
+                    {
+                        Log.defcon1(this, "Setting state to middle");
+                        ms.setState(ManipulatorSystem.STATE_MIDDLE_PEG);
+                    }
+                    else if(xboxJoystick.getYButton())
+                    {
+                        Log.defcon1(this, "Setting state to top");
+                        ms.setState(ManipulatorSystem.STATE_TOP_PEG);
+                    }
+                    else if(xboxJoystick.getDpad() == 1.0)
+                    {
+                        Log.defcon1(this, "Setting state to floor");
+                        ms.setState(ManipulatorSystem.STATE_FLOOR);
+                    }
+                }
+            }
+
+            /*
+             * Arm control
+             */
+            if(Math.abs(xboxJoystick.getLeftStickY()) > 0.20)
+            {
+                ms.stopArmPIDs();
+                if(xboxJoystick.getLeftStickY() > 0.0)
+                {
+                    Log.defcon1(this, "Setting arm speed" + xboxJoystick.getLeftStickY()/4);
+                    ms.setArmSpeed(xboxJoystick.getLeftStickY()/4);
+                }
+                else //Lower than 0
+                {
+                    Log.defcon1(this, "Setting arm speed" + xboxJoystick.getLeftStickY()/2);
+                    ms.setArmSpeed(xboxJoystick.getLeftStickY()/2);
+                }
+
+                stopArm = true;
+            }
+            else if(stopArm)
+            {
+                Log.defcon1(this, "Stopping arm within deadband");
+                ms.setArmSpeed(0.0);
+                stopArm = false;
+            }/*
+            else
+            {
+                ms.setArmPosition(ms.getArmEncoder());
+            }*/
+
+            /*
+             * Gripper and wrist
+             */
+            if(xboxJoystick.getLeftBumper() && !xboxLeftBumperLastState)
+            {
+                ManipulatorSystem.getInstance().toggleClaw();
+                xboxLeftBumperLastState = true;
+            }
+            if(!xboxJoystick.getLeftBumper())
+                xboxLeftBumperLastState = false;
+
+            if(xboxJoystick.getRightBumper() && !xboxRightBumperLastState)
+            {
+                ManipulatorSystem.getInstance().toggleWrist();
+                xboxRightBumperLastState = true;
+            }
+            if(!xboxJoystick.getRightBumper())
+                xboxRightBumperLastState = false;
         }
-        if(!xboxJoystick.getLeftBumper())
-            xboxLeftBumperLastState = false;
-        
-        if(xboxJoystick.getRightBumper() && !xboxRightBumperLastState)
-        {
-            ManipulatorSystem.getInstance().toggleWrist();
-            xboxRightBumperLastState = true;
-        }
-        if(!xboxJoystick.getRightBumper())
-            xboxRightBumperLastState = false;
         
         /*
          * Drive Controls
@@ -197,20 +225,18 @@ public class OperatorSystem extends SystemBase
         /*
          * Minbot Controls
          */
-        minis.setStartButton(xboxJoystick.getStartButton());
-        minis.setBackButton(xboxJoystick.getBackButton());
+        
+        //minis.setStartButton(xboxJoystick.getStartButton());
+        //minis.setBackButton(xboxJoystick.getBackButton());
         
         /*
          * Reset joysticks
          */
         if (leftJoystick.getRawButton(8))
-        {
             leftJoystick.reset();
-        }
+        
         if (rightJoystick.getRawButton(8))
-        {
             rightJoystick.reset();
-        }
     }
     
     public void start()
