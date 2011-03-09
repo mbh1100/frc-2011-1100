@@ -106,12 +106,12 @@ public class ManipulatorSystem extends SystemBase
                 break;
                 
             case LIFTMUX_PID:
-                Log.defcon2(this, "LiftMux: Pid");
+                Log.defcon1(this, "LiftMux: Pid");
 
                 if(liftCamPID.isEnable()) liftCamPID.disable();
                 if (liftPID.isEnable())
                 {
-                    Log.defcon2(this, ("LiftPID Error : " + liftPID.getError()));
+                    Log.defcon1(this, ("LiftPID Error : " + liftPID.getError()));
                     if(Math.abs(liftPID.getError()) <= 1.0)
                     {
                         stopLiftPIDs();
@@ -142,25 +142,42 @@ public class ManipulatorSystem extends SystemBase
         switch(armMUX)
         {
             case ARMMUX_OPERATOR:
-                Log.defcon2(this, "ArmMux: Op");
+                Log.defcon1(this, "ArmMux: Op");
                 if(armPID.isEnable()) armPID.disable();
                 break;
             
             case ARMMUX_PID:
-                Log.defcon2(this, "ArmMux: Pid");
-                armPID.enable();
-                
-                if(armPID.getError() <= 1.0)
+                Log.defcon1(this, "ArmMux: Pid");
+
+                if(armPID.isEnable())
                 {
-                    //stopArmPIDs();
-                    Log.defcon2(this, "ArmPid: TARGET REACHED");
+                    Log.defcon2(this, ("ArmPID Error : " + liftPID.getError()));
+                    if(armPID.getError() <= 1.0)
+                    {
+                        stopArmPIDs();
+                        Log.defcon2(this, "ArmPid: TARGET REACHED");
+                    }
+                }
+                else
+                {
+                    armPID.enable();
                 }
                 break;
         }
-        
+
+        if(!armBackLimitSwitch.get())
+        {
+            Log.defcon2(this, "Resetting Arm Encoder");
+            resetArmEncoder();
+        }
+
+        if(!liftBottomLimitSwitch.get())
+        {
+            Log.defcon2(this, "Resetting Lift Encoder");
+            resetLiftEncoder();
+        }
         Log.defcon2(this, "Lift Encoder : "+liftEncoder.get());
         Log.defcon2(this, "Arm Encoder  : "+armEncoder.get());
-        Log.defcon2(this, "");
     }
 
     public void reset()
@@ -174,6 +191,8 @@ public class ManipulatorSystem extends SystemBase
      */
     public void setState(int state)
     {
+        Log.defcon2(this, "Setting state to" + state);
+        
         switch(state)
         {
             case STATE_DEFAULT:
@@ -207,9 +226,7 @@ public class ManipulatorSystem extends SystemBase
     {
         if(!liftBottomLimitSwitch.get())
         {
-            Log.defcon2(this, "!!!!!!!! Bottom limit pressed !!!!!!!!!!");
-
-            resetLiftEncoder();
+            Log.defcon1(this, "!!!!!!!! Bottom limit pressed !!!!!!!!!!");
             if(speed<0.0)
             {
                 liftJaguar.set(0.0);
@@ -247,6 +264,11 @@ public class ManipulatorSystem extends SystemBase
         return liftPID.getError();
     }
 
+    public int getArmMUXState()
+    {
+        return armMUX;
+    }
+    
     public void stopLiftPIDs()
     {
         liftMUX = LIFTMUX_OPERATOR;
@@ -264,9 +286,8 @@ public class ManipulatorSystem extends SystemBase
     {
         if(!armBackLimitSwitch.get())
         {
-            Log.defcon2(this, "########### Arm limit pressed ############### (#brown)");
+            Log.defcon1(this, "########### Arm limit pressed ############### (#brown)");
             
-            resetArmEncoder();
             if(speed < 0.0)
             {
                 armJaguar.set(0.0);

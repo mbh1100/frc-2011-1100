@@ -1,16 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package edu.arhs.first1100.autoctl;
 
+import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 
-/**
- *
- * @author team1100
- */
 public class SetManipulatorStateRoutine extends Routine
 {
     public SetManipulatorStateRoutine(int state)
@@ -22,7 +14,9 @@ public class SetManipulatorStateRoutine extends Routine
     
     public void tick()
     {
-        if(ManipulatorSystem.getInstance().getLiftMUXState() == ManipulatorSystem.LIFTMUX_OPERATOR)
+        if(ManipulatorSystem.getInstance().getLiftMUXState() == ManipulatorSystem.LIFTMUX_OPERATOR &&
+           ManipulatorSystem.getInstance().getArmMUXState()  == ManipulatorSystem.ARMMUX_OPERATOR)
+            Log.defcon2(this, "Stopping routine");
             setDone();
     }
 }

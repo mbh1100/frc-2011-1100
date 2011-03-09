@@ -10,6 +10,7 @@ package edu.arhs.first1100.robot;
 import edu.wpi.first.wpilibj.SimpleRobot;
 
 import edu.arhs.first1100.autoctl.AutonomousSystem;
+import edu.arhs.first1100.autoctl.SetManipulatorStateRoutine;
 import edu.arhs.first1100.camera.CameraSystem;
 import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.line.LineSystem;
@@ -43,15 +44,16 @@ public class RobotMain extends SimpleRobot
         if(!diagnostic)
         {
             //Set Logging Levels
-            Log.addClass(MinibotSystem.class, 1);
+            Log.addClass(MinibotSystem.class, 3);
             Log.addClass(OperatorSystem.class, 4);
             Log.addClass(RobotMain.class, 4);
             Log.addClass(ManipulatorSystem.class, 4);
             Log.addClass(DriveSystem.class, 4);
-
-            //Log.addClass(AdvJoystick.class, 3);
+            Log.addClass(AutonomousSystem.class, 1);
+            Log.addClass(LineSystem.class, 1);
+            Log.addClass(SetManipulatorStateRoutine.class, 1);
             
-            OperatorSystem.getInstance().setSleep(50);
+            OperatorSystem.getInstance().setSleep(25);
             AutonomousSystem.getInstance().setSleep(1000);
 
             DriveSystem.getInstance().setSleep(500);
@@ -68,7 +70,7 @@ public class RobotMain extends SimpleRobot
         }
         
         compressor = new Compressor(6, 1);
-        //compressor.start();
+        compressor.start();
         
         Log.defcon3(this, "+------------------------+");
         Log.defcon3(this, "| USING " + ((diagnostic) ? "DIAGNOSTIC " : "  REGULAR  ") + "ROBOT |");

@@ -83,7 +83,7 @@ public class XboxJoystick extends AdvJoystick
      */
     public double getLeftTrigger()
     {
-        return -Math.min(super.getRawAxis(3), 0);
+        return Math.max(super.getRawAxis(3), 0);
     }
     
     /**
@@ -91,7 +91,7 @@ public class XboxJoystick extends AdvJoystick
      */
     public double getRightTrigger()
     {
-        return Math.max(super.getRawAxis(3), 0);
+        return -Math.min(super.getRawAxis(3), 0);
     }
     
     /*
