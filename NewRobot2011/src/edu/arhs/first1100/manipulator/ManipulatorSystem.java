@@ -34,6 +34,7 @@ public class ManipulatorSystem extends SystemBase
 
     public static final int ARMMUX_OPERATOR = 0;
     public static final int ARMMUX_PID = 1;
+    public static final int ARMMUX_CAM = 2;
     
     private int liftMUX = LIFTMUX_OPERATOR;
     private int armMUX = ARMMUX_OPERATOR;
@@ -50,6 +51,7 @@ public class ManipulatorSystem extends SystemBase
 
     private DigitalInput armBackLimitSwitch;
     private LiftCamPid liftCamPID;
+    private ArmCamPid armCamPID;
 
     private Solenoid claw;
     private Solenoid wrist;
@@ -78,6 +80,10 @@ public class ManipulatorSystem extends SystemBase
         
         liftCamPID = new LiftCamPid();
         liftCamPID.setOutputRange(-0.4, 0.6);
+
+        armCamPID = new ArmCamPid();
+        armCamPID.setOutputRange(-0.2, 0.2);
+        armCamPID.setSetpoint(1000);
         
         claw = new Solenoid(1);
         wrist = new Solenoid(2);
@@ -144,23 +150,41 @@ public class ManipulatorSystem extends SystemBase
             case ARMMUX_OPERATOR:
                 Log.defcon1(this, "ArmMux: Op");
                 if(armPID.isEnable()) armPID.disable();
+                if(armCamPID.isEnable()) armCamPID.disable();
                 break;
             
             case ARMMUX_PID:
-                Log.defcon1(this, "ArmMux: Pid");
+                Log.defcon2(this, "ArmMux: Pid");
+                if (armCamPID.isEnable()) armCamPID.disable();
 
-                if(armPID.isEnable())
+                if (armPID.isEnable())
                 {
-                    Log.defcon2(this, ("ArmPID Error : " + liftPID.getError()));
-                    if(armPID.getError() <= 1.0)
+                    if (armPID.getError() <= 1.0)
                     {
-                        stopArmPIDs();
+                        //stopArmPIDs();
                         Log.defcon2(this, "ArmPid: TARGET REACHED");
                     }
                 }
                 else
                 {
                     armPID.enable();
+                }
+                break;
+
+            case ARMMUX_CAM:
+                Log.defcon2(this, "ArmMux: Cam");
+                if (armPID.isEnable()) armPID.disable();
+
+                if (armCamPID.isEnable())
+                {
+                    if (armPID.getError() <= 1.0)
+                    {
+                        Log.defcon2(this, "ArmCam: TARGET REACHED");
+                    }
+                }
+                else
+                {
+                    armCamPID.enable();
                 }
                 break;
         }
@@ -249,9 +273,14 @@ public class ManipulatorSystem extends SystemBase
     /*
      * PID Interfaces
      */
-    public void enableCamPID()
+    public void enableLiftCamPID()
     {
         liftMUX = LIFTMUX_CAM;
+    }
+
+    public void enableArmCamPID()
+    {
+        armMUX = ARMMUX_CAM;
     }
     
     public int getLiftMUXState()

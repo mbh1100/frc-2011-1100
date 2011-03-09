@@ -19,6 +19,7 @@ public class DriveSystem extends SystemBase
     private static DriveSystem instance = null;
 
     private SteerPid steerPid;
+    private DriveCamPid powerPid;
     
     private AdvJaguar leftJaguars;
     private AdvJaguar rightJaguars;
@@ -29,7 +30,7 @@ public class DriveSystem extends SystemBase
     public DriveSystem()
     {
         steerPid = new SteerPid();
-        steerPid.enable();
+        powerPid = new DriveCamPid();
         
         leftJaguars  = new AdvJaguar(4, 2, 4, false);
         rightJaguars = new AdvJaguar(4, 1, 3, false);
@@ -48,19 +49,35 @@ public class DriveSystem extends SystemBase
         Log.defcon1(this, "");
         
     }
+    
+    public void steerByCamera()
+    {
+        steerPid.setOutputRange(-0.2, 0.2);
+        steerPid.enable();
+    }
+
+    public void driveByCamera()
+    {
+        steerByCamera();
+        powerPid.setOutputRange(-0.3, 0.3);
+        powerPid.setSetpoint(1000.0);
+        powerPid.enable();
+    }
 
     public void setTankSpeed(double leftSide, double rightSide)
     {
+        steerPid.disable();
+        powerPid.disable();
         leftJaguars.set(leftSide);
         rightJaguars.set(rightSide);
     }
 
-    public void setArcadeSpeed(double outputMagnitude, double curve)
+    private void setArcadeSpeed(double outputMagnitude, double curve)
     {
         setArcadeSpeed(outputMagnitude, curve, 0.5);
     }
     
-    public void setArcadeSpeed(double outputMagnitude, double curve, double sensitivity)
+    private void setArcadeSpeed(double outputMagnitude, double curve, double sensitivity)
     {
         double leftOutput, rightOutput;
         
@@ -94,7 +111,7 @@ public class DriveSystem extends SystemBase
         setTankSpeed(leftOutput, rightOutput);
     }
     
-    public void setCurve(double curve)
+    void setCurve(double curve)
     {
         Log.defcon1(this, "Setting Curve to "+curve);
         this.curve = curve;

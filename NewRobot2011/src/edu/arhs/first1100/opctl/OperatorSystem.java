@@ -73,8 +73,8 @@ public class OperatorSystem extends SystemBase
             
             if(xboxJoystick.getRightTrigger() > 0.5)
             {
-                Log.defcon1(this, "Using CamPID");
-                ms.enableCamPID();
+                Log.defcon1(this, "Using LiftCamPID");
+                ms.enableLiftCamPID();
                 stopLift = true;
             }
             else

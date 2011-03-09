@@ -28,17 +28,17 @@ class ArmCamOutput implements PIDOutput
     public void pidWrite(double output)
     {
         Log.defcon2(this, "Using PID to tell DS to drive wheels at " + output);
-        DriveSystem.getInstance().setTankSpeed(output, output);
+        DriveSystem.getInstance().setPower(output);
     }
 }
 
-public class ArmCamPid extends PIDController
+public class DriveCamPid extends PIDController
 {
     static private final double P = 0.1;
     static private final double I = 0.01;
     private static final double D = 0.001;
     
-    ArmCamPid()
+    DriveCamPid()
     {
 	super(P, I, D, new ArmCamSource(), new ArmCamOutput());
     }
