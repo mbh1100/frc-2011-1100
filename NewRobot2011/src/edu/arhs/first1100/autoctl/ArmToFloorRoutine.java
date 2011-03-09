@@ -7,6 +7,7 @@ package edu.arhs.first1100.autoctl;
 
 import edu.arhs.first1100.autoctl.lowlevel.ReleaseATubeRoutine;
 import edu.arhs.first1100.autoctl.lowlevel.WristDownRoutine;
+import edu.arhs.first1100.manipulator.ManipulatorSystem;
 
 public class ArmToFloorRoutine extends Routine
 {
@@ -14,24 +15,21 @@ public class ArmToFloorRoutine extends Routine
     {
         super(100);
     }
-
+    
     public void run()
     {
         WristDownRoutine wdr = new WristDownRoutine();
-        LiftToPositionRoutine ltpr = new LiftToPositionRoutine(5);
-        ArmToPositionRoutine atpr = new ArmToPositionRoutine(100);  //encoder needs to be fixed
+        SetManipulatorStateRoutine smr = new SetManipulatorStateRoutine(ManipulatorSystem.STATE_FLOOR);
         ReleaseATubeRoutine ratr = new ReleaseATubeRoutine();
 
         wdr.start();
-        ltpr.start();
-        atpr.start();
+        smr.start();
         ratr.start();
         
         wdr.waitForDone();
-        ltpr.waitForDone();
-        atpr.waitForDone();
+        smr.waitForDone();
         ratr.waitForDone();
-
+        
         this.setDone();
     }
 }

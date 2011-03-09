@@ -6,6 +6,7 @@
 package edu.arhs.first1100.drive;
 
 import edu.arhs.first1100.camera.CameraSystem;
+import edu.arhs.first1100.log.Log;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -18,6 +19,7 @@ class SteerSource implements PIDSource
 {
     public double pidGet()
     {
+        Log.defcon1(this, "pigGet():" + CameraSystem.getInstance().getCenterX());
         return CameraSystem.getInstance().getCenterX();
     }
 }
@@ -37,7 +39,7 @@ public class SteerPid extends PIDController
     static private final double I = 0.0;
     static private final double D = 0.0;
 
-    SteerPid()
+    public SteerPid()
     {
 	super(P, I, D, new SteerSource(), new SteerOutput());
     }

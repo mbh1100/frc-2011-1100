@@ -6,6 +6,7 @@
 package edu.arhs.first1100.autoctl;
 
 import edu.arhs.first1100.autoctl.lowlevel.GrabATubeRoutine;
+import edu.arhs.first1100.manipulator.ManipulatorSystem;
 
 public class PickUpTubeFromFloorRoutine extends Routine
 {
@@ -16,11 +17,9 @@ public class PickUpTubeFromFloorRoutine extends Routine
 
     public void run()
     {
-        GrabATubeRoutine gatr = new GrabATubeRoutine();
-        gatr.execute();
-
-        DefaultPositionRoutine dpr = new DefaultPositionRoutine();
-        dpr.execute();
+        new GrabATubeRoutine().execute();
+        
+        new SetManipulatorStateRoutine(ManipulatorSystem.STATE_DEFAULT).execute();
 
         this.setDone();
     }

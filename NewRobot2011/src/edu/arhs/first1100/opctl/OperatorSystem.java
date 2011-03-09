@@ -21,7 +21,7 @@ public class OperatorSystem extends SystemBase
     private boolean stopLift = false;
     private boolean stopArm = false;
 
-    public ButtonBox buttonBox;
+    private ButtonBox buttonBox;
     
     private OperatorSystem()
     {
@@ -61,19 +61,29 @@ public class OperatorSystem extends SystemBase
 
         ManipulatorSystem ms = ManipulatorSystem.getInstance();
         MinibotSystem minis = MinibotSystem.getInstance();
+        DriveSystem ds = DriveSystem.getInstance();
         
         if(xboxJoystick.getStartButton())
         {
             processMinibotControls();
         }
+        else if(leftJoystick.getRawButton(8))
+        {
+            Log.defcon2(this, "Running steer PID");
+            ds.steerByCamera();
+        }
+        else if(leftJoystick.getRawButton(7))
+        {
+            Log.defcon2(this, "Running drive PID");
+            ds.driveByCamera();
+        }
         else
         {
-            minis.setArmSpeed(0.0);
-            minis.setBeltSpeed(0.0);
+            ds.disablePids();
             
             if(xboxJoystick.getRightTrigger() > 0.5)
             {
-                Log.defcon1(this, "Using LiftCamPID");
+                Log.defcon1(this, "Using LiftCamPID!");
                 ms.enableLiftCamPID();
                 stopLift = true;
             }
@@ -81,7 +91,13 @@ public class OperatorSystem extends SystemBase
             {
                 processLiftControls();
             }
+
             processArmControls();
+            processGripperWristControls();
+            
+            // Stop minibot
+            minis.setArmSpeed(0.0);
+            minis.setBeltSpeed(0.0);
         }
 
         processDriveControls();
@@ -89,11 +105,8 @@ public class OperatorSystem extends SystemBase
         /*
          * Reset joysticks
          */
-        if (leftJoystick.getRawButton(8))
-            leftJoystick.reset();
-        
-        if (rightJoystick.getRawButton(8))
-            rightJoystick.reset();
+        if (leftJoystick.getRawButton(8)) leftJoystick.reset();
+        if (rightJoystick.getRawButton(8)) rightJoystick.reset();
     }
 
     public void processMinibotControls()
@@ -173,7 +186,7 @@ public class OperatorSystem extends SystemBase
             }
         }
     }
-
+    
     public void processArmControls()
     {
         /*
@@ -240,10 +253,11 @@ public class OperatorSystem extends SystemBase
         double rightSpeed = -rightJoystick.getStickY() * Math.max(-((rightJoystick.getZ()/2)-0.5), 0.75);
 
         DriveSystem.getInstance().setTankSpeed(leftSpeed, rightSpeed);
+    }
 
-        Log.defcon1(this, "SETTING TANK SPEED WITH TRIM:\n"+
-                          leftSpeed+"\n"+
-                          rightSpeed);
+    public ButtonBox getButtonBox()
+    {
+        return buttonBox;
     }
     
     public void start()

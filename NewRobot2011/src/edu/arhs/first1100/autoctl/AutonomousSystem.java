@@ -25,7 +25,7 @@ public class AutonomousSystem extends SystemBase
     
     public void win()
     {
-        ButtonBox bb = OperatorSystem.getInstance().buttonBox;
+        ButtonBox bb = OperatorSystem.getInstance().getButtonBox();
         
         scoreUberTube(bb.getStartingPosition(),
                       bb.getRack(),
@@ -63,6 +63,7 @@ public class AutonomousSystem extends SystemBase
                 break;
         }
 
+        
         Log.defcon2(this, "All done!");
     }
 }

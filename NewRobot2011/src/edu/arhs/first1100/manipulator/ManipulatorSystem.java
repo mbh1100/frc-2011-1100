@@ -189,18 +189,21 @@ public class ManipulatorSystem extends SystemBase
                 }
                 break;
         }
-
+        
         if(!armBackLimitSwitch.get())
         {
             Log.defcon2(this, "Resetting Arm Encoder");
-            resetArmEncoder();
+            if(getArmEncoder() != 0)
+                resetArmEncoder();
         }
 
         if(!liftBottomLimitSwitch.get())
         {
             Log.defcon2(this, "Resetting Lift Encoder");
-            resetLiftEncoder();
+            if(getArmEncoder() != 0)
+                resetLiftEncoder();
         }
+        
         Log.defcon2(this, "Lift Encoder : "+liftEncoder.get());
         Log.defcon2(this, "Arm Encoder  : "+armEncoder.get());
     }

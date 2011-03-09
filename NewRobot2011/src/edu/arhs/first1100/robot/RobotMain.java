@@ -44,14 +44,14 @@ public class RobotMain extends SimpleRobot
         if(!diagnostic)
         {
             //Set Logging Levels
-            Log.addClass(MinibotSystem.class, 3);
-            Log.addClass(OperatorSystem.class, 4);
+            Log.addClass(MinibotSystem.class, 4);
+            Log.addClass(OperatorSystem.class, 1);
             Log.addClass(RobotMain.class, 4);
             Log.addClass(ManipulatorSystem.class, 4);
-            Log.addClass(DriveSystem.class, 4);
-            Log.addClass(AutonomousSystem.class, 1);
-            Log.addClass(LineSystem.class, 1);
-            Log.addClass(SetManipulatorStateRoutine.class, 1);
+            Log.addClass(DriveSystem.class, 1);
+            Log.addClass(AutonomousSystem.class, 4);
+            Log.addClass(LineSystem.class, 4);
+            Log.addClass(SetManipulatorStateRoutine.class, 4);
             
             OperatorSystem.getInstance().setSleep(25);
             AutonomousSystem.getInstance().setSleep(1000);

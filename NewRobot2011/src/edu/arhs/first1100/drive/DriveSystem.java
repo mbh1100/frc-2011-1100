@@ -6,6 +6,7 @@
 package edu.arhs.first1100.drive;
 
 import com.sun.squawk.util.MathUtils;
+import edu.arhs.first1100.camera.CameraSystem;
 import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.util.AdvJaguar;
@@ -44,9 +45,14 @@ public class DriveSystem extends SystemBase
     
     public void tick()
     {
-        Log.defcon1(this, "Left:  "+leftJaguars.get());
-        Log.defcon1(this, "Right: "+rightJaguars.get());
+        Log.defcon1(this, "Steer PID Output: " + steerPid.get());
+        Log.defcon1(this, "Power PID Output: " + powerPid.get());
+        Log.defcon1(this, "Particle Size:" + CameraSystem.getInstance().getBiggestParticle().particleArea);
         Log.defcon1(this, "");
+        
+        //Log.defcon1(this, "Left:  "+leftJaguars.get());
+        //Log.defcon1(this, "Right: "+rightJaguars.get());
+        //Log.defcon1(this, "");
         
     }
     
@@ -66,12 +72,17 @@ public class DriveSystem extends SystemBase
 
     public void setTankSpeed(double leftSide, double rightSide)
     {
-        steerPid.disable();
-        powerPid.disable();
+        
         leftJaguars.set(leftSide);
         rightJaguars.set(rightSide);
     }
 
+    public void disablePids()
+    {
+        if(steerPid.isEnable()) steerPid.disable();
+        if(powerPid.isEnable()) powerPid.disable();
+    }
+    
     private void setArcadeSpeed(double outputMagnitude, double curve)
     {
         setArcadeSpeed(outputMagnitude, curve, 0.5);
@@ -123,6 +134,4 @@ public class DriveSystem extends SystemBase
         this.power = power;
         setArcadeSpeed(this.power, this.curve);
     }
-
-
 }

@@ -35,6 +35,7 @@ public class Light
         }
         
     }
+
     /**
      *says what chanel the light is on
      * @param ch
@@ -43,6 +44,7 @@ public class Light
     {
         solenoid = new Solenoid(ch);
     }
+
     /**
      *toggles the light on and off
      */
@@ -52,9 +54,10 @@ public class Light
         System.out.println("Light toggled");
         solenoid.set(state);
     }
-/**
- * paramiters to turn the light on for
- */
+
+    /**
+     * paramiters to turn the light on for
+     */
     public void on()
     {
         if(timer != null)
@@ -63,9 +66,10 @@ public class Light
         state = true;
         solenoid.set(state);
     }
-/**
- * peramiters to turn the light off for
- */
+
+    /**
+     * peramiters to turn the light off for
+     */
     public void off()
     {
         state = false;
@@ -80,6 +84,7 @@ public class Light
         on();
         this.scheduleOff();
     }
+    
     /**
      *says when the light off.
      */
