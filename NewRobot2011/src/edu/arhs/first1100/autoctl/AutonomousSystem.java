@@ -11,7 +11,11 @@ public class AutonomousSystem extends SystemBase
     private static AutonomousSystem instance = null;
     
     public AutonomousSystem()
+    { }
+
+    public void start()
     {
+        super.start();
         win();
     }
     

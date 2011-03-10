@@ -47,7 +47,7 @@ public class DriveSystem extends SystemBase
     {
         Log.defcon1(this, "Steer PID Output: " + steerPid.get());
         Log.defcon1(this, "Power PID Output: " + powerPid.get());
-        Log.defcon1(this, "Particle Size:" + CameraSystem.getInstance().getBiggestParticle().particleArea);
+        //Log.defcon1(this, "Particle Size:" + CameraSystem.getInstance().getBiggestParticle().particleArea);
         Log.defcon1(this, "");
         
         //Log.defcon1(this, "Left:  "+leftJaguars.get());

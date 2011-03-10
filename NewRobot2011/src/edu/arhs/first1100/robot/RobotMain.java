@@ -47,7 +47,7 @@ public class RobotMain extends SimpleRobot
             Log.addClass(MinibotSystem.class, 4);
             Log.addClass(OperatorSystem.class, 1);
             Log.addClass(RobotMain.class, 4);
-            Log.addClass(ManipulatorSystem.class, 4);
+            Log.addClass(ManipulatorSystem.class, 2);
             Log.addClass(DriveSystem.class, 1);
             Log.addClass(AutonomousSystem.class, 4);
             Log.addClass(LineSystem.class, 4);
