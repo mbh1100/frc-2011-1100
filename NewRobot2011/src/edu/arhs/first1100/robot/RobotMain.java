@@ -45,10 +45,10 @@ public class RobotMain extends SimpleRobot
         {
             //Set Logging Levels
             Log.addClass(MinibotSystem.class, 4);
-            Log.addClass(OperatorSystem.class, 1);
+            Log.addClass(OperatorSystem.class, 4);
             Log.addClass(RobotMain.class, 4);
-            Log.addClass(ManipulatorSystem.class, 2);
-            Log.addClass(DriveSystem.class, 1);
+            Log.addClass(ManipulatorSystem.class, 1);
+            Log.addClass(DriveSystem.class, 4);
             Log.addClass(AutonomousSystem.class, 4);
             Log.addClass(LineSystem.class, 4);
             Log.addClass(SetManipulatorStateRoutine.class, 4);

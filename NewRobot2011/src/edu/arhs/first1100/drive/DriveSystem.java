@@ -21,41 +21,40 @@ public class DriveSystem extends SystemBase
 
     private SteerPid steerPid;
     private DriveCamPid powerPid;
-    
+
     private AdvJaguar leftJaguars;
     private AdvJaguar rightJaguars;
 
     private double curve = 0.0;
     private double power = 0.0;
-    
+
     public DriveSystem()
     {
         steerPid = new SteerPid();
         powerPid = new DriveCamPid();
-        
+
         leftJaguars  = new AdvJaguar(4, 2, 4, false);
         rightJaguars = new AdvJaguar(4, 1, 3, false);
     }
-    
+
     public static DriveSystem getInstance()
     {
         if(instance == null) instance = new DriveSystem();
         return instance;
     }
-    
+
     public void tick()
     {
         Log.defcon1(this, "Steer PID Output: " + steerPid.get());
         Log.defcon1(this, "Power PID Output: " + powerPid.get());
         //Log.defcon1(this, "Particle Size:" + CameraSystem.getInstance().getBiggestParticle().particleArea);
         Log.defcon1(this, "");
-        
+
         //Log.defcon1(this, "Left:  "+leftJaguars.get());
         //Log.defcon1(this, "Right: "+rightJaguars.get());
         //Log.defcon1(this, "");
-        
     }
-    
+
     public void steerByCamera()
     {
         steerPid.setOutputRange(-0.2, 0.2);
@@ -72,7 +71,6 @@ public class DriveSystem extends SystemBase
 
     public void setTankSpeed(double leftSide, double rightSide)
     {
-        
         leftJaguars.set(leftSide);
         rightJaguars.set(rightSide);
     }
@@ -82,16 +80,16 @@ public class DriveSystem extends SystemBase
         if(steerPid.isEnable()) steerPid.disable();
         if(powerPid.isEnable()) powerPid.disable();
     }
-    
+
     private void setArcadeSpeed(double outputMagnitude, double curve)
     {
         setArcadeSpeed(outputMagnitude, curve, 0.5);
     }
-    
+
     private void setArcadeSpeed(double outputMagnitude, double curve, double sensitivity)
     {
         double leftOutput, rightOutput;
-        
+
         if (curve < 0)
         {
             double value = MathUtils.log(-curve);
@@ -121,7 +119,7 @@ public class DriveSystem extends SystemBase
         }
         setTankSpeed(leftOutput, rightOutput);
     }
-    
+
     void setCurve(double curve)
     {
         Log.defcon1(this, "Setting Curve to "+curve);
@@ -133,5 +131,23 @@ public class DriveSystem extends SystemBase
     {
         this.power = power;
         setArcadeSpeed(this.power, this.curve);
+    }
+
+    public void experimentalDrive(double speed, int a)
+    {
+        int angle = 90-(Math.max(-90, Math.min(90, a)));
+        double ratio = Math.sin(angle);
+        if (a > 0)
+        {
+            setTankSpeed(speed,(speed*ratio));
+        }
+        else if (a < 0)
+        {
+            setTankSpeed((speed*ratio), speed);
+        }
+        else
+        {
+            setTankSpeed(speed, speed);
+        }
     }
 }

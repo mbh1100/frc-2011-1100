@@ -17,9 +17,9 @@ public class FollowLineRoutine extends Routine
     
     public void tick()
     {
-        if(LineSystem.getInstance().isStopped())
-        {
+        //if(LineSystem.getInstance().isStopped())
+        //{
             setDone();
-        }
+        //}
     }
 }

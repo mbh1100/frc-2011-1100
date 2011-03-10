@@ -6,12 +6,10 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Encoder;
 
 /**
- *
  * @author team1100
  */
 public class DiagnosticRobot
-{
-    
+{    
     //Channel numbers
     final int LEFT_JOYSTICK_CHANNEL = 1;
     final int RIGHT_JOYSTICK_CHANNEL = 2;
@@ -81,7 +79,6 @@ public class DiagnosticRobot
         claw = new Solenoid(CLAW);
         lastWristState = wrist.get();
         lastClawState = claw.get();
-
 
         //Minibot init
         mbArm = new Victor(MINIBOT_SIDECAR, MINIBOT_ARM_VICTOR);

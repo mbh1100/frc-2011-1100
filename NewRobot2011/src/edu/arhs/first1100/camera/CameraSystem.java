@@ -116,8 +116,7 @@ public class CameraSystem extends SystemBase
                 info += "Center: "
                         +pRep[i].center_mass_x_normalized
                         +", "
-                        +pRep[i].center_mass_y_normalized+"\n\n";
-                
+                        +pRep[i].center_mass_y_normalized+"\n\n";                
             }
             Log.defcon2(this, info);
         }

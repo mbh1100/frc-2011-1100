@@ -10,11 +10,11 @@ import edu.arhs.first1100.minibot.MinibotSystem;
 public class OperatorSystem extends SystemBase
 {
     private static OperatorSystem instance = null;
-    
+
     public AdvJoystick leftJoystick;  //controls the left side of the robot
     public AdvJoystick rightJoystick; //controls the right side of the robot.
     public XboxJoystick xboxJoystick; //controls the arm and other stuff. Hi.
-    
+
     private boolean xboxLeftBumperLastState = false;
     private boolean xboxRightBumperLastState = false;
 
@@ -22,23 +22,23 @@ public class OperatorSystem extends SystemBase
     private boolean stopArm = false;
 
     private ButtonBox buttonBox;
-    
+
     private OperatorSystem()
     {
         leftJoystick = new AdvJoystick(1);
         rightJoystick = new AdvJoystick(2);
-        
+
         xboxJoystick = new XboxJoystick(3);
 
         buttonBox = new ButtonBox();
     }
-    
+
     public static OperatorSystem getInstance()
     {
         if(instance == null) instance = new OperatorSystem();
         return instance;
     }
-    
+
     public void tick()
     {
         /*
@@ -56,13 +56,13 @@ public class OperatorSystem extends SystemBase
          *
          * IF YOU NEED TO INVERT A MOTOR, DO SO IN THE SYSTEM IT IS DECLARED,
          * DON'T INVERT THE JOYSTICK
-         * 
+         *
          */
 
         ManipulatorSystem ms = ManipulatorSystem.getInstance();
         MinibotSystem minis = MinibotSystem.getInstance();
         DriveSystem ds = DriveSystem.getInstance();
-        
+
         if(xboxJoystick.getStartButton())
         {
             processMinibotControls();
@@ -80,7 +80,7 @@ public class OperatorSystem extends SystemBase
         else
         {
             ds.disablePids();
-            
+
             if(xboxJoystick.getRightTrigger() > 0.5)
             {
                 Log.defcon1(this, "Using LiftCamPID!");
@@ -94,14 +94,14 @@ public class OperatorSystem extends SystemBase
 
             processArmControls();
             processGripperWristControls();
-            
+
             // Stop minibot
             minis.setArmSpeed(0.0);
             minis.setBeltSpeed(0.0);
         }
 
         processDriveControls();
-        
+
         /*
          * Reset joysticks
          */
@@ -154,7 +154,6 @@ public class OperatorSystem extends SystemBase
         {
             Log.defcon1(this, "Stopping lift within deadband");
             stopLift = false;
-            ms.stopLiftPIDs();
             ms.setLiftSpeed(0.0);
         }
         else
@@ -186,7 +185,7 @@ public class OperatorSystem extends SystemBase
             }
         }
     }
-    
+
     public void processArmControls()
     {
         /*
@@ -259,12 +258,12 @@ public class OperatorSystem extends SystemBase
     {
         return buttonBox;
     }
-    
+
     public void start()
     {
         Log.defcon2(this, "Resetting joystick centers...");
         super.start();
-        
+
         rightJoystick.reset();
         leftJoystick.reset();
     }

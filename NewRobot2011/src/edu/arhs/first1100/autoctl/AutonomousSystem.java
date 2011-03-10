@@ -5,11 +5,12 @@ import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.opctl.ButtonBox;
 import edu.arhs.first1100.opctl.OperatorSystem;
 import edu.arhs.first1100.util.SystemBase;
+import edu.wpi.first.wpilibj.Timer;
 
 public class AutonomousSystem extends SystemBase
 {
     private static AutonomousSystem instance = null;
-    
+
     public AutonomousSystem()
     { }
 
@@ -24,7 +25,7 @@ public class AutonomousSystem extends SystemBase
         if(instance == null) instance = new AutonomousSystem();
         return instance;
     }
-
+    
     public void tick() { }
     
     public void win()
@@ -43,12 +44,18 @@ public class AutonomousSystem extends SystemBase
         
         Log.defcon2(this, "Running SetManipulatorStateRoutine");
         new SetManipulatorStateRoutine(ManipulatorSystem.STATE_DEFAULT).execute();
+
+        Timer.delay(1);
         
         Log.defcon2(this, "Running FollowLineRoutine");
         new FollowLineRoutine(rack).execute();
 
+        Timer.delay(1);
+        
         Log.defcon2(this, "Running SelectColumRoutine");
         new SelectColumRoutine().execute();
+
+        Timer.delay(1);
         
         Log.defcon2(this, "Running SetManipulatorStateRoutine on the...");
         switch(row)
@@ -67,6 +74,7 @@ public class AutonomousSystem extends SystemBase
                 break;
         }
 
+        Timer.delay(1);
         
         Log.defcon2(this, "All done!");
     }

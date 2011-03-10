@@ -1,5 +1,6 @@
 package edu.arhs.first1100.camera;
 
+import edu.arhs.first1100.log.Log;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Solenoid;
 import java.util.Timer;
@@ -51,7 +52,7 @@ public class Light
     public void toggle()
     {
         state = !state;
-        System.out.println("Light toggled");
+        Log.defcon2(this, "Light Toggled");
         solenoid.set(state);
     }
 
@@ -82,14 +83,6 @@ public class Light
     public void onForAWhile()
     {
         on();
-        this.scheduleOff();
-    }
-    
-    /**
-     *says when the light off.
-     */
-    public void scheduleOff()
-    {
         timer = new Timer();
         timer.schedule(new Timeout(this), 2000);
     }

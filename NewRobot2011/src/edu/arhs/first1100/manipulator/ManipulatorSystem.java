@@ -14,10 +14,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 
-/**
- *
- * @author team1100
- */
 public class ManipulatorSystem extends SystemBase
 {
     private static ManipulatorSystem instance = null;
@@ -58,16 +54,19 @@ public class ManipulatorSystem extends SystemBase
     
     public ManipulatorSystem()
     {
+        //Lift Constructers
         liftJaguar = new AdvJaguar(4, 6, true);
         
         liftEncoder = new Encoder(8, 9);
         liftEncoder.start();
         
         liftPID = new LiftPid();
-        liftPID.setOutputRange(-0.2, 0.2);  // maybe it should be a bit higher like .3 ?
+        liftPID.setOutputRange(-0.5, 0.5);  // maybe it should be a bit higher like .3 ?
 
         liftBottomLimitSwitch = new DigitalInput(7);
 
+
+        //Arm Constructers
         armJaguar = new AdvJaguar(4, 8, false);
 
         armEncoder = new Encoder(10, 11);
@@ -77,7 +76,9 @@ public class ManipulatorSystem extends SystemBase
         armPID.setOutputRange(-0.2, 0.2);  // maybe it should be a bit higher like .3 ?
         
         armBackLimitSwitch = new DigitalInput(12);
-        
+
+
+        //Other
         liftCamPID = new LiftCamPid();
         liftCamPID.setOutputRange(-0.4, 0.6);
 
@@ -112,10 +113,10 @@ public class ManipulatorSystem extends SystemBase
                 break;
                 
             case LIFTMUX_PID:
-                Log.defcon1(this, "LiftMux: Pid");
+                Log.defcon2(this, "LiftMux: Pid");
 
                 if(liftCamPID.isEnable()) liftCamPID.disable();
-                if (liftPID.isEnable())
+                if(liftPID.isEnable())
                 {
                     Log.defcon1(this, ("LiftPID Error : " + liftPID.getError()));
                     if(Math.abs(liftPID.getError()) <= 1.0)
@@ -159,7 +160,7 @@ public class ManipulatorSystem extends SystemBase
 
                 if (armPID.isEnable())
                 {
-                    if (armPID.getError() <= 1.0)
+                    if (Math.abs(armPID.getError()) <= 1.0)
                     {
                         stopArmPIDs();
                         Log.defcon2(this, "ArmPid: TARGET REACHED");
@@ -177,7 +178,7 @@ public class ManipulatorSystem extends SystemBase
 
                 if (armCamPID.isEnable())
                 {
-                    if (armPID.getError() <= 1.0)
+                    if (Math.abs(armPID.getError()) <= 1.0)
                     {
                         stopArmPIDs();
                         Log.defcon2(this, "ArmCam: TARGET REACHED");
@@ -255,9 +256,10 @@ public class ManipulatorSystem extends SystemBase
         if(!liftBottomLimitSwitch.get())
         {
             Log.defcon1(this, "!!!!!!!! Bottom limit pressed !!!!!!!!!!");
-            if(speed<0.0)
+            if(speed>0.0)
             {
                 liftJaguar.set(0.0);
+                return;
             }
         }
         liftJaguar.set(speed);
@@ -320,10 +322,10 @@ public class ManipulatorSystem extends SystemBase
         if(!armBackLimitSwitch.get())
         {
             Log.defcon1(this, "########### Arm limit pressed ############### (#brown)");
-            
             if(speed < 0.0)
             {
                 armJaguar.set(0.0);
+                return;
             }
         }
         armJaguar.set(speed);
@@ -362,7 +364,8 @@ public class ManipulatorSystem extends SystemBase
     {
         armEncoder.reset();
     }
-    
+
+
     /*
      * Claw and Wrist
      */
