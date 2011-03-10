@@ -25,6 +25,7 @@ public class DSKnob
         m_channel = channel;
         reset();
     }
+    
     /**
      * set the initial value of the knob to the current value.
      */
@@ -54,7 +55,7 @@ public class DSKnob
         }
         catch (EnhancedIOException e)
         {
-            System.out.println("oops");
+            //System.out.println("oops");
         }
         return m_lastVal;
     }

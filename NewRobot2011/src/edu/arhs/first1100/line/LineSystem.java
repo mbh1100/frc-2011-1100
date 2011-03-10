@@ -42,7 +42,7 @@ public class LineSystem extends SystemBase
         {
             Log.defcon1(this, "Following the line...");
             
-            // Check for middle
+            // Check for all
             if(left.get() && middle.get() && right.get())
             {
                 Log.defcon1(this, "    Stopping on the line!");
@@ -68,6 +68,14 @@ public class LineSystem extends SystemBase
                 ds.setTankSpeed(0.5, 0.5);
                 Timer.delay(1);
             }
+            
+            else if(middle.get() && (right.get() ||left.get()))
+            {
+                ds.setTankSpeed(-0.3, -0.3);
+                Timer.delay(0.2);
+                ds.setTankSpeed(0, 0);
+                followLine = false;
+            }
 
             // Turn robot back right
             else if(left.get())
@@ -84,7 +92,7 @@ public class LineSystem extends SystemBase
                 ds.setTankSpeed(0.3, 0.6);
                 Timer.delay(0.1);
             }
-            
+                      
             // Teeter on the line
             else
             {
@@ -103,6 +111,7 @@ public class LineSystem extends SystemBase
         }
     }
     
+
     public void followLine(boolean splitDir)
     {
         this.splitDir = splitDir;

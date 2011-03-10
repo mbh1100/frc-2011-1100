@@ -104,18 +104,6 @@ public class SystemBase extends Thread
         sleepTime = time;
     }
     
-    public synchronized void waitTillDone()
-    {
-        try
-        {
-            wait();
-        }
-        catch(InterruptedException e)
-        {
-            
-        }
-    }
-    
     public synchronized void imDone()
     {
         notify();

@@ -51,7 +51,9 @@ public class ManipulatorSystem extends SystemBase
 
     private Solenoid claw;
     private Solenoid wrist;
-    
+
+    private boolean defaultState;
+
     public ManipulatorSystem()
     {
         //Lift Constructers
@@ -61,7 +63,7 @@ public class ManipulatorSystem extends SystemBase
         liftEncoder.start();
         
         liftPID = new LiftPid();
-        liftPID.setOutputRange(-0.5, 0.5);  // maybe it should be a bit higher like .3 ?
+        liftPID.setOutputRange(-0.5, 0.5);
 
         liftBottomLimitSwitch = new DigitalInput(7);
 
@@ -73,7 +75,7 @@ public class ManipulatorSystem extends SystemBase
         armEncoder.start();
         
         armPID = new ArmPid();
-        armPID.setOutputRange(-0.2, 0.2);  // maybe it should be a bit higher like .3 ?
+        armPID.setOutputRange(-0.4, 0.4);
         
         armBackLimitSwitch = new DigitalInput(12);
 
@@ -162,7 +164,7 @@ public class ManipulatorSystem extends SystemBase
                 {
                     if (Math.abs(armPID.getError()) <= 1.0)
                     {
-                        stopArmPIDs();
+                        //stopArmPIDs();
                         Log.defcon2(this, "ArmPid: TARGET REACHED");
                     }
                 }
@@ -196,6 +198,11 @@ public class ManipulatorSystem extends SystemBase
             Log.defcon2(this, "Resetting Arm Encoder");
             if(getArmEncoder() != 0)
                 resetArmEncoder();
+            if(defaultState)
+            {
+                Log.defcon2(this, "End of default state for arm!");
+                armMUX = ARMMUX_OPERATOR;
+            }
         }
 
         if(!liftBottomLimitSwitch.get())
@@ -203,6 +210,11 @@ public class ManipulatorSystem extends SystemBase
             Log.defcon2(this, "Resetting Lift Encoder");
             if(getArmEncoder() != 0)
                 resetLiftEncoder();
+            if(defaultState)
+            {
+                Log.defcon2(this, "End of default state for lift!");
+                liftMUX = LIFTMUX_OPERATOR;
+            }
         }
         
         Log.defcon2(this, "Lift Encoder : "+liftEncoder.get());
@@ -225,25 +237,30 @@ public class ManipulatorSystem extends SystemBase
         switch(state)
         {
             case STATE_DEFAULT:
-                setLiftHeight(0);
-                setArmPosition(0);
+                setLiftHeight(-9999);
+                setArmPosition(-999);
+                defaultState = true;
                 // Make jags drive down to calibrate encoders?
                 break;
             case STATE_TOP_PEG:
-                setLiftHeight(1680);
+                setLiftHeight(2026);
                 setArmPosition(62);
+                defaultState = false;
                 break;
             case STATE_MIDDLE_PEG:
-                setLiftHeight(620);
-                setArmPosition(128);
+                setLiftHeight(740);
+                setArmPosition(62);
+                defaultState = false;
                 break;
             case STATE_BOTTOM_PEG:
                 setLiftHeight(0);
-                setArmPosition(121);
+                setArmPosition(140);
+                defaultState = false;
                 break;
             case STATE_FLOOR:
                 setLiftHeight(620);
                 setArmPosition(0);
+                defaultState = false;
                 break;
         }
     }
@@ -269,6 +286,7 @@ public class ManipulatorSystem extends SystemBase
     {
         liftMUX = LIFTMUX_PID;
         liftPID.setSetpoint(height);
+        
     }
 
     public double getLiftSpeed()
@@ -299,9 +317,15 @@ public class ManipulatorSystem extends SystemBase
         return liftPID.getError();
     }
 
+    
     public int getArmMUXState()
     {
         return armMUX;
+    }
+
+    public double getArmPIDError()
+    {
+        return armPID.getError();
     }
     
     public void stopLiftPIDs()

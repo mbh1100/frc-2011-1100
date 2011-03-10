@@ -36,6 +36,7 @@ public class RobotMain extends SimpleRobot
     
     public void robotInit()
     {
+        Log.addClass(RobotMain.class, 3);
         Log.defcon3(this, "Robot Init");
         
         diagSwitch = new DigitalInput(13);
@@ -46,7 +47,6 @@ public class RobotMain extends SimpleRobot
             //Set Logging Levels
             Log.addClass(MinibotSystem.class, 4);
             Log.addClass(OperatorSystem.class, 4);
-            Log.addClass(RobotMain.class, 4);
             Log.addClass(ManipulatorSystem.class, 1);
             Log.addClass(DriveSystem.class, 4);
             Log.addClass(AutonomousSystem.class, 4);
@@ -75,6 +75,11 @@ public class RobotMain extends SimpleRobot
         Log.defcon3(this, "+------------------------+");
         Log.defcon3(this, "| USING " + ((diagnostic) ? "DIAGNOSTIC " : "  REGULAR  ") + "ROBOT |");
         Log.defcon3(this, "+------------------------+");
+        Log.defcon3(this, "");
+        Log.defcon3(this, "+-------------------------------------+");
+        Log.defcon3(this, "| IT IS NOW SAFE TO UNPLUG YOUR ROBOT |");
+        Log.defcon3(this, "+-------------------------------------+");
+
     }
     
     public void autonomous()

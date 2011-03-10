@@ -1,11 +1,14 @@
 package edu.arhs.first1100.opctl;
 
+import edu.arhs.first1100.autoctl.FollowLineRoutine;
+import edu.arhs.first1100.autoctl.SetManipulatorStateRoutine;
 import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.util.SystemBase;
 
 import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.minibot.MinibotSystem;
+import edu.wpi.first.wpilibj.Joystick.ButtonType;
 
 public class OperatorSystem extends SystemBase
 {
@@ -77,6 +80,14 @@ public class OperatorSystem extends SystemBase
             Log.defcon2(this, "Running drive PID");
             ds.driveByCamera();
         }
+        else if(leftJoystick.getRawButton(11))
+        {
+            new FollowLineRoutine().execute();
+        }
+        else if(leftJoystick.getRawButton(10))
+        {
+            new SetManipulatorStateRoutine(ManipulatorSystem.STATE_TOP_PEG).execute();
+        }
         else
         {
             ds.disablePids();
@@ -141,8 +152,8 @@ public class OperatorSystem extends SystemBase
         ManipulatorSystem ms = ManipulatorSystem.getInstance();
         if(Math.abs(xboxJoystick.getRightStickY()) > 0.20)
         {
-            Log.defcon1(this, "Setting lift speed " + xboxJoystick.getRightStickY()/2);
-            ms.setLiftSpeed(xboxJoystick.getRightStickY()/2);
+            Log.defcon1(this, "Setting lift speed " + xboxJoystick.getRightStickY());
+            ms.setLiftSpeed(xboxJoystick.getRightStickY());
 
             ms.stopLiftPIDs();
 
@@ -205,7 +216,7 @@ public class OperatorSystem extends SystemBase
                 Log.defcon1(this, "Setting arm speed" + xboxJoystick.getLeftStickY()/2);
                 ms.setArmSpeed(xboxJoystick.getLeftStickY()/2);
             }
-
+            
             stopArm = true;
         }
         else if(stopArm)
@@ -213,6 +224,7 @@ public class OperatorSystem extends SystemBase
             Log.defcon1(this, "Stopping arm within deadband");
             ms.setArmSpeed(0.0);
             stopArm = false;
+            //ms.setArmPosition(ms.getArmEncoder());
         }
     }
 

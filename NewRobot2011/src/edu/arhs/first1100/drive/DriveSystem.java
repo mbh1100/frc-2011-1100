@@ -34,7 +34,7 @@ public class DriveSystem extends SystemBase
         powerPid = new DriveCamPid();
 
         leftJaguars  = new AdvJaguar(4, 2, 4, false);
-        rightJaguars = new AdvJaguar(4, 1, 3, false);
+        rightJaguars = new AdvJaguar(4, 1, 3, true);
     }
 
     public static DriveSystem getInstance()
@@ -65,7 +65,7 @@ public class DriveSystem extends SystemBase
     {
         steerByCamera();
         powerPid.setOutputRange(-0.3, 0.3);
-        powerPid.setSetpoint(1000.0);
+        powerPid.setSetpoint(1000.0);//why are we giving it a setpoint?  Shouldnt it be a camera particle size?
         powerPid.enable();
     }
 

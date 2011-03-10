@@ -45,17 +45,20 @@ public class AutonomousSystem extends SystemBase
         Log.defcon2(this, "Running SetManipulatorStateRoutine");
         new SetManipulatorStateRoutine(ManipulatorSystem.STATE_DEFAULT).execute();
 
-        Timer.delay(1);
+        Timer.delay(1);// possibly change to .5?
         
         Log.defcon2(this, "Running FollowLineRoutine");
-        new FollowLineRoutine(rack).execute();
+        FollowLineRoutine followline = new FollowLineRoutine(rack);
+        followline.start();
 
-        Timer.delay(1);
-        
-        Log.defcon2(this, "Running SelectColumRoutine");
-        new SelectColumRoutine().execute();
+        Timer.delay(3);
 
-        Timer.delay(1);
+
+        //Log.defcon2(this, "Running SelectColumRoutine");
+        //new SelectColumRoutine().execute();
+
+        //SelectColumRoutine scr = new SelectColumRoutine();
+        //Timer.delay(1);
         
         Log.defcon2(this, "Running SetManipulatorStateRoutine on the...");
         switch(row)
@@ -73,8 +76,8 @@ public class AutonomousSystem extends SystemBase
                 new SetManipulatorStateRoutine(ManipulatorSystem.STATE_BOTTOM_PEG).execute();
                 break;
         }
-
-        Timer.delay(1);
+        followline.waitForDone();
+        Timer.delay(1); //why do we need this after the wait for done?
         
         Log.defcon2(this, "All done!");
     }
