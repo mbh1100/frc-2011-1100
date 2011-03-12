@@ -122,4 +122,19 @@ public class LineSystem extends SystemBase
     {
         return followLine;
     }
+
+    public boolean getLeft()
+    {
+        return left.get();
+    }
+
+    public boolean getRight()
+    {
+        return right.get();
+    }
+
+    public boolean getCenter()
+    {
+        return middle.get();
+    }
 }
