@@ -5,13 +5,12 @@
 
 package edu.arhs.first1100.autoctl;
 
-import edu.arhs.first1100.autoctl.lowlevel.ReleaseATubeRoutine;
-import edu.arhs.first1100.autoctl.lowlevel.WristUpRoutine;
 import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.line.LineSystem;
 import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.opctl.OperatorSystem;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
@@ -29,6 +28,8 @@ public class HeckerAutonomousRoutine extends Routine
         super(100);
     }
 
+    SetManipulatorStateRoutine smsr;
+    
     public void run()
     {
         OperatorSystem.getInstance().dsPrint(6, "!!!AUTONOMOUS MODE RUNNING!!!");
@@ -37,7 +38,7 @@ public class HeckerAutonomousRoutine extends Routine
         ManipulatorSystem ms = ManipulatorSystem.getInstance();
         DriveSystem ds = DriveSystem.getInstance();
         LineSystem ls = LineSystem.getInstance();
-
+        
         // tube is already grabbed, wrist is down, lift is down, arm is withdrawn
 
         // put the wrist up
@@ -48,8 +49,10 @@ public class HeckerAutonomousRoutine extends Routine
         OperatorSystem.getInstance().dsPrint(6, "Setting state to default");
         
         // calibrate the lift and arm (shouldn't take long, we should already be here)
-        new SetManipulatorStateRoutine(ManipulatorSystem.STATE_DEFAULT).execute();
+        smsr = new SetManipulatorStateRoutine(ManipulatorSystem.STATE_DEFAULT);
+        smsr.execute();
         OperatorSystem.getInstance().dsPrint(6, "done.");
+        
         /*
         ms.setState(ms.STATE_DEFAULT);
         while (ms.getLiftMUXState() != ms.LIFTMUX_OPERATOR ||
@@ -62,7 +65,8 @@ public class HeckerAutonomousRoutine extends Routine
 
         OperatorSystem.getInstance().dsPrint(6, "Setting state to top peg");
         // raise the lift to the middle and wait for it to get there.
-        new SetManipulatorStateRoutine(ManipulatorSystem.STATE_TOP_PEG).execute();
+        smsr = new SetManipulatorStateRoutine(ManipulatorSystem.STATE_TOP_PEG);
+        smsr.execute();
         ms.setArmPosition(ms.getArmEncoder());
         OperatorSystem.getInstance().dsPrint(6, "Done.");
         
@@ -73,9 +77,12 @@ public class HeckerAutonomousRoutine extends Routine
             Timer.delay(0.2);
         }*/
 
+        double speed = DriverStation.getInstance().getAnalogIn(2)/5;
+        
         OperatorSystem.getInstance().dsPrint(6, "Driving w/no tracking (Look out!)");
-        ds.setTankSpeed(0.7, 0.7);
+        ds.setTankSpeed(speed, speed);
         Timer.delay(4);
+        ds.setTankSpeed(0.0, 0.0);
         
         // enable y-axis steering and z-axis power, get near the peg.
         OperatorSystem.getInstance().dsPrint(6, "Using Z and X PID");
@@ -114,8 +121,9 @@ public class HeckerAutonomousRoutine extends Routine
             Timer.delay(0.2);
         }*/
 
+        ds.setTankSpeed(0.0, 0.0);
         OperatorSystem.getInstance().dsPrint(6, "TIMEOUT NEVER REACHED(THAT'S GOOD!)");
-
+        
         // enable lift x-axis tracking
         ms.enableLiftCamPID();
         
@@ -127,7 +135,7 @@ public class HeckerAutonomousRoutine extends Routine
         ds.setTankSpeed(0.5, 0.5);
         Timer.delay(0.5);
         ds.setTankSpeed(0.0, 0.0);
-
+        
         OperatorSystem.getInstance().dsPrint(6, "OPENING CLAW");
         // open claw
         ms.openClaw();
@@ -145,7 +153,8 @@ public class HeckerAutonomousRoutine extends Routine
         {
             Timer.delay(0.2);
         }*/
-
+        Timer.delay(2);
+        
         OperatorSystem.getInstance().dsPrint(6, "BACKING UP");
         ds.setTankSpeed(-0.5, -0.5);
         Timer.delay(2);
@@ -159,4 +168,12 @@ public class HeckerAutonomousRoutine extends Routine
         setDone();
     }
 
+    public void stop()
+    {
+        smsr.setDone();
+        Timer.delay(0.1);
+        smsr = null;
+        
+        super.stop();
+    }
 }
