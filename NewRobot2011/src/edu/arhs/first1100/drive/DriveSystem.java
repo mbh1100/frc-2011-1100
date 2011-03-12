@@ -45,6 +45,12 @@ public class DriveSystem extends SystemBase
 
     public void tick()
     {
+        if (powerPid.isEnable() && Math.abs(powerPid.getError()) < 10.0)
+        {
+            Log.defcon1(this, "Stopping drive pids");
+            powerPid.disable();
+            steerPid.disable();
+        }
         Log.defcon1(this, "Steer PID Output: " + steerPid.get());
         Log.defcon1(this, "Power PID Output: " + powerPid.get());
         //Log.defcon1(this, "Particle Size:" + CameraSystem.getInstance().getBiggestParticle().particleArea);
@@ -67,6 +73,11 @@ public class DriveSystem extends SystemBase
         powerPid.setOutputRange(-0.3, 0.3);
         powerPid.setSetpoint(1000.0);//why are we giving it a setpoint?  Shouldnt it be a camera particle size?
         powerPid.enable();
+    }
+
+    public boolean getDrivePidEnabled()
+    {
+        return powerPid.isEnable();
     }
 
     public void setTankSpeed(double leftSide, double rightSide)
