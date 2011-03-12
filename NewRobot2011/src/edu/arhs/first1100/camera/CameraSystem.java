@@ -59,27 +59,16 @@ public class CameraSystem extends SystemBase
         return instance;
     }
 
-    public void tick()
-    { 
-        processImg();
-    }
-
     /**
-     * Sets the brightness of the camera
-     * @param b Brightness
+     * Tick
      */
-    public void setBrightness(int b)
+    public void tick()
     {
-        ac.writeBrightness(b);
-    }
-
-    /**
-    * Gets an image from the camera to find particles within the camera's
-    * RGB threshold.
-    */
-    private void processImg()
-    {
-        if(ac.freshImage())
+        /**
+        * Gets an image from the camera to find particles within the camera's
+        * RGB threshold.
+        */
+        if (ac.freshImage())
         {
             try
             {
@@ -95,6 +84,15 @@ public class CameraSystem extends SystemBase
             }
             printPRep();
         }
+    }
+
+    /**
+     * Sets the brightness of the camera
+     * @param b Brightness
+     */
+    public void setBrightness(int b)
+    {
+        ac.writeBrightness(b);
     }
 
     /**

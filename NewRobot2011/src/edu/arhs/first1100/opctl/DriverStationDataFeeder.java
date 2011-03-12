@@ -44,6 +44,9 @@ public class DriverStationDataFeeder extends SystemBase
 
     public DriverStationDataFeeder()
     {
+        for (int i = 0; i < lcdHistory.length;i++){
+            lcdHistory[i] = "";
+        }
     }
     
     /**
@@ -115,6 +118,7 @@ public class DriverStationDataFeeder extends SystemBase
         for (int i = 0; i < 6; i++)
         {
             DriverStationLCD.getInstance().println(lcdLines[i], 1, lcdHistory[i]);
+            System.out.println(i);
         }
         
         DriverStationLCD.getInstance().updateLCD(); // display the screen
@@ -144,7 +148,7 @@ public class DriverStationDataFeeder extends SystemBase
      *
      * The LabView dashboard is organized with all the various displays in
      * "clusters".  These clusters are embedded in other clusters, which are
-     * embedded in others, and so on.  For example, PWM display 1 is embedded
+     * embedded in otherwise, and so on.  For example, PWM display 1 is embedded
      * in the cluster for Digital Module 0, which is embedded in Digital
      * Cluster 1, which is in the cluster containing all the digital modules,
      * which is in the cluster containing everything.  Whew.  Basically it's

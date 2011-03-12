@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package edu.arhs.first1100.drive;
 
 import com.sun.squawk.util.MathUtils;
@@ -11,10 +6,6 @@ import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.util.AdvJaguar;
 
-/**
- *
- * @author team1100
- */
 public class DriveSystem extends SystemBase
 {
     private static DriveSystem instance = null;

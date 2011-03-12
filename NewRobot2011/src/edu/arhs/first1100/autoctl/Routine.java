@@ -23,8 +23,7 @@ public class Routine extends SystemBase
     {
         try
         {
-            if(!done)
-                wait();
+            if(!done) wait();
         }
         catch(InterruptedException e)
         {

@@ -12,7 +12,6 @@ public class ButtonBox extends SystemBase
     private DSKnob knob2;
     private DSKnob knob3;
     private DSKnob knob4;
-
     
     public ButtonBox()
     {
@@ -31,6 +30,7 @@ public class ButtonBox extends SystemBase
     {
         
     }
+    
     public int getStartingPosition()
     {
         return 0;

@@ -59,7 +59,7 @@ public class MinibotSystem extends SystemBase
     {
         Log.defcon1(this, "Setting arm speed..." + !guideSwitch.get());
 
-        if(speed > 0.0 && (armPOT.getValue() > ARM_DOWN_POT_VALUE || !guideSwitch.get()))
+        /*if(speed > 0.0 && armPOT.getValue() > ARM_DOWN_POT_VALUE)
         {
             Log.defcon1(this, ".....Stopping, too low");
             armJaguar.set(0.0);
@@ -73,7 +73,9 @@ public class MinibotSystem extends SystemBase
         {
             Log.defcon1(this, "....."+speed);
             armJaguar.set(speed);
-        }
+        }*/
+
+        armJaguar.set(speed);
     }
     
     public void setBeltSpeed(double speed)
@@ -82,8 +84,7 @@ public class MinibotSystem extends SystemBase
         Log.defcon1(this, "....."+speed);
         if(speed > 0)
         {
-            if(!guideSwitch.get())
-                beltJaguar.set(speed);
+            beltJaguar.set(speed);
             if(!beltFrontSwitch.get())
                 beltJaguar.set(0.0);
         }

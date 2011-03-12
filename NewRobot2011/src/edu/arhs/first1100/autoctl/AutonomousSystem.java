@@ -17,7 +17,7 @@ public class AutonomousSystem extends SystemBase
     public void start()
     {
         super.start();
-        win();
+        //win();
     }
     
     public static AutonomousSystem getInstance()
@@ -64,15 +64,15 @@ public class AutonomousSystem extends SystemBase
         switch(row)
         {
             case 2:
-                Log.defcon2(this, "top peg");
+                Log.defcon2(this, "Top Peg");
                 new SetManipulatorStateRoutine(ManipulatorSystem.STATE_TOP_PEG).execute();
                 break;
             case 1:
-                Log.defcon2(this, "middle peg");
+                Log.defcon2(this, "Middle Peg");
                 new SetManipulatorStateRoutine(ManipulatorSystem.STATE_MIDDLE_PEG).execute();
                 break;
             case 0:
-                Log.defcon2(this, "bottom peg");
+                Log.defcon2(this, "Bottom Peg");
                 new SetManipulatorStateRoutine(ManipulatorSystem.STATE_BOTTOM_PEG).execute();
                 break;
         }

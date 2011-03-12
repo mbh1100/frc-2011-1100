@@ -1,9 +1,10 @@
 package edu.arhs.first1100.log;
 
 import java.util.Vector;
+import edu.arhs.first1100.opctl.DriverStationDataFeeder;
 
 /**
- * @author Raymond Mead
+ * @author team1100
  */
 class AdvLogger
 {
@@ -30,7 +31,13 @@ class AdvLogger
  */
 public class Log
 {
+    DriverStationDataFeeder dsdf;
     private static Vector records = new Vector();
+
+    public static void dsLog(int line, String message)
+    {
+
+    }
     
     public static void defcon3(Object obj, String message)
     {

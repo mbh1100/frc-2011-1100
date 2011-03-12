@@ -14,8 +14,8 @@ public class SetManipulatorStateRoutine extends Routine
     
     public void tick()
     {
-        if(ManipulatorSystem.getInstance().getLiftMUXState() == ManipulatorSystem.LIFTMUX_OPERATOR &&
-           Math.abs(ManipulatorSystem.getInstance().getArmPIDError()) <= 1.0)
+        if(ManipulatorSystem.getInstance().getLiftMUXState() == ManipulatorSystem.LIFTMUX_OPERATOR &&/*should be or*/
+           Math.abs(ManipulatorSystem.getInstance().getArmPIDError()) <= 2.0)
         {
             Log.defcon2(this, "Stopping routine");
             setDone();

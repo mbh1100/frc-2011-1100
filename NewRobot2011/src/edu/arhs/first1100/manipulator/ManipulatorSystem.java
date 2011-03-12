@@ -1,4 +1,5 @@
-/*
+/**
+ * @author team1100
  * ManipulatorSystem.java
  *
  * Controls the manipulator component of the robot.
@@ -13,6 +14,7 @@ import edu.arhs.first1100.util.SystemBase;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 
 public class ManipulatorSystem extends SystemBase
 {
@@ -75,14 +77,13 @@ public class ManipulatorSystem extends SystemBase
         armEncoder.start();
         
         armPID = new ArmPid();
-        armPID.setOutputRange(-0.4, 0.4);
+        armPID.setOutputRange(-0.3, 0.3);
         
         armBackLimitSwitch = new DigitalInput(12);
-
-
+        
         //Other
         liftCamPID = new LiftCamPid();
-        liftCamPID.setOutputRange(-0.4, 0.6);
+        liftCamPID.setOutputRange(-0.45, 0.75);
 
         armCamPID = new ArmCamPid();
         armCamPID.setOutputRange(-0.2, 0.2);
@@ -316,7 +317,6 @@ public class ManipulatorSystem extends SystemBase
     {
         return liftPID.getError();
     }
-
     
     public int getArmMUXState()
     {
@@ -348,7 +348,7 @@ public class ManipulatorSystem extends SystemBase
             Log.defcon1(this, "########### Arm limit pressed ############### (#brown)");
             if(speed < 0.0)
             {
-                armJaguar.set(0.0);
+                armJaguar.set(-0.2);
                 return;
             }
         }

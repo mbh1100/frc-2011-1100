@@ -87,19 +87,32 @@ public class DiagnosticRobot
 
     public void teleop()
     {
-        minibotActive = left.getRawButton(MINIBOT_TOGGLE_BUTTON);
+        minibotActive = xbox.getRawButton(8);
+        
         //Driving
-        if(!minibotActive)
+        if(minibotActive)
         {
-            l1.set(left.getY());
-            l2.set(left.getY());
-            r1.set(right.getY());
-            r2.set(right.getY());
+            System.out.println("MINIBOT MODE ON");
+            mbArm.set(xbox.getRawAxis(XBOX_LEFT_STICK_Y));
+            mbBelt.set(xbox.getRawAxis(XBOX_RIGHT_STICK_Y));
         }
-        //Manipulator
-        armJag.set(xbox.getRawAxis(XBOX_LEFT_STICK_Y)/4);
-        liftJag.set(-xbox.getRawAxis(XBOX_RIGHT_STICK_Y));
+        else
+        {
+            //Stop Minibot
+            mbArm.set(0.0);
+            mbBelt.set(0.0);
 
+            //Manip
+            liftJag.set(-xbox.getRawAxis(XBOX_RIGHT_STICK_Y));
+            armJag.set(xbox.getRawAxis(XBOX_LEFT_STICK_Y)/4);
+        }
+
+        //Drive/
+        l1.set(left.getY());
+        l2.set(left.getY());
+        r1.set(right.getY());
+        r2.set(right.getY());
+        
         //Claw Toggle
         if(xbox.getRawButton(XBOX_LEFT_BUMBER) && !lastClawState)
         {
@@ -122,18 +135,6 @@ public class DiagnosticRobot
             lastWristState = false;
         }
         
-        //Minibot
-        if(minibotActive)
-        {
-            mbArm.set(left.getRawAxis(MINIBOT_DEPLOY_AXIS));
-            mbBelt.set(right.getRawAxis(MINIBOT_DEPLOY_AXIS));
-        }
-        else
-        {
-            mbArm.set(0.0);
-            mbBelt.set(0.0);
-        }
-
         System.out.println("Lift Encoder:" + liftEncoder.get());
         System.out.println("Arm Encoder: " + armEncoder.get());
         System.out.println();

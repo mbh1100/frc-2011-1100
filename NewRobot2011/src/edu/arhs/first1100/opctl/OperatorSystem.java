@@ -1,14 +1,17 @@
 package edu.arhs.first1100.opctl;
 
+import edu.wpi.first.wpilibj.RobotDrive;
+
 import edu.arhs.first1100.autoctl.FollowLineRoutine;
-import edu.arhs.first1100.autoctl.SetManipulatorStateRoutine;
+import edu.arhs.first1100.autoctl.Routine;
 import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.util.SystemBase;
 
 import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.minibot.MinibotSystem;
-import edu.wpi.first.wpilibj.Joystick.ButtonType;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 
 public class OperatorSystem extends SystemBase
 {
@@ -26,6 +29,10 @@ public class OperatorSystem extends SystemBase
 
     private ButtonBox buttonBox;
 
+    private Routine currentRoutine;
+
+    private boolean sensitiveDrive;
+    
     private OperatorSystem()
     {
         leftJoystick = new AdvJoystick(1);
@@ -70,28 +77,23 @@ public class OperatorSystem extends SystemBase
         {
             processMinibotControls();
         }
-        else if(leftJoystick.getRawButton(8))
+        else if(leftJoystick.getRawButton(11) && currentRoutine == null)
         {
-            Log.defcon2(this, "Running steer PID");
-            ds.steerByCamera();
-        }
-        else if(leftJoystick.getRawButton(7))
-        {
-            Log.defcon2(this, "Running drive PID");
-            ds.driveByCamera();
-        }
-        else if(leftJoystick.getRawButton(11))
-        {
-            new FollowLineRoutine().execute();
-        }
-        else if(leftJoystick.getRawButton(10))
-        {
-            new SetManipulatorStateRoutine(ManipulatorSystem.STATE_TOP_PEG).execute();
+            currentRoutine = new FollowLineRoutine();
+            currentRoutine.start();
         }
         else
         {
+            if(!leftJoystick.getRawButton(11) && currentRoutine != null)
+            {
+                currentRoutine.stop();
+                Timer.delay(0.055); // makes sure routine ends
+                currentRoutine = null;
+            }
+            
+            //currentRoutine.setDone();
             ds.disablePids();
-
+            
             if(xboxJoystick.getRightTrigger() > 0.5)
             {
                 Log.defcon1(this, "Using LiftCamPID!");
@@ -105,18 +107,26 @@ public class OperatorSystem extends SystemBase
 
             processArmControls();
             processGripperWristControls();
-
+            
             // Stop minibot
             minis.setArmSpeed(0.0);
             minis.setBeltSpeed(0.0);
         }
 
+        if(leftJoystick.getRawButton(6))
+        {
+            sensitiveDrive = true;
+        }
+        else if(leftJoystick.getRawButton(7))
+        {
+            sensitiveDrive = false;
+        }
         processDriveControls();
 
         /*
          * Reset joysticks
          */
-        if (leftJoystick.getRawButton(8)) leftJoystick.reset();
+        if (leftJoystick.getRawButton(8))  leftJoystick.reset();
         if (rightJoystick.getRawButton(8)) rightJoystick.reset();
     }
 
@@ -128,19 +138,23 @@ public class OperatorSystem extends SystemBase
         MinibotSystem minis = MinibotSystem.getInstance();
         if(xboxJoystick.getBackButton())
         {
-            minis.setBeltSpeed(0.3);
+            minis.setBeltSpeed(DriverStation.getInstance().getAnalogIn(1)/5);
         }
         else
         {
-            if(Math.abs(xboxJoystick.getLeftStickY()) > 0.20)
-                if(xboxJoystick.getLeftStickY()>0)
-                    minis.setArmSpeed(xboxJoystick.getLeftStickY()/5);
-                else
-                    minis.setArmSpeed(xboxJoystick.getLeftStickY()/2);
-            else
-                minis.setArmSpeed(0.0);
-
             minis.setBeltSpeed(-0.2);
+        }
+        
+        if(Math.abs(xboxJoystick.getLeftStickY()) > 0.20)
+        {
+            if(xboxJoystick.getLeftStickY()>0)
+                minis.setArmSpeed(xboxJoystick.getLeftStickY()/5);
+            else
+                minis.setArmSpeed(xboxJoystick.getLeftStickY()/2);
+        }
+        else
+        {
+            minis.setArmSpeed(0.0);
         }
     }
 
@@ -226,6 +240,10 @@ public class OperatorSystem extends SystemBase
             stopArm = false;
             //ms.setArmPosition(ms.getArmEncoder());
         }
+        else
+        {
+            ms.setArmPosition(ms.getArmEncoder());
+        }
     }
 
     public void processGripperWristControls()
@@ -260,12 +278,54 @@ public class OperatorSystem extends SystemBase
          *   The drive output is multiplied by this value when setTankSpeed is called.
          *   To avoid accidental moving, the trim will only work if the axis is over 75 percent.
          */
-        double leftSpeed = -leftJoystick.getStickY()   * Math.max(-((leftJoystick.getZ() /2)-0.5), 0.75);
-        double rightSpeed = -rightJoystick.getStickY() * Math.max(-((rightJoystick.getZ()/2)-0.5), 0.75);
 
-        DriveSystem.getInstance().setTankSpeed(leftSpeed, rightSpeed);
+        // TANK DRIVE WITH TRIM
+        
+        if(sensitiveDrive)
+        {
+            double leftValue = limit(-leftJoystick.getStickY());
+            double rightValue = limit(-rightJoystick.getStickY());
+
+            if (leftValue >= 0.0)
+            {
+                leftValue = (leftValue * leftValue);
+            }
+            else
+            {
+                leftValue = -(leftValue * leftValue);
+            }
+
+            if (rightValue >= 0.0)
+            {
+                rightValue = (rightValue * rightValue);
+            }
+            else
+            {
+                rightValue = -(rightValue * rightValue);
+            }
+
+            //setLeftRightMotorOutputs(leftValue, rightValue);
+
+            DriveSystem.getInstance().setTankSpeed(leftValue, rightValue);
+        }
+        else
+        {
+            double leftSpeed = -leftJoystick.getStickY()   * Math.max(-((leftJoystick.getZ() /2)-0.5), 0.75);
+            double rightSpeed = -rightJoystick.getStickY() * Math.max(-((rightJoystick.getZ()/2)-0.5), 0.75);
+            DriveSystem.getInstance().setTankSpeed(leftSpeed, rightSpeed);
+        }
     }
 
+    public double limit(double num) {
+        if (num > 1.0) {
+            return 1.0;
+        }
+        if (num < -1.0) {
+            return -1.0;
+        }
+        return num;
+    }
+    
     public ButtonBox getButtonBox()
     {
         return buttonBox;
@@ -278,5 +338,36 @@ public class OperatorSystem extends SystemBase
 
         rightJoystick.reset();
         leftJoystick.reset();
+    }
+
+
+    DriverStationDataFeeder dsFeeder;
+
+   /**
+    * Sends a message to the Driver Station
+    */
+    
+    public void dsPrint(int ln, String msg)
+    {
+        try
+        {
+            dsFeeder = new DriverStationDataFeeder();
+
+            //if you want to have line 1 on top, 6 on the bottom
+            //use line as param instead of ln
+            int line =  (6-ln)+1;
+
+            //Send to line # the normal way (console style)
+            dsFeeder.toLCDLine(ln, msg);
+
+            //OR:
+
+            //Send to bottom of the screen (line 1)
+            dsFeeder.sendToLCD(msg);
+        }
+        catch(Exception e)
+        {
+            Log.defcon3(this, "dsPrint failed! :"+e.getMessage());
+        }
     }
 }

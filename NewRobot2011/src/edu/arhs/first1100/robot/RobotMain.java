@@ -19,6 +19,7 @@ import edu.arhs.first1100.minibot.MinibotSystem;
 import edu.arhs.first1100.opctl.OperatorSystem;
 import edu.arhs.first1100.diag.DiagnosticRobot;
 import edu.arhs.first1100.log.Log;
+import edu.arhs.first1100.opctl.DriverStationDataFeeder;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -33,9 +34,12 @@ public class RobotMain extends SimpleRobot
     private boolean diagnostic;
     private DiagnosticRobot diagRobot;
     public Compressor compressor;
+    //added by Akshay
+
     
     public void robotInit()
-    {
+    {        
+        //added by Akshay
         Log.addClass(RobotMain.class, 3);
         Log.defcon3(this, "Robot Init");
         
@@ -80,10 +84,18 @@ public class RobotMain extends SimpleRobot
         Log.defcon3(this, "| IT IS NOW SAFE TO UNPLUG YOUR ROBOT |");
         Log.defcon3(this, "+-------------------------------------+");
 
+        OperatorSystem.getInstance().dsPrint(6, "Enabled : "+((diagnostic) ? "DIAGNOSTIC" : "REGULAR"));
+        
     }
     
     public void autonomous()
     {
+        DriveSystem.getInstance().setTankSpeed(0.0, 0.0);
+        ManipulatorSystem.getInstance().setArmSpeed(0.0);
+        ManipulatorSystem.getInstance().setLiftSpeed(0.0);
+        
+        return;
+        /*
         Log.defcon3(this, "Autonomous Mode Activated");
         if(!diagnostic)
         {
@@ -98,6 +110,7 @@ public class RobotMain extends SimpleRobot
 
             MinibotSystem.getInstance().start();
         }
+        */
     }
 
     public void operatorControl()
