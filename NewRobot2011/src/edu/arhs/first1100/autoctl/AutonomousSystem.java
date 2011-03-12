@@ -1,10 +1,12 @@
 package edu.arhs.first1100.autoctl;
 
+import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.opctl.ButtonBox;
 import edu.arhs.first1100.opctl.OperatorSystem;
 import edu.arhs.first1100.util.SystemBase;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 
 public class AutonomousSystem extends SystemBase
@@ -17,7 +19,16 @@ public class AutonomousSystem extends SystemBase
     public void start()
     {
         super.start();
-        //win();
+        
+        if(!DriverStation.getInstance().getDigitalIn(1))
+        {
+            OperatorSystem.getInstance().dsPrint(2, "Running autonomous(but not really)");
+            //win();
+        }
+        else
+        {
+            OperatorSystem.getInstance().dsPrint(2, "autonomous skipped");
+        }
     }
     
     public static AutonomousSystem getInstance()
@@ -27,6 +38,11 @@ public class AutonomousSystem extends SystemBase
     }
     
     public void tick() { }
+    /*  public void run() {
+        DriveSystem.getInstance().driveByCamera();
+        Timer.delay(10.0);
+        DriveSystem.getInstance().disablePids();
+    }*/
     
     public void win()
     {
@@ -40,8 +56,11 @@ public class AutonomousSystem extends SystemBase
     
     public void scoreUberTube(int starting, boolean rack, int column, int row)
     {
-        OperatorSystem op = OperatorSystem.getInstance();
+        //OperatorSystem op = OperatorSystem.getInstance();
         
+        new HeckerAutonomousRoutine().execute();
+        
+        /*
         Log.defcon2(this, "Running SetManipulatorStateRoutine");
         new SetManipulatorStateRoutine(ManipulatorSystem.STATE_DEFAULT).execute();
 
@@ -80,5 +99,6 @@ public class AutonomousSystem extends SystemBase
         Timer.delay(1); //why do we need this after the wait for done?
         
         Log.defcon2(this, "All done!");
+        */
     }
 }

@@ -11,24 +11,29 @@ import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.line.LineSystem;
 import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
+import edu.arhs.first1100.opctl.OperatorSystem;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
  *
  * @author markbh
  */
-public class AutonomousRoutine extends Routine
+public class HeckerAutonomousRoutine extends Routine
 {
 
     static final double MIDDLE_PEG_HEIGHT = 720;
     static final double TOP_PEG_HEIGHT = 2000;
 
-    AutonomousRoutine() {
+    HeckerAutonomousRoutine()
+    {
         super(100);
     }
 
     public void run()
     {
+        OperatorSystem.getInstance().dsPrint(6, "!!!AUTONOMOUS MODE RUNNING!!!");
+
+        OperatorSystem op = OperatorSystem.getInstance();
         ManipulatorSystem ms = ManipulatorSystem.getInstance();
         DriveSystem ds = DriveSystem.getInstance();
         LineSystem ls = LineSystem.getInstance();
@@ -36,31 +41,51 @@ public class AutonomousRoutine extends Routine
         // tube is already grabbed, wrist is down, lift is down, arm is withdrawn
 
         // put the wrist up
-        new WristUpRoutine().start(); // it should be done long before we care
+        ms.wristUp();
+        
+        //new WristUpRoutine().start(); // it should be done long before we care
 
+        OperatorSystem.getInstance().dsPrint(6, "Setting state to default");
+        
         // calibrate the lift and arm (shouldn't take long, we should already be here)
+        new SetManipulatorStateRoutine(ManipulatorSystem.STATE_DEFAULT).execute();
+        OperatorSystem.getInstance().dsPrint(6, "done.");
+        /*
         ms.setState(ms.STATE_DEFAULT);
         while (ms.getLiftMUXState() != ms.LIFTMUX_OPERATOR ||
                ms.getArmMUXState() != ms.ARMMUX_OPERATOR)
         {
             Timer.delay(0.1);
-        }
+        }*/
+        
+        Timer.delay(0.5);
 
+        OperatorSystem.getInstance().dsPrint(6, "Setting state to top peg");
         // raise the lift to the middle and wait for it to get there.
+        new SetManipulatorStateRoutine(ManipulatorSystem.STATE_TOP_PEG).execute();
+        ms.setArmPosition(ms.getArmEncoder());
+        OperatorSystem.getInstance().dsPrint(6, "Done.");
+        
+        /*
         ms.setLiftHeight(MIDDLE_PEG_HEIGHT);
         while (ms.getLiftMUXState() != ms.LIFTMUX_OPERATOR)
         {
             Timer.delay(0.2);
-        }
+        }*/
 
+        OperatorSystem.getInstance().dsPrint(6, "Driving w/no tracking (Look out!)");
+        ds.setTankSpeed(0.7, 0.7);
+        Timer.delay(4);
+        
         // enable y-axis steering and z-axis power, get near the peg.
+        OperatorSystem.getInstance().dsPrint(6, "Using Z and X PID");
         ds.driveByCamera();
 
-
+        OperatorSystem.getInstance().dsPrint(6, "Using Z and X PID/Waiting for the timeout");
         // stop either when the line system sees the 'T', or when the z-axis is done,
         // or if 5 seconds elapses. If we timeout, don't continue.
         int i = 0;
-        while (i < 25)
+        while (i < 20*5) //Each tick is 50 ms.
         {
             ++i;
             if (ls.getLeft() && ls.getRight() && ls.getCenter())
@@ -68,24 +93,28 @@ public class AutonomousRoutine extends Routine
                 Log.defcon1(this, "reached end of line");
                 break;
             }
-            if (ds.getDrivePidEnabled())
+            if (!ds.getDrivePidEnabled())
             {
                 Log.defcon1(this, "drive pid reached target");
                 break;
             }
         }
-        if (i == 25)
+        if (i >= 20*5)
         {
             Log.defcon1(this, "timeout looking for goal. Abandoning scoring attempt.");
+            OperatorSystem.getInstance().dsPrint(6, "ERROR: Tracking timeout.");
             return;
         }
-
+        
         // raise the lift to the top peg and wait for it to get there
+        /*  ALREADY RAISED
         ms.setLiftHeight(TOP_PEG_HEIGHT);
         while (ms.getLiftMUXState() != ms.LIFTMUX_OPERATOR)
         {
             Timer.delay(0.2);
-        }
+        }*/
+
+        OperatorSystem.getInstance().dsPrint(6, "TIMEOUT NEVER REACHED(THAT'S GOOD!)");
 
         // enable lift x-axis tracking
         ms.enableLiftCamPID();
@@ -93,16 +122,18 @@ public class AutonomousRoutine extends Routine
         // enable arm z-axis tracking
         ms.enableArmCamPID();
 
-        // wait for arm to stop
-        while (ms.getArmMUXState() != ms.ARMMUX_OPERATOR)
-        {
-            Timer.delay(0.2);
-        }
+        OperatorSystem.getInstance().dsPrint(6, "MOVING FORWARD TO SCORE TUBE");
+        // Nudge forward to score tube
+        ds.setTankSpeed(0.5, 0.5);
+        Timer.delay(0.5);
+        ds.setTankSpeed(0.0, 0.0);
 
+        OperatorSystem.getInstance().dsPrint(6, "OPENING CLAW");
         // open claw
-        new ReleaseATubeRoutine().execute();
-
+        ms.openClaw();
+        
         // withdraw arm, wait until done
+        /*
         ms.setArmPosition(0.0);
         while (ms.getArmMUXState() != ms.ARMMUX_OPERATOR)
         {
@@ -113,8 +144,17 @@ public class AutonomousRoutine extends Routine
         while (ms.getLiftMUXState() != ms.LIFTMUX_OPERATOR)
         {
             Timer.delay(0.2);
-        }
+        }*/
 
+        OperatorSystem.getInstance().dsPrint(6, "BACKING UP");
+        ds.setTankSpeed(-0.5, -0.5);
+        Timer.delay(2);
+        ms.setState(ManipulatorSystem.STATE_DEFAULT);
+        Timer.delay(1);
+        ds.setTankSpeed(0.0, 0.0);
+        
+        OperatorSystem.getInstance().dsPrint(6, "DONE WITH AUTONOMOUS!");
+        
         // with
         setDone();
     }

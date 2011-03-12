@@ -310,6 +310,7 @@ public class OperatorSystem extends SystemBase
         }
         else
         {
+            //Old Drive
             double leftSpeed = -leftJoystick.getStickY()   * Math.max(-((leftJoystick.getZ() /2)-0.5), 0.75);
             double rightSpeed = -rightJoystick.getStickY() * Math.max(-((rightJoystick.getZ()/2)-0.5), 0.75);
             DriveSystem.getInstance().setTankSpeed(leftSpeed, rightSpeed);
