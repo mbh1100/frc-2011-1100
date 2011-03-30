@@ -39,7 +39,7 @@ public class OperatorSystem extends SystemBase
         rightJoystick = new AdvJoystick(2);
 
         xboxJoystick = new XboxJoystick(3);
-
+        
         buttonBox = new ButtonBox();
     }
 
@@ -121,6 +121,7 @@ public class OperatorSystem extends SystemBase
         {
             sensitiveDrive = false;
         }
+
         processDriveControls();
 
         /*

@@ -5,6 +5,8 @@ import edu.arhs.first1100.camera.CameraSystem;
 import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.util.AdvJaguar;
+import edu.wpi.first.wpilibj.AnalogChannel;
+import edu.wpi.first.wpilibj.AnalogModule;
 
 public class DriveSystem extends SystemBase
 {
@@ -19,6 +21,8 @@ public class DriveSystem extends SystemBase
     private double curve = 0.0;
     private double power = 0.0;
 
+    private AnalogChannel hall;
+
     public DriveSystem()
     {
         steerPid = new SteerPid();
@@ -26,6 +30,8 @@ public class DriveSystem extends SystemBase
 
         leftJaguars  = new AdvJaguar(4, 2, 4, false);
         rightJaguars = new AdvJaguar(4, 1, 3, true);
+
+        hall = new AnalogChannel(3);
     }
 
     public static DriveSystem getInstance()
@@ -38,12 +44,14 @@ public class DriveSystem extends SystemBase
     {
         if (powerPid.isEnable() && Math.abs(powerPid.getError()) < 10.0)
         {
-            Log.defcon1(this, "Stopping drive pids");
+            //Log.defcon1(this, "Stopping drive pids");
             powerPid.disable();
             steerPid.disable();
         }
-        Log.defcon1(this, "Steer PID Output: " + steerPid.get());
-        Log.defcon1(this, "Power PID Output: " + powerPid.get());
+        //Log.defcon1(this, "Steer PID Output: " + steerPid.get());
+        //Log.defcon1(this, "Power PID Output: " + powerPid.get());
+        Log.defcon1(this, "Analog 3:" + hall.getValue());
+
         //Log.defcon1(this, "Particle Size:" + CameraSystem.getInstance().getBiggestParticle().particleArea);
         Log.defcon1(this, "");
 
