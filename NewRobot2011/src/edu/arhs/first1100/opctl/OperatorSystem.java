@@ -33,7 +33,7 @@ public class OperatorSystem extends SystemBase
 
     private boolean sensitiveDrive;
     
-    private OperatorSystem()
+    public OperatorSystem()
     {
         leftJoystick = new AdvJoystick(1);
         rightJoystick = new AdvJoystick(2);
@@ -48,6 +48,7 @@ public class OperatorSystem extends SystemBase
         if(instance == null) instance = new OperatorSystem();
         return instance;
     }
+
 
     public void tick()
     {
@@ -69,6 +70,7 @@ public class OperatorSystem extends SystemBase
          *
          */
 
+        /* OLD STUFF
         ManipulatorSystem ms = ManipulatorSystem.getInstance();
         MinibotSystem minis = MinibotSystem.getInstance();
         DriveSystem ds = DriveSystem.getInstance();
@@ -122,8 +124,15 @@ public class OperatorSystem extends SystemBase
             sensitiveDrive = false;
         }
 
-        processDriveControls();
+        
+        */
 
+        processArmControls();
+        processGripperWristControls();
+        processLiftControls();
+        
+        processDriveControls();
+        
         /*
          * Reset joysticks
          */
@@ -169,7 +178,7 @@ public class OperatorSystem extends SystemBase
         {
             Log.defcon1(this, "Setting lift speed " + xboxJoystick.getRightStickY());
             ms.setLiftSpeed(xboxJoystick.getRightStickY());
-
+            
             ms.stopLiftPIDs();
 
             // Will make sure lift won't drift when joystick re-enters
@@ -182,34 +191,6 @@ public class OperatorSystem extends SystemBase
             stopLift = false;
             ms.setLiftSpeed(0.0);
         }
-        else
-        {
-            if(xboxJoystick.getXButton())
-            {
-                Log.defcon1(this, "Setting state to default");
-                ms.setState(ManipulatorSystem.STATE_DEFAULT);
-            }
-            else if(xboxJoystick.getAButton())
-            {
-                Log.defcon1(this, "Setting state to bottom");
-                ms.setState(ManipulatorSystem.STATE_BOTTOM_PEG);
-            }
-            else if(xboxJoystick.getBButton())
-            {
-                Log.defcon1(this, "Setting state to middle");
-                ms.setState(ManipulatorSystem.STATE_MIDDLE_PEG);
-            }
-            else if(xboxJoystick.getYButton())
-            {
-                Log.defcon1(this, "Setting state to top");
-                ms.setState(ManipulatorSystem.STATE_TOP_PEG);
-            }
-            else if(xboxJoystick.getDpad() == 1.0)
-            {
-                Log.defcon1(this, "Setting state to floor");
-                ms.setState(ManipulatorSystem.STATE_FLOOR);
-            }
-        }
     }
 
     public void processArmControls()
@@ -218,6 +199,7 @@ public class OperatorSystem extends SystemBase
          * Arm control
          */
         ManipulatorSystem ms = ManipulatorSystem.getInstance();
+        
         if(Math.abs(xboxJoystick.getLeftStickY()) > 0.20)
         {
             ms.stopArmPIDs();
@@ -243,15 +225,39 @@ public class OperatorSystem extends SystemBase
         }
         else
         {
-            ms.setArmPosition(ms.getArmEncoder());
+            //ms.setArmPosition(ms.getArmEncoder());
         }
     }
 
     public void processGripperWristControls()
     {
+        ManipulatorSystem ms = ManipulatorSystem.getInstance();
+        
+        if(xboxJoystick.getXButton())
+        {
+            ms.rollerWristUp();
+        }
+        else if(xboxJoystick.getAButton())
+        {
+            ms.rollersIn();
+        }
+        else if(xboxJoystick.getBButton())
+        {
+            ms.rollerWristDown();
+        }
+        else if(xboxJoystick.getYButton())
+        {
+            ms.rollersOut();
+        }
+        else
+        {
+            ms.rollersStop();
+        }
+        
         /*
          * Gripper and wrist
          */
+        /*
         if(xboxJoystick.getLeftBumper() && !xboxLeftBumperLastState)
         {
             ManipulatorSystem.getInstance().toggleClaw();
@@ -267,6 +273,7 @@ public class OperatorSystem extends SystemBase
         }
         if(!xboxJoystick.getRightBumper())
             xboxRightBumperLastState = false;
+        */
     }
 
     public void processDriveControls()

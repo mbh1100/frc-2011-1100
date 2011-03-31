@@ -54,6 +54,9 @@ public class ManipulatorSystem extends SystemBase
     private Solenoid claw;
     private Solenoid wrist;
 
+    private AdvJaguar rollerTop;
+    private AdvJaguar rollerBottom;
+    
     private boolean defaultState;
 
     public ManipulatorSystem()
@@ -81,6 +84,9 @@ public class ManipulatorSystem extends SystemBase
         
         armBackLimitSwitch = new DigitalInput(12);
         
+        rollerTop = new AdvJaguar(4, 9, false);
+        rollerBottom = new AdvJaguar(4, 10, false);
+
         //Other
         liftCamPID = new LiftCamPid();
         liftCamPID.setOutputRange(-0.45, 0.75);
@@ -89,8 +95,6 @@ public class ManipulatorSystem extends SystemBase
         armCamPID.setOutputRange(-0.2, 0.2);
         armCamPID.setSetpoint(1000);
         
-        claw = new Solenoid(1);
-        wrist = new Solenoid(2);
     }
     
     public static ManipulatorSystem getInstance()
@@ -389,31 +393,53 @@ public class ManipulatorSystem extends SystemBase
         armEncoder.reset();
     }
 
-
-    /*
-     * Claw and Wrist
-     */
-    public void toggleClaw()
-    { claw.set(!claw.get()); }
-    
-    public void openClaw()
-    { claw.set(true); }
-
     public void closeClaw()
-    { claw.set(false); }
+    {
 
-    public boolean getClawState()
-    { return claw.get(); }
+    }
 
-    public void toggleWrist()
-    { wrist.set(!wrist.get()); }
+    public void openClaw()
+    {
 
-    public void wristUp()
-    { wrist.set(true); }
+    }
 
     public void wristDown()
-    { wrist.set(false); }
+    {
+
+    }
+
+    public void wristUp()
+    {
     
-    public boolean getWristState()
-    { return wrist.get(); }
+    }
+    
+    public void rollersOut()
+    {
+        rollerTop.set(1.0);
+        rollerBottom.set(1.0);
+    }
+
+    public void rollersIn()
+    {
+        rollerTop.set(-1.0);
+        rollerBottom.set(-1.0);
+    }
+
+    public void rollerWristUp()
+    {
+        rollerTop.set(1.0);
+        rollerBottom.set(-1.0);
+    }
+
+    public void rollerWristDown()
+    {
+        rollerTop.set(-1.0);
+        rollerBottom.set(1.0);
+    }
+
+    public void rollersStop()
+    {
+        rollerTop.set(0.0);
+        rollerBottom.set(0.0);
+    }
 }
