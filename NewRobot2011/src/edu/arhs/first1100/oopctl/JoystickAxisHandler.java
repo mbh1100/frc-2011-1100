@@ -1,8 +1,8 @@
 package edu.arhs.first1100.oopctl;
 
-public class JoystickHandler
+public class JoystickAxisHandler
 {
-    public JoystickHandler()
+    public JoystickAxisHandler()
     {
         
     }

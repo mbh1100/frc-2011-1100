@@ -1,7 +1,24 @@
+
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+Future controls:
+
+            Xbox Controls:
+    
+    Left Analog:    Arm
+    Right Analog:   Lift
+
+    Right Bumper:   Pull tube in
+    Left Bumper:    Push tube out
+    
+    A Button:       Rotate tube down
+    B Button:       Rotate tube up
+
+    X Button:       Floor state(Lift up, gripper down)
+    Y Button:       Default state(Lift fully down, gripper fully up)
+
+    Back + Start:   Deploy minibot arm(the new swing-out one)
+
+*/
 
 package edu.arhs.first1100.oopctl;
 
