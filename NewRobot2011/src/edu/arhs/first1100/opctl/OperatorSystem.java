@@ -286,9 +286,8 @@ public class OperatorSystem extends SystemBase
          *   The drive output is multiplied by this value when setTankSpeed is called.
          *   To avoid accidental moving, the trim will only work if the axis is over 75 percent.
          */
-
-        // TANK DRIVE WITH TRIM
         
+        // TANK DRIVE WITH TRIM
         if(sensitiveDrive)
         {
             double leftValue = limit(-leftJoystick.getStickY());

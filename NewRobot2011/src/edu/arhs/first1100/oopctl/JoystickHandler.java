@@ -1,11 +1,19 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package edu.arhs.first1100.oopctl;
 
 public class JoystickHandler
 {
+    public JoystickHandler()
+    {
+        
+    }
+    
+    public void getX(double value)
+    {
 
+    }
+    
+    public void getY(double value)
+    {
+
+    }
 }

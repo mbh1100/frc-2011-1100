@@ -13,6 +13,7 @@ public class Button
     private int button_number;
     private Joystick js;
     boolean last_value;
+    
     public Button(Joystick js, int button_number)
     {
         this.button_number = button_number;

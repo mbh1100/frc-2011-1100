@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package edu.arhs.first1100.minibot;
 
 import edu.arhs.first1100.log.Log;
@@ -11,6 +6,34 @@ import edu.arhs.first1100.util.SystemBase;
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.DigitalInput;
 
+
+/*
+ *                       HOW THIS THING WORKS
+ *
+ * The minibot system uses three states to go through this process:
+ *
+ * STATE_DROPARM -> STATE_DEPLOY -> STATE_LIFTARM -> STATE_DROPARM -> ...
+ *
+ * The goal of these states is to slightly switch control schemes depending
+ * on where the arm is to make sure we can't deploy when we shouldn't, and
+ * to bring the arm back automaticly.
+ *
+ * Here is a step by step process of how the bot will be deployed.
+ * 
+ * 1. Operator pushes back to lower arm.
+ *
+ * 2. Once a preset POT value is reached, operator can now hold start
+ *    to push minibot on belt.  If start is depressed, the belt will
+ *    move back tword the robot.
+ *
+ * 3. When the minibot hits the end limit switch and is launched, the
+ *    operator brings back the belt by not pressing start.
+ *
+ * 4. When the belt is all the way back in, the arm will automaticly
+ *    raise back to the up position, ready for another minibot
+ *    deployment next match.
+ * 
+ */
 public class MinibotSystem extends SystemBase
 {
     private static MinibotSystem instance = null;
