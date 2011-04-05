@@ -1,9 +1,7 @@
  package edu.arhs.first1100.opctl;
 
-import edu.wpi.first.wpilibj.RobotDrive;
 
-import edu.arhs.first1100.autoctl.FollowLineRoutine;
-import edu.arhs.first1100.autoctl.Routine;
+import edu.arhs.first1100.autoctl.ScoreRoutine;
 import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.util.SystemBase;
@@ -11,7 +9,6 @@ import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.minibot.MinibotSystem;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
 
 public class OperatorSystem extends SystemBase
 {
@@ -29,7 +26,7 @@ public class OperatorSystem extends SystemBase
 
     private ButtonBox buttonBox;
 
-    private Routine currentRoutine;
+    private ScoreRoutine scoreRoutine;
 
     private boolean sensitiveDrive;
     
@@ -69,13 +66,24 @@ public class OperatorSystem extends SystemBase
          * DON'T INVERT THE JOYSTICK
          *
          */
+        if(scoreRoutine == null)
+        {
+            processLiftControls();
+            processArmControls();
+            processGripperControls();
+        }
+        else
+        {
+            if(scoreRoutine.isDone())
+                scoreRoutine = null;
+        }
 
-        processLiftControls();
-        processArmControls();
-        processGripperControls();
+        Log.defcon3(this, "I LOVE YOU NICK! -MR. ROBOT");
         
         processDriveControls();
+
         
+
         /*
          * Reset joysticks
          */
@@ -179,6 +187,11 @@ public class OperatorSystem extends SystemBase
         
         else if(xboxJoystick.getTriggers() < -0.6)
             ms.rollersIn();
+        else if(xboxJoystick.getXButton() && scoreRoutine == null)
+        {
+            scoreRoutine = new ScoreRoutine();
+            scoreRoutine.start();
+        }
 
         else
             ms.rollersStop();

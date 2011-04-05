@@ -40,6 +40,8 @@ public class ManipulatorSystem extends SystemBase
     private AdvJaguar liftJaguar;
     private Encoder liftEncoder;
     private LiftPid liftPID;
+
+    
     
     private DigitalInput liftBottomLimitSwitch;
     
@@ -94,7 +96,8 @@ public class ManipulatorSystem extends SystemBase
         armCamPID = new ArmCamPid();
         armCamPID.setOutputRange(-0.2, 0.2);
         armCamPID.setSetpoint(1000);
-        
+
+
     }
     
     public static ManipulatorSystem getInstance()

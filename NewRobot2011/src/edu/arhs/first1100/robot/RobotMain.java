@@ -41,6 +41,7 @@ public class RobotMain extends SimpleRobot
     {        
         //added by Akshay
         Log.addClass(RobotMain.class, 3);
+        Log.addClass(OperatorSystem.class, 3);
         Log.defcon3(this, "Robot Init");
         
         diagSwitch = new DigitalInput(13);
