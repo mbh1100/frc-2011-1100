@@ -1,4 +1,4 @@
-package edu.arhs.first1100.opctl;
+ package edu.arhs.first1100.opctl;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 
@@ -70,66 +70,9 @@ public class OperatorSystem extends SystemBase
          *
          */
 
-        /* OLD STUFF
-        ManipulatorSystem ms = ManipulatorSystem.getInstance();
-        MinibotSystem minis = MinibotSystem.getInstance();
-        DriveSystem ds = DriveSystem.getInstance();
-
-        if(xboxJoystick.getStartButton())
-        {
-            processMinibotControls();
-        }
-        else if(leftJoystick.getRawButton(11) && currentRoutine == null)
-        {
-            currentRoutine = new FollowLineRoutine();
-            currentRoutine.start();
-        }
-        else
-        {
-            if(!leftJoystick.getRawButton(11) && currentRoutine != null)
-            {
-                currentRoutine.stop();
-                Timer.delay(0.055); // makes sure routine ends
-                currentRoutine = null;
-            }
-            
-            //currentRoutine.setDone();
-            ds.disablePids();
-            
-            if(xboxJoystick.getRightTrigger() > 0.5)
-            {
-                Log.defcon1(this, "Using LiftCamPID!");
-                ms.enableLiftCamPID();
-                stopLift = true;
-            }
-            else
-            {
-                processLiftControls();
-            }
-
-            processArmControls();
-            processGripperWristControls();
-            
-            // Stop minibot
-            minis.setArmSpeed(0.0);
-            minis.setBeltSpeed(0.0);
-        }
-
-        if(leftJoystick.getRawButton(6))
-        {
-            sensitiveDrive = true;
-        }
-        else if(leftJoystick.getRawButton(7))
-        {
-            sensitiveDrive = false;
-        }
-
-        
-        */
-
-        processArmControls();
-        processGripperWristControls();
         processLiftControls();
+        processArmControls();
+        processGripperControls();
         
         processDriveControls();
         
@@ -174,13 +117,11 @@ public class OperatorSystem extends SystemBase
          * Lift controls
          */
         ManipulatorSystem ms = ManipulatorSystem.getInstance();
-        if(Math.abs(xboxJoystick.getRightStickY()) > 0.20)
+        if(Math.abs(xboxJoystick.getLeftStickY()) > 0.20)
         {
-            Log.defcon1(this, "Setting lift speed " + xboxJoystick.getRightStickY());
-            ms.setLiftSpeed(xboxJoystick.getRightStickY());
+            Log.defcon1(this, "Setting lift speed " + xboxJoystick.getLeftStickY());
+            ms.setLiftSpeed(xboxJoystick.getLeftStickY());
             
-            ms.stopLiftPIDs();
-
             // Will make sure lift won't drift when joystick re-enters
             // deadband
             stopLift = true;
@@ -200,18 +141,17 @@ public class OperatorSystem extends SystemBase
          */
         ManipulatorSystem ms = ManipulatorSystem.getInstance();
         
-        if(Math.abs(xboxJoystick.getLeftStickY()) > 0.20)
+        if(Math.abs(xboxJoystick.getRightStickY()) > 0.20)
         {
-            ms.stopArmPIDs();
-            if(xboxJoystick.getLeftStickY() > 0.0)
+            if(xboxJoystick.getRightStickY() > 0.0)
             {
-                Log.defcon1(this, "Setting arm speed" + xboxJoystick.getLeftStickY()/4);
-                ms.setArmSpeed(xboxJoystick.getLeftStickY()/4);
+                Log.defcon1(this, "Setting arm speed" + xboxJoystick.getRightStickY()/4);
+                ms.setArmSpeed(xboxJoystick.getRightStickY()/4);
             }
-            else //Lower than 0
+            else
             {
-                Log.defcon1(this, "Setting arm speed" + xboxJoystick.getLeftStickY()/2);
-                ms.setArmSpeed(xboxJoystick.getLeftStickY()/2);
+                Log.defcon1(this, "Setting arm speed" + xboxJoystick.getRightStickY()/2);
+                ms.setArmSpeed(xboxJoystick.getRightStickY()/2);
             }
             
             stopArm = true;
@@ -221,59 +161,27 @@ public class OperatorSystem extends SystemBase
             Log.defcon1(this, "Stopping arm within deadband");
             ms.setArmSpeed(0.0);
             stopArm = false;
-            //ms.setArmPosition(ms.getArmEncoder());
-        }
-        else
-        {
-            //ms.setArmPosition(ms.getArmEncoder());
         }
     }
 
-    public void processGripperWristControls()
+    public void processGripperControls()
     {
         ManipulatorSystem ms = ManipulatorSystem.getInstance();
         
-        if(xboxJoystick.getXButton())
-        {
+        if(xboxJoystick.getLeftBumper())
             ms.rollerWristUp();
-        }
-        else if(xboxJoystick.getAButton())
-        {
-            ms.rollersIn();
-        }
-        else if(xboxJoystick.getBButton())
-        {
-            ms.rollerWristDown();
-        }
-        else if(xboxJoystick.getYButton())
-        {
-            ms.rollersOut();
-        }
-        else
-        {
-            ms.rollersStop();
-        }
         
-        /*
-         * Gripper and wrist
-         */
-        /*
-        if(xboxJoystick.getLeftBumper() && !xboxLeftBumperLastState)
-        {
-            ManipulatorSystem.getInstance().toggleClaw();
-            xboxLeftBumperLastState = true;
-        }
-        if(!xboxJoystick.getLeftBumper())
-            xboxLeftBumperLastState = false;
+        else if(xboxJoystick.getRightBumper())
+            ms.rollerWristDown();
+        
+        else if(xboxJoystick.getTriggers() > 0.6)
+            ms.rollersOut();
+        
+        else if(xboxJoystick.getTriggers() < -0.6)
+            ms.rollersIn();
 
-        if(xboxJoystick.getRightBumper() && !xboxRightBumperLastState)
-        {
-            ManipulatorSystem.getInstance().toggleWrist();
-            xboxRightBumperLastState = true;
-        }
-        if(!xboxJoystick.getRightBumper())
-            xboxRightBumperLastState = false;
-        */
+        else
+            ms.rollersStop();
     }
 
     public void processDriveControls()

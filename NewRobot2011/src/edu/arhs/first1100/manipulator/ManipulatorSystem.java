@@ -85,7 +85,7 @@ public class ManipulatorSystem extends SystemBase
         armBackLimitSwitch = new DigitalInput(12);
         
         rollerTop = new AdvJaguar(4, 9, false);
-        rollerBottom = new AdvJaguar(4, 10, false);
+        rollerBottom = new AdvJaguar(4, 10, true);
 
         //Other
         liftCamPID = new LiftCamPid();
@@ -427,14 +427,14 @@ public class ManipulatorSystem extends SystemBase
 
     public void rollerWristUp()
     {
-        rollerTop.set(1.0);
-        rollerBottom.set(-1.0);
+        rollerTop.set(-1.0);
+        rollerBottom.set(1.0);
     }
 
     public void rollerWristDown()
     {
-        rollerTop.set(-1.0);
-        rollerBottom.set(1.0);
+        rollerTop.set(1.0);
+        rollerBottom.set(-1.0);
     }
 
     public void rollersStop()
