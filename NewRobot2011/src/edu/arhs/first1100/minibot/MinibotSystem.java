@@ -48,7 +48,7 @@ public class MinibotSystem extends SystemBase
     private DigitalInput guideSwitch;
     private DigitalInput poleSwitch;
     
-    private AnalogChannel armPOT;
+    //private AnalogChannel armPOT;
     
     private boolean minibotDeployed;
     
@@ -61,7 +61,7 @@ public class MinibotSystem extends SystemBase
         guideSwitch = new DigitalInput(6, 6);
         poleSwitch = new DigitalInput(6,7);
         
-        armPOT = new AnalogChannel(1, 2);
+        //armPOT = new AnalogChannel(1, 2);
     }
     
     public static MinibotSystem getInstance()

@@ -41,15 +41,15 @@ public class ManipulatorSystem extends SystemBase
     private Encoder liftEncoder;
     private LiftPid liftPID;
 
-    
-    
+    private DigitalInput liftTopLimitSwitch;
     private DigitalInput liftBottomLimitSwitch;
+    private DigitalInput armLimitSwitch;
+    //private DigitalInput armBackLimitSwitch;
     
     private AdvJaguar armJaguar;
     private Encoder armEncoder;
     private ArmPid armPID;
 
-    private DigitalInput armBackLimitSwitch;
     private LiftCamPid liftCamPID;
     private ArmCamPid armCamPID;
 
@@ -73,6 +73,8 @@ public class ManipulatorSystem extends SystemBase
         liftPID.setOutputRange(-0.5, 0.5);
 
         liftBottomLimitSwitch = new DigitalInput(7);
+        liftTopLimitSwitch = new DigitalInput(4);
+        armLimitSwitch = new DigitalInput(5);//IDK
 
 
         //Arm Constructers
@@ -84,7 +86,7 @@ public class ManipulatorSystem extends SystemBase
         armPID = new ArmPid();
         armPID.setOutputRange(-0.3, 0.3);
         
-        armBackLimitSwitch = new DigitalInput(12);
+        //armBackLimitSwitch = new DigitalInput(12);
         
         rollerTop = new AdvJaguar(4, 9, false);
         rollerBottom = new AdvJaguar(4, 10, true);
@@ -108,6 +110,8 @@ public class ManipulatorSystem extends SystemBase
     
     public void tick()
     {
+
+        Log.defcon2(this, "Arm Encoder: " + armEncoder.get());
         /*
          * MUX Control
          *
@@ -201,7 +205,7 @@ public class ManipulatorSystem extends SystemBase
                 break;
         }
         
-        if(!armBackLimitSwitch.get())
+        if(!armLimitSwitch.get())
         {
             Log.defcon2(this, "Resetting Arm Encoder");
             if(getArmEncoder() != 0)
@@ -287,6 +291,15 @@ public class ManipulatorSystem extends SystemBase
                 return;
             }
         }
+        if(!liftTopLimitSwitch.get())
+        {
+            Log.defcon1(this, "!!!!!!!! Top limit pressed !!!!!!!!!!");
+            if(speed<0.0)
+            {
+                liftJaguar.set(0.0);
+                return;
+            }
+        }
         liftJaguar.set(speed);
     }
     
@@ -350,12 +363,12 @@ public class ManipulatorSystem extends SystemBase
      */
     public void setArmSpeed(double speed)
     {
-        if(!armBackLimitSwitch.get())
+        if(!armLimitSwitch.get())
         {
             Log.defcon1(this, "########### Arm limit pressed ############### (#brown)");
             if(speed < 0.0)
             {
-                armJaguar.set(-0.2);
+                armJaguar.set(0.0);
                 return;
             }
         }
@@ -444,5 +457,15 @@ public class ManipulatorSystem extends SystemBase
     {
         rollerTop.set(0.0);
         rollerBottom.set(0.0);
+    }
+
+    public boolean getArmLimitSwitch()
+    {
+        return armLimitSwitch.get();
+    }
+
+    public boolean getLiftLimitSwitch()
+    {
+        return liftTopLimitSwitch.get();
     }
 }

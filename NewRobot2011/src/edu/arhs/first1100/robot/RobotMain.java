@@ -10,6 +10,8 @@ package edu.arhs.first1100.robot;
 import edu.wpi.first.wpilibj.SimpleRobot;
 
 import edu.arhs.first1100.autoctl.AutonomousSystem;
+import edu.arhs.first1100.autoctl.NoCamNoRangeAutonomous;
+import edu.arhs.first1100.autoctl.Routine;
 import edu.arhs.first1100.autoctl.SetManipulatorStateRoutine;
 import edu.arhs.first1100.camera.CameraSystem;
 import edu.arhs.first1100.drive.DriveSystem;
@@ -19,7 +21,6 @@ import edu.arhs.first1100.minibot.MinibotSystem;
 import edu.arhs.first1100.opctl.OperatorSystem;
 import edu.arhs.first1100.diag.DiagnosticRobot;
 import edu.arhs.first1100.log.Log;
-import edu.arhs.first1100.opctl.DriverStationDataFeeder;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -41,7 +42,7 @@ public class RobotMain extends SimpleRobot
     {        
         //added by Akshay
         Log.addClass(RobotMain.class, 3);
-        Log.addClass(OperatorSystem.class, 3);
+        Log.addClass(OperatorSystem.class, 4);
         Log.defcon3(this, "Robot Init");
         
         diagSwitch = new DigitalInput(13);
@@ -52,11 +53,13 @@ public class RobotMain extends SimpleRobot
             //Set Logging Levels
             Log.addClass(MinibotSystem.class, 4);
             Log.addClass(OperatorSystem.class, 4);
-            Log.addClass(ManipulatorSystem.class, 4);
-            Log.addClass(DriveSystem.class, 1);
-            Log.addClass(AutonomousSystem.class, 4);
+            Log.addClass(ManipulatorSystem.class, 2);
+            Log.addClass(DriveSystem.class, 4);
+            Log.addClass(AutonomousSystem.class, 1);
             Log.addClass(LineSystem.class, 4);
             Log.addClass(SetManipulatorStateRoutine.class, 4);
+            Log.addClass(CameraSystem.class, 1);
+            Log.addClass(NoCamNoRangeAutonomous.class, 1);
             
             OperatorSystem.getInstance().setSleep(25);
             AutonomousSystem.getInstance().setSleep(1000);
@@ -86,7 +89,7 @@ public class RobotMain extends SimpleRobot
         Log.defcon3(this, "+-------------------------------------+");
 
         OperatorSystem.getInstance().dsPrint(6, "Enabled : "+((diagnostic) ? "DIAGNOSTIC" : "REGULAR"));
-        
+        CameraSystem.getInstance().start();
     }
     
     public void autonomous()
@@ -94,9 +97,8 @@ public class RobotMain extends SimpleRobot
         DriveSystem.getInstance().setTankSpeed(0.0, 0.0);
         ManipulatorSystem.getInstance().setArmSpeed(0.0);
         ManipulatorSystem.getInstance().setLiftSpeed(0.0);
+
         
-        return;
-        /*
         Log.defcon3(this, "Autonomous Mode Activated");
         if(!diagnostic)
         {
@@ -111,7 +113,6 @@ public class RobotMain extends SimpleRobot
 
             MinibotSystem.getInstance().start();
         }
-        */
     }
 
     public void operatorControl()
@@ -126,7 +127,7 @@ public class RobotMain extends SimpleRobot
             ManipulatorSystem.getInstance().start();
 
             CameraSystem.getInstance().start();
-            LineSystem.getInstance().start();
+            //LineSystem.getInstance().start();
 
             MinibotSystem.getInstance().start();
         }
@@ -154,6 +155,8 @@ public class RobotMain extends SimpleRobot
             LineSystem.getInstance().stop();
 
             MinibotSystem.getInstance().stop();
+            Routine.disableRoutines();
+        
         }
     }
 }

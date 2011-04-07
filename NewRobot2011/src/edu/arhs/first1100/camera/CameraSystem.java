@@ -17,6 +17,7 @@ public class CameraSystem extends SystemBase
     public final int WHITE_THRESHOLD = 1;
     public final int RED_THRESHOLD = 2;
     public final int BLUE_THRESHOLD =3;
+    public final int GREEN_THRESHOLD = 4;
     private final int PARTICLE_SIZE = 3;
     public Light light;
 
@@ -50,7 +51,8 @@ public class CameraSystem extends SystemBase
         ac.writeRotation(AxisCamera.RotationT.k0);
         ac.writeResolution(AxisCamera.ResolutionT.k160x120);
 
-        setThreshold(BLUE_THRESHOLD);
+        setThreshold(GREEN_THRESHOLD);
+        light.on();
     }
 
     public static CameraSystem getInstance()
@@ -107,10 +109,11 @@ public class CameraSystem extends SystemBase
             for (int i = 0;i< 1;i++)
             {
                 info += "PARTICLE "+i+'\n';
-                info += "Top:    "+pRep[i].boundingRectTop+'\n';
-                info += "Left:   "+pRep[i].boundingRectLeft+'\n';
-                info += "Width:  "+pRep[i].boundingRectWidth+'\n';
-                info += "Height: "+pRep[i].boundingRectHeight+'\n';
+                //info += "Top:    "+pRep[i].boundingRectTop+'\n';
+                //info += "Left:   "+pRep[i].boundingRectLeft+'\n';
+                //info += "Width:  "+pRep[i].boundingRectWidth+'\n';
+                //info += "Height: "+pRep[i].boundingRectHeight+'\n';
+                info += "Area:   "+pRep[i].particleArea+'\n';
                 info += "Center: "
                         +pRep[i].center_mass_x_normalized
                         +", "
@@ -144,7 +147,7 @@ public class CameraSystem extends SystemBase
     * Human way of setting the camera threshold.
     * @param t Threshold
     */
-    public synchronized void setThreshold(int t){
+    private synchronized void setThreshold(int t){
         switch (t)
         {
             case WHITE_THRESHOLD:
@@ -153,6 +156,9 @@ public class CameraSystem extends SystemBase
             case BLUE_THRESHOLD:
                 setThresholdRGB(0, 125, 160, 255, 210, 255);
                 break;
+            case GREEN_THRESHOLD:
+                setThresholdRGB(0, 50, 100, 150, 0, 20);
+
         }
     }
 

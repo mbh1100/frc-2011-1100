@@ -22,6 +22,7 @@ public class DriveSystem extends SystemBase
     private double power = 0.0;
 
     private AnalogChannel hall;
+    private AnalogChannel range;
 
     public DriveSystem()
     {
@@ -32,6 +33,7 @@ public class DriveSystem extends SystemBase
         rightJaguars = new AdvJaguar(4, 1, 3, true);
 
         hall = new AnalogChannel(3);
+        range = new AnalogChannel(2);
     }
 
     public static DriveSystem getInstance()
@@ -159,5 +161,10 @@ public class DriveSystem extends SystemBase
         {
             setTankSpeed(speed, speed);
         }
+    }
+
+    public int getRangeValue()
+    {
+        return range.getValue();
     }
 }

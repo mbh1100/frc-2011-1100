@@ -79,17 +79,17 @@ public class XboxJoystick extends AdvJoystick
      */
      
     /**
-     * @return left trigger state (0.0 - 1.0)
+     * @return right trigger state (0.0 - 1.0)
      */
-    public double getLeftTrigger()
+    public double getRightTrigger()
     {
         return Math.max(super.getRawAxis(3), 0);
     }
     
     /**
-     * @return right trigger state (0.0 - 1.0)
+     * @return left trigger state (0.0 - 1.0)
      */
-    public double getRightTrigger()
+    public double getLeftTrigger()
     {
         return -Math.min(super.getRawAxis(3), 0);
     }

@@ -24,8 +24,8 @@ public class OberAutonomousRoutine extends Routine
     
     public void run()
     {
-        /*
-        ManipulatorSystem ms = ManipulatorSystem.getInstance();
+        
+        /*ManipulatorSystem ms = ManipulatorSystem.getInstance();
         DriveSystem ds = DriveSystem.getInstance();
         
         // Move wrist up
@@ -47,6 +47,8 @@ public class OberAutonomousRoutine extends Routine
         
         spr.waitForDone();
         lcr.waitForDone();
-        */
+         * 
+         */
+        
     }
 }

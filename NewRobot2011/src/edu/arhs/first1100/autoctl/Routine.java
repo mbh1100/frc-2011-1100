@@ -3,14 +3,18 @@ package edu.arhs.first1100.autoctl;
 
 import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.util.SystemBase;
+import edu.arhs.first1100.autoctl.Routine;
+import java.util.Vector;
 
-public class Routine extends SystemBase
+public abstract class Routine extends SystemBase
 {
     private boolean done = false;
+    private boolean cancelled= false;
 
     public Routine(int sleep)
     {
         super();
+        addRoutine(this);
         setSleep(sleep);
     }
 
@@ -41,5 +45,33 @@ public class Routine extends SystemBase
     {
         start();
         waitForDone();
+    }
+
+    public final void cancel()
+    {
+
+        cancelled = true;
+        doCancel();
+        setDone();
+    }
+    public boolean isCancelled()
+    {
+        return cancelled;
+    }
+    protected void doCancel()
+    {}
+
+
+    private static Vector routines = new Vector();
+    public static void addRoutine(Routine aRoutine)
+    {
+        routines.addElement(aRoutine);
+    }
+    public static void disableRoutines()
+    {
+        for(int i = 0; i < routines.size(); i++)
+        {
+            ((Routine)routines.elementAt(i)).cancel();
+        }
     }
 } //Billy was Here!!!!!!!:0

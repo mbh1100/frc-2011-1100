@@ -37,4 +37,11 @@ public class ScoreRoutine extends Routine
 
         this.setDone();
     }
+
+    public void doCancel()
+    {
+        ManipulatorSystem.getInstance().setArmSpeed(0.0);
+        ManipulatorSystem.getInstance().setLiftSpeed(0.0);
+        ManipulatorSystem.getInstance().rollersStop();
+    }
 }

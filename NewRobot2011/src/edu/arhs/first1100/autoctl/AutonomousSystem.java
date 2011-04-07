@@ -23,7 +23,7 @@ public class AutonomousSystem extends SystemBase
         if(!DriverStation.getInstance().getDigitalIn(1))
         {
             OperatorSystem.getInstance().dsPrint(2, "Running autonomous(but not really)");
-            //win();
+            win();
         }
         else
         {
@@ -46,12 +46,27 @@ public class AutonomousSystem extends SystemBase
     
     public void win()
     {
-        ButtonBox bb = OperatorSystem.getInstance().getButtonBox();
+        /*ButtonBox bb = OperatorSystem.getInstance().getButtonBox();
         
         scoreUberTube(bb.getStartingPosition(),
                       bb.getRack(),
                       bb.getColumn(),
                       bb.getRow());
+         *
+         */
+
+        boolean mode = true;//DriverStation.getInstance().getEnhancedIO().getDigital(15);
+        if(mode)
+        {
+            Log.defcon1(this, "No range autonomous");
+            new NoCamNoRangeAutonomous().execute();
+        }
+        else
+        {
+            Log.defcon1(this, "Range mode for autonomous");
+            new RangeAutonomous().execute();
+
+        }
     }
     
     public void scoreUberTube(int starting, boolean rack, int column, int row)
