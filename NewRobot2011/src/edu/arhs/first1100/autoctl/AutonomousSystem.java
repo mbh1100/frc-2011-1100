@@ -13,22 +13,14 @@ public class AutonomousSystem extends SystemBase
 {
     private static AutonomousSystem instance = null;
 
+    boolean won;
+
     public AutonomousSystem()
     { }
 
     public void start()
     {
         super.start();
-        
-        if(!DriverStation.getInstance().getDigitalIn(1))
-        {
-            OperatorSystem.getInstance().dsPrint(2, "Running autonomous(but not really)");
-            win();
-        }
-        else
-        {
-            OperatorSystem.getInstance().dsPrint(2, "autonomous skipped");
-        }
     }
     
     public static AutonomousSystem getInstance()
@@ -37,7 +29,15 @@ public class AutonomousSystem extends SystemBase
         return instance;
     }
     
-    public void tick() { }
+    public void tick()
+    {
+        if (!won)
+        {
+            won = true;
+            win();
+        }
+    }
+    
     /*  public void run() {
         DriveSystem.getInstance().driveByCamera();
         Timer.delay(10.0);
@@ -55,17 +55,16 @@ public class AutonomousSystem extends SystemBase
          *
          */
 
-        boolean mode = true;//DriverStation.getInstance().getEnhancedIO().getDigital(15);
+        boolean mode = true; //DriverStation.getInstance().getEnhancedIO().getDigital(15);
         if(mode)
         {
             Log.defcon1(this, "No range autonomous");
-            new NoCamNoRangeAutonomous().execute();
+            new NoCamNoRangeEncodersRoutine().execute();    //runs the encoders only routine untill done
         }
         else
         {
             Log.defcon1(this, "Range mode for autonomous");
             new RangeAutonomous().execute();
-
         }
     }
     

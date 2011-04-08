@@ -10,6 +10,7 @@ package edu.arhs.first1100.robot;
 import edu.wpi.first.wpilibj.SimpleRobot;
 
 import edu.arhs.first1100.autoctl.AutonomousSystem;
+import edu.arhs.first1100.autoctl.LiftRoutine;
 import edu.arhs.first1100.autoctl.NoCamNoRangeAutonomous;
 import edu.arhs.first1100.autoctl.Routine;
 import edu.arhs.first1100.autoctl.SetManipulatorStateRoutine;
@@ -60,6 +61,8 @@ public class RobotMain extends SimpleRobot
             Log.addClass(SetManipulatorStateRoutine.class, 4);
             Log.addClass(CameraSystem.class, 1);
             Log.addClass(NoCamNoRangeAutonomous.class, 1);
+            Log.addClass(LiftRoutine.class, 1);
+
             
             OperatorSystem.getInstance().setSleep(25);
             AutonomousSystem.getInstance().setSleep(1000);
@@ -78,7 +81,7 @@ public class RobotMain extends SimpleRobot
         }
         
         compressor = new Compressor(6, 1);
-        compressor.start();
+        //compressor.start();
         
         Log.defcon3(this, "+------------------------+");
         Log.defcon3(this, "| USING " + ((diagnostic) ? "DIAGNOSTIC " : "  REGULAR  ") + "ROBOT |");
@@ -122,6 +125,7 @@ public class RobotMain extends SimpleRobot
         {
             OperatorSystem.getInstance().start();
             AutonomousSystem.getInstance().stop();
+            Routine.disableRoutines();
 
             DriveSystem.getInstance().start();
             ManipulatorSystem.getInstance().start();
@@ -147,6 +151,7 @@ public class RobotMain extends SimpleRobot
         {        
             OperatorSystem.getInstance().stop();
             AutonomousSystem.getInstance().stop();
+            Routine.disableRoutines();
 
             DriveSystem.getInstance().stop();
             ManipulatorSystem.getInstance().stop();
@@ -155,7 +160,6 @@ public class RobotMain extends SimpleRobot
             LineSystem.getInstance().stop();
 
             MinibotSystem.getInstance().stop();
-            Routine.disableRoutines();
         
         }
     }

@@ -49,7 +49,7 @@ public abstract class Routine extends SystemBase
 
     public final void cancel()
     {
-
+        Log.defcon2(this, "cancelling " + this.getClass().getName());
         cancelled = true;
         doCancel();
         setDone();
@@ -58,10 +58,10 @@ public abstract class Routine extends SystemBase
     {
         return cancelled;
     }
+
     protected void doCancel()
     {}
-
-
+    
     private static Vector routines = new Vector();
     public static void addRoutine(Routine aRoutine)
     {

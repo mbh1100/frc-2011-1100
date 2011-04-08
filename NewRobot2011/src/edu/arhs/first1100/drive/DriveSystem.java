@@ -73,6 +73,7 @@ public class DriveSystem extends SystemBase
         steerByCamera();
         powerPid.setOutputRange(-0.3, 0.3);
         powerPid.setSetpoint(1000.0);//why are we giving it a setpoint?  Shouldnt it be a camera particle size?
+                                     //yes, but the camera isnt working so it cant be tested now.
         powerPid.enable();
     }
 

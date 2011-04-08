@@ -25,7 +25,7 @@ class LiftOutput implements PIDOutput
 {
     public void pidWrite(double output)
     {
-        // assuming a DriveSystem interface that incorporates the behavior of the ArcadeDriveMux
+        if (Math.abs(output) < 0.1) output = 0.0; // deadband
         ManipulatorSystem.getInstance().setLiftSpeed(-output);
     }
 }

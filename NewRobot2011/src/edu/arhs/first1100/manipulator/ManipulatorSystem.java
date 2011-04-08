@@ -89,7 +89,7 @@ public class ManipulatorSystem extends SystemBase
         //armBackLimitSwitch = new DigitalInput(12);
         
         rollerTop = new AdvJaguar(4, 9, false);
-        rollerBottom = new AdvJaguar(4, 10, true);
+        rollerBottom = new AdvJaguar(4, 10, false);
 
         //Other
         liftCamPID = new LiftCamPid();
@@ -110,8 +110,6 @@ public class ManipulatorSystem extends SystemBase
     
     public void tick()
     {
-
-        Log.defcon2(this, "Arm Encoder: " + armEncoder.get());
         /*
          * MUX Control
          *
@@ -220,7 +218,7 @@ public class ManipulatorSystem extends SystemBase
         if(!liftBottomLimitSwitch.get())
         {
             Log.defcon2(this, "Resetting Lift Encoder");
-            if(getArmEncoder() != 0)
+            if(getLiftEncoder() != 0)
                 resetLiftEncoder();
             if(defaultState)
             {

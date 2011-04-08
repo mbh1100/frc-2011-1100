@@ -1,6 +1,7 @@
  package edu.arhs.first1100.opctl;
 
 
+import edu.arhs.first1100.autoctl.NoCamNoRangeEncodersRoutine;
 import edu.arhs.first1100.autoctl.ScoreRoutine;
 import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
@@ -13,21 +14,22 @@ import edu.wpi.first.wpilibj.DriverStation;
 public class OperatorSystem extends SystemBase
 {
     private static OperatorSystem instance = null;
-
+    
     public AdvJoystick leftJoystick;  //controls the left side of the robot
     public AdvJoystick rightJoystick; //controls the right side of the robot.
     public XboxJoystick xboxJoystick; //controls the arm and other stuff. Hi.
-
+    
     private boolean xboxLeftBumperLastState = false;
     private boolean xboxRightBumperLastState = false;
-
+    
     private boolean stopLift = false;
     private boolean stopArm = false;
-
+    
     private ButtonBox buttonBox;
-
+    
     private ScoreRoutine scoreRoutine;
-
+    private NoCamNoRangeEncodersRoutine autonomousRoutine;
+    
     private boolean sensitiveDrive;
     
     public OperatorSystem()
@@ -66,29 +68,54 @@ public class OperatorSystem extends SystemBase
          * DON'T INVERT THE JOYSTICK
          *
          */
-        if(scoreRoutine == null)
+        
+        processDriveControls();
+        
+        if(xboxJoystick.getStartButton())
         {
-            processLiftControls();
-            processArmControls();
-            processGripperControls();
+            processMinibotControls();
         }
         else
         {
+            MinibotSystem.getInstance().stopJaguars();
+            
+            if(scoreRoutine == null)
+            {
+                processLiftControls();
+                processArmControls();
+                processGripperControls();
+            }
+        }
+        
+        if(scoreRoutine != null)
+        {
             if(scoreRoutine.isDone())
+            {
                 scoreRoutine = null;
+            }
+        }
+        
+        if(autonomousRoutine != null)
+        {
+            if(autonomousRoutine.isDone())
+            {
+                autonomousRoutine = null;
+            }
         }
 
-        Log.defcon3(this, "I LOVE YOU NICK! -MR. ROBOT");
+        /*
+         * Drive modes
+         */
+        if(leftJoystick.getRawButton(6))
+            sensitiveDrive = true;
+        else if(leftJoystick.getRawButton(7))
+            sensitiveDrive = false;
         
-        processDriveControls();
-
-        
-
         /*
          * Reset joysticks
          */
-        if (leftJoystick.getRawButton(8))  leftJoystick.reset();
-        if (rightJoystick.getRawButton(8)) rightJoystick.reset();
+        if(leftJoystick.getRawButton(8))  leftJoystick.reset();
+        if(rightJoystick.getRawButton(8)) rightJoystick.reset();
     }
 
     public void processMinibotControls()
@@ -97,26 +124,25 @@ public class OperatorSystem extends SystemBase
          * Minibot controls
          */
         MinibotSystem minis = MinibotSystem.getInstance();
-        if(xboxJoystick.getBackButton())
-        {
-            minis.setBeltSpeed(DriverStation.getInstance().getAnalogIn(1)/5);
-        }
-        else
-        {
-            minis.setBeltSpeed(-0.2);
-        }
         
         if(Math.abs(xboxJoystick.getLeftStickY()) > 0.20)
         {
-            if(xboxJoystick.getLeftStickY()>0)
-                minis.setArmSpeed(xboxJoystick.getLeftStickY()/5);
-            else
-                minis.setArmSpeed(xboxJoystick.getLeftStickY()/2);
+            minis.setArmSpeed(xboxJoystick.getLeftStickY());
         }
         else
         {
             minis.setArmSpeed(0.0);
         }
+
+        if(xboxJoystick.getBackButton())
+        {
+            minis.setBeltSpeed(0.1);
+        }
+        else
+        {
+            minis.setBeltSpeed(0.0);
+        }
+        
     }
 
     public void processLiftControls()
@@ -153,13 +179,13 @@ public class OperatorSystem extends SystemBase
         {
             if(xboxJoystick.getRightStickY() > 0.0)
             {
-                Log.defcon1(this, "Setting arm speed" + xboxJoystick.getRightStickY()/4);
-                ms.setArmSpeed(xboxJoystick.getRightStickY()/4);
+                Log.defcon1(this, "Setting arm speed" + xboxJoystick.getRightStickY()/1.3);
+                ms.setArmSpeed(xboxJoystick.getRightStickY()/1.3);
             }
             else
             {
-                Log.defcon1(this, "Setting arm speed" + xboxJoystick.getRightStickY()/2);
-                ms.setArmSpeed(xboxJoystick.getRightStickY()/2);
+                Log.defcon1(this, "Setting arm speed" + xboxJoystick.getRightStickY()/1.3);
+                ms.setArmSpeed(xboxJoystick.getRightStickY()/1.3);
             }
             
             stopArm = true;
@@ -176,10 +202,10 @@ public class OperatorSystem extends SystemBase
     {
         ManipulatorSystem ms = ManipulatorSystem.getInstance();
         
-        if(xboxJoystick.getLeftBumper())
+        if(xboxJoystick.getRightBumper())
             ms.rollerWristUp();
         
-        else if(xboxJoystick.getRightBumper())
+        else if(xboxJoystick.getLeftBumper())
             ms.rollerWristDown();
         
         else if(xboxJoystick.getTriggers() > 0.6)
@@ -187,16 +213,26 @@ public class OperatorSystem extends SystemBase
         
         else if(xboxJoystick.getTriggers() < -0.6)
             ms.rollersIn();
+
         else if(xboxJoystick.getXButton() && scoreRoutine == null)
         {
             scoreRoutine = new ScoreRoutine();
             scoreRoutine.start();
         }
 
+        else if(xboxJoystick.getYButton() && autonomousRoutine == null)
+        {
+            autonomousRoutine = new NoCamNoRangeEncodersRoutine();
+            autonomousRoutine.start();
+        }
         else
+        {
             ms.rollersStop();
+            if(autonomousRoutine != null)
+                autonomousRoutine.cancel();
+        }
     }
-
+    
     public void processDriveControls()
     {
         /*

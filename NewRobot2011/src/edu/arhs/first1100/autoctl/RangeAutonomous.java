@@ -18,7 +18,7 @@ public class RangeAutonomous extends Routine
 
     private ArmRoutine ar = new ArmRoutine();
     private ScoreRoutine sr = new ScoreRoutine();
-    private LiftRoutine lr = new LiftRoutine();
+    private LiftRoutine lr = new LiftRoutine(9999); // drive to limit switch
 
     public RangeAutonomous()
     {
@@ -41,6 +41,8 @@ public class RangeAutonomous extends Routine
 
         if(!isCancelled()) sr.start();
         sr.waitForDone();
+
+        this.setDone();
     }
 
     protected void doCancel()

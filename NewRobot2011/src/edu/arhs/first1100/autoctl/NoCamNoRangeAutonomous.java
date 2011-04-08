@@ -7,16 +7,14 @@ import edu.arhs.first1100.log.Log;
 import edu.wpi.first.wpilibj.Timer;
 
 
-public class NoCamNoRangeAutonomous extends Routine{
+public class NoCamNoRangeAutonomous extends Routine {
      //lift 4 arm 5
-    private final double DRIVE_TIME = 5;
+    private final double DRIVE_TIME = 3;
 
     private ArmRoutine ar = new ArmRoutine();
     private ScoreRoutine sr = new ScoreRoutine();
-    private LiftRoutine lr = new LiftRoutine();
-
-
-
+    private LiftRoutine lr = new LiftRoutine(9999);// drive to limit switch
+    
     public NoCamNoRangeAutonomous()
     {
         super(50);
@@ -25,9 +23,9 @@ public class NoCamNoRangeAutonomous extends Routine{
 
     public void run()
     {
-        ar.start();
-        lr.start();
-        DriveSystem.getInstance().setTankSpeed(0.8, 0.8);
+        //ar.start();
+        //lr.start();
+        DriveSystem.getInstance().setTankSpeed(0.45, 0.5);
         Log.defcon1(this, "No cam driving");
         Timer.delay(DRIVE_TIME);
         Log.defcon1(this, "Done driving");

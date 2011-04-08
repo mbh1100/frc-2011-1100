@@ -4,6 +4,7 @@
  */
 
 package edu.arhs.first1100.autoctl;
+import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 
 /**
@@ -12,24 +13,35 @@ import edu.arhs.first1100.manipulator.ManipulatorSystem;
  */
 public class LiftRoutine extends Routine
 {
+    private int height;
 
-    public LiftRoutine()
+    public LiftRoutine(int height)
     {
         super(50);
+        this.height = height;
+    }
 
+    public void start()
+    {
+        ManipulatorSystem.getInstance().setLiftHeight(height);
+        super.start();
+        Log.defcon2(this, "Routine started");
     }
 
     public void tick()
     {
+        Log.defcon1(this, "tick");
 
         if(!ManipulatorSystem.getInstance().getLiftLimitSwitch())
         {
+            Log.defcon1(this, "switch hit, setdone()");
             ManipulatorSystem.getInstance().setLiftSpeed(0.0);
             setDone();
         }
-        else
+        else if (ManipulatorSystem.getInstance().getLiftMUXState() != ManipulatorSystem.LIFTMUX_PID)
         {
-            ManipulatorSystem.getInstance().setLiftSpeed(-0.8);
+            Log.defcon1(this, "manip state not PID, setdone()");
+            setDone();
         }
 
     }

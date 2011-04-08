@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package edu.arhs.first1100.autoctl;
 
 import edu.arhs.first1100.drive.DriveSystem;
@@ -13,10 +8,6 @@ import edu.arhs.first1100.opctl.OperatorSystem;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 
-/**
- *
- * @author markbh
- */
 public class HeckerAutonomousRoutine extends Routine
 {
 

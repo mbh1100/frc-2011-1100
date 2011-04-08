@@ -12,7 +12,6 @@ import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
- *
  * @author team1100
  */
 public class OberAutonomousRoutine extends Routine
