@@ -1,3 +1,5 @@
+
+
 /*
  * Encoder -> Jaguar
  */
@@ -25,7 +27,7 @@ class LiftOutput implements PIDOutput
 {
     public void pidWrite(double output)
     {
-        if (Math.abs(output) < 0.1) output = 0.0; // deadband
+        //if (Math.abs(output) < 0.1) output = 0.0; // deadband
         ManipulatorSystem.getInstance().setLiftSpeed(-output);
     }
 }

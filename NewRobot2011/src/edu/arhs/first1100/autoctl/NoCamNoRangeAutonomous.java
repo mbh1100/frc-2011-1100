@@ -11,7 +11,7 @@ public class NoCamNoRangeAutonomous extends Routine {
      //lift 4 arm 5
     private final double DRIVE_TIME = 3;
 
-    private ArmRoutine ar = new ArmRoutine();
+    private ArmToLimitSwitchRoutine ar = new ArmToLimitSwitchRoutine();
     private ScoreRoutine sr = new ScoreRoutine();
     private LiftRoutine lr = new LiftRoutine(9999);// drive to limit switch
     

@@ -8,6 +8,7 @@ package edu.arhs.first1100.autoctl;
 import edu.arhs.first1100.autoctl.lowlevel.LiftCamPIDRoutine;
 import edu.arhs.first1100.autoctl.lowlevel.SteerPIDRoutine;
 import edu.arhs.first1100.drive.DriveSystem;
+import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -16,6 +17,11 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class OberAutonomousRoutine extends Routine
 {
+    LiftRoutine lr = new LiftRoutine(1900);
+    ArmToLimitSwitchRoutine ar = new ArmToLimitSwitchRoutine();
+    DriveForwardWithRangeRoutine df = new DriveForwardWithRangeRoutine(35);
+    ScoreRoutine sr = new ScoreRoutine();
+    
     public OberAutonomousRoutine()
     {
         super(100);
@@ -23,31 +29,33 @@ public class OberAutonomousRoutine extends Routine
     
     public void run()
     {
+        if(!isCancelled())lr.start();
+        if(!isCancelled())ar.start();
         
-        /*ManipulatorSystem ms = ManipulatorSystem.getInstance();
-        DriveSystem ds = DriveSystem.getInstance();
+        Timer.delay(2.0);
         
-        // Move wrist up
-        ms.wristUp();
-        
-        // Set the manip state to where we want to be
-        new SetManipulatorStateRoutine(ManipulatorSystem.STATE_TOP_PEG).execute();
-        
-        // Then make sure the PID fights gravity
-        ms.setArmPosition(ms.getArmEncoder());
+        if(!isCancelled())df.start();
+        df.waitForDone();
 
-        ds.setTankSpeed(0.7, 0.7);
-        Timer.delay(5);
-        
-        LiftCamPIDRoutine lcr = new LiftCamPIDRoutine();
+        lr.waitForDone();
+        ar.waitForDone();
 
-        spr.start();
-        lcr.start();
+        Timer.delay(0.2);
         
-        spr.waitForDone();
-        lcr.waitForDone();
-         * 
-         */
+        if(!isCancelled()) sr.execute();
+
+        DriveSystem.getInstance().setTankSpeed(-0.3, -0.3);
+        Timer.delay(2);
+        DriveSystem.getInstance().setTankSpeed( 0.0,  0.0);
         
+        setDone();
+    }
+    
+    public void doCancel()
+    {
+        lr.cancel();
+        sr.cancel();
+        ar.cancel();
+        df.cancel();
     }
 }

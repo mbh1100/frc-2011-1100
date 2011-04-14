@@ -77,7 +77,7 @@ public class HeckerAutonomousRoutine extends Routine
         
         // enable y-axis steering and z-axis power, get near the peg.
         OperatorSystem.getInstance().dsPrint(6, "Using Z and X PID");
-        ds.driveByCamera();
+        //ds.driveByCamera();
 
         OperatorSystem.getInstance().dsPrint(6, "Using Z and X PID/Waiting for the timeout");
         // stop either when the line system sees the 'T', or when the z-axis is done,

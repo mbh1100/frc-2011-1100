@@ -11,6 +11,9 @@ import edu.arhs.first1100.log.Log;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.arhs.first1100.opctl.DriverStationDataFeeder;
+import edu.arhs.first1100.robot.RobotMain;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * @author markbh
@@ -26,10 +29,20 @@ class SteerSource implements PIDSource
 
 class SteerOutput implements PIDOutput
 {
+    DriverStationDataFeeder dsdf = new DriverStationDataFeeder();
+
     public void pidWrite(double output)
     {
         // assuming a DriveSystem interface that incorporates the behavior of the ArcadeDriveMux
-        DriveSystem.getInstance().setCurve(output);
+        if (RobotMain.getSwitch())
+        {
+            DriveSystem.getInstance().setCurve(0);
+        }
+        else
+        {
+            DriveSystem.getInstance().setCurve(0.0); // change to if not tested
+        }
+        dsdf.sendToLCD("driving PID:" + output);
     }
 }
 

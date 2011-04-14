@@ -3,10 +3,12 @@ package edu.arhs.first1100.drive;
 import com.sun.squawk.util.MathUtils;
 import edu.arhs.first1100.camera.CameraSystem;
 import edu.arhs.first1100.log.Log;
+import edu.arhs.first1100.opctl.OperatorSystem;
 import edu.arhs.first1100.util.SystemBase;
 import edu.arhs.first1100.util.AdvJaguar;
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.AnalogModule;
+
 
 public class DriveSystem extends SystemBase
 {
@@ -44,15 +46,17 @@ public class DriveSystem extends SystemBase
 
     public void tick()
     {
+        /*
         if (powerPid.isEnable() && Math.abs(powerPid.getError()) < 10.0)
         {
             //Log.defcon1(this, "Stopping drive pids");
             powerPid.disable();
             steerPid.disable();
-        }
+        }*/
+        
         //Log.defcon1(this, "Steer PID Output: " + steerPid.get());
         //Log.defcon1(this, "Power PID Output: " + powerPid.get());
-        Log.defcon1(this, "Analog 3:" + hall.getValue());
+        Log.defcon1(this, "RangeFinder:" + range.getValue());
 
         //Log.defcon1(this, "Particle Size:" + CameraSystem.getInstance().getBiggestParticle().particleArea);
         Log.defcon1(this, "");
@@ -68,11 +72,11 @@ public class DriveSystem extends SystemBase
         steerPid.enable();
     }
 
-    public void driveByCamera()
+    public void driveByCamera(int range)
     {
         steerByCamera();
         powerPid.setOutputRange(-0.3, 0.3);
-        powerPid.setSetpoint(1000.0);//why are we giving it a setpoint?  Shouldnt it be a camera particle size?
+        powerPid.setSetpoint(range);//why are we giving it a setpoint?  Shouldnt it be a camera particle size?
                                      //yes, but the camera isnt working so it cant be tested now.
         powerPid.enable();
     }
@@ -130,7 +134,9 @@ public class DriveSystem extends SystemBase
             leftOutput = outputMagnitude;
             rightOutput = outputMagnitude;
         }
-        setTankSpeed(leftOutput, rightOutput);
+        setTankSpeed(leftOutput*OperatorSystem.getInstance().getLeftTrim(),
+                rightOutput*OperatorSystem.getInstance().getLeftTrim()
+                );
     }
 
     void setCurve(double curve)

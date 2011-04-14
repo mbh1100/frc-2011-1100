@@ -33,16 +33,16 @@ public class CameraSystem extends SystemBase
     AxisCamera ac;
     ColorImage cImg;
     BinaryImage bImg;
-    ParticleAnalysisReport[] pRep = new ParticleAnalysisReport[PARTICLE_SIZE];
+    ParticleAnalysisReport[] pRep = null;
     private static CameraSystem instance = null;
-    
+
     public CameraSystem() 
     {
         ac = AxisCamera.getInstance();
         cImg = null;
         bImg = null;
         sleepTime = 200;
-        light = new Light(3);
+        //light = new Light(3);
 
         //Camera Settings
         ac.writeCompression(0);
@@ -52,9 +52,13 @@ public class CameraSystem extends SystemBase
         ac.writeResolution(AxisCamera.ResolutionT.k160x120);
 
         setThreshold(GREEN_THRESHOLD);
-        light.on();
     }
 
+    public void start()
+    {
+        pRep = null;
+        super.start();
+    }
     public static CameraSystem getInstance()
     {
         if(instance == null) instance = new CameraSystem();
@@ -169,7 +173,7 @@ public class CameraSystem extends SystemBase
     public double getCenterY()
     {
         light.onForAWhile();
-        if(pRep.length > 0 && pRep[0] != null )
+        if( pRep != null && pRep.length > 0 && pRep[0] != null && pRep[0].particleArea > 4)
             return pRep[0].center_mass_y_normalized;
         else
             return 0.0;
@@ -182,7 +186,7 @@ public class CameraSystem extends SystemBase
     public double getCenterX()
     {
         light.onForAWhile();
-        if(pRep.length > 0 && pRep[0] != null)
+        if(pRep != null && pRep.length > 0 && pRep[0] != null)
             return pRep[0].center_mass_x_normalized;
         else
             return 0.0;
@@ -203,49 +207,5 @@ public class CameraSystem extends SystemBase
         {
             return null;
         }
-    }
-
-     /**
-     * Returns the significant particles found in array of ParticleAnalysisReports.
-     * @return ParticleAnalysisReport[]
-     */
-    public synchronized ParticleAnalysisReport[] getParticles()
-    {
-        light.onForAWhile();
-        return pRep;
-    }
-    /**
-     * Return a specified number of particles in order of size.
-     * @param n Number of particles
-     * @return ParticleAnalysisReport[n]
-     */
-    public synchronized ParticleAnalysisReport[] getParticles(int n)
-    {
-        light.onForAWhile();
-        ParticleAnalysisReport[] p = new ParticleAnalysisReport[n];
-        System.arraycopy(pRep, 0, p, 0, n);
-        return p;
-    }
-
-    /**
-     * Sort an array of particles by their Y values.
-     * @param p ParticleAnalysisReport[]
-     * @return sorted ParticleAnalysisReport[]
-     */
-    public synchronized ParticleAnalysisReport[] SortY(ParticleAnalysisReport[] p)
-    {
-        int index = 0;
-        ParticleAnalysisReport[] sortedP = new ParticleAnalysisReport[p.length];
-        for (int i = 0; i< p.length-1; i++)
-        {
-            index = i;
-            for (int n = i+1; n< p.length;n++)
-            {
-                if (p[i].center_mass_y < p[n].center_mass_y)
-                    index++;
-            }
-            sortedP[index] = p[i];
-        }
-        return sortedP;
     }
 }

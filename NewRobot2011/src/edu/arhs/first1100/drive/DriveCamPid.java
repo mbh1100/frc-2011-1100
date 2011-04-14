@@ -7,6 +7,7 @@ package edu.arhs.first1100.drive;
 
 import edu.arhs.first1100.camera.CameraSystem;
 import edu.arhs.first1100.log.Log;
+import edu.arhs.first1100.opctl.OperatorSystem;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -19,7 +20,7 @@ class ArmCamSource implements PIDSource
 {
     public double pidGet()
     {
-        return CameraSystem.getInstance().getBiggestParticle().particleArea;
+        return DriveSystem.getInstance().getRangeValue();
     }
 }
 
@@ -27,8 +28,8 @@ class ArmCamOutput implements PIDOutput
 {
     public void pidWrite(double output)
     {
-        Log.defcon2(this, "Using PID to tell DS to drive wheels at " + output);
-        DriveSystem.getInstance().setPower(output);
+        Log.defcon2(OperatorSystem.getInstance(), "Using PID to tell DS to drive wheels at " + output);
+        DriveSystem.getInstance().setPower(-output);
     }
 }
 

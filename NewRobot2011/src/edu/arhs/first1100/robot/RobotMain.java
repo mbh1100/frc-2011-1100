@@ -22,22 +22,18 @@ import edu.arhs.first1100.minibot.MinibotSystem;
 import edu.arhs.first1100.opctl.OperatorSystem;
 import edu.arhs.first1100.diag.DiagnosticRobot;
 import edu.arhs.first1100.log.Log;
+import edu.arhs.first1100.opctl.DriverStationDataFeeder;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 
-/**
- *
- * @author team1100
- */
 public class RobotMain extends SimpleRobot
 {
-    private DigitalInput diagSwitch;
-    private boolean diagnostic;
+    public DigitalInput diagSwitch;
+    private static boolean diagnostic;
     private DiagnosticRobot diagRobot;
     public Compressor compressor;
     //added by Akshay
-
     
     public void robotInit()
     {        
@@ -48,14 +44,15 @@ public class RobotMain extends SimpleRobot
         
         diagSwitch = new DigitalInput(13);
         diagnostic = !diagSwitch.get();
-        
-        if(!diagnostic)
+
+        OperatorSystem.getInstance().dsPrint(4, "");
+        if(true)
         {
             //Set Logging Levels
             Log.addClass(MinibotSystem.class, 4);
             Log.addClass(OperatorSystem.class, 4);
-            Log.addClass(ManipulatorSystem.class, 2);
-            Log.addClass(DriveSystem.class, 4);
+            Log.addClass(ManipulatorSystem.class, 4);
+            Log.addClass(DriveSystem.class, 1);
             Log.addClass(AutonomousSystem.class, 1);
             Log.addClass(LineSystem.class, 4);
             Log.addClass(SetManipulatorStateRoutine.class, 4);
@@ -67,7 +64,7 @@ public class RobotMain extends SimpleRobot
             OperatorSystem.getInstance().setSleep(25);
             AutonomousSystem.getInstance().setSleep(1000);
 
-            DriveSystem.getInstance().setSleep(500);
+            DriveSystem.getInstance().setSleep(50);
             ManipulatorSystem.getInstance().setSleep(50);
 
             CameraSystem.getInstance().setSleep(100);
@@ -78,6 +75,15 @@ public class RobotMain extends SimpleRobot
         else
         {
             diagRobot = new DiagnosticRobot();
+        }
+
+        try
+        {
+            new DriverStationDataFeeder().sendToLCD("SWITCH IS" + diagnostic);
+        }
+        catch(Exception e)
+        {
+            
         }
         
         compressor = new Compressor(6, 1);
@@ -91,7 +97,7 @@ public class RobotMain extends SimpleRobot
         Log.defcon3(this, "| IT IS NOW SAFE TO UNPLUG YOUR ROBOT |");
         Log.defcon3(this, "+-------------------------------------+");
 
-        OperatorSystem.getInstance().dsPrint(6, "Enabled : "+((diagnostic) ? "DIAGNOSTIC" : "REGULAR"));
+        OperatorSystem.getInstance().dsPrint(6, "Mode : "+((diagnostic) ? "DIAGNOSTIC" : "REGULAR"));
         CameraSystem.getInstance().start();
     }
     
@@ -103,7 +109,7 @@ public class RobotMain extends SimpleRobot
 
         
         Log.defcon3(this, "Autonomous Mode Activated");
-        if(!diagnostic)
+        if(true)
         {
             OperatorSystem.getInstance().stop();
             AutonomousSystem.getInstance().start();
@@ -121,7 +127,7 @@ public class RobotMain extends SimpleRobot
     public void operatorControl()
     {
         Log.defcon3(this, "Operator Mode Activated");
-        if(!diagnostic)
+        if(true)
         {
             OperatorSystem.getInstance().start();
             AutonomousSystem.getInstance().stop();
@@ -132,7 +138,7 @@ public class RobotMain extends SimpleRobot
 
             CameraSystem.getInstance().start();
             //LineSystem.getInstance().start();
-
+            
             MinibotSystem.getInstance().start();
         }
         else
@@ -147,10 +153,11 @@ public class RobotMain extends SimpleRobot
     public void disabled()
     {
         Log.defcon3(this, "Robot Disabled");
-        if(!diagnostic)
+        if(true)
         {        
             OperatorSystem.getInstance().stop();
             AutonomousSystem.getInstance().stop();
+            AutonomousSystem.getInstance().resetWin();
             Routine.disableRoutines();
 
             DriveSystem.getInstance().stop();
@@ -162,5 +169,9 @@ public class RobotMain extends SimpleRobot
             MinibotSystem.getInstance().stop();
         
         }
+    }
+    public static boolean getSwitch()
+    {
+        return diagnostic;
     }
 }

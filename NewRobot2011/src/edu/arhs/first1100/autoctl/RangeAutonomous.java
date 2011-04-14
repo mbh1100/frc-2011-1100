@@ -16,7 +16,7 @@ public class RangeAutonomous extends Routine
 {
     private final int A_VALUE = 200; //temp
 
-    private ArmRoutine ar = new ArmRoutine();
+    private ArmToLimitSwitchRoutine ar = new ArmToLimitSwitchRoutine();
     private ScoreRoutine sr = new ScoreRoutine();
     private LiftRoutine lr = new LiftRoutine(9999); // drive to limit switch
 

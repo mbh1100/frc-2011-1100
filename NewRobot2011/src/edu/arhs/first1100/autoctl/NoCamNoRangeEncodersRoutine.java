@@ -31,7 +31,7 @@ public class NoCamNoRangeEncodersRoutine extends Routine
 
     public void run()
     {
-        DriveSystem.getInstance().setTankSpeed(0.45, 0.5);
+        DriveSystem.getInstance().setTankSpeed(0.5, 0.5);
         lr.start();
         //ManipulatorSystem.getInstance().setArmPosition(ARM_HEIGHT);
         Log.defcon1(this, "No cam or range driving");

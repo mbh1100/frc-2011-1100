@@ -1,12 +1,6 @@
 package edu.arhs.first1100.autoctl;
 
-import edu.arhs.first1100.drive.DriveSystem;
-import edu.arhs.first1100.log.Log;
-import edu.arhs.first1100.manipulator.ManipulatorSystem;
-import edu.arhs.first1100.opctl.ButtonBox;
-import edu.arhs.first1100.opctl.OperatorSystem;
 import edu.arhs.first1100.util.SystemBase;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 
 public class AutonomousSystem extends SystemBase
@@ -46,6 +40,8 @@ public class AutonomousSystem extends SystemBase
     
     public void win()
     {
+        new OberAutonomousRoutine().execute();
+
         /*ButtonBox bb = OperatorSystem.getInstance().getButtonBox();
         
         scoreUberTube(bb.getStartingPosition(),
@@ -55,6 +51,7 @@ public class AutonomousSystem extends SystemBase
          *
          */
 
+        /*
         boolean mode = true; //DriverStation.getInstance().getEnhancedIO().getDigital(15);
         if(mode)
         {
@@ -66,6 +63,9 @@ public class AutonomousSystem extends SystemBase
             Log.defcon1(this, "Range mode for autonomous");
             new RangeAutonomous().execute();
         }
+        */
+
+        
     }
     
     public void scoreUberTube(int starting, boolean rack, int column, int row)
@@ -114,5 +114,10 @@ public class AutonomousSystem extends SystemBase
         
         Log.defcon2(this, "All done!");
         */
+    }
+
+    public void resetWin()
+    {
+        won = false;
     }
 }

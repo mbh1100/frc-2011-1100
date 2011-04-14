@@ -3,6 +3,7 @@
 
 import edu.arhs.first1100.autoctl.NoCamNoRangeEncodersRoutine;
 import edu.arhs.first1100.autoctl.ScoreRoutine;
+import edu.arhs.first1100.camera.CameraSystem;
 import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.manipulator.ManipulatorSystem;
 import edu.arhs.first1100.util.SystemBase;
@@ -136,7 +137,7 @@ public class OperatorSystem extends SystemBase
 
         if(xboxJoystick.getBackButton())
         {
-            minis.setBeltSpeed(0.1);
+            minis.setBeltSpeed(0.25);
         }
         else
         {
@@ -202,10 +203,10 @@ public class OperatorSystem extends SystemBase
     {
         ManipulatorSystem ms = ManipulatorSystem.getInstance();
         
-        if(xboxJoystick.getRightBumper())
+        if(xboxJoystick.getLeftBumper())
             ms.rollerWristUp();
         
-        else if(xboxJoystick.getLeftBumper())
+        else if(xboxJoystick.getRightBumper())
             ms.rollerWristDown();
         
         else if(xboxJoystick.getTriggers() > 0.6)
@@ -247,6 +248,8 @@ public class OperatorSystem extends SystemBase
         // TANK DRIVE WITH TRIM
         if(sensitiveDrive)
         {
+            Log.defcon1(this, "sensitive drive");
+            
             double leftValue = limit(-leftJoystick.getStickY());
             double rightValue = limit(-rightJoystick.getStickY());
 
@@ -269,15 +272,21 @@ public class OperatorSystem extends SystemBase
             }
 
             //setLeftRightMotorOutputs(leftValue, rightValue);
-
-            DriveSystem.getInstance().setTankSpeed(leftValue, rightValue);
+            
+            DriveSystem.getInstance().setTankSpeed(
+                    leftValue *getLeftTrim(),
+                    rightValue*getRightTrim()
+                    );
         }
         else
         {
+            Log.defcon1(this, "Old drive");
             //Old Drive
-            double leftSpeed = -leftJoystick.getStickY()   * Math.max(-((leftJoystick.getZ() /2)-0.5), 0.75);
-            double rightSpeed = -rightJoystick.getStickY() * Math.max(-((rightJoystick.getZ()/2)-0.5), 0.75);
-            DriveSystem.getInstance().setTankSpeed(leftSpeed, rightSpeed);
+            double leftSpeed = -leftJoystick.getStickY() ;
+            double rightSpeed = -rightJoystick.getStickY();
+            
+            DriveSystem.getInstance().setTankSpeed(leftSpeed * getLeftTrim(),
+                                                   rightSpeed* getRightTrim());
         }
     }
 
@@ -304,8 +313,7 @@ public class OperatorSystem extends SystemBase
         rightJoystick.reset();
         leftJoystick.reset();
     }
-
-
+    
     DriverStationDataFeeder dsFeeder;
 
    /**
@@ -335,4 +343,16 @@ public class OperatorSystem extends SystemBase
             Log.defcon3(this, "dsPrint failed! :"+e.getMessage());
         }
     }
+
+    public double getLeftTrim()
+    {
+        return Math.max(-((leftJoystick.getZ() /2)-0.5), 0.75);
+    }
+
+    public double getRightTrim()
+    {
+        return Math.max(-((rightJoystick.getZ() /2)-0.5), 0.75);
+    }
+
+
 }
