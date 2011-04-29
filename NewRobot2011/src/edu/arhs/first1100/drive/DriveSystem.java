@@ -68,7 +68,7 @@ public class DriveSystem extends SystemBase
 
     public void steerByCamera()
     {
-        steerPid.setOutputRange(-0.2, 0.2);
+        steerPid.setOutputRange(-0.1, 0.1);
         steerPid.enable();
     }
 

@@ -40,8 +40,8 @@ class SteerOutput implements PIDOutput
         }
         else
         {
-            DriveSystem.getInstance().setCurve(0.0);
-            //DriveSystem.getInstance().setCurve(output);
+            //DriveSystem.getInstance().setCurve(0.0);
+            DriveSystem.getInstance().setCurve(-output);
         }
         dsdf.sendToLCD("driving PID:" + output);
     }

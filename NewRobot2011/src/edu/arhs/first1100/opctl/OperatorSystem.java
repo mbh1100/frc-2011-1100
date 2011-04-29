@@ -137,7 +137,7 @@ public class OperatorSystem extends SystemBase
 
         if(xboxJoystick.getBackButton())
         {
-            minis.setBeltSpeed(0.25);
+            minis.setBeltSpeed(0.30);
         }
         else
         {
@@ -346,12 +346,12 @@ public class OperatorSystem extends SystemBase
 
     public double getLeftTrim()
     {
-        return Math.max(-((leftJoystick.getZ() /2)-0.5), 0.75);
+        return Math.max(-((leftJoystick.getZ() /2)-0.5), 0.20);
     }
 
     public double getRightTrim()
     {
-        return Math.max(-((rightJoystick.getZ() /2)-0.5), 0.75);
+        return Math.max(-((rightJoystick.getZ() /2)-0.5), 0.20);
     }
 
 
