@@ -1,5 +1,6 @@
 package edu.arhs.first1100.camera;
 
+import edu.arhs.first1100.drive.DriveSystem;
 import edu.arhs.first1100.log.Log;
 import edu.arhs.first1100.util.SystemBase;
 import edu.wpi.first.wpilibj.camera.*;
@@ -189,7 +190,7 @@ public class CameraSystem extends SystemBase
         if(pRep != null && pRep.length > 0 && pRep[0] != null)
             return pRep[0].center_mass_x_normalized;
         else
-            return 0.0;
+            return -(DriveSystem.getInstance().getGyroAngle()/10);
     }
 
     /**

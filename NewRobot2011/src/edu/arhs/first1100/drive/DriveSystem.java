@@ -23,7 +23,7 @@ public class DriveSystem extends SystemBase
     private double curve = 0.0;
     private double power = 0.0;
 
-    private AnalogChannel hall;
+    private edu.wpi.first.wpilibj.Gyro gyro;
     private AnalogChannel range;
 
     public DriveSystem()
@@ -34,7 +34,7 @@ public class DriveSystem extends SystemBase
         leftJaguars  = new AdvJaguar(4, 2, 4, false);
         rightJaguars = new AdvJaguar(4, 1, 3, true);
 
-        hall = new AnalogChannel(3);
+        gyro = new edu.wpi.first.wpilibj.Gyro(1);
         range = new AnalogChannel(2);
     }
 
@@ -56,7 +56,8 @@ public class DriveSystem extends SystemBase
         
         //Log.defcon1(this, "Steer PID Output: " + steerPid.get());
         //Log.defcon1(this, "Power PID Output: " + powerPid.get());
-        Log.defcon1(this, "RangeFinder:" + range.getValue());
+        Log.defcon1(this, "Gyro:" + gyro.getAngle());
+
 
         //Log.defcon1(this, "Particle Size:" + CameraSystem.getInstance().getBiggestParticle().particleArea);
         Log.defcon1(this, "");
@@ -77,7 +78,8 @@ public class DriveSystem extends SystemBase
         steerByCamera();
         powerPid.setOutputRange(-0.3, 0.3);
         powerPid.setSetpoint(range);//why are we giving it a setpoint?  Shouldnt it be a camera particle size?
-                                     //yes, but the camera isnt working so it cant be tested now.
+                                     //it is camera particle size. The pid only knows it as something
+                                     // to compare to the pidGet value(). [now provided by the rangefinder].
         powerPid.enable();
     }
 
@@ -173,5 +175,10 @@ public class DriveSystem extends SystemBase
     public int getRangeValue()
     {
         return range.getValue();
+    }
+
+    public double getGyroAngle()
+    {
+        return gyro.getAngle();
     }
 }

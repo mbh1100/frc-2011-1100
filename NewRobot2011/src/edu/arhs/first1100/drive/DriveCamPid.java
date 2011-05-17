@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 /**
  * @author markbh
  */
-class ArmCamSource implements PIDSource
+class PowerCamSource implements PIDSource
 {
     public double pidGet()
     {
@@ -24,7 +24,7 @@ class ArmCamSource implements PIDSource
     }
 }
 
-class ArmCamOutput implements PIDOutput
+class PowerCamOutput implements PIDOutput
 {
     public void pidWrite(double output)
     {
@@ -41,7 +41,7 @@ public class DriveCamPid extends PIDController
     
     DriveCamPid()
     {
-	super(P, I, D, new ArmCamSource(), new ArmCamOutput());
+	super(P, I, D, new PowerCamSource(), new PowerCamOutput());
     }
 
     // this class exposes all the methods of PIDController, such as enable(), disable(), setSetpoint(), etc.
