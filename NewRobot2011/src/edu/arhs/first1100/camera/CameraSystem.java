@@ -190,7 +190,7 @@ public class CameraSystem extends SystemBase
         if(pRep != null && pRep.length > 0 && pRep[0] != null)
             return pRep[0].center_mass_x_normalized;
         else
-            return -(DriveSystem.getInstance().getGyroAngle()/10);
+            return -(DriveSystem.getInstance().getGyroAngle()/50);
     }
 
     /**

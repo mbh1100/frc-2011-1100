@@ -56,11 +56,11 @@ public class DriveSystem extends SystemBase
         
         //Log.defcon1(this, "Steer PID Output: " + steerPid.get());
         //Log.defcon1(this, "Power PID Output: " + powerPid.get());
-        Log.defcon1(this, "Gyro:" + gyro.getAngle());
+        //Log.defcon1(this, "Gyro:" + gyro.getAngle());
 
 
         //Log.defcon1(this, "Particle Size:" + CameraSystem.getInstance().getBiggestParticle().particleArea);
-        Log.defcon1(this, "");
+        //Log.defcon1(this, "");
 
         //Log.defcon1(this, "Left:  "+leftJaguars.get());
         //Log.defcon1(this, "Right: "+rightJaguars.get());
@@ -76,7 +76,7 @@ public class DriveSystem extends SystemBase
     public void driveByCamera(int range)
     {
         steerByCamera();
-        powerPid.setOutputRange(-0.3, 0.3);
+        powerPid.setOutputRange(-0.5, 0.5);
         powerPid.setSetpoint(range);//why are we giving it a setpoint?  Shouldnt it be a camera particle size?
                                      //it is camera particle size. The pid only knows it as something
                                      // to compare to the pidGet value(). [now provided by the rangefinder].
@@ -136,8 +136,8 @@ public class DriveSystem extends SystemBase
             leftOutput = outputMagnitude;
             rightOutput = outputMagnitude;
         }
-        setTankSpeed(leftOutput*OperatorSystem.getInstance().getLeftTrim(),
-                rightOutput*OperatorSystem.getInstance().getLeftTrim()
+        setTankSpeed(leftOutput,//*OperatorSystem.getInstance().getLeftTrim(),
+                rightOutput //*OperatorSystem.getInstance().getLeftTrim()
                 );
     }
 

@@ -29,8 +29,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 public class RobotMain extends SimpleRobot
 {
-    public DigitalInput diagSwitch;
-    private static boolean diagnostic;
+    public DigitalInput autonomousModeSwitch;
+    private static boolean autonomousWithCamera;
     private DiagnosticRobot diagRobot;
     public Compressor compressor;
     //added by Akshay
@@ -42,8 +42,8 @@ public class RobotMain extends SimpleRobot
         Log.addClass(OperatorSystem.class, 4);
         Log.defcon3(this, "Robot Init");
         
-        diagSwitch = new DigitalInput(13);
-        diagnostic = !diagSwitch.get();
+        autonomousModeSwitch = new DigitalInput(13);
+        autonomousWithCamera = !autonomousModeSwitch.get();
 
         OperatorSystem.getInstance().dsPrint(4, "");
         if(true)
@@ -79,7 +79,7 @@ public class RobotMain extends SimpleRobot
 
         try
         {
-            new DriverStationDataFeeder().sendToLCD("SWITCH IS" + diagnostic);
+            new DriverStationDataFeeder().sendToLCD("SWITCH IS" + autonomousWithCamera);
         }
         catch(Exception e)
         {
@@ -90,14 +90,14 @@ public class RobotMain extends SimpleRobot
         //compressor.start();
         
         Log.defcon3(this, "+------------------------+");
-        Log.defcon3(this, "| USING " + ((diagnostic) ? "DIAGNOSTIC " : "  REGULAR  ") + "ROBOT |");
+        Log.defcon3(this, "| USING " + ((autonomousWithCamera) ? "CAMERA     " : "NO CAMERA  ") + "      |");
         Log.defcon3(this, "+------------------------+");
         Log.defcon3(this, "");
         Log.defcon3(this, "+-------------------------------------+");
         Log.defcon3(this, "| IT IS NOW SAFE TO UNPLUG YOUR ROBOT |");
         Log.defcon3(this, "+-------------------------------------+");
 
-        OperatorSystem.getInstance().dsPrint(6, "Mode : "+((diagnostic) ? "DIAGNOSTIC" : "REGULAR"));
+        OperatorSystem.getInstance().dsPrint(6, "Autonomous : "+((autonomousWithCamera) ? "" : "NO ") + "CAMERA");
         CameraSystem.getInstance().start();
     }
     
@@ -172,6 +172,6 @@ public class RobotMain extends SimpleRobot
     }
     public static boolean getSwitch()
     {
-        return diagnostic;
+        return autonomousWithCamera;
     }
 }

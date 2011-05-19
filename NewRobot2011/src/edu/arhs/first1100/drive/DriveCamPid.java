@@ -20,6 +20,7 @@ class PowerCamSource implements PIDSource
 {
     public double pidGet()
     {
+        Log.defcon2(DriveSystem.getInstance(), "Range is " + DriveSystem.getInstance().getRangeValue());
         return DriveSystem.getInstance().getRangeValue();
     }
 }
@@ -28,16 +29,16 @@ class PowerCamOutput implements PIDOutput
 {
     public void pidWrite(double output)
     {
-        Log.defcon2(OperatorSystem.getInstance(), "Using PID to tell DS to drive wheels at " + output);
+        Log.defcon2(DriveSystem.getInstance(), "Using PID to tell DS to drive wheels at " + output);
         DriveSystem.getInstance().setPower(-output);
     }
 }
 
 public class DriveCamPid extends PIDController
 {
-    static private final double P = 0.1;
-    static private final double I = 0.01;
-    private static final double D = 0.001;
+    static private final double P = 0.02;
+    static private final double I = 0.0005;
+    private static final double D = 0.00;
     
     DriveCamPid()
     {
