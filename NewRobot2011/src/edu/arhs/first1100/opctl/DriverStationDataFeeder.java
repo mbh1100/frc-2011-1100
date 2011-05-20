@@ -118,7 +118,7 @@ public class DriverStationDataFeeder extends SystemBase
         for (int i = 0; i < 6; i++)
         {
             DriverStationLCD.getInstance().println(lcdLines[i], 1, lcdHistory[i]);
-            System.out.println(i);
+            //System.out.println(i);
         }
         
         DriverStationLCD.getInstance().updateLCD(); // display the screen
