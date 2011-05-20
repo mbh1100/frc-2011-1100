@@ -30,7 +30,7 @@ public class LiftRoutine extends Routine
 
     public void tick()
     {
-        Log.defcon1(this, "tick");
+        //Log.defcon1(this, "tick");
 
         if(!ManipulatorSystem.getInstance().getLiftLimitSwitch())
         {

@@ -43,7 +43,7 @@ public class RobotMain extends SimpleRobot
         Log.defcon3(this, "Robot Init");
         
         autonomousModeSwitch = new DigitalInput(13);
-        autonomousWithCamera = !autonomousModeSwitch.get();
+        autonomousWithCamera = autonomousModeSwitch.get();
 
         OperatorSystem.getInstance().dsPrint(4, "");
         if(true)
@@ -51,14 +51,14 @@ public class RobotMain extends SimpleRobot
             //Set Logging Levels
             Log.addClass(MinibotSystem.class, 4);
             Log.addClass(OperatorSystem.class, 4);
-            Log.addClass(ManipulatorSystem.class, 4);
+            Log.addClass(ManipulatorSystem.class, 1 );
             Log.addClass(DriveSystem.class, 1);
             Log.addClass(AutonomousSystem.class, 1);
             Log.addClass(LineSystem.class, 4);
             Log.addClass(SetManipulatorStateRoutine.class, 4);
             Log.addClass(CameraSystem.class, 1);
             Log.addClass(NoCamNoRangeAutonomous.class, 1);
-            Log.addClass(LiftRoutine.class, 1);
+            Log.addClass(LiftRoutine.class, 4);
 
             
             OperatorSystem.getInstance().setSleep(25);
@@ -106,6 +106,7 @@ public class RobotMain extends SimpleRobot
         DriveSystem.getInstance().setTankSpeed(0.0, 0.0);
         ManipulatorSystem.getInstance().setArmSpeed(0.0);
         ManipulatorSystem.getInstance().setLiftSpeed(0.0);
+        DriveSystem.getInstance().resetGyro();
 
         
         Log.defcon3(this, "Autonomous Mode Activated");

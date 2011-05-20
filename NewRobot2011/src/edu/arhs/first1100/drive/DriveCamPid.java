@@ -36,8 +36,8 @@ class PowerCamOutput implements PIDOutput
 
 public class DriveCamPid extends PIDController
 {
-    static private final double P = 0.02;
-    static private final double I = 0.0005;
+    static private final double P = 0.015;
+    static private final double I = 0.00;
     private static final double D = 0.00;
     
     DriveCamPid()

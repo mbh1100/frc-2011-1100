@@ -181,4 +181,8 @@ public class DriveSystem extends SystemBase
     {
         return gyro.getAngle();
     }
+    public void resetGyro()
+    {
+        gyro.reset();
+    }
 }

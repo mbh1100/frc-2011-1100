@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class OberAutonomousRoutine extends Routine
 {
-    LiftRoutine lr = new LiftRoutine(1900);
+    LiftRoutine lr = new LiftRoutine(1725);
     ArmToLimitSwitchRoutine ar = new ArmToLimitSwitchRoutine();
     DriveForwardWithRangeRoutine df = new DriveForwardWithRangeRoutine(35);
     ScoreRoutine sr = new ScoreRoutine();
@@ -30,20 +30,29 @@ public class OberAutonomousRoutine extends Routine
     public void run()
     {
         if(!isCancelled())lr.start();
-        if(!isCancelled())ar.start();
         
-        Timer.delay(2.0);
+        
+        //Timer.delay(1.0);
         
         if(!isCancelled())df.start();
-        df.waitForDone();
-
-        lr.waitForDone();
-        ar.waitForDone();
-
-        Timer.delay(0.2);
         
+        lr.waitForDone();
+        ManipulatorSystem.getInstance().enableLiftCamPID();
+        
+        df.waitForDone();
+        
+        //Timer.delay(0.2);
+
+        ManipulatorSystem.getInstance().stopLiftPIDs();
+      //  if (!isCancelled()) new LiftRoutine((int)ManipulatorSystem.getInstance().getLiftEncoder()-100).execute();
+
+        if(!isCancelled())ar.execute();
         if(!isCancelled()) sr.execute();
 
+        ManipulatorSystem.getInstance().setArmSpeed(-0.5);
+        Timer.delay(1.0);
+        ManipulatorSystem.getInstance().setArmSpeed(0.0);
+        
         DriveSystem.getInstance().setTankSpeed(-0.3, -0.3);
         Timer.delay(2);
         DriveSystem.getInstance().setTankSpeed( 0.0,  0.0);

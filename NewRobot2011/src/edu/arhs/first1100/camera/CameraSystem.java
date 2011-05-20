@@ -174,7 +174,7 @@ public class CameraSystem extends SystemBase
     public double getCenterY()
     {
         light.onForAWhile();
-        if( pRep != null && pRep.length > 0 && pRep[0] != null && pRep[0].particleArea > 4)
+        if( pRep != null && pRep.length > 0 && pRep[0] != null)
             return pRep[0].center_mass_y_normalized;
         else
             return 0.0;
@@ -188,9 +188,15 @@ public class CameraSystem extends SystemBase
     {
         light.onForAWhile();
         if(pRep != null && pRep.length > 0 && pRep[0] != null)
+        {
+            Log.defcon3(this, "camera x:" + pRep[0].center_mass_x_normalized);
             return pRep[0].center_mass_x_normalized;
+        }
         else
-            return -(DriveSystem.getInstance().getGyroAngle()/50);
+        {
+            Log.defcon3(this, "gyro: " + -DriveSystem.getInstance().getGyroAngle());
+            return -(DriveSystem.getInstance().getGyroAngle()/25);
+        }
     }
 
     /**

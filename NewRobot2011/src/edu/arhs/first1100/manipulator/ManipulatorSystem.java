@@ -70,7 +70,7 @@ public class ManipulatorSystem extends SystemBase
         liftEncoder.start();
         
         liftPID = new LiftPid();
-        liftPID.setOutputRange(-0.5, 0.5);
+        liftPID.setOutputRange(-0.5, 1.0);
 
         liftBottomLimitSwitch = new DigitalInput(7);
         liftTopLimitSwitch = new DigitalInput(4);
@@ -93,7 +93,7 @@ public class ManipulatorSystem extends SystemBase
 
         //Other
         liftCamPID = new LiftCamPid();
-        liftCamPID.setOutputRange(-0.45, 0.75);
+        liftCamPID.setOutputRange(-0.45, 1.0);
 
         armCamPID = new ArmCamPid();
         armCamPID.setOutputRange(-0.2, 0.2);
@@ -131,7 +131,7 @@ public class ManipulatorSystem extends SystemBase
                 if(liftPID.isEnable())
                 {
                     Log.defcon1(this, ("LiftPID Error : " + liftPID.getError()));
-                    if(Math.abs(liftPID.getError()) <= 1.0)
+                    if(Math.abs(liftPID.getError()) <= 5.0)
                     {
                         stopLiftPIDs();
                         Log.defcon2(this, "LiftPid: TARGET REACHED");

@@ -34,7 +34,7 @@ class SteerOutput implements PIDOutput
     public void pidWrite(double output)
     {
         // assuming a DriveSystem interface that incorporates the behavior of the ArcadeDriveMux
-        if (RobotMain.getSwitch())
+        if (!RobotMain.getSwitch())
         {
             DriveSystem.getInstance().setCurve(0);
         }
@@ -49,7 +49,7 @@ class SteerOutput implements PIDOutput
 
 public class SteerPid extends PIDController
 {
-    static private final double P = 2;
+    static private final double P = 1;
     static private final double I = 0.0;
     static private final double D = 0.0;
 
