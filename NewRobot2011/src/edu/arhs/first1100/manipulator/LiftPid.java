@@ -34,9 +34,9 @@ class LiftOutput implements PIDOutput
 
 public class LiftPid extends PIDController
 {
-    static private final double P = 0.1;
-    static private final double I = 0.01;
-    static private final double D = 0.001;
+    static private final double P = 0.05;
+    static private final double I = 0.005;
+    static private final double D = 0.0005;
 
     LiftPid()
     {

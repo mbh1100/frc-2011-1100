@@ -187,7 +187,7 @@ public class CameraSystem extends SystemBase
     public double getCenterX()
     {
         light.onForAWhile();
-        if(pRep != null && pRep.length > 0 && pRep[0] != null)
+        if (false && pRep != null && pRep.length > 0 && pRep[0] != null)
         {
             Log.defcon3(this, "camera x:" + pRep[0].center_mass_x_normalized);
             return pRep[0].center_mass_x_normalized;
