@@ -96,8 +96,8 @@ public class DriveSystem extends SystemBase
 
     public void disablePids()
     {
-        if(steerPid.isEnable()) steerPid.disable();
-        if(powerPid.isEnable()) powerPid.disable();
+        if(steerPid.isEnable()) steerPid.reset();
+        if(powerPid.isEnable()) powerPid.reset();
     }
 
     private void setArcadeSpeed(double outputMagnitude, double curve)

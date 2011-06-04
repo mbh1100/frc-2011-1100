@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class OberAutonomousRoutine extends Routine
 {
-    LiftRoutine lr = new LiftRoutine(1600);
+    LiftRoutine lr = new LiftRoutine(1700);
     ArmToLimitSwitchRoutine ar = new ArmToLimitSwitchRoutine();
     DriveForwardWithRangeRoutine df = new DriveForwardWithRangeRoutine(35);
     ScoreRoutine sr = new ScoreRoutine();
@@ -50,15 +50,7 @@ public class OberAutonomousRoutine extends Routine
       //  if (!isCancelled()) new LiftRoutine((int)ManipulatorSystem.getInstance().getLiftEncoder()-100).execute();
 
         if(!isCancelled())ar.execute();
-        if(!isCancelled()) {
-            sr.execute();
-            scoreCalled = true;
-        }
-        if (!scoreCalled && System.currentTimeMillis() - startTime >= 13500){
-            ManipulatorSystem.getInstance().stopLiftPIDs();
-            sr.execute();
-            scoreCalled = true;
-        }
+        if(!isCancelled())sr.execute();
 
         ManipulatorSystem.getInstance().setArmSpeed(-0.5);
         Timer.delay(1.0);

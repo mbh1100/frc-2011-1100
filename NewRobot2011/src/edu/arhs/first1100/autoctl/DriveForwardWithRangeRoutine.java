@@ -18,7 +18,7 @@ public class DriveForwardWithRangeRoutine extends Routine
 
     public DriveForwardWithRangeRoutine(int r)
     {
-        super(50);
+        super(500);
         range = r;
     }
     
@@ -29,7 +29,7 @@ public class DriveForwardWithRangeRoutine extends Routine
 
          while(!isCancelled())
          {
-             if (Math.abs(ds.getRangeValue() - range) < 5)
+             if (Math.abs(ds.getRangeValue() - range) < 8)
              {
                 count++;
              }
