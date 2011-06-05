@@ -29,7 +29,8 @@ public class DriveForwardWithRangeRoutine extends Routine
 
          while(!isCancelled())
          {
-             if (Math.abs(ds.getRangeValue() - range) < 8)
+             //if (ds.getRangeValue() < 50) ds.setI();
+             if (ds.getRangeValue() < (range + 10) )
              {
                 count++;
              }
