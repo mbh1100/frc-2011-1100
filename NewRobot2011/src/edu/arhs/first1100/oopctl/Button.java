@@ -13,11 +13,14 @@ public class Button
     private int button_number;
     private Joystick js;
     boolean last_value;
+    private String name;
     
-    public Button(Joystick js, int button_number)
+    public Button(Joystick js, int button_number, String name)
     {
         this.button_number = button_number;
         this.js = js;
+        this.name = name;
+        bind(new ButtonHandler());
     }
 
     public void update()
@@ -49,6 +52,7 @@ public class Button
     public void bind(ButtonHandler bh)
     {
         this.bh = bh;
+        bh.setName(name);
     }
 
 }
