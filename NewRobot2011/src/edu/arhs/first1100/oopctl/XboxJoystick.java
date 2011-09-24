@@ -58,7 +58,14 @@ public class XboxJoystick extends SystemBase
 
     public void tick()
     {
-        // update button a
+        buttonA.update();
+        buttonB.update();
+        buttonX.update();
+        buttonY.update();
+        buttonLeftBumper.update();
+        buttonRightBumper.update();
+        buttonStart.update();
+        buttonBack.update();
     }
 
     public void bindA(ButtonHandler h)
@@ -85,15 +92,18 @@ public class XboxJoystick extends SystemBase
     {
         buttonLeftBumper.bind(h);
         // set the button_LeftBumper's handler to h
-    }public void bindRighBumper(ButtonHandler h)
+    }
+    public void bindRighBumper(ButtonHandler h)
     {
         buttonRightBumper.bind(h);
         // set the button_RighBumper's handler to h
-    }public void bindStart(ButtonHandler h)
+    }
+    public void bindStart(ButtonHandler h)
     {
         buttonStart.bind(h);
         // set the button_Start's handler to h
-    }public void bindBack(ButtonHandler h)
+    }
+    public void bindBack(ButtonHandler h)
     {
         buttonBack.bind(h);
         // set the button_Back's handler to h

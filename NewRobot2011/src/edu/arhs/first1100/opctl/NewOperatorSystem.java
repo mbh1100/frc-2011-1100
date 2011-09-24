@@ -31,6 +31,7 @@ public class NewOperatorSystem extends SystemBase
     {
         leftJoystick = new WingMan(1);
         rightJoystick = new WingMan(2);
+        xboxGamepad = new XboxJoystick(3);
         
         bindControls();
     }
