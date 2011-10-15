@@ -22,8 +22,6 @@ public class ButtonBox extends SystemBase
 
     // -.-. .... .-. .. ... - .. -. .
 
-    // . .. ... .... .....
-
 
     public int getStartingPosition()
     {

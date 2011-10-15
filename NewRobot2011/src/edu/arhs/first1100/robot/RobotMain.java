@@ -36,7 +36,7 @@ public class RobotMain extends SimpleRobot
     //added by Akshay
     
     public void robotInit()
-    {        
+    {
         //added by Akshay
         Log.addClass(RobotMain.class, 3);
         Log.addClass(OperatorSystem.class, 4);
@@ -51,7 +51,7 @@ public class RobotMain extends SimpleRobot
             //Set Logging Levels
             Log.addClass(MinibotSystem.class, 4);
             Log.addClass(OperatorSystem.class, 4);
-            Log.addClass(ManipulatorSystem.class, 1 );
+            Log.addClass(ManipulatorSystem.class, 1);
             Log.addClass(DriveSystem.class, 1);
             Log.addClass(AutonomousSystem.class, 1);
             Log.addClass(LineSystem.class, 4);

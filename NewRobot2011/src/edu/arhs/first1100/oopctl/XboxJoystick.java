@@ -1,4 +1,3 @@
-
 /*
 Future controls:
 
@@ -19,7 +18,6 @@ Future controls:
     Back + Start:   Deploy minibot arm(the new swing-out one)
 
 */
-
 package edu.arhs.first1100.oopctl;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -34,6 +32,9 @@ public class XboxJoystick extends SystemBase
     private Button buttonRightBumper;
     private Button buttonStart;
     private Button buttonBack;
+    private JoystickAxis axisY;
+    private JoystickAxis axisX;
+    
     
     
     private Joystick xboxJoystick;
@@ -51,7 +52,8 @@ public class XboxJoystick extends SystemBase
         buttonRightBumper = new Button(xboxJoystick, 6, "Right Bumper button");
         buttonStart = new Button(xboxJoystick, 7, "Start button");
         buttonBack = new Button(xboxJoystick, 8, "Back button");
-
+        axisX = new JoystickAxis(xboxJoystick, 123456, "X axis");
+        axisY = new JoystickAxis(xboxJoystick, 123456, "Y axis");
         
         this.start();
     }
